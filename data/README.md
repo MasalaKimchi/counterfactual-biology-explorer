@@ -1,11 +1,14 @@
 # Fetching the data
 
-**No-auth first.** Everything the graded pipeline needs is the open, no-login
-supplementary CSVs already in this folder — no CZI / Synapse / Wiley account required.
-The raw dataset (~22M cells) is **not** needed. The gene-level `GWCD4i.DE_stats.h5ad`
-is **optional** (Tier-2 only) and requires a free CZI login (via `vcp login` + `vcp
-data download`; the raw per-donor datasets are hundreds of GB, so only fetch the
-derived artifact — see the ROADMAP "Two tiers" section).
+**Two tiers, and the tiering was corrected — read this.** The local no-login
+supplementary CSVs (this folder) are the **Tier-1 warm-up + zero-dependency fallback**,
+and they need no CZI / Synapse / Wiley account. But the **graded core is Tier-2**: the
+gene-level `GWCD4i.DE_stats.h5ad` effect matrix, where the novel reachability-cone method
+actually runs. It is **required for the headline result** (not "optional") — fetch it
+early via a free CZI login (`vcp login` + `vcp data download`, or `fetch_de_stats.sh`).
+The raw ~22M-cell dataset is **not** needed (hundreds of GB — only the derived matrix).
+Tier 1 stays fully no-auth so there is still a defensible submission if the download
+fails. See the ROADMAP "Two tiers" section for the full rationale.
 
 > Note (`.gitignore`): `data/*.csv` is currently ignored, so the 7 CSVs are present
 > locally but **not tracked** by git. To ship a self-contained repo, force-add them:
@@ -26,10 +29,11 @@ repo and are enough to run every analysis in the "CSV-only" tier of `ROADMAP.md`
 | `cluster_autoimmune_enrichment_results.suppl_table.csv` | 5,236 | Perturbation-cluster × **autoimmune-disease** GWAS-gene enrichment (odds ratio, FDR, intersecting genes) across 17 diseases and 4 gene sets. |
 | `sample_metadata.suppl_table.csv` | 12 | Sample sheet: 4 donors × 3 conditions, donor demographics (age, sex, ethnicity). |
 
-**Not local:** the large `GWCD4i.DE_stats.h5ad` gene×perturbation *effect matrix*
-(and `GWCD4i.pseudobulk_merged.h5ad`). These are required only for the full
-counterfactual reconstruction solver (see `ROADMAP.md` §"Two tiers"). Fetch them
-via Option A below when you're ready to move past the CSV-only tier.
+**Not local (fetch this — it is the graded core):** the large `GWCD4i.DE_stats.h5ad`
+gene×perturbation *effect matrix* (and `GWCD4i.pseudobulk_merged.h5ad`). This is the
+input to the **reachability-cone + reconstruction solver** — the headline method — so
+it is required for the primary result, not a "nice to have" (see `ROADMAP.md`
+§"Two tiers"). Fetch via Option A below early in the week.
 
 ## Option A — CZI Virtual Cells Platform CLI (recommended)
 

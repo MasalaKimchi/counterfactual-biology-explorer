@@ -2,15 +2,24 @@
 
 This is the working roadmap. It supersedes v1: same dataset and honest-scope stance,
 but the method is reframed from "sparse reconstruction scored by cosine" to a
-**reachability-of-cell-states** treatment, a **cross-dataset external-validation**
-layer was added, and — per the no-auth mandate — the **graded core now runs entirely
-on the open, no-login Tier-1 CSVs** (no CZI/Synapse/Wiley account required anywhere on
-the critical path).
+**reachability-of-cell-states** treatment, and a **cross-dataset external-validation**
+layer was added.
 
-> **Repo state: planning / brainstorming only.** All runnable code (`src/`, `app/`,
-> `tests/`, build config) has been removed; this repo now holds the design docs plus
-> the local Tier-1 CSVs. The "Done" items below are **validated findings from the
-> earlier prototype** — preserved as ground truth to rebuild from, not live code.
+> **Tiering correction (was inverted).** Earlier drafts made the no-login Tier-1 CSVs
+> the "graded core" and Tier-2 "optional." That put the *novel* method off the critical
+> path, because Tier 1 is only a 1-D diagonal proxy (see §0d). **Corrected stance: the
+> graded core is the Tier-2 gene-level reachability cone; Tier 1 is the warm-up + a
+> zero-dependency fallback.** Tier 1 stays fully no-auth, so if the (free) CZI download
+> fails there is still a defensible submission — but the target is Tier 2.
+
+> **Repo state: docs on `HEAD`; validated prototype recoverable from git — do NOT
+> rewrite.** The working tree holds the design docs + local Tier-1 CSVs. The runnable
+> pipeline (`src/`, `app/`, `tests/`, build config, ~1,000 LOC) was removed from `HEAD`
+> but is **intact in history at commit `3f8db17`**. Day 0 restores it in one command —
+> `git checkout 3f8db17 -- src app tests environment.yml requirements.txt
+> data/fetch_de_stats.sh` — then `python -m src.data_loader --check` and `pytest -q`.
+> The "Done" items below are validated findings from that prototype: **restore and
+> iterate, do not rebuild from scratch.**
 
 ## Status checklist
 
@@ -26,11 +35,11 @@ the critical path).
 - [x] Folder renamed → `cell-state-reachability`; core smoke tests pass on CPU
 
 **Pending (needs the user or is optional)**
-- [ ] Commit the code-removal + doc updates and push (run locally; sandbox can't push)
-- [ ] Rebuild the pipeline from this plan when implementation resumes
+- [ ] **Day 0, first move:** `git checkout 3f8db17 -- src app tests environment.yml requirements.txt data/fetch_de_stats.sh` → schema gate + `pytest -q` green (restore, don't rebuild)
+- [ ] Commit the doc updates and push (run locally; sandbox can't push)
 - [ ] Decide whether to track the 7 Tier-1 CSVs (currently gitignored despite README)
-- [ ] *(optional)* Tier-2 gene-level matrix for full reachability — CZI login; not on critical path
-- [ ] Reachability cone + spectrum, held-out-gene eval (Tier-2, once/if matrix is fetched)
+- [ ] **Fetch Tier-2 gene-level matrix (`GWCD4i.DE_stats.h5ad`) — now promoted toward the graded core, not "optional."** Free CZI login; ~1.4 GB one layer; CPU-tractable. This is where the novel method (reachability cone) actually lives.
+- [ ] Reachability cone + spectrum, held-out-gene eval (Tier-2)
 - [ ] Streamlit cards wired to live no-auth evidence
 
 ## 0. Feasibility verdict — is this possible on a CPU-only MacBook?
@@ -108,25 +117,40 @@ needs the gene-level matrix in `GWCD4i.DE_stats.h5ad` (fetched via `vcp-cli`).
 
 ## 0d. Two tiers of analysis (no-auth first)
 
-**Tier 1 — CSV-only, NO AUTH, THE GRADED CORE.** Signatures, per-perturbation
+**Tier 1 — CSV-only, NO AUTH, WARM-UP + FALLBACK (not the graded core).** Signatures, per-perturbation
 QC/effect summaries, guide QC, off-target design, disease enrichment, donor metadata —
 **plus directional knockdown nominations** via `tier1_directional_nominations`. This is
-an honest 1-D proxy (not full gene-space reachability): it scores each knockdown by
+an honest 1-D proxy (**not** full gene-space reachability): it scores each knockdown by
 whether the target wants that gene's transcript lower, weighted by on-target effect and
-cross-donor reproducibility. It demonstrates the counterfactual *idea* end-to-end with
-zero login and zero download. Sanity-checked: for `toward_Th1`, the Th2 master
-regulator **GATA3 ranks #3 of 2,135**.
+cross-donor reproducibility. Its role is a **warm-up + zero-dependency fallback**, not
+the headline result.
 
-**Tier 2 — adds `GWCD4i.DE_stats.h5ad` (OPTIONAL).** Upgrades the 1-D proxy to the full
-gene-space **reachability cone + spectrum** and held-out-gene evaluation. Requires a
-(free) CZI login and a non-trivial download, so it is explicitly **off the critical
-path**: a graded, defensible submission ships on Tier 1 alone. Note from a real run —
-`vcp data search --exact` returns only the 12 raw per-donor datasets; the derived
-matrix is not a `--file`-selectable hit, so Tier 2 is "nice to have," not required.
+> **Read the GATA3 result honestly.** For `toward_Th1` the Th2 master regulator **GATA3
+> ranks #3 of 2,135** — but note `toward_Th1` = −(Th2-vs-Th1), so the target "wants down"
+> exactly the genes most up in Th2, and GATA3 is *the* Th2 master TF. A diagonal method
+> that ranks "genes the signature most wants down, with a strong reproducible knockdown"
+> is nearly guaranteed to surface GATA3. So this is a **positive control / sign-convention
+> check that the plumbing is correct — it is not a discovery**, and it is not evidence the
+> method finds anything non-obvious. The proxy also collapses the P×G matrix to its
+> *diagonal*: it uses only each perturbation's effect on its **own** transcript and throws
+> away every *trans* effect — which is the entire point of a genome-scale screen.
+
+**Tier 2 — adds `GWCD4i.DE_stats.h5ad`. THIS IS THE GRADED CORE, not "optional."** The
+novel contribution — the full gene-space **reachability cone + spectrum** and
+held-out-gene evaluation — requires the gene-level effect matrix. Tier 1 cannot
+demonstrate the method's thesis (see the diagonal caveat above), so shipping on Tier 1
+*alone* would submit the near-tautological proxy and leave the actual novelty unbuilt.
+The matrix is a free CZI login and ~1.4 GB for one `float32` layer — CPU-tractable per
+§0. Fetch it early (Day 0/1). **Tier 1 remains the fallback** if the download truly
+fails, but the plan is to reach Tier 2. Note from a real run — `vcp data search --exact`
+returns only the 12 raw per-donor datasets; the derived matrix is not a
+`--file`-selectable hit, so use `data/fetch_de_stats.sh` (restored from `3f8db17`) /
+the dataset card's artifact path rather than the bare `--exact` search.
 
 ## 1. Success criteria (falsifiable, not vibes)
 
-A submission is "done" when:
+A submission is "done" when *(criteria 2–3 are Tier-2 and are the primary validity
+claims — they are the bar, not extras; 1/4/5/6 hold on either tier)*:
 
 1. **Cross-source robustness (Tier 1).** The polarization target is built from the
    **sign-concordant core** of Ota vs Höllbacher, and the concordance is *reported*
@@ -210,9 +234,12 @@ A submission is "done" when:
 
 ## 2. Day-by-day plan (revised)
 
-**Day 0 — De-risk the download + lock the data contract.** Register on CZI VCP,
-install `vcp-cli`, pull `GWCD4i.DE_stats.h5ad`. Run the schema gate. (Front-loaded
-because Tier 1 alone can't demonstrate the method.)
+**Day 0 — Restore the prototype + de-risk the download.** *First:* `git checkout 3f8db17
+-- src app tests environment.yml requirements.txt data/fetch_de_stats.sh`, create the
+env, and get `python -m src.data_loader --check` + `pytest -q` green — this recovers
+~1,000 validated LOC, not a rewrite. *Then:* register on CZI VCP, install `vcp-cli`,
+pull `GWCD4i.DE_stats.h5ad` (the Tier-2 matrix is the graded core — front-loaded because
+Tier 1 alone can't demonstrate the method). Run the schema gate on both.
 
 **Day 1 — Data load + known-biology sanity.** Load 7 CSVs; assert shapes. Build target
 vectors; confirm the sanity gate (`toward_Th1` → GATA3 down, TBX21/IFNG up). Compute
@@ -262,12 +289,29 @@ pathways + citations + limitations banner). Plus the experiment-design queue.
 
 ## 5. Key references
 
-- Zhu et al. *Genome-scale perturb-seq in primary human CD4+ T cells.* bioRxiv 2025.
+- Zhu et al. *Genome-scale perturb-seq in primary human CD4+ T cells maps
+  context-specific regulators of T cell programs and human immune traits.* bioRxiv 2025
+  (doi:10.64898/2025.12.23.696273). *Abstract confirms this screen nominates "regulators
+  of Th1 and Th2 polarization and of age-related T cell phenotypes" — i.e. our axes are
+  the source paper's own results; we claim novelty for method, not regulator lists.*
 - Ahlmann-Eltze, Huber & Anders. *Deep-learning-based gene perturbation effect
   prediction does not yet outperform simple linear baselines.* Nat Methods 22,
   1657–1661 (2025).
 - Lotfollahi et al. scGen (Nat Methods 2019); CPA (Mol Syst Biol 2023);
   Roohani et al. GEARS (Nat Biotechnol 2023).
+
+**Prior art for the "minimal set → target cell state" problem (positioning our novelty
+delta — see README "Related work"):**
+- **Mogrify** — Rackham et al. *A predictive computational framework for direct
+  reprogramming between human cell types.* Nat Genet 48:331–335 (2016). Predicts
+  reprogramming **TF sets** from expression + regulatory-network info; validated 2 new
+  transdifferentiations. *Ours differs: measured CRISPRi LOF effect vectors, not a
+  network heuristic; knockdown-only.*
+- **CellOracle** — Kamimoto et al. *Dissecting cell identity via network inference and
+  in silico gene perturbation.* Nature 614:742–751 (2023). Simulates KO/overexpression
+  via **inferred GRNs** into a "vector map of transitions in cell identity," with a
+  randomized-model null. *Ours differs: measured effect matrix (not inferred GRN) + a
+  convex-cone reachable/unreachable verdict.*
 
 ## 5b. External validation datasets (independent, public, open) — NEW
 
