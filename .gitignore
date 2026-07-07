@@ -1,0 +1,17 @@
+# Data artifacts (large; fetch via data/README.md)
+data/*.h5ad
+data/*.h5mu
+data/*.csv
+!data/README.md
+!data/.gitkeep
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.ipynb_checkpoints/
+.env
+
+# Outputs
+outputs/
+*.log
