@@ -1,6 +1,6 @@
 # Response to Reviewer 2 — dataset limitations
 
-*Companion to the adversarial dataset appraisal, now consolidated into the "Reviewer 2" section of [`CAUSAL.md`](../CAUSAL.md). Each limitation raised
+*Companion to the adversarial dataset appraisal, now consolidated into the "Reviewer 2" section of [`CAUSAL.md`](CAUSAL.md). Each limitation raised
 there is addressed here by one of four remedies — **reframe**, **new analysis**, **state**, or
 **augment** — with the supporting number and a one-line residual-risk verdict. Every number is
 recomputed from the local data; result tables are named inline and shipped in `results/`.*
@@ -32,7 +32,7 @@ are now stated as limitations rather than defended.
 
 Consolidated evidence figure:
 
-![Reviewer 2 trust checks]({{artifact:d5a86da6-010f-4e89-9987-4a1dcd7b0d75}})
+![Reviewer 2 trust checks](figures/reviewer2_trust_checks.png)
 
 *(a) Th2→Th1 verdict is stable whether the target is built from both source studies or either one alone.
 (b) Removing all 808 off-target-flagged generators barely moves the reachable cosine. (c) Only ~76 % of

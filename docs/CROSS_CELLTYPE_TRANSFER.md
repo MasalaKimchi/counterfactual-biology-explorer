@@ -88,15 +88,69 @@ This is a **robustness result with a sharp boundary condition**:
    cell-type-invariance in general, not a direct re-measurement of the Th2→Th1 recipe in a
    second T-cell system (no second genome-scale CD4⁺ T screen is available).
 
+## Independent reproduction, and the packaged generality claim
+
+> **Provenance / scope note.** The cross-cell-type effect matrices and the headline transfer numbers
+> above were **first established** by notebook `07_cross_celltype_transfer` (cached in
+> `analysis_cache/czi_data/transfer_summary.json` and `per_perturbation_transfer.csv`). What this
+> section adds is **independent reproduction and consolidation**, not a new download: the full
+> held-out reachability sweep was re-run from the raw effect vectors and reproduces the cached
+> per-perturbation table to `max|Δ| = 0.0000` on every reach-cosine column, and the result is
+> re-expressed as an explicit *verdict-transfers / recipes-don't* generality statement with a
+> publication figure and a tidy summary table. A genuinely new genome-wide Perturb-seq download was
+> not feasible under that session's compute budget (no GPU, ~0.8 GB free RAM). Treat this as
+> consolidation of an existing in-repo result on a second, independent dataset — not a first
+> observation.
+
+**Operator.** For every one of the 843 perturbations we hold it out as the target `d` and fit the
+reachability cone over the remaining 842 perturbation vectors, both **within** cell type (K562
+target on K562 basis; RPE1 target on RPE1 basis) and **cross-basis** (K562 target on the RPE1 cone,
+and vice versa). All fits are exact NNLS.
+
+### Reproduction result 1 — the reachability verdict is portable across cell types
+
+The per-perturbation reach cosine in K562 and in RPE1 are strongly rank-correlated (**Spearman
+ρ = 0.57, p = 1.8 × 10⁻⁷³, n = 843**): perturbations whose target direction is well inside the
+achievable cone in one cell type tend to be well inside it in the other. Cross-basis reach — fitting
+a K562 target with only RPE1 perturbation vectors, and vice versa — stays far above the
+shuffled-gene null (95th percentile **0.058**): median cross-basis reach cosine **0.50** (K562
+target / RPE1 basis) and **0.73** (RPE1 target / K562 basis). Reduced to a binary
+reachable / not-reachable call, the verdict agrees across bases for **99.3 %** of K562 targets and
+**100 %** of RPE1 targets. The *direction* of an achievable state shift is a portable property of
+the biology.
+
+### Reproduction result 2 — the minimal recipe is basis-specific
+
+The same-target recipe overlap (Jaccard of the greedy minimal knockdown sets in K562 vs RPE1) has
+median **0.11**, only marginally above the shuffled-recipe null (95th percentile **0.053**); just
+**65 %** of perturbations clear that null at all, and cross-basis recipe overlap sits **at** the null
+(0.053). So while the feasibility verdict transfers, the *specific set of perturbations* that
+realizes it does not — it is a property of the available basis in each cell type, not a portable
+prescription.
+
+### Why this is the honest scope statement
+
+"Reachability transfers, recipes don't" is the correct generalization claim for the method. It says a
+practitioner can trust a **feasibility verdict** computed in one cellular context as a guide to
+another, but must **re-derive the recipe** in the target context against its own measured effects.
+This is exactly the division of labor the method is built for: the verdict is the portable scientific
+claim; the recipe is the context-specific engineering answer.
+
 ## Reproducibility
 
-- `build_effect_matrices.py` — builds the aligned effect matrices from the two CZI h5ad files.
-- `czi_data/cross_celltype_effects.npz` — the checkpoint (E_K562, E_RPE1, shared perturbations
-  and genes, per-perturbation cell counts).
+- `scripts/build_effect_matrices.py` — builds the aligned effect matrices from the two CZI h5ad files.
+- `analysis_cache/czi_data/cross_celltype_effects.npz` — the checkpoint (E_K562, E_RPE1, shared
+  perturbations and genes, per-perturbation cell counts). *Gitignored (17 MB); rebuild from the script.*
 - `notebooks/07_cross_celltype_transfer.ipynb` — runs all three tests against the unchanged
   `reachability.py`. Its code cells were re-run as a standalone script (`_nb07_verify.py`,
   extracted verbatim from the notebook) in the `cellreach` environment to confirm the numbers
   in this writeup regenerate; `jupyter nbconvert --execute` itself is unavailable here because
   the sandbox blocks the kernel's TCP-socket bind, so the committed `.ipynb` carries the code
   and markdown but not embedded cell outputs.
-- `czi_data/per_perturbation_transfer.csv` — every metric, per perturbation (843 rows).
+- `analysis_cache/czi_data/per_perturbation_transfer.csv` — every metric, per perturbation (843 rows).
+- `results/generality_second_dataset_summary.csv` — headline metrics of the reproduction above.
+- `results/generality_second_dataset_per_perturbation.csv` — all 843 perturbations, every within- and
+  cross-basis reach cosine, verdict, and recipe-overlap value.
+- `notebooks/figures/fig_generality_second_dataset.png` — 3 panels: (A) reach cosine K562 vs RPE1
+  (verdict transfers, ρ = 0.57); (B) within- and cross-basis reach cosine vs the shuffled-gene null;
+  (C) same-target recipe-overlap distribution vs the shuffled-recipe null (recipes don't transfer).
