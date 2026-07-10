@@ -517,7 +517,7 @@ future corroboration — the sandbox reaches Open Targets but not those hosts.)*
 
 ## 6. Generalizability — does the method transfer, and what is it good for?
 
-*Findings and application map for the convex-cone reachability oracle (absorbing the former `GENERALIZABILITY.md`). The live cross-dataset demo is reproduced end-to-end by `notebooks/03_generalizability_and_impact.ipynb` (K562 CRISPRa); the cross-cell-type transfer by `notebooks/07_cross_celltype_transfer.ipynb` (K562/RPE1). Companion data: `results/dataset_catalog.csv`, `results/tractability_grounding.csv`, `results/norman_table1..5_*.csv`, `results/generalizability_survey.md`, `analysis_cache/czi_data/per_perturbation_transfer.csv`, `analysis_cache/czi_data/CROSS_CELLTYPE_TRANSFER.md`.*
+*Findings and application map for the convex-cone reachability oracle (absorbing the former `GENERALIZABILITY.md`). The live cross-dataset demo is reproduced end-to-end by `notebooks/03_generalizability_and_impact.ipynb` (K562 CRISPRa); the cross-cell-type transfer by `notebooks/07_cross_celltype_transfer.ipynb` (K562/RPE1). Companion data: `results/dataset_catalog.csv`, `results/tractability_grounding.csv`, `results/norman_table1..5_*.csv`, `docs/GENERALIZABILITY_SURVEY.md`, `analysis_cache/czi_data/per_perturbation_transfer.csv`, `docs/CROSS_CELLTYPE_TRANSFER.md`.*
 
 
 ### 6.1 The scope is an input contract, not an assay
@@ -573,7 +573,7 @@ additivity assumption from an article of faith into a reported number with flagg
 
 ### 6.3 Cross-cell-type transfer: is reachability a property of the biology or of one cell type's basis?
 
-*Notebook `07_cross_celltype_transfer.ipynb`; full writeup `analysis_cache/czi_data/CROSS_CELLTYPE_TRANSFER.md`.*
+*Notebook `07_cross_celltype_transfer.ipynb`; full writeup `docs/CROSS_CELLTYPE_TRANSFER.md`.*
 
 The K562 demo above shows the *code* transfers to a new assay. A sharper question is whether the
 **cone geometry** is a property of the target biology or of the specific cell type's measured basis.
@@ -733,7 +733,7 @@ matter how many guides it includes. In every transition the activation-support g
 larger than the knockdown-support set. This is the central design message: a knockdown-only
 screen is, geometrically, the wrong instrument for a large share of these state changes.
 
-![Modality triage across all 12 transitions]({{artifact:art_d8a5ea7a-b82e-4e78-89c5-837a6b14a937}})
+![Modality triage across all 12 transitions](figures/nb04_fig2_modality_triage.png)
 
 ### 2 · Grounding the recipe in real delivery technology
 
@@ -755,7 +755,7 @@ against Open Targets. Two findings shape a screen:
 
 This is the honesty result, and it is the reason the notebook exists in this form.
 
-![Reliability diagram]({{artifact:art_be72897c-a66c-46aa-9185-206be61eb765}})
+![Reliability diagram](figures/nb04_fig3_reliability.png)
 
 Across all 12 transitions the in-sample reachable cosine (mean **0.580**) overstates the
 held-out-gene realized cosine (mean **0.355**) by a mean gap of **0.225** (range 0.18–0.27).
@@ -767,7 +767,7 @@ cosine-units too high.
 Each card therefore reports the **held-out** number as the honest estimate and carries a
 **confidence label**: **2 HIGH** (toward_Th1_Rest, toward_Th2_Rest), **6 MEDIUM**, **4 LOW**.
 
-![Design-card summary]({{artifact:art_922fcad1-b4dc-43a7-8d8c-4e1706c6dfe8}})
+![Design-card summary](figures/nb04_fig1_design_summary.png)
 
 ---
 
@@ -1115,6 +1115,27 @@ reproducible analysis in `notebooks/08_deg_weighted_evaluation.ipynb`.*
 
 ### 8.3 Nine in-silico results closing the sharpest methodological and experimental gaps
 
+> **Reproducibility status of this section — read before citing.** Unlike the rest of this
+> document, most of §8.3 is **not currently reproducible from the repository**. The analyses were
+> run and rendered in a working session, but only §8.3.1 and §8.3.6 left artifacts behind:
+>
+> | subsection | figure in repo | table in repo |
+> |---|---|---|
+> | 8.3.1 non-negativity ablation | no | **yes** — `analysis_cache/nb_out/L4_constraint_ablation.csv` |
+> | 8.3.2 collateral specificity | no | no |
+> | 8.3.3 generator uncertainty | no | no |
+> | 8.3.4 effective rank | no | no |
+> | 8.3.5 group-sparse cone | no | no |
+> | 8.3.6 certificate reproducibility | **yes** | **yes** |
+> | 8.3.7 directional genetics | prose only | no |
+> | 8.3.8 ChEMBL MoA grounding | no | no |
+> | 8.3.9 forward-predictor head-to-head | no | no |
+>
+> The numbers below are reported as originally written. Per this repo's own *nulls before claims*
+> guardrail, **regenerate the missing figures and tables before this section reaches the manuscript
+> or a public README.** The claims are flagged rather than deleted because the analyses appear to
+> have genuinely run — what is missing is the committed output, not the work.
+
 #### 8.3.1–8.3.2 — the first two results (non-negativity ablation, collateral specificity)
 
 The limitations plan lists a constraint ablation (L4) as priority #2 and, separately, the
@@ -1131,7 +1152,8 @@ fits — the non-negative cone (NNLS), unconstrained least-squares (OLS), and a
 nearest-single-knockdown baseline — and added one diagnostic: the OLS solution **clipped to
 the non-negative orthant**, i.e. the physically realisable part of what OLS prescribes.
 
-![Non-negativity ablation across all 12 atlas cells. (a) Held-out-gene cosine to target for four fits. Unconstrained least-squares (purple squares) edges out the cone (green) by at most 0.04 — but that edge is bought entirely with pseudo-activations: projecting the OLS solution onto the physically realisable non-negative orthant (purple triangles) collapses it to ~0.13 and below zero in 4 of 12 cells. The nearest single knockdown (grey) is far worse, so the multi-gene combination does real work. (b) In-sample residual: the constrained fit always leaves a large residual (mean 0.75) — that residual is the infeasibility certificate — while the underdetermined OLS fits every target to machine zero and can therefore never declare a target unreachable.]({{artifact:9319d411-bde8-45ce-bd9d-7b1e02caf2b5}})
+<!-- FIGURE NOT IN REPO: this panel was rendered in a chat session and never written to notebooks/figures/. Regenerate before publishing. -->
+> **Figure (not in repo).** Non-negativity ablation across all 12 atlas cells. (a) Held-out-gene cosine to target for four fits. Unconstrained least-squares (purple squares) edges out the cone (green) by at most 0.04 — but that edge is bought entirely with pseudo-activations: projecting the OLS solution onto the physically realisable non-negative orthant (purple triangles) collapses it to ~0.13 and below zero in 4 of 12 cells. The nearest single knockdown (grey) is far worse, so the multi-gene combination does real work. (b) In-sample residual: the constrained fit always leaves a large residual (mean 0.75) — that residual is the infeasibility certificate — while the underdetermined OLS fits every target to machine zero and can therefore never declare a target unreachable.
 
 **What the ablation shows, in numbers:**
 
@@ -1155,7 +1177,9 @@ the non-negative orthant**, i.e. the physically realisable part of what OLS pres
 The one-line version for the paper: *the sign constraint costs at most 0.04 of held-out
 cosine and buys the entire ability to declare a target unreachable; the unconstrained fit's
 apparent advantage is 50%-composed of activations that cannot be built.* Table:
-[`ablation_nonnegativity.csv`]({{artifact:14743c9d-3d59-4439-a078-aeebc221027f}}).
+[`analysis_cache/nb_out/L4_constraint_ablation.csv`](../analysis_cache/nb_out/L4_constraint_ablation.csv)
+(12 atlas cells; `cosine_cost_of_constraint` max 0.0436 — the "at most 0.04" above). The
+clipped-OLS column plotted in the figure is not in that table and must be regenerated.
 
 #### 8.3.2 Recipes carry a small but systematic off-target movement — a specificity readout the verdict alone lacks (new)
 
@@ -1168,7 +1192,8 @@ and polarization is orthogonal to aging (cosine 0.012). So *cross-pair* movement
 off-target readout: a polarization recipe should not move the aging axis at all. We projected
 every atlas recipe's achieved transcriptome shift onto all four axes.
 
-![Collateral specificity of the atlas recipes. (a) Achieved movement (cosine of the recipe's realised shift) of each recipe (rows) along each axis (columns), averaged over the three culture conditions. The boxed diagonal is on-target movement; the off-diagonal cross-pair cells (polarization recipe → aging axis, and vice-versa) should be zero if recipes were specific. They are not: a toward-Th1 recipe carries a systematic +0.09 move along the *older* axis, and a toward-Th2 recipe a +0.07 move toward *younger*. (b) Collateral ratio (|dominant off-target| / |on-target|) per recipe. Polarization recipes leak onto the aging axis at a mean 33% of their on-target magnitude; aging recipes leak onto polarization at 19%.]({{artifact:47f725a0-0551-4ca7-9a28-042509523d12}})
+<!-- FIGURE NOT IN REPO: this panel was rendered in a chat session and never written to notebooks/figures/. Regenerate before publishing. -->
+> **Figure (not in repo).** Collateral specificity of the atlas recipes. (a) Achieved movement (cosine of the recipe's realised shift) of each recipe (rows) along each axis (columns), averaged over the three culture conditions. The boxed diagonal is on-target movement; the off-diagonal cross-pair cells (polarization recipe → aging axis, and vice-versa) should be zero if recipes were specific. They are not: a toward-Th1 recipe carries a systematic +0.09 move along the *older* axis, and a toward-Th2 recipe a +0.07 move toward *younger*. (b) Collateral ratio (|dominant off-target| / |on-target|) per recipe. Polarization recipes leak onto the aging axis at a mean 33% of their on-target magnitude; aging recipes leak onto polarization at 19%.
 
 **What the specificity test shows:**
 
@@ -1189,8 +1214,8 @@ every atlas recipe's achieved transcriptome shift onto all four axes.
 
 This costs nothing new to compute — it reuses the existing recipes and effect matrices — and
 it converts the oracle from a single-axis verdict into a **multi-axis specificity profile**.
-Tables: [`collateral_movement.csv`]({{artifact:1a0eea70-4d2c-498b-a776-ef0444d921f3}}),
-[`collateral_specificity_summary.csv`]({{artifact:ac417152-195e-490f-b913-e450cecbf795}}).
+Tables: `collateral_movement.csv` *(table not in repo)*,
+`collateral_specificity_summary.csv` *(table not in repo)*.
 
 #### 8.3.3 The verdict is robust to generator measurement noise — the biggest *unlisted* gap, now closed (new)
 
@@ -1207,7 +1232,8 @@ the z-scale. The dictionary bootstrap is therefore the parameter-free `E_boot = 
 per element. We drew **B = 200** noisy dictionaries per cell (FISTA-accelerated NNLS, 12
 cells) and re-ran the full reachability verdict on each.
 
-![Generator-uncertainty propagation across all 12 atlas cells. Each cell's reachable fraction (point estimate and bootstrap 95% CI), held-out cosine, and verdict-flip rates under B=200 noisy dictionary draws with E_boot = E + N(0,1) on the z-scale. The reachable-fraction CIs are narrow and sit well below the 0.5 reachable/infeasible threshold for every cell; no draw crosses it (flip rate 0.0 everywhere).]({{artifact:0a77895a-83f6-4602-8962-3a96d3dbb9af}})
+<!-- FIGURE NOT IN REPO: this panel was rendered in a chat session and never written to notebooks/figures/. Regenerate before publishing. -->
+> **Figure (not in repo).** Generator-uncertainty propagation across all 12 atlas cells. Each cell's reachable fraction (point estimate and bootstrap 95% CI), held-out cosine, and verdict-flip rates under B=200 noisy dictionary draws with E_boot = E + N(0,1) on the z-scale. The reachable-fraction CIs are narrow and sit well below the 0.5 reachable/infeasible threshold for every cell; no draw crosses it (flip rate 0.0 everywhere).
 
 **What the propagation shows:**
 
@@ -1228,7 +1254,7 @@ cells) and re-ran the full reachability verdict on each.
   the sub-threshold — but never across the reachable/infeasible line. The paper should report
   the coarse verdict as robust and flag the aging-axis fine grade as noise-sensitive.
 
-Table: [`generator_uncertainty_verdicts.csv`]({{artifact:9b37cb80-e41e-49c1-b470-f6263ca396ca}}).
+Table: `generator_uncertainty_verdicts.csv` *(table not in repo)*.
 This is the single most important remaining robustness check in the appraisal, and it now has
 a distributional answer rather than a point estimate + null-z.
 
@@ -1238,7 +1264,8 @@ With ~6,900 correlated generators acting in a ~6,200-gene signature subspace, th
 nearly degenerate — and that is *why* the greedy top genes (LAT2, RARA, ATF7IP2) are not the
 canonical master TFs (`§3.2`). We quantified the geometry rather than footnoting it.
 
-![Singular spectrum of the effect dictionary on the Th1/Th2 signature subspace, for all three culture conditions. Left: the spectrum decays fast — a few dominant axes carry most of the L2 energy (stable numerical rank ≈13). Right: cumulative variance shows a long low-variance tail, so the participation-ratio effective rank is ≈3,435. The dictionary is anisotropic (energy concentrated in a few directions), not globally collinear.]({{artifact:7d886da7-d22b-443c-8807-c07028aed15c}})
+<!-- FIGURE NOT IN REPO: this panel was rendered in a chat session and never written to notebooks/figures/. Regenerate before publishing. -->
+> **Figure (not in repo).** Singular spectrum of the effect dictionary on the Th1/Th2 signature subspace, for all three culture conditions. Left: the spectrum decays fast — a few dominant axes carry most of the L2 energy (stable numerical rank ≈13). Right: cumulative variance shows a long low-variance tail, so the participation-ratio effective rank is ≈3,435. The dictionary is anisotropic (energy concentrated in a few directions), not globally collinear.
 
 **What the spectrum shows:**
 
@@ -1254,7 +1281,7 @@ canonical master TFs (`§3.2`). We quantified the geometry rather than footnotin
   anisotropy (mean pairwise generator cosine is only 0.006, so the dictionary is anisotropic,
   not uniformly collinear). What looked like a wart is a measured property of the geometry.
 
-Table: [`effective_rank_report.csv`]({{artifact:2fe4cd86-7525-4fa5-b39c-32a61e4ec3f2}}).
+Table: `effective_rank_report.csv` *(table not in repo)*.
 
 #### 8.3.5 One group-sparse cone unifies the reachable fraction and the recipe (new)
 
@@ -1265,7 +1292,8 @@ fit yields both the fraction and a group-sparse recipe. Because a group atom is 
 its members, a non-negative atom weight maps to non-negative weights on the original
 generators, so the group-sparse solution is an *exactly valid* point in the original cone.
 
-![Group-sparse cone versus the dense cone, all 12 atlas cells. Left: the one group-sparse fit reproduces the dense reachable cosine, clustering tightly along the y = x line (retention ≥95% in every cell). Right: the Th1/Rest recipe with the greedy picks and the canonical Th2 master TF GATA3 resolved into distinct explicit groups — GATA3 lands in its own group at rank 11 of 59, so the collinearity structure is made visible rather than worked around.]({{artifact:563c0968-d1f2-43d9-9c98-7799a14ce395}})
+<!-- FIGURE NOT IN REPO: this panel was rendered in a chat session and never written to notebooks/figures/. Regenerate before publishing. -->
+> **Figure (not in repo).** Group-sparse cone versus the dense cone, all 12 atlas cells. Left: the one group-sparse fit reproduces the dense reachable cosine, clustering tightly along the y = x line (retention ≥95% in every cell). Right: the Th1/Rest recipe with the greedy picks and the canonical Th2 master TF GATA3 resolved into distinct explicit groups — GATA3 lands in its own group at rank 11 of 59, so the collinearity structure is made visible rather than worked around.
 
 **What the unified object shows:**
 
@@ -1278,7 +1306,7 @@ generators, so the group-sparse solution is an *exactly valid* point in the orig
   recipe genes reappear among the active groups. The grouping *names* the redundancy the dense
   cone hides.
 
-Table: [`group_sparse_atlas.csv`]({{artifact:0d0693ec-7f36-49c5-b557-ce12a813e9f6}}).
+Table: `group_sparse_atlas.csv` *(table not in repo)*.
 
 #### 8.3.6 The activation certificate is reproducible and partially corroborated — with an honest caveat about which genes it names (resolves L1's in-silico half)
 
@@ -1288,7 +1316,7 @@ the convex program is optimal; it says nothing about biological correctness. The
 screen is CRISPRi (no activation arm), so a within-screen modality hold-out is impossible. We
 did the two tests that *are* possible without a wet lab.
 
-![Activation-certificate validation. Left: the certificate gene ranking is stable across a random gene-axis split — top genes hug the y = x line, and cross-half Spearman rho is 0.65 (half-vs-full 0.84), z ≈ 35 against the shuffle null of ~0. Right: literature and Open-Targets cross-reference of the top genes — the canonical Th1 master TFs (IFNG, TBX21, STAT4, STAT1, green stars) are in the certificate but rank deep, while the top-ranked genes are state-markers and negative regulators.]({{artifact:a9f7ac89-c55c-42c4-849c-8654b57994ca}})
+![Activation-certificate validation. Left: the certificate gene ranking is stable across a random gene-axis split — top genes hug the y = x line, and cross-half Spearman rho is 0.65 (half-vs-full 0.84), z ≈ 35 against the shuffle null of ~0. Right: literature and Open-Targets cross-reference of the top genes — the canonical Th1 master TFs (IFNG, TBX21, STAT4, STAT1, green stars) are in the certificate but rank deep, while the top-ranked genes are state-markers and negative regulators.](figures/fig_certificate_split_stability.png)
 
 **(A) The ranking is reproducible, not an artifact of which genes you fit on.** Rebuilding the
 certificate from a random half of the signature genes and scoring on the other half, the top
@@ -1308,10 +1336,10 @@ genes with the largest *unmet upward demand*, which is not the same as the causa
 activators — a caveat the paper must state plainly. The honest ceiling without a wet lab is
 **"interpretable and reproducible, partially corroborated"** — not "validated."
 
-![Certificate cross-reference detail: per-gene certificate score with literature direction-of-effect classification (left) and independent Open-Targets genetic corroboration against the top Th1-driven autoimmune disease (right).]({{artifact:a094179e-53bb-4cd7-9fa3-907bd5953788}})
+![Certificate cross-reference detail: per-gene certificate score with literature direction-of-effect classification (left) and independent Open-Targets genetic corroboration against the top Th1-driven autoimmune disease (right).](figures/fig_certificate_crossref.png)
 
-Tables: [`heldout_modality_certificate.csv`]({{artifact:8baa1960-0b60-4bc1-8b76-7f9f2e2becaa}}),
-[`certificate_literature_crossref.csv`]({{artifact:5faeb0a6-5e59-44ff-b3b3-f13a81faad7a}}).
+Tables: [`heldout_modality_certificate.csv`](../results/heldout_modality_certificate.csv),
+[`certificate_literature_crossref.csv`](../results/certificate_literature_crossref.csv).
 
 #### 8.3.7 Directional genetics — association *count* hides conflicting *direction* (new)
 
@@ -1340,7 +1368,8 @@ no LINCS/CMap L1000 connector available, so ChEMBL mechanism-of-action is the fe
 for each green-light nomination with a clinical-grade compound, does an approved or clinical
 drug act in the **LOF direction** (inhibitor / antagonist / blocker) the knockdown implies?
 
-![Genetics and pharmacology grounding of the green-light nominations. Left: directional-genetics concordance — the IRF1 discordant (wrong-direction) segment is flagged in red. Right: ChEMBL mechanism-of-action — LOF-consistent drug records per target, with the two wrong-direction targets (IFNGR1, RARA; only agonist drugs exist) in red.]({{artifact:d76ad46f-8ae5-4a89-b5b5-6bb19edc15f8}})
+<!-- FIGURE NOT IN REPO: this panel was rendered in a chat session and never written to notebooks/figures/. Regenerate before publishing. -->
+> **Figure (not in repo).** Genetics and pharmacology grounding of the green-light nominations. Left: directional-genetics concordance — the IRF1 discordant (wrong-direction) segment is flagged in red. Right: ChEMBL mechanism-of-action — LOF-consistent drug records per target, with the two wrong-direction targets (IFNGR1, RARA; only agonist drugs exist) in red.
 
 **What the MoA grounding shows** (10 genes): **4 APPROVED_LOF_MATCH** — JAK2 (ruxolitinib;
 25/25 mechanisms are inhibitors), CD3D (muromonab-CD3), KEAP1 (dimethyl fumarate), VKORC1
@@ -1352,8 +1381,8 @@ reproduce the required knockdown; **CD5 AMBIGUOUS** (only a binding/cross-linkin
 *mechanism* level for six nominations and **contradicted for two** — the pharmacology, not the
 druggability tier, is what tells you whether "knockdown works" can become "drug works."
 
-Tables: [`directional_genetics_crosscheck.csv`]({{artifact:856c3ea9-4489-4806-905e-ed9fbc61dde7}}),
-[`chembl_moa_grounding.csv`]({{artifact:3bad3dc6-9e59-421a-a07c-0b24f8da2503}}).
+Tables: `directional_genetics_crosscheck.csv` *(table not in repo)*,
+`chembl_moa_grounding.csv` *(table not in repo)*.
 
 #### 8.3.9 Forward-predictor head-to-head — the only thing that beats the cone cheats physics (resolves L3 / pharma item 8)
 
@@ -1363,7 +1392,8 @@ the k = 7 actionable recipe) against an unconstrained ridge **forward predictor*
 GEARS/CPA-class task, done linearly — no GPU is configured, so scGPT/GEARS-class models are
 remote-dependent and out of scope here) and a plain **DE-ranking** baseline.
 
-![Forward-predictor head-to-head on the reachable task. Left: held-out-gene cosine for four methods across all 12 atlas cells. The unconstrained forward ridge (grey) wins on raw prediction, but the physically-realizable methods are the cone family (green); among realizable methods the cone leads and its k=7 recipe beats DE ranking in 11/12 cells. Right: the forward model's entire edge over the cone rests on ~50% negative weight — unrealizable "anti-knockdowns."]({{artifact:f22d4cac-7bba-412c-ac3e-4f6c060e9657}})
+<!-- FIGURE NOT IN REPO: this panel was rendered in a chat session and never written to notebooks/figures/. Regenerate before publishing. -->
+> **Figure (not in repo).** Forward-predictor head-to-head on the reachable task. Left: held-out-gene cosine for four methods across all 12 atlas cells. The unconstrained forward ridge (grey) wins on raw prediction, but the physically-realizable methods are the cone family (green); among realizable methods the cone leads and its k=7 recipe beats DE ranking in 11/12 cells. Right: the forward model's entire edge over the cone rests on ~50% negative weight — unrealizable "anti-knockdowns."
 
 **What the head-to-head shows:**
 
@@ -1377,7 +1407,7 @@ remote-dependent and out of scope here) and a plain **DE-ranking** baseline.
   feasibility verdict + a buildable recipe, not a prediction score — and on prediction, nothing
   that respects the non-negativity physics does better.
 
-Table: [`forward_predictor_headtohead.csv`]({{artifact:1a3d84e4-89ca-446c-b64b-8c39d8ef800d}}).
+Table: `forward_predictor_headtohead.csv` *(table not in repo)*.
 
 ---
 
@@ -1539,8 +1569,8 @@ three per-condition effect matrices + four transition targets) and
 - `notebooks/04_experimental_design_toolkit.ipynb` — `design_experiment()`: verdict → calibrated recipe → modality triage (see §7)
 - `notebooks/05_target_id_showcase.ipynb` — "From screen to shortlist" pharma target-ID walkthrough
 - `notebooks/08_deg_weighted_evaluation.ipynb` — DEG-weighted evaluation & metric calibration (Needles-in-the-Haystack robustness test; §8.2.5)
-- `notebooks/06_reinforcement_analyses.ipynb` — L1/L2/L4/L5 reinforcement battery (see `analysis_cache/nb_out/REINFORCEMENT_RESULTS.md`)
-- `notebooks/07_cross_celltype_transfer.ipynb` — K562/RPE1 cross-cell-type transfer (see `analysis_cache/czi_data/CROSS_CELLTYPE_TRANSFER.md`)
+- `notebooks/06_reinforcement_analyses.ipynb` — L1/L2/L4/L5 reinforcement battery (see `docs/REINFORCEMENT_RESULTS.md`)
+- `notebooks/07_cross_celltype_transfer.ipynb` — K562/RPE1 cross-cell-type transfer (see `docs/CROSS_CELLTYPE_TRANSFER.md`)
 
 **Headline figures** (`notebooks/figures/`)
 - `fig1_reachability_spectrum.png` — reachable cosine vs k with null band

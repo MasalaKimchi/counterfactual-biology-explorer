@@ -25,7 +25,8 @@ The word doing the work is **verdict**. Everything else in the field returns a *
 return a **decision with a proof attached**: reachable, or here is the direction no
 knockdown can produce.
 
-![Reachability as convex geometry: a feasibility verdict, not a ranking]({{artifact:cc2d1434-0603-4ae7-9872-32d852e484f8}})
+<!-- FIGURE NOT IN REPO: this panel was rendered in a chat session and never written to notebooks/figures/. Regenerate before publishing. -->
+> **Figure (not in repo).** Reachability as convex geometry: a feasibility verdict, not a ranking
 
 *Left: the target shift `d` lies inside the cone spanned by the (non-negative) knockdown
 effect vectors — reachable, and the mixing weights are the minimal recipe. Right: `d`
@@ -166,7 +167,7 @@ represent the modality requirement geometrically in the first place. (The full t
 That sentence, as a figure — screen → convex cone → verdict + activation certificate →
 cross-dataset transfer:
 
-![Figure 1 — the reachability oracle end to end. (A) A genome-scale CRISPRi Perturb-seq in primary human CD4+ T cells gives a measured effect vector per knockdown (no inferred network). (B) Reachability = membership in the convex cone of non-negative combinations of those measured vectors; the Th2→Th1 target splits into an in-cone reachable component (teal) and an out-of-cone residual (amber), with "outside" certified by a separating hyperplane (Farkas/KKT). (C) The Th2→Th1 verdict: partly reachable (held-out cosine 0.448, null z ≈ 24, KKT residual 1.1×10⁻¹¹), signed decomposition LOF 39% / GOF 25% / neither 35%, and an activation certificate naming falsifiable CRISPRa hypotheses. (D) The operator transfers unchanged to the Norman 2019 K562 CRISPRa screen (held-out CEBPA cosine 0.878). This is the measured-effect, certificate-carrying reachability decision the sentence above claims as novel.]({{artifact:724c5ece-a685-440a-8850-b3617cb1adcb}})
+![Figure 1 — the reachability oracle end to end. (A) A genome-scale CRISPRi Perturb-seq in primary human CD4+ T cells gives a measured effect vector per knockdown (no inferred network). (B) Reachability = membership in the convex cone of non-negative combinations of those measured vectors; the Th2→Th1 target splits into an in-cone reachable component (teal) and an out-of-cone residual (amber), with "outside" certified by a separating hyperplane (Farkas/KKT). (C) The Th2→Th1 verdict: partly reachable (held-out cosine 0.448, null z ≈ 24, KKT residual 1.1×10⁻¹¹), signed decomposition LOF 39% / GOF 25% / neither 35%, and an activation certificate naming falsifiable CRISPRa hypotheses. (D) The operator transfers unchanged to the Norman 2019 K562 CRISPRa screen (held-out CEBPA cosine 0.878). This is the measured-effect, certificate-carrying reachability decision the sentence above claims as novel.](figures/fig_central_illustration.png)
 
 ### 3.5 Positioning vs prior work — the full survey
 
@@ -178,7 +179,7 @@ from it is the landscape map: it shows that the two capabilities our method comb
 *grounded in measured effects* and *answers the feasibility question with a certificate* — are
 **disjoint across the entire prior literature.**
 
-![Where a measured-effect reachability oracle sits in the cell-fate-control landscape. Perturbation-ML methods (amber) use measured data but only predict responses; network-control methods (blue) reach toward feasibility but run on inferred or hand-built models; GRN-inference methods (green) sit lower-left. The measured-and-certified corner (top-right) is empty before this work.]({{artifact:891d8a45-8d5c-44fe-91e3-abab7ff9e434}})
+![Where a measured-effect reachability oracle sits in the cell-fate-control landscape. Perturbation-ML methods (amber) use measured data but only predict responses; network-control methods (blue) reach toward feasibility but run on inferred or hand-built models; GRN-inference methods (green) sit lower-left. The measured-and-certified corner (top-right) is empty before this work.](figures/fig_landscape_positioning.png)
 
 The counts that back the claim, over the **91 prior methods** (2011–2026, ours excluded): **14**
 operate on measured effects, but all 14 only predict or rank; **0** return a feasibility verdict on
@@ -394,7 +395,7 @@ The use cases below reduce to one decision diagram and one funnel: *what the ora
 team to do* (GO / STOP / REDIRECT, then a modality triage), and *where each value lever acts*
 on the attrition funnel.
 
-![How the reachability oracle is useful to a drug-development team. (A) The decision it makes — a desired cell-state change is routed to GO (reachable → minimal ranked knockdown set → arrayed screen), STOP (provably outside the cone → don't spend a CRISPRi arm), or REDIRECT (activation-required → switch to CRISPRa; the certificate names the genes to test). The GO branch feeds a modality triage over 102 real nominations (44% hard-to-drug; 10 with a clinical-grade drug): green-light (JAK2, ICOS, MAPK14, CD3D), tractable-but-untried (IL7R, ZAP70, TET2), and required-but-undruggable (IRF1, 17 immune-disease genetic associations, no conventional handle). (B) Four value levers mapped onto the drug-development attrition funnel — measured-not-inferred effects (attacks 11–25% preclinical reproducibility), disease-genetics cross-reference (2.6× approval odds), the provable "unreachable" STOP (redirects before the expensive phase; ~half of Phase II/III failures are efficacy), and the minimal ranked recipe (allocates scarce screen slots). ≈10% of programmes reach approval; Phase II is the lowest transition at 30.7%. Nominations are wet-lab hypotheses, not validated targets.]({{artifact:3a67feb4-18d0-4fbd-b88d-69317752dfdd}})
+![How the reachability oracle is useful to a drug-development team. (A) The decision it makes — a desired cell-state change is routed to GO (reachable → minimal ranked knockdown set → arrayed screen), STOP (provably outside the cone → don't spend a CRISPRi arm), or REDIRECT (activation-required → switch to CRISPRa; the certificate names the genes to test). The GO branch feeds a modality triage over 102 real nominations (44% hard-to-drug; 10 with a clinical-grade drug): green-light (JAK2, ICOS, MAPK14, CD3D), tractable-but-untried (IL7R, ZAP70, TET2), and required-but-undruggable (IRF1, 17 immune-disease genetic associations, no conventional handle). (B) Four value levers mapped onto the drug-development attrition funnel — measured-not-inferred effects (attacks 11–25% preclinical reproducibility), disease-genetics cross-reference (2.6× approval odds), the provable "unreachable" STOP (redirects before the expensive phase; ~half of Phase II/III failures are efficacy), and the minimal ranked recipe (allocates scarce screen slots). ≈10% of programmes reach approval; Phase II is the lowest transition at 30.7%. Nominations are wet-lab hypotheses, not validated targets.](figures/fig_impact_usecase.png)
 
 **Target triage for T-cell engineering & cell therapy (the nearest application).**
 The featured dataset is primary human CD4+ T cells, and **T-cell state engineering is a

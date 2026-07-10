@@ -191,7 +191,8 @@ their realized contribution will fall short of their assigned weight (Fig. c). T
 compliance analogue of the existing `additivity_risk` saturation score: it does not change
 *whether* the target is reachable, it flags *how faithfully the recipe will be delivered*.
 
-![Causal-inference / compliance analysis of the reachability oracle]({{artifact:art_88317910-40a7-4be0-8dd5-b3fa40028923}})
+<!-- FIGURE NOT IN REPO: this panel was rendered in a chat session and never written to notebooks/figures/. Regenerate before publishing. -->
+> **Figure (not in repo).** Causal-inference / compliance analysis of the reachability oracle
 
 *Figure. (a) The IV/compliance DAG: guide assignment Z (randomized) → realized on-target
 knockdown T (imperfect compliance, first stage π) → transcriptome Y; the published effect is
@@ -693,7 +694,7 @@ validated*.)
 | 6 | **Effects are consistent across data sources** | **Moderate** | 68.5% sign-concordant across 11,616 shared genes; Spearman ρ=0.562 | 31.5% sign-discordance is not negligible; the discordant tail is uncharacterized |
 | 7 | **The metric isn't gamed by signal dilution** — the all-gene reachability cosine isn't inflated by the many unchanged background genes | **Solid** | DEG-weighted recompute (Mejia et al., ICML 2026; §6.5, nb08): the Th2→Th1 verdict *strengthens* under `w=|d|` weighting (cosine 0.627→0.803, held-out z 28.3→14.1, still ≫ z=3) across all three conditions and six Norman held-out doubles; interpolated-duplicate positive control confirms the metric rewards known-reachable targets (ceiling ≈0.97–0.99); unweighted default reproduces every published number bit-for-bit | Dynamic-range calibration computed on the headline Rest condition only (Monte-Carlo cost); Stim conditions carry the cheaper cosine + held-out-z recompute |
 
-Two reinforcement analyses (`analysis_cache/nb_out/REINFORCEMENT_RESULTS.md`) also close manuscript-level
+Two reinforcement analyses (`docs/REINFORCEMENT_RESULTS.md`) also close manuscript-level
 defenses not in the six-row ledger above: **L4** — dropping the non-negativity constraint
 buys only **+0.018** held-out cosine, and buys it with ~3,537 biologically-unrealizable
 negative weights; the cone recovers a mean **95%** of the unconstrained cosine using physical
@@ -713,7 +714,7 @@ the in-sample cone cosine to 1e-4, so the headline 0.448 is **71% of the achieva
 - **Generalization has widened.** The method now runs unchanged on **three** human cell types
   (CD4⁺ T, K562, RPE1) plus the Norman K562 CRISPRa demo; effect *direction* transfers while
   the specific *recipe* does not — a robustness result with a sharp, honestly-stated boundary
-  (`analysis_cache/czi_data/CROSS_CELLTYPE_TRANSFER.md`).
+  (`docs/CROSS_CELLTYPE_TRANSFER.md`).
 - **One gap remains the priority.** The claim a reader most wants — *"it finds the right
   genes"* — is still **not independently confirmed**: the positive control is honestly labeled
   post-hoc, and the activation certificate, though now backed by a synthetic-verified runnable
@@ -795,7 +796,7 @@ narrative that *shows* the method, not just describes it.
 
 *The validation ledger is grounded in a direct read of `RESULTS.md` (§3 held-out validation,
 §5 signed decomposition, §6 post-hackathon advances) plus the two reinforcement writeups
-`analysis_cache/nb_out/REINFORCEMENT_RESULTS.md` (L1/L2/L4/L5) and `analysis_cache/czi_data/CROSS_CELLTYPE_TRANSFER.md`
+`docs/REINFORCEMENT_RESULTS.md` (L1/L2/L4/L5) and `docs/CROSS_CELLTYPE_TRANSFER.md`
 (K562/RPE1 transfer). Every number above is quoted from the repo's own results — no number is
 introduced here that a linked CSV or notebook does not reproduce.*
 
