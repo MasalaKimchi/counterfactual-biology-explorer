@@ -65,17 +65,16 @@ key columns `target_contrast_gene_name`, `culture_condition`, `ontarget_effect_s
 `ontarget_significant`, `offtarget_flag`, `crossdonor_correlation_mean/min`,
 `crossguide_correlation`. The aging join uses `gene_name`; polarization uses `variable`.
 
-> **Resolved (figure audit, 2026-07).** The canonical figure quantity is the *signed*
-> split 39/25/35, verified against `results/atlas_reachability.csv` (toward_Th1/Rest:
-> lof=0.393, gof=0.253, neither=0.354) and `manuscript_facts.json` `decomposition_signed`.
-> `docs/figures/fig2_decomposition_certificate.png` previously showed 39/31/30 (the
-> one-sided heuristic triple, mislabelled as the signed split) and has been regenerated
-> to 39/25/35, matching `fig_central_illustration.png`. The one-sided decomposition
-> (39% / 31% / 30%) is a *distinct, legitimate* quantity — kept in `manuscript_facts.json`
-> `decomposition_one_sided` and reconciled in the Technical Dossier (Part 1 — Results) §5.2 (the 0.31 is a
-> heuristic upper bound; the signed 0.25 GOF is what a non-negative activation cone
-> actually reaches). Do not "fix" the one-sided 0.31/0.30 numbers in the Technical Dossier (Part 1 — Results),
-> the Technical Dossier (Part 4 — Trust & Causal Inference), or the Technical Dossier (Appendix E — Response to Reviewer 2).
+> **Two decomposition triples, both canonical — do not conflate them.** The *signed*
+> split is **39 / 25 / 35** (LOF / GOF / neither), verified against
+> `results/atlas_reachability.csv` (toward_Th1/Rest: lof=0.393, gof=0.253, neither=0.354)
+> and `manuscript_facts.json` `decomposition_signed`; this is the figure quantity, shown in
+> `docs/figures/fig2_decomposition_certificate.png` and `fig_central_illustration.png`. The
+> *one-sided* split **39 / 31 / 30** is a distinct, legitimate quantity (`manuscript_facts.json`
+> `decomposition_one_sided`): the 0.31 is a heuristic upper bound, whereas the signed 0.25 GOF is
+> what a non-negative activation cone actually reaches. The Technical Dossier reconciles both
+> (Part 1 — Results, §5.2). Do **not** "fix" the one-sided 0.31/0.30 numbers where they appear
+> in Part 1, Part 4 (Trust & Causal Inference), or Appendix E (Response to Reviewer 2).
 
 ---
 

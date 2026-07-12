@@ -1,4 +1,4 @@
-\begin{thebibliography}{66}
+\begin{thebibliography}{69}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -153,6 +153,11 @@ Klein, D., Palla, G., Lange, M., Klein, M., Piran, Z., Gander, M., Meng-Papaxant
 \newblock \emph{Nature}, 638\penalty0 (8052):\penalty0 1065--1075, 2025.
 \newblock \doi{10.1038/s41586-024-08453-2}.
 
+\bibitem[Kuhn \& Tucker(1951)Kuhn and Tucker]{KuhnTucker1951}
+Kuhn, H.~W. and Tucker, A.~W.
+\newblock {Nonlinear programming}.
+\newblock In Neyman, J. (ed.), \emph{Proceedings of the Second Berkeley Symposium on Mathematical Statistics and Probability}, pp.\  481--492. University of California Press, 1951.
+
 \bibitem[Lange et~al.(2022)Lange, Bergen, Klein, Setty, Reuter, Bakhti, Lickert, Ansari, Gote-Schniering, Schiller, Pe'er, and Theis]{Lange2022}
 Lange, M., Bergen, V., Klein, M., Setty, M., Reuter, B., Bakhti, M., Lickert, H., Ansari, M., Gote-Schniering, J., Schiller, H.~B., Pe'er, D., and Theis, F.~J.
 \newblock {CellRank for directed single-cell fate mapping}.
@@ -203,11 +208,12 @@ Marazzi, L., Shah, M., Balakrishnan, S., Patil, A., and Vera-Licona, P.
 \newblock \emph{npj Systems Biology and Applications}, 8\penalty0 (1):\penalty0 21--21, 2022.
 \newblock \doi{10.1038/s41540-022-00231-y}.
 
-\bibitem[Mejia et~al.(2026)Mejia, Miller, Leblanc, Wang, Swain, and de~Lima~Camillo]{Mejia2026}
+\bibitem[Mejia et~al.(2025)Mejia, Miller, Leblanc, Wang, Swain, and de~Lima~Camillo]{Mejia2025}
 Mejia, G.~M., Miller, H.~E., Leblanc, F. J.~A., Wang, B., Swain, B., and de~Lima~Camillo, L.~P.
-\newblock {Needles in the Haystack: Addressing Signal Dilution Improves scRNA-seq Perturbation Response Modeling and Evaluation}.
-\newblock In \emph{Proceedings of the 43rd International Conference on Machine Learning (ICML)}, 2026.
-\newblock ICML 2026 poster (OpenReview XsrXLPxBJw). Expanded preprint: Miller et al., bioRxiv 2025.10.20.683304, doi:10.1101/2025.10.20.683304, ``Deep Learning-Based Genetic Perturbation Models Do Outperform Uninformative Baselines on Well-Calibrated Metrics''.
+\newblock {Diversity by Design: Addressing Mode Collapse Improves scRNA-seq Perturbation Modeling on Well-Calibrated Metrics}.
+\newblock \emph{arXiv:2506.22641}, 2025.
+\newblock \doi{10.48550/arXiv.2506.22641}.
+\newblock Preprint.
 
 \bibitem[Metzcar et~al.(2025)Metzcar, Pletz, Rocha, and Rozum]{Metzcar2025}
 Metzcar, J., Pletz, K., Rocha, H.~L., and Rozum, J.~C.
@@ -227,6 +233,11 @@ Mochizuki, A., Fiedler, B., Kurosawa, G., and Saito, D.
 \newblock {Dynamics and control at feedback vertex sets. II: A faithful monitor to determine the diversity of molecular activities in regulatory networks}.
 \newblock \emph{Journal of Theoretical Biology}, 335:\penalty0 130--146, 2013.
 \newblock \doi{10.1016/j.jtbi.2013.06.009}.
+
+\bibitem[Moreau(1962)]{Moreau1962}
+Moreau, J.-J.
+\newblock {D\'ecomposition orthogonale d'un espace hilbertien selon deux c\^ones mutuellement polaires}.
+\newblock \emph{Comptes Rendus de l'Acad\'emie des Sciences}, 255:\penalty0 238--240, 1962.
 
 \bibitem[Murrugarra et~al.(2025)Murrugarra, Veliz-Cuba, Dimitrova, Kadelka, Wheeler, and Laubenbacher]{Murrugarra2025}
 Murrugarra, D., Veliz-Cuba, A., Dimitrova, E., Kadelka, C., Wheeler, M.~T., and Laubenbacher, R.
@@ -360,6 +371,12 @@ Wei, Z., Wang, Y., Gao, Y., Wang, S.-G., Li, P., Si, D., Gao, Y., Wu, S., Li, D.
 \newblock {Benchmarking algorithms for generalizable single-cell perturbation response prediction}.
 \newblock \emph{Nature Methods}, 23\penalty0 (2):\penalty0 451--464, 2025.
 \newblock \doi{10.1038/s41592-025-02980-0}.
+
+\bibitem[Wong et~al.(2019)Wong, Siah, and Lo]{WongSiahLo2019}
+Wong, C.~H., Siah, K.~W., and Lo, A.~W.
+\newblock {Estimation of clinical trial success rates and related parameters}.
+\newblock \emph{Biostatistics}, 20\penalty0 (2):\penalty0 273--286, 2019.
+\newblock \doi{10.1093/biostatistics/kxx069}.
 
 \bibitem[Wong et~al.(2025)Wong, Hill, and Moccia]{Wong2025}
 Wong, D.~R., Hill, A.~S., and Moccia, R.

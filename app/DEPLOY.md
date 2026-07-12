@@ -1,33 +1,63 @@
-# Deploying the reachability explorer
+# Deploying the interactive walkthrough
 
-`index.html` in this folder is the interactive **reachability explorer** — a single, fully
-self-contained HTML file. It embeds its own data (as an inline `const DATA = {…}` JSON payload) and
-draws everything with inline JavaScript and SVG. **There is no build step and no server to run.**
+`index.html` in this folder is the **single-page narrative** — a guided, six-chapter walkthrough
+(Problem → Reframe → Verdict → Trust → Impact → Novelty) that embeds all seven interactive explorers
+live and threads them with interpretive prose. Each explorer is inlined with an `<iframe srcdoc>`, so
+the page is one fully self-contained HTML file: no build step, no server, no external dependencies.
+
+The seven explorers also live standalone in `explorers/` and open independently — the narrative links
+to each ("open standalone ↗"), and they are what you screen-record for the demo video.
+
+```
+app/
+├── index.html          ← the narrative hub (open this)
+├── explorers/          ← the 7 standalone explorers
+│   ├── reachability_explorer.html
+│   ├── causal_reframe.html
+│   ├── causal_iv.html
+│   ├── causal_trust.html
+│   ├── pharma_funnel.html
+│   ├── pharma_triage.html
+│   └── pharma_capability.html
+├── previews/           ← static PNG thumbnails
+└── _build_index.py     ← regenerates index.html from the explorers
+```
 
 ## Fastest path: open it locally
 
 You do not need to deploy anything to use it. Just open the file in any modern browser:
 
 ```bash
-open deploy/index.html          # macOS
-xdg-open deploy/index.html      # Linux
-start deploy\index.html         # Windows
+open app/index.html          # macOS
+xdg-open app/index.html      # Linux
+start app\index.html         # Windows
 ```
 
-It works offline, from a `file://` URL — no internet connection required.
+It works offline, from a `file://` URL — no internet connection required. Because each explorer is
+embedded as an inline `srcdoc` (not a linked `src`), the iframes render live even from `file://`,
+with no cross-origin restriction and no local web server.
+
+## Regenerating the narrative
+
+`index.html` is generated from the seven explorers and the interpretive prose in `_build_index.py`.
+After editing any explorer (or the prose), rebuild it:
+
+```bash
+python app/_build_index.py     # reads explorers/*.html, rewrites app/index.html
+```
 
 ## Publish on GitHub Pages (free static hosting)
 
-Because the explorer is one static file, GitHub Pages serves it as-is. Naming it `index.html` means the
-folder's URL resolves straight to the explorer (no `/reachability_explorer.html` suffix needed).
+Because everything is static files, GitHub Pages serves them as-is. Naming the hub `index.html` means
+the folder's URL resolves straight to the walkthrough.
 
-1. **Push the repo** (this `deploy/` folder included) to GitHub, on the branch you want to publish from
+1. **Push the repo** (this `app/` folder included) to GitHub, on the branch you want to publish from
    (usually `main`).
 2. **Enable Pages.** In the repository on github.com, go to **Settings → Pages**.
    - Under **Build and deployment → Source**, choose **Deploy from a branch**.
-   - Set **Branch** to `main` and the **folder** to **`/deploy`**, then **Save.**
-     *(If your account only offers `/ (root)` and `/docs`, either move `index.html` to a top-level
-     `docs/` folder and pick `/docs`, or publish from the repo root and pick `/ (root)`.)*
+   - Set **Branch** to `main` and the **folder** to **`/app`**, then **Save.**
+     *(If your account only offers `/ (root)` and `/docs`, either copy the `app/` contents to a
+     top-level `docs/` folder and pick `/docs`, or publish from the repo root and pick `/ (root)`.)*
 3. **Wait ~1–2 minutes** for the first build. The Pages panel then shows a green check and the live URL.
 
 ### Resulting URL

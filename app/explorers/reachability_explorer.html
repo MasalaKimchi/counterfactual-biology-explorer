@@ -176,7 +176,8 @@ function drawVerdict(){
        <div><b>${a.heldout_cosine.toFixed(3)}</b>held-out cosine</div>
        <div><b>${a.heldout_z.toFixed(0)}</b>held-out z</div>
        <div><b>${a.kkt}</b>KKT / Farkas residual</div>
-     </div>`;
+     </div>
+     ${sel===0?`<p class="note" style="margin:-6px 0 14px">The held-out <b>z&nbsp;=&nbsp;45</b> and cosine <b>0.446</b> are the atlas's 8-shuffle null band (<code>atlas_reachability.csv</code>); the manuscript headlines the same Th2&rarr;Th1 result at a conservative <b>z&nbsp;≈&nbsp;24</b> (cosine 0.448) from a denser 60-shuffle null. One result, two null estimates — z scales with the null's shuffle count; the cosine is essentially unchanged (0.446 vs 0.448).</p>`:``}`;
   const b = document.getElementById("bar");
   b.innerHTML =
     `<span style="flex-basis:${a.lof*100}%;background:var(--lof)">${(a.lof*100).toFixed(0)}%</span>`+

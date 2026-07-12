@@ -32,11 +32,18 @@
 
 Nine of ten clinical drug programs never reach approval, and **Phase II is the lowest
 transition of the pipeline (30.7%)** — where roughly **half of late-stage failures are
-lack of efficacy**, i.e. the target was never a way to move the biology. Every AI tool
-in this space is a *forward* predictor: it scores what a perturbation would do. **None
-can tell a team, from measured data, that a desired cell-state change is simply out of
-reach for the chosen modality** — so programs discover unreachability only after the
+lack of efficacy**,[^attrition] i.e. the target was never a way to move the biology. Every
+AI tool in this space is a *forward* predictor: it scores what a perturbation would do.
+**None can tell a team, from measured data, that a desired cell-state change is simply out
+of reach for the chosen modality** — so programs discover unreachability only after the
 screen, or after the trial.
+
+[^attrition]: Cumulative approval (~10%) and per-phase transition rates (Phase II 30.7%,
+    the lowest of any phase) are from Thomas et al., *Clinical Development Success Rates
+    2006–2015* (BIO / Biomedtracker / Amplion, 2016), corroborated by
+    [Wong, Siah & Lo 2019](https://doi.org/10.1093/biostatistics/kxx069) (*Biostatistics*).
+    That roughly half of Phase II/III failures are for lack of efficacy rather than safety
+    is from [Harrison 2016](https://doi.org/10.1038/nrd.2016.184) (*Nat. Rev. Drug Discov.*).
 
 ## Method
 

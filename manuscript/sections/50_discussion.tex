@@ -20,8 +20,10 @@ majority of a transition (mean loss-of-function fraction $0.34$). A knockdown-on
 however well designed, therefore addresses a minority of most cell-state transitions; the
 remaining majority is a mix of required activation and an irreducible remainder. This is a
 property of the modality, not a shortfall of fit---the headline cosine is $71\%$ of the ceiling
-a knockdown-only cone can reach in principle (atlas mean $61\%$)---which is why a single
-reachability score would be misleading and we report a signed decomposition instead.
+a knockdown-only cone can reach in principle (atlas mean $61\%$; equivalently, as that ceiling
+coincides with the in-sample cosine, the held-out fit recovers $71\%$ of the in-sample one, not
+an independent bound)---which is why a single reachability score would be misleading and we
+report a signed decomposition instead.
 
 The infeasibility certificate is what makes this limitation actionable: it names, reproducibly,
 the genes carrying the unmet upward demand, so a ``no'' redirects an experiment rather than
@@ -72,6 +74,11 @@ is the held-out one. The certificate ranking is reproducible under a gene-axis s
 (cross-half Spearman $\rho\approx0.65$, half-versus-full $\approx0.84$), but its biological
 reading---like the transcription-factor-versus-marker split in the positive control---is
 retrospective and post-hoc, and is offered as annotation rather than validation.
+
+Beneath all three is a proxy assumption: the target is a transcriptomic signature, and
+matching it in expression space is not the same as achieving the corresponding cellular
+phenotype---functional confirmation (cytokine output, chromatin state, \emph{in vivo}
+function) remains a separate wet-lab endpoint.
 
 \subsection{Outlook}
 The most valuable next experiments follow directly from the limitations. Measuring a modest

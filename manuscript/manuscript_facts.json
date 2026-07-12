@@ -574,7 +574,7 @@
   "provenance": "nb07 (07_cross_celltype_transfer); Technical_Dossier.md (Appendix B); results cross-celltype CSVs"
  },
  "deg_weighted_evaluation": {
-  "_desc": "DEG-weighted (w=|d|) evaluation addressing the signal-dilution critique of Mejia et al. (Needles in the Haystack, ICML 2026; expanded preprint bioRxiv 10.1101/2025.10.20.683304). The verdict STRENGTHENS under weighting rather than collapsing.",
+  "_desc": "DEG-weighted (w=|d|) evaluation addressing the signal-dilution critique of Mejia et al. (Diversity by Design, arXiv:2506.22641, 2025). The verdict STRENGTHENS under weighting rather than collapsing.",
   "tier2_cd4_weighted_cosine": {
    "Rest": {
     "unweighted": 0.627,
@@ -619,7 +619,7 @@
   "unweighted_default_reproduces_published_numbers": "bit-for-bit",
   "calibration_scope": "dynamic-range calibration computed on the Rest condition only (Monte-Carlo cost)",
   "interpretation": "Under DEG-magnitude weighting the Th2->Th1 verdict strengthens (Tier-2 CD4 cosine 0.627->0.803 at Rest) and held-out z stays >>3; the dynamic-range fraction is stable because the shuffled floor rises in step, confirming the signal is not a dilution artifact.",
-  "provenance": "nb08 (08_deg_weighted_evaluation); Technical_Dossier.md (Part 1) 6.5; results DEG-weighted CSVs; critique: Mejia2026 (ICML 2026; expanded preprint bioRxiv 10.1101/2025.10.20.683304)"
+  "provenance": "nb08 (08_deg_weighted_evaluation); Technical_Dossier.md (Part 1) 6.5; results DEG-weighted CSVs; critique: Mejia2025 (arXiv:2506.22641, doi:10.48550/arXiv.2506.22641)"
  },
  "certificate_validation": {
   "_desc": "Two Jul-10 validations of the activation certificate: (A) gene-axis split-stability, (B) literature/genetics cross-reference. Together these TIGHTEN the certificate claim.",

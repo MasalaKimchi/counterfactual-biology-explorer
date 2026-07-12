@@ -24,12 +24,12 @@ the bibliography (Barabási, González-Blas, Zañudo, …) render correctly.
 - `main.tex`                — preprint driver (preamble + \input of sections/)
 - `sections/`               — 00_abstract, 10_introduction, 20_methods,
                               30_results, 40_related_work, 50_discussion, 90_supplement
-- `references.bib`          — 103 verified BibTeX entries (101 prior + Replogle2022 and
-                              Mejia2026 added for the reinforcement threads. Replogle2022
-                              verified by DOI (OpenAlex) and PMID (PubMed E-utilities);
-                              Mejia2026 is the ICML 2026 poster "Needles in the Haystack"
-                              (OpenReview XsrXLPxBJw), whose expanded preprint DOI
-                              10.1101/2025.10.20.683304 is cited in the entry note; 0 fabricated).
+- `references.bib`          — verified BibTeX entries (Replogle2022 and Mejia2025 added
+                              for the reinforcement threads; Moreau1962 and KuhnTucker1951
+                              for the convex-analysis foundations). Replogle2022 verified
+                              by DOI (OpenAlex) and PMID (PubMed E-utilities); Mejia2025 is
+                              the preprint "Diversity by Design" (arXiv:2506.22641,
+                              doi:10.48550/arXiv.2506.22641); 0 fabricated.
                               Barabási author name corrected from a malformed "Albert-Ĺaszló"
                               (U+0139) to "Albert-László" — the stray codepoint was truncated by
                               8-bit bibtex into invalid UTF-8 in the .bbl.

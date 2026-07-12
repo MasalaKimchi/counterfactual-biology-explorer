@@ -80,7 +80,8 @@ squared norm: the component captured by the non-negative knockdown cone
 expression (gain-of-function, GOF), obtained by projecting the residual onto the
 positive-expression orthant; and an irreducible remainder aligned with neither
 (``neither''). We report this in two conventions. The \emph{signed} decomposition partitions
-the target by the sign of each coordinate's required change; the \emph{one-sided}
+the target by the sign of each coordinate's required change---an orthogonal split along
+mutually polar cones in the sense of \citet{Moreau1962}; the \emph{one-sided}
 decomposition instead attributes the residual after the non-negative projection. For
 T\textsubscript{H}2$\rightarrow$T\textsubscript{H}1 these give LOF/GOF/neither of
 $39\%/25\%/35\%$ (signed) and $39\%/31\%/30\%$ (one-sided). We report both because they
@@ -153,7 +154,7 @@ attainable in principle rather than against $1$.
 
 \paragraph{DEG-magnitude weighting.} Uniform-gene metrics can dilute a real signal by
 averaging over thousands of unchanged genes, a critique raised for perturbation-response
-evaluation by \citet{Mejia2026}. We recompute every reachable cosine and held-out $z$ under a
+evaluation by \citet{Mejia2025}. We recompute every reachable cosine and held-out $z$ under a
 weighting $w_g=\lvert d_g\rvert$ that concentrates the metric on the genes the target actually
 moves, and we recalibrate the dynamic-range fraction against a shuffled-gene floor and an
 interpolated-duplicate ceiling under the same weighting. The unweighted metric remains the

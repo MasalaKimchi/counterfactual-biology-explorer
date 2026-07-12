@@ -68,8 +68,10 @@ knockdown.}
 the shuffled-target null at every $k$, with a knee at $k=7$ (cosine $0.40$) and a held-out
 cosine of $0.448$ (null mean $-0.005$, $z\approx24$). \textbf{(b)}~Signed decomposition of the
 target: $39\%$ reachable by knockdown, $25\%$ activation-required, $35\%$ neither.
-\textbf{(c)}~Activation certificate: seven genes the T\textsubscript{H}1 target needs raised
-that no knockdown mix supplies---falsifiable CRISPRa hypotheses. \textbf{(d)}~Positive
+\textbf{(c)}~Activation certificate: seven genes whose expression the T\textsubscript{H}1
+target needs raised but no knockdown mix supplies---falsifiable hypotheses in expression
+space, with the realizing intervention differing by gene role (activation for effectors,
+de-repression for negative regulators such as IKZF3/CBLB). \textbf{(d)}~Positive
 control: the T\textsubscript{H}2 driver GATA3 is reached (rank $155/6871$) while the
 T\textsubscript{H}1 driver TBX21 is correctly anti-aligned (rank $6775/6871$).}
 \label{fig:headline}
@@ -131,14 +133,17 @@ close to the ceiling the modality allows: because a knockdown-only cone cannot e
 gain-of-function directions, the attainable held-out cosine is bounded by
 $\sqrt{\smash[b]{f_{\mathrm{LOF}}}}$, and the headline $0.448$ is $71\%$ of that bound (atlas
 mean $61\%$, range $49$--$71\%$), leaving the residual $22$--$26\%$ gain-of-function-locked---%
-most of what loss-of-function can supply, not a tuning shortfall. The recommended recipes stay
+most of what loss-of-function can supply, not a tuning shortfall. This bound is not an
+independent check: $\sqrt{\smash[b]{f_{\mathrm{LOF}}}}$ coincides with the in-sample reachable
+cosine ($0.627$ here, to $10^{-4}$), so ``$71\%$ of the ceiling'' is the same statement as the
+held-out cosine recovering $71\%$ of the in-sample fit. The recommended recipes stay
 well inside the additivity regime that justifies them, too: every knee recipe is additive-safe
 across all $12$ cells (per-recipe reliability $0.92$--$0.96$), and the combined-magnitude
 saturation cap binds only near $k\approx28$ knockdowns against a knee of $k\approx4$--$5$, a
 $5.6\times$ margin on the headline recipe.
 
 Two sharper challenges aimed at the evaluation itself leave the conclusion stronger rather than
-weaker. The signal-dilution critique of \citet{Mejia2026}---that a uniform-gene metric averages
+weaker. The signal-dilution critique of \citet{Mejia2025}---that a uniform-gene metric averages
 a real effect away over unchanged genes---would deflate the reachable cosine if it applied;
 reweighting the metric by each gene's target magnitude ($w_g=\lvert d_g\rvert$) instead
 \emph{raises} the Tier-2 T\textsubscript{H}2$\rightarrow$T\textsubscript{H}1 cosine from $0.627$

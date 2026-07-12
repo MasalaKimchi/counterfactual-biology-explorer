@@ -21,7 +21,7 @@ minimal knockdown recipe, a numerical activation certificate, and a confidence s
 | **The 2-minute pitch** | [`SUBMISSION.md`](./SUBMISSION.md) |
 | **The paper** (preprint PDF) | [`manuscript/main.pdf`](./manuscript/main.pdf) |
 | **All technical write-ups, merged** — method, novelty, related work, causal foundations + 5 appendices | [`docs/Technical_Dossier.pdf`](./docs/Technical_Dossier.pdf) (162 pp) · editable source [`docs/Technical_Dossier.md`](./docs/Technical_Dossier.md) |
-| **Interactive explorers** (7 single-file, no server) | [`app/index.html`](./app/index.html) |
+| **Interactive walkthrough** — one guided page threading all 7 explorers (no server) | [`app/index.html`](./app/index.html) · standalone explorers in [`app/explorers/`](./app/explorers/) |
 | **Reproduce it** | [`reproduce.sh`](./reproduce.sh) · [`notebooks/`](./notebooks/) |
 
 ---
@@ -138,8 +138,10 @@ cell-state-reachability/
 │   ├── figstyle.py, make_deg_figures.py   #   shared plotting helpers
 │   └── cache/                   #   small cached bundles + exported design cards
 │
-├── app/                     # interactive explorer — 8 self-contained HTML views + DEPLOY.md
-│   ├── index.html               #   landing page linking all 7 explorers
+├── app/                     # interactive walkthrough — self-contained HTML, no server
+│   ├── index.html               #   the guided narrative (6 chapters, embeds all 7 explorers live)
+│   ├── explorers/               #   the 7 standalone explorers (open independently)
+│   ├── _build_index.py          #   regenerates index.html from the explorers
 │   └── previews/                #   PNG preview of each view
 │
 ├── scripts/                 # analysis drivers (run_atlas / run_nulls / run_bootstrap /
