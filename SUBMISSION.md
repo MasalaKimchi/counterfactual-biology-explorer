@@ -1,11 +1,11 @@
 # Cell-State Reachability
 
-### An oracle that tells you what's *impossible* — before you run the experiment.
+### An oracle that tells you what a screen *can't* reach — before you run the experiment.
 
 **Built with Claude — Life Sciences Hackathon · Research / Lab Track**
 
 > Every AI model in biology predicts what a perturbation *will* do. We built the first
-> one that returns a falsifiable **reachable / provably-outside-the-cone** verdict — plus
+> one we know of that returns a falsifiable **reachable / provably-outside-the-cone** verdict — plus
 > the minimal knockdown recipe and a numerical certificate — for a real genome-scale
 > CRISPRi screen in primary human CD4⁺ T cells.
 
@@ -61,7 +61,7 @@ down) is recovered at **rank 155/6871 (97.7th percentile)**, and the Th1 driver 
 (must go up) is correctly anti-aligned under knockdown (**rank 6775/6871**). The operator
 generalizes unchanged: transferred to a different assay, cell type, and direction (Norman
 et al. 2019 K562 CRISPRa), it recovers a held-out **CEBPA** master-TF state at cosine
-**0.878** (permutation *z* = 36.97). Across a **12-cell atlas** (4 transitions × 3
+**0.878** (permutation *z* = 36.97) — a single held-out target; full cross-atlas transfer remains future work. Across a **12-cell atlas** (4 transitions × 3
 activation conditions) every cell clears its null (held-out *z* = 4.7–45.0), and knockdown
 is *never* the majority modality — activation and irreducible components always dominate.
 
@@ -73,7 +73,7 @@ says are actually needed and cross them against Open Targets druggability × imm
 genetics: **45/102 (44%) are hard-to-drug** and only **10 of 102 are clinical-grade
 today**. **IRF1** is the headline collision — a top-genetics node with no conventional
 drug handle; **JAK2** and **ICOS** are green-lit. A survey of **91 prior methods
-(2011–2026)** finds **zero** that return a feasibility verdict on measured effects — this
+(2011–2026; 92 including this work)** finds **zero** that return a feasibility verdict on measured effects — this
 work is the sole occupant of the *measured × achievability* quadrant. Since **human
 genetic support carries 2.6× approval odds** (Minikel 2024), a feasibility-plus-genetics
 triage attacks failure exactly where the funnel leaks most.

@@ -4,7 +4,8 @@
 
 *Given a genome-scale screen of gene perturbations, can we reach a desired cell state —
 and if not, what is provably stopping us?* This project answers that with a **convex-cone
-reachability oracle**: it returns a falsifiable **reachable / provably-outside-the-cone**
+reachability oracle** (a decision instrument relative to the measured screen, not a claim
+of biological ground truth): it returns a falsifiable **reachable / provably-outside-the-cone**
 verdict for a real CRISPRi Perturb-seq screen in primary human CD4⁺ T cells, plus the
 minimal knockdown recipe, a numerical activation certificate, and a confidence score.
 
@@ -41,8 +42,9 @@ For the flagship **Th2 → Th1** switch the verdict is *partially reachable*: **
 shift is reachable by knockdown (LOF), 25% provably requires activation (GOF), 35% is
 neither** — held-out cosine 0.448, KKT/Farkas residual 1.1 × 10⁻¹¹. Master-regulator
 controls land correctly (GATA3 recovered at rank 155/6871; TBX21 correctly anti-aligned
-under knockdown), the operator transfers unchanged to a K562 CRISPRa screen (Norman 2019;
-held-out CEBPA at cosine 0.878, z = 36.97), and across a 12-cell atlas knockdown is never
+under knockdown), the operator transfers unchanged (no retuning) to a K562 CRISPRa screen (Norman 2019;
+held-out CEBPA at cosine 0.878, z = 36.97 — a single held-out target; full cross-atlas
+transfer is future work), and across a 12-cell atlas knockdown is never
 the majority modality. Full numbers, tables, and figures are in the
 [Technical Dossier](./docs/Technical_Dossier.pdf) and the [manuscript](./manuscript/main.pdf).
 
@@ -99,8 +101,8 @@ baselines, so any DL comparison here is explicitly optional and benchmarked, nev
 (the empirical CRISPRi matrix, not a GRN inferred from wild-type data); a **convex-cone
 reachability verdict** with a provable outside-the-cone certificate rather than a similarity
 score; and a held-out-gene validity test plus a screen-native confidence decomposition. A
-survey of 91 prior methods (2011–2026) finds none returning a feasibility verdict on
-measured effects. The regulator biology the pipeline recovers (Th1/Th2, aging) is what the
+survey of 91 prior methods (2011–2026; 92 including this work) finds none returning a
+feasibility verdict on measured effects. The regulator biology the pipeline recovers (Th1/Th2, aging) is what the
 source paper itself reports — so regulator recovery is treated as *validation the method
 works*, and novelty is claimed only for the method + decision layer. Full argument and the
 91-method survey: [Technical Dossier](./docs/Technical_Dossier.pdf), Parts 2–3.
