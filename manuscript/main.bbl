@@ -1,4 +1,4 @@
-\begin{thebibliography}{69}
+\begin{thebibliography}{68}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -189,8 +189,8 @@ Lotfollahi, M., Susmelj, A.~K., De~Donno, C., Hetzel, L., Ji, Y., Ibarra, I.~L.,
 \newblock \emph{Molecular Systems Biology}, 19\penalty0 (6):\penalty0 e11517--e11517, 2023.
 \newblock \doi{10.15252/msb.202211517}.
 
-\bibitem[Luecken et~al.(2025)Luecken, Gigante, Burkhardt, Cannoodt, Strobl, Markov, Zappia, Palla, Lewis, Dimitrov, Vinyard, Magruder, Mueller, Andersson, Dann, Qin, Otto, Klein, Botvinnik, Deconinck, Waldrant, Yasa, Szałata, Benz, Li, Members, Rieck, Ahlmann-Eltze, Beltrame, Bravo González-Blas, Chen, DeMeo, Ergen, Floc'hlay, Gayoso, Hicks, Ji, Kleshchevnikov, La~Manno, Lombardo, Lopez, Righelli, Sarkar, Svensson, Tong, Xing, Xu, Bloom, Pisco, Saez-Rodriguez, Wulsin, Pinello, Saeys, Theis, and Krishnaswamy]{Luecken2025}
-Luecken, M.~D., Gigante, S., Burkhardt, D.~B., Cannoodt, R., Strobl, D., Markov, N.~S., Zappia, L., Palla, G., Lewis, W., Dimitrov, D., Vinyard, M., Magruder, D.~S., Mueller, M.~F., Andersson, A., Dann, E., Qin, Q., Otto, D.~J., Klein, M., Botvinnik, O., Deconinck, L., Waldrant, K., Yasa, S.~N., Szałata, A., Benz, A., Li, Z., Members, O. P.~J., Rieck, B., Ahlmann-Eltze, C., Beltrame, E. d.~V., Bravo González-Blas, C., Chen, A.~T., DeMeo, B., Ergen, C., Floc'hlay, S., Gayoso, A., Hicks, S., Ji, Y., Kleshchevnikov, V., La~Manno, G., Lombardo, M.~G., Lopez, R., Righelli, D., Sarkar, H., Svensson, V., Tong, A., Xing, G., Xu, C., Bloom, J.~M., Pisco, A.~O., Saez-Rodriguez, J., Wulsin, D., Pinello, L., Saeys, Y., Theis, F.~J., and Krishnaswamy, S.
+\bibitem[Luecken et~al.(2025)Luecken, Gigante, Burkhardt, Cannoodt, Strobl, Markov, Zappia, Palla, Lewis, Dimitrov, Vinyard, Magruder, Mueller, Andersson, Dann, Qin, Otto, Klein, Botvinnik, Deconinck, Waldrant, Yasa, Sza{\l}ata, Benz, Li, Members, Rieck, Ahlmann-Eltze, Beltrame, Bravo González-Blas, Chen, DeMeo, Ergen, Floc'hlay, Gayoso, Hicks, Ji, Kleshchevnikov, La~Manno, Lombardo, Lopez, Righelli, Sarkar, Svensson, Tong, Xing, Xu, Bloom, Pisco, Saez-Rodriguez, Wulsin, Pinello, Saeys, Theis, and Krishnaswamy]{Luecken2025}
+Luecken, M.~D., Gigante, S., Burkhardt, D.~B., Cannoodt, R., Strobl, D., Markov, N.~S., Zappia, L., Palla, G., Lewis, W., Dimitrov, D., Vinyard, M., Magruder, D.~S., Mueller, M.~F., Andersson, A., Dann, E., Qin, Q., Otto, D.~J., Klein, M., Botvinnik, O., Deconinck, L., Waldrant, K., Yasa, S.~N., Sza{\l}ata, A., Benz, A., Li, Z., Members, O. P.~J., Rieck, B., Ahlmann-Eltze, C., Beltrame, E. d.~V., Bravo González-Blas, C., Chen, A.~T., DeMeo, B., Ergen, C., Floc'hlay, S., Gayoso, A., Hicks, S., Ji, Y., Kleshchevnikov, V., La~Manno, G., Lombardo, M.~G., Lopez, R., Righelli, D., Sarkar, H., Svensson, V., Tong, A., Xing, G., Xu, C., Bloom, J.~M., Pisco, A.~O., Saez-Rodriguez, J., Wulsin, D., Pinello, L., Saeys, Y., Theis, F.~J., and Krishnaswamy, S.
 \newblock {Defining and benchmarking open problems in single-cell analysis}.
 \newblock \emph{Nature Biotechnology}, 43\penalty0 (7):\penalty0 1035--1040, 2025.
 \newblock \doi{10.1038/s41587-025-02694-w}.
@@ -208,12 +208,11 @@ Marazzi, L., Shah, M., Balakrishnan, S., Patil, A., and Vera-Licona, P.
 \newblock \emph{npj Systems Biology and Applications}, 8\penalty0 (1):\penalty0 21--21, 2022.
 \newblock \doi{10.1038/s41540-022-00231-y}.
 
-\bibitem[Mejia et~al.(2025)Mejia, Miller, Leblanc, Wang, Swain, and de~Lima~Camillo]{Mejia2025}
+\bibitem[Mejia et~al.(2026)Mejia, Miller, Leblanc, Wang, Swain, and de~Lima~Camillo]{Mejia2026}
 Mejia, G.~M., Miller, H.~E., Leblanc, F. J.~A., Wang, B., Swain, B., and de~Lima~Camillo, L.~P.
-\newblock {Diversity by Design: Addressing Mode Collapse Improves scRNA-seq Perturbation Modeling on Well-Calibrated Metrics}.
-\newblock \emph{arXiv:2506.22641}, 2025.
-\newblock \doi{10.48550/arXiv.2506.22641}.
-\newblock Preprint.
+\newblock {Needles in the Haystack: Addressing Signal Dilution Improves scRNA-seq Perturbation Response Modeling and Evaluation}.
+\newblock In \emph{Proceedings of the 43rd International Conference on Machine Learning (ICML)}, 2026.
+\newblock ICML 2026 poster (OpenReview XsrXLPxBJw). Expanded preprint: Miller et al., bioRxiv 2025.10.20.683304, doi:10.1101/2025.10.20.683304, ``Deep Learning-Based Genetic Perturbation Models Do Outperform Uninformative Baselines on Well-Calibrated Metrics''.
 
 \bibitem[Metzcar et~al.(2025)Metzcar, Pletz, Rocha, and Rozum]{Metzcar2025}
 Metzcar, J., Pletz, K., Rocha, H.~L., and Rozum, J.~C.
@@ -233,11 +232,6 @@ Mochizuki, A., Fiedler, B., Kurosawa, G., and Saito, D.
 \newblock {Dynamics and control at feedback vertex sets. II: A faithful monitor to determine the diversity of molecular activities in regulatory networks}.
 \newblock \emph{Journal of Theoretical Biology}, 335:\penalty0 130--146, 2013.
 \newblock \doi{10.1016/j.jtbi.2013.06.009}.
-
-\bibitem[Moreau(1962)]{Moreau1962}
-Moreau, J.-J.
-\newblock {D\'ecomposition orthogonale d'un espace hilbertien selon deux c\^ones mutuellement polaires}.
-\newblock \emph{Comptes Rendus de l'Acad\'emie des Sciences}, 255:\penalty0 238--240, 1962.
 
 \bibitem[Murrugarra et~al.(2025)Murrugarra, Veliz-Cuba, Dimitrova, Kadelka, Wheeler, and Laubenbacher]{Murrugarra2025}
 Murrugarra, D., Veliz-Cuba, A., Dimitrova, E., Kadelka, C., Wheeler, M.~T., and Laubenbacher, R.
@@ -341,8 +335,8 @@ Trinh, V.-G., Park, K.~H., Pastva, S., and Rozum, J.~C.
 \newblock \emph{Bioinformatics}, 41\penalty0 (5), 2025.
 \newblock \doi{10.1093/bioinformatics/btaf280}.
 
-\bibitem[Viñas et~al.(2025)Viñas, Wiatrak, Piran, Fan, Jiang, Teichmann, Nitzan, and Brbić]{Vinas2025}
-Viñas, R., Wiatrak, M., Piran, Z., Fan, S., Jiang, L., Teichmann, S.~A., Nitzan, M., and Brbić, M.
+\bibitem[Viñas et~al.(2025)Viñas, Wiatrak, Piran, Fan, Jiang, Teichmann, Nitzan, and Brbi{\'c}]{Vinas2025}
+Viñas, R., Wiatrak, M., Piran, Z., Fan, S., Jiang, L., Teichmann, S.~A., Nitzan, M., and Brbi{\'c}, M.
 \newblock {Systema: a framework for evaluating genetic perturbation response prediction beyond systematic variation}.
 \newblock \emph{Nature Biotechnology}, 44\penalty0 (6):\penalty0 1050--1059, 2025.
 \newblock \doi{10.1038/s41587-025-02777-8}.

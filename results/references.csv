@@ -90,4 +90,4 @@ Vinas2025,Systema,"Ramón Viñas, Maciej Wiatrak et al.",2025,Nature Biotechnolo
 Wei2025,Benchmark of generalizable single-cell perturbation prediction,"Zhiting Wei, Yiheng Wang et al.",2025,Nature Methods,10.1038/s41592-025-02980-0,41381899.0,15,Benchmark / other,2025-2026
 Wu2025,Biology-driven insights into single-cell foundation models,"Jialu Wu, Qing Ye et al.",2025,Genome biology,10.1186/s13059-025-03781-6,41044630.0,15,Benchmark / other,2025-2026
 Zhang2025Tahoe,Tahoe-100M,"Jesse Zhang, Airol A Ubas et al.",2025,bioRxiv (Cold Spring Harbor Laboratory) [preprint],10.1101/2025.02.20.639398,,85,Benchmark / other,2025-2026
-Mejia2025,"DEG-aware evaluation metrics (WMSE, weighted delta-R2) + positive/negative control calibration","Gabriel Mateo Mejia, Henry E. Miller et al.",2025,arXiv,10.48550/arXiv.2506.22641,,3,Evaluation methodology,2025-2026
+Mejia2026,"DEG-aware evaluation metrics (WMSE, weighted delta-R2) + positive/negative control calibration","Gabriel Mateo Mejia, Henry E. Miller et al.",2026,ICML 2026 (Poster),10.1101/2025.10.20.683304,,3,Evaluation methodology,2025-2026

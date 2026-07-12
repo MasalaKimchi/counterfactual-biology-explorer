@@ -54,3 +54,8 @@ manuscript/**/*.aux
 
 # ── OS cruft ─────────────────────────────────────────────────────────────────
 .DS_Store
+
+# ── Process / operating docs — kept local, not part of the deliverable ─────────
+AGENTS.md
+CLAUDE.md
+CHANGES.md

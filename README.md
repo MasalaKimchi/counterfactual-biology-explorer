@@ -135,7 +135,6 @@ not proof that no adjacent method exists.
 cell-state-reachability/
 ├── SUBMISSION.md            # accessible 2-minute pitch
 ├── README.md                # orientation, scope, and reproduction routes
-├── AGENTS.md / CLAUDE.md    # enduring facts and scientific guardrails
 ├── DEMO_VIDEO_SCRIPT.md     # 3-minute demo plan
 ├── reachability.py          # cone fit, dual certificate, nulls, spectrum, additivity risk
 ├── reproduce.sh             # software verification: 11 tests + synthetic self-test

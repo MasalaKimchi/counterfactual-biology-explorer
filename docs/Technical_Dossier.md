@@ -248,7 +248,7 @@ activation-required fraction (0.31 → 0.38) — biologically sensible, since st
 activation-driven component that loss-of-function cannot supply.
 
 It also survives a harder stress test. Under **DEG-magnitude weighting** (w = |d|, the
-signal-dilution correction of Mejia et al. 2025), the Rest verdict *strengthens* rather than
+signal-dilution correction of Mejia et al. 2026), the Rest verdict *strengthens* rather than
 collapses (reachable cosine **0.627 → 0.803**; held-out z stays far above the z=3 floor,
 28.3 → 14.1), and the calibrated dynamic-range placement is stable because the shuffled floor
 rises in step (0.346 → 0.619). The unweighted metric remains the default and reproduces these
@@ -1164,8 +1164,8 @@ synthetic + real validation rows, both regimes: RMSE 0.029 in-sample / 0.045 hel
 #### 8.2.5 DEG-weighted evaluation — the verdict is not a signal-dilution artifact
 
 The reachability verdict is scored with a cosine between the target shift and its closest
-reachable point, taken **over all genes**. Mejia et al. (*Diversity by Design*, arXiv:2506.22641,
-2025) show that unweighted transcriptome-wide metrics are prone to
+reachable point, taken **over all genes**. Mejia et al. (*Needles in the Haystack*, ICML 2026;
+expanded preprint bioRxiv 10.1101/2025.10.20.683304) show that unweighted transcriptome-wide metrics are prone to
 **signal dilution**: when a perturbation moves only a handful of genes, the score is dominated
 by the many unchanged background genes, which can flatter a fit and let an uninformative
 baseline look competitive. Their fix — DEG-aware metrics (weighted MSE / weighted ΔR²) reported
@@ -1750,8 +1750,7 @@ question it answers is on the table. Stated the wrong way round — machinery fi
 hits "convex cone" with no anchor for *why a cone*, and the geometry reads as decoration on top
 of a ranking; it also buries the single most novel output, the *provably-outside* verdict, in a
 subordinate clause. The framing that works runs **question → why the geometry is forced → what
-falls out** (this is the framing to use, in preference to the machinery-first paragraph in
-`CLAUDE.md §0`):
+falls out** (this is the framing to use, in preference to a machinery-first ordering):
 
 > A genome-scale CRISPRi screen measures, for every gene, the causal effect of knocking
 > it down on the whole transcriptome. Read each of those measured effects as a vector,
@@ -3018,7 +3017,7 @@ drift.*
 **Evaluation methodology incorporated into this work** *(not part of the 91-method
 cell-fate-control landscape survey; adopted to stress-test our own reachability metric)*
 
-92. **Diversity by Design (DEG-aware metrics + control calibration)** — Gabriel Mateo Mejia, Henry E. Miller, Francis J. A. Leblanc, Bo Wang, Brendan Swain, Lucas Paulo de Lima Camillo. *Diversity by Design: Addressing Mode Collapse Improves scRNA-seq Perturbation Modeling on Well-Calibrated Metrics.* arXiv:2506.22641 [preprint] (2025). doi:10.48550/arXiv.2506.22641.
+92. **Needles in the Haystack (DEG-aware metrics + control calibration)** — Gabriel Mateo Mejia, Henry E. Miller, Francis J. A. Leblanc, Bo Wang, Brendan Swain, Lucas Paulo de Lima Camillo. *Needles in the Haystack: Addressing Signal Dilution Improves scRNA-seq Perturbation Response Modeling and Evaluation.* ICML 2026 (Poster; OpenReview XsrXLPxBJw). Expanded preprint: *Deep Learning-Based Genetic Perturbation Models Do Outperform Uninformative Baselines on Well-Calibrated Metrics*, bioRxiv (Cold Spring Harbor Laboratory) [preprint] (2025). doi:10.1101/2025.10.20.683304.
 
 ---
 
@@ -3713,7 +3712,7 @@ validated*.)
 | 4 | **The activation certificate is real** — genes flagged "must be switched ON" genuinely can't be reached by knockdown | **Scaffolded + synthetic-verified** | Signed split (Th2→Th1 Rest) LOF 0.39 / GOF 0.25 / neither 0.35; atlas mean LOF ≈0.34 — every transition is minority-LOF (§5). Reinforcement (nb06 L1): a runnable dual-modality test (`held_out_modality_test`) recovers a hidden activation-only gene set at **AUROC 0.999, z 8.9** on synthetic ground truth | Not yet run on **real** overexpression data — blocked on a dual-arm CRISPRi+CRISPRa screen on one axis, not on method. The code runs unchanged the moment such data exists |
 | 5 | **It recovers known biology** — the method ranks true drivers above bystanders | **Provisional / post-hoc** | Master-TF panel **AUROC = 1.00** (p=0.014), 7/8 sign-concordant (p=0.035) — **but** the master-TF-vs-marker split was chosen *after* seeing the weak full-panel result (AUROC 0.69, p=0.052). The docs state this plainly (§6.1) | This is the **single biggest gap.** The clean result needs a **pre-registered** test on an independent axis or dataset before it counts as confirmatory |
 | 6 | **Effects are consistent across data sources** | **Moderate** | 68.5% sign-concordant across 11,616 shared genes; Spearman ρ=0.562 | 31.5% sign-discordance is not negligible; the discordant tail is uncharacterized |
-| 7 | **The metric isn't gamed by signal dilution** — the all-gene reachability cosine isn't inflated by the many unchanged background genes | **Solid** | DEG-weighted recompute (Mejia et al. 2025; §6.5, nb08): the Th2→Th1 verdict *strengthens* under `w=|d|` weighting (cosine 0.627→0.803, held-out z 28.3→14.1, still ≫ z=3) across all three conditions and six Norman held-out doubles; interpolated-duplicate positive control confirms the metric rewards known-reachable targets (ceiling ≈0.97–0.99); unweighted default reproduces every published number bit-for-bit | Dynamic-range calibration computed on the headline Rest condition only (Monte-Carlo cost); Stim conditions carry the cheaper cosine + held-out-z recompute |
+| 7 | **The metric isn't gamed by signal dilution** — the all-gene reachability cosine isn't inflated by the many unchanged background genes | **Solid** | DEG-weighted recompute (Mejia et al., ICML 2026; §6.5, nb08): the Th2→Th1 verdict *strengthens* under `w=|d|` weighting (cosine 0.627→0.803, held-out z 28.3→14.1, still ≫ z=3) across all three conditions and six Norman held-out doubles; interpolated-duplicate positive control confirms the metric rewards known-reachable targets (ceiling ≈0.97–0.99); unweighted default reproduces every published number bit-for-bit | Dynamic-range calibration computed on the headline Rest condition only (Monte-Carlo cost); Stim conditions carry the cheaper cosine + held-out-z recompute |
 
 Two reinforcement analyses (Appendix C, Reinforcement Analyses) also close manuscript-level
 defenses not in the six-row ledger above: **L4** — dropping the non-negativity constraint
@@ -3730,7 +3729,7 @@ the in-sample cone cosine to 1e-4, so the headline 0.448 is **71% of the achieva
   null, the held-out test, the additivity safety check, the now-quantified constraint
   ablation, and — new — the DEG-weighted metric robustness check) are validated to a high
   standard. A skeptical reviewer cannot easily attack the statistics: the headline survives
-  the exact signal-dilution critique (Mejia et al. 2025) that has been leveled at the
+  the exact signal-dilution critique (Mejia et al., ICML 2026) that has been leveled at the
   perturbation-prediction field, and in fact *strengthens* under it.
 - **Generalization has widened.** The method now runs unchanged on **three** human cell types
   (CD4⁺ T, K562, RPE1) plus the Norman K562 CRISPRa demo; effect *direction* transfers while
