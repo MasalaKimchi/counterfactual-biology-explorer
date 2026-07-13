@@ -64,7 +64,7 @@ CHAPTERS = [
          "greedy sparse panel, and the dual certificate."),
     mean=("For the flagship cell: <strong>39% measured LOF, 25% sign-flipped GOF proxy, 35% "
           "neither</strong>; canonical held-out cosine 0.448 exceeds all 60 shuffled controls, "
-          "KKT/Farkas residual 1&times;10&#8315;&#185;&#185;. Master-regulator controls land "
+          "KKT optimality violation 1&times;10&#8315;&#185;&#185;. Master-regulator controls land "
           "correctly (GATA3 recovered; TBX21 anti-aligned under knockdown), and across all 12 "
           "atlas cells knockdown is <em>never</em> the majority component. The eight-shuffle atlas "
           "z values are screening estimates. Positive residual genes are follow-up hypotheses, "

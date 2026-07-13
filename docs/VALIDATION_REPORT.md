@@ -104,7 +104,7 @@ an early, screen-relative modality check.
 
 - For Euclidean projection onto a closed convex cone, fitted and residual components are
   orthogonal, so the KKT/separating result is mathematically appropriate.
-- The KKT residual certifies optimizer convergence and the model-relative projection. It does
+- The KKT optimality violation certifies optimizer convergence and the model-relative projection. It does
   not validate additivity, causal transport, intervention magnitude, or phenotype.
 - The cone is unbounded. Because the principal metric is cosine, the claim is about direction,
   not an achievable biological dose or complete state transition.

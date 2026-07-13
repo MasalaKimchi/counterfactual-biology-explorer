@@ -1290,7 +1290,7 @@ class DesignResult:
     # --- bookkeeping -----------------------------------------------------------------
     n_generators: int
     n_readout: int
-    cert_max_violation: float          # signed-cone KKT residual (should be ~0)
+    cert_max_violation: float          # signed-cone KKT optimality violation (should be ~0)
 
     def summary(self) -> str:
         """One-line human-readable headline for a design card."""
@@ -1342,8 +1342,8 @@ def design_experiment(E: np.ndarray, d: np.ndarray, *,
          direction', i.e. CRISPRi vs CRISPRa).
       3. LIBRARY  — the optimal k-perturbation set for the NEXT screen, from the greedy
          reachability spectrum, with the knee (`optimal_k`) detected automatically.
-      4. CERTIFICATE — the readout genes the target wants UP that no non-negative knockdown
-         mix can deliver (the Farkas separating direction; concrete CRISPRa hypotheses).
+      4. CERTIFICATE — positive unmet readouts at the closest knockdown-cone point; together
+         they contribute to the Farkas separating direction and motivate CRISPRa hypotheses.
 
     Parameters
     ----------

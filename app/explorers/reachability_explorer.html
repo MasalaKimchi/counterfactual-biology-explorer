@@ -176,7 +176,7 @@ function drawVerdict(){
        <div><b>${a.reachable_cosine.toFixed(3)}</b>reachable cosine</div>
        <div><b>${a.heldout_cosine.toFixed(3)}</b>held-out cosine</div>
        <div><b>${a.heldout_z.toFixed(0)}</b>held-out z</div>
-       <div><b>${a.kkt}</b>KKT / Farkas residual</div>
+       <div><b>${a.kkt}</b>KKT optimality violation</div>
      </div>
      ${sel===0?`<p class="note" style="margin:-6px 0 14px">The displayed <b>z&nbsp;=&nbsp;45</b> and cosine <b>0.446</b> come from an older eight-shuffle screening run. Eight draws give an unstable null-SD estimate, so this z is descriptive only. The manuscript uses the denser 60-shuffle result: cosine <b>0.448</b>, above all 60 controls (empirical p&nbsp;=&nbsp;1/61; descriptive z&nbsp;≈&nbsp;24).</p>`:``}`;
   const b = document.getElementById("bar");

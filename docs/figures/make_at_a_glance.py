@@ -86,7 +86,7 @@ ax.add_line(Line2D([FX + 2.2, FX + FW - 2.2], [69.4, 69.4], color=PANELB, lw=1.1
 txt(FX + 2.4, 62.6, "0.448", size=40, color=TEAL, weight="bold", va="center")
 txt(FX + 20.5, 65.4, "held-out cosine", size=12.5, color=NAVY, weight="bold")
 txt(FX + 20.5, 61.7, "in-sample 0.627 · the honest,", size=10.3, color=MUTE)
-txt(FX + 20.5, 58.9, "cross-validated number", size=10.3, color=MUTE)
+txt(FX + 20.5, 58.9, "held-out-gene score", size=10.3, color=MUTE)
 
 # verdict chip
 rbox(FX + 2.4, 49.6, 34.0, 5.6, fc=GREENBG, ec=GREENBD, lw=1.3, r=0.7)
@@ -98,7 +98,7 @@ txt(FX + 3.6, 45.7, "> all 60 shuffled targets", size=10.2, color=NAVY, weight="
 txt(FX + 3.6, 43.0, "empirical p = 1/61  ·  z ≈ 24", size=9.6, color=MUTE)
 
 rbox(FX + 29.2, 41.2, 23.4, 6.9, fc=PANEL, ec=PANELB, lw=1.1, r=0.6)
-txt(FX + 30.4, 45.7, "KKT / Farkas residual", size=10.2, color=NAVY, weight="bold")
+txt(FX + 30.4, 45.7, "KKT optimality violation", size=10.2, color=NAVY, weight="bold")
 txt(FX + 30.4, 43.0, "1.1 × 10⁻¹¹  (cone optimality)", size=9.6, color=MUTE)
 
 # ============================ DECOMPOSITION (right) ==========================
@@ -123,8 +123,8 @@ def legrow(y, col, name):
     txt(DX + 5.6, y, name, size=10.4, color=NAVY, va="center")
 
 legrow(54.2, TEAL, "LOF 39% — reachable by knockdown")
-legrow(49.6, GOLD, "GOF 25% — needs activation (CRISPRa)")
-legrow(45.0, GRAY, "neither 35% — irreducible residual")
+legrow(49.6, GOLD, "GOF proxy 25% — sign-flipped effect")
+legrow(45.0, GRAY, "neither 35% — unmatched by either proxy")
 
 txt(DX + 2.2, 41.4, "knockdown is never the majority modality  (atlas mean LOF 0.34)",
     size=9.3, color=MUTE, style="italic")
@@ -160,7 +160,7 @@ txt(11.2, 8.3,
     "Directional feasibility relative to one measured screen — not functional rescue.  Combinations assume bounded additivity.",
     size=10.2, color=MUTE, va="center")
 txt(11.2, 5.4,
-    "Recovered regulators (GATA3↓, TBX21) are positive controls, not discoveries.  Every nomination is a wet-lab hypothesis, never a validated target.",
+    "Recovered regulators (GATA3↓, TBX21↑) are positive controls, not discoveries.  Every nomination is a wet-lab hypothesis, never a validated target.",
     size=10.2, color=MUTE, va="center")
 
 # source data footnote

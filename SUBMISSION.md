@@ -4,7 +4,7 @@
 
 **Built with Claude — Life Sciences Hackathon · Research / Lab Track**
 
-![Cell-State Reachability at a glance — the reframe; the Th2→Th1 flagship verdict (held-out cosine 0.448, above all 60 shuffled targets, KKT residual 1.1×10⁻¹¹); the signed 39/25/35 LOF/GOF/neither decomposition; and the four outputs.](docs/figures/fig_at_a_glance.png)
+![Cell-State Reachability at a glance — the reframe; the Th2→Th1 flagship verdict (held-out cosine 0.448, above all 60 shuffled targets, KKT optimality violation 1.1×10⁻¹¹); the signed 39/25/35 LOF/GOF-proxy/neither decomposition; and the four outputs.](docs/figures/fig_at_a_glance.png)
 
 > A GPS is useful for two reasons: it finds a route, and it tells you when the road you
 > need is not on the map. This project brings that second answer to cell engineering.
@@ -54,7 +54,7 @@ For the flagship **Th2 → Th1** direction in resting primary human CD4⁺ T cel
 - The staged modality proxy assigns **39%** of target energy to measured knockdown
   directions, **25%** to sign-flipped gain-of-function proxy directions, and **35%** to
   neither.
-- The KKT residual is **1.1 × 10⁻¹¹**. That certifies numerical optimality of the cone
+- The KKT optimality violation is **1.1 × 10⁻¹¹**. That certifies the numerical cone
   projection; it does not certify biological efficacy.
 
 Known regulators behave in the expected direction: GATA3, which should be reduced when
@@ -111,7 +111,7 @@ modality mismatch before a costly combination experiment.
 
 | If you want… | Open |
 |---|---|
-| **The guided interactive story** | [`app/index.html`](app/index.html) |
+| **The guided interactive story** | [Open live](https://raw.githack.com/MasalaKimchi/cell-state-reachability/main/app/index.html) · [`app/index.html`](app/index.html) |
 | **The paper** | [`manuscript/main.pdf`](manuscript/main.pdf) |
 | **The validation report** | [`docs/VALIDATION_REPORT.md`](docs/VALIDATION_REPORT.md) |
 | **The full technical record** | [`docs/Technical_Dossier.pdf`](docs/Technical_Dossier.pdf) |

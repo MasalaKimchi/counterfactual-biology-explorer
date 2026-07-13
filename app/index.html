@@ -773,7 +773,7 @@ function drawVerdict(){
        &lt;div&gt;&lt;b&gt;${a.reachable_cosine.toFixed(3)}&lt;/b&gt;reachable cosine&lt;/div&gt;
        &lt;div&gt;&lt;b&gt;${a.heldout_cosine.toFixed(3)}&lt;/b&gt;held-out cosine&lt;/div&gt;
        &lt;div&gt;&lt;b&gt;${a.heldout_z.toFixed(0)}&lt;/b&gt;held-out z&lt;/div&gt;
-       &lt;div&gt;&lt;b&gt;${a.kkt}&lt;/b&gt;KKT / Farkas residual&lt;/div&gt;
+       &lt;div&gt;&lt;b&gt;${a.kkt}&lt;/b&gt;KKT optimality violation&lt;/div&gt;
      &lt;/div&gt;
      ${sel===0?`&lt;p class=&quot;note&quot; style=&quot;margin:-6px 0 14px&quot;&gt;The displayed &lt;b&gt;z&amp;nbsp;=&amp;nbsp;45&lt;/b&gt; and cosine &lt;b&gt;0.446&lt;/b&gt; come from an older eight-shuffle screening run. Eight draws give an unstable null-SD estimate, so this z is descriptive only. The manuscript uses the denser 60-shuffle result: cosine &lt;b&gt;0.448&lt;/b&gt;, above all 60 controls (empirical p&amp;nbsp;=&amp;nbsp;1/61; descriptive z&amp;nbsp;≈&amp;nbsp;24).&lt;/p&gt;`:``}`;
   const b = document.getElementById(&quot;bar&quot;);
@@ -845,7 +845,7 @@ render();
       </div>
     <div class="readout">
       <div class="ro"><h3>What you&rsquo;re looking at</h3><p>Left: the target's exact shadow in the plane of {reachable fit, residual} — the 2-D picture is the true projection of the high-dimensional NNLS fit, not a schematic. Right: pick any of the 12 atlas cells; read its verdict, the signed LOF/GOF/neither split, the greedy sparse panel, and the dual certificate.</p></div>
-      <div class="ro"><h3>What it means</h3><p>For the flagship cell: <strong>39% measured LOF, 25% sign-flipped GOF proxy, 35% neither</strong>; canonical held-out cosine 0.448 exceeds all 60 shuffled controls, KKT/Farkas residual 1&times;10&#8315;&#185;&#185;. Master-regulator controls land correctly (GATA3 recovered; TBX21 anti-aligned under knockdown), and across all 12 atlas cells knockdown is <em>never</em> the majority component. The eight-shuffle atlas z values are screening estimates. Positive residual genes are follow-up hypotheses, not proven activation targets.</p></div>
+      <div class="ro"><h3>What it means</h3><p>For the flagship cell: <strong>39% measured LOF, 25% sign-flipped GOF proxy, 35% neither</strong>; canonical held-out cosine 0.448 exceeds all 60 shuffled controls, KKT optimality violation 1&times;10&#8315;&#185;&#185;. Master-regulator controls land correctly (GATA3 recovered; TBX21 anti-aligned under knockdown), and across all 12 atlas cells knockdown is <em>never</em> the majority component. The eight-shuffle atlas z values are screening estimates. Positive residual genes are follow-up hypotheses, not proven activation targets.</p></div>
     </div>
   </section>
   <section class="chap" id="trust">
