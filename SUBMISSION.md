@@ -4,6 +4,8 @@
 
 **Built with Claude — Life Sciences Hackathon · Research / Lab Track**
 
+![Cell-State Reachability at a glance — the reframe; the Th2→Th1 flagship verdict (held-out cosine 0.448, above all 60 shuffled targets, KKT residual 1.1×10⁻¹¹); the signed 39/25/35 LOF/GOF/neither decomposition; and the four outputs.](docs/figures/fig_at_a_glance.png)
+
 > A GPS is useful for two reasons: it finds a route, and it tells you when the road you
 > need is not on the map. This project brings that second answer to cell engineering.
 

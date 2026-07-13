@@ -78,15 +78,7 @@
     - L2 — recommended recipes are provably additive-safe
     - L1 — a runnable test for the activation certificate (top priority)
     - Bottom line
-4. [Appendix D · Formulation Assessment](#appendix-d)
-    - 0 · What the data says the formulation actually *is*
-    - 1 · The reduction IS forced (three ways), so most "upgrades" are wrong
-    - 2 · The ONE free rigor upgrade: name the Moreau decomposition
-    - 3 · Genuine formulation opportunities (ranked by payoff / honesty)
-    - 4 · What NOT to do (traps that look like upgrades)
-    - 5 · Bottom line
-
-5. [Appendix E · Response to Reviewer 2 — Dataset Limitations](#appendix-e)
+4. [Appendix D · Response to Reviewer 2 — Dataset Limitations](#appendix-d)
     - At a glance
     - New analyses (the substantive additions)
     - Reframes
@@ -143,23 +135,23 @@ its self-test.
 
 | Stage | What | Status |
 |---|---|---|
-| Data integrity | Structure/dtype/NaN audit + self-knockdown orientation gate | ✅ passed |
-| QC reproduction | Cross-source concordance, per-condition significant counts | ✅ reproduced exactly |
-| Target construction | `toward_Th1` and `aging` signatures mapped into E's gene space | ✅ validated by markers |
-| Cone fit | NNLS projection onto the knockdown cone + KKT/Farkas certificate | ✅ certified optimal |
-| Honesty | Held-out-gene validation + shuffled-target null (60 shuffles) | ✅ above all shuffles (empirical p=1/61) |
-| Spectrum | Greedy sparse candidate panel + null band | ✅ above p99 at every k |
-| Positive control | GATA3↓ / TBX21↓ placement | ✅ both correct |
-| Dual certificate | Full separating residual + ranked positive unmet readouts | ✅ numerically valid; biology remains hypothetical |
-| Conditions + sensitivity | Rest/Stim8hr/Stim48hr × {z-score, log-fc} × {sig, all} | ✅ verdict stable |
-| Second axis | CD4 aging signature | ⚠️ ran; null correctly discounts it |
-| IV / compliance | Guide non-compliance as instrumental variables (ITT vs LATE; valid-instrument subset) | ✅ verdict invariant (max \|Δcos\|=2.2e-16 rescale, 4e-4 drop) |
-| A1 · sensitivity radius | Verdict robustness in measured-SE units (measurement-error bootstrap + coordinated-bias radius) | ✅ Th1/Th2 robust to noise, flip at ≈0.03 SE-units; aging axes fragile |
-| A3 · k-way additivity | Directional additivity retention vs recipe size (Norman-calibrated) | ✅ 0.71 (k=2) → 0.29 (k=12) |
-| A4 · weak instruments | Anderson–Rubin-style 1/π recipe-weight intervals | ✅ headline recipe clean; catches SNX5 (π≈0.07) |
-| A5 · negative controls | Housekeeping/proteasome negative-control-outcome projection | ✅ 4.1–5.5× positive-over-negative enrichment |
-| A6 · construct validity | Signed cosine of master-regulator KD vectors vs Th1 axis | ✅ TBX21↓/GATA3↓ correct-signed |
-| A2 · conditional reachability | Subtype-stratified re-solve | ⏳ scaffold — needs raw single-cell counts |
+| Data integrity | Structure/dtype/NaN audit + self-knockdown orientation gate | ✓ passed |
+| QC reproduction | Cross-source concordance, per-condition significant counts | ✓ reproduced exactly |
+| Target construction | `toward_Th1` and `aging` signatures mapped into E's gene space | ✓ validated by markers |
+| Cone fit | NNLS projection onto the knockdown cone + KKT/Farkas certificate | ✓ certified optimal |
+| Honesty | Held-out-gene validation + shuffled-target null (60 shuffles) | ✓ above all shuffles (empirical p=1/61) |
+| Spectrum | Greedy sparse candidate panel + null band | ✓ above p99 at every k |
+| Positive control | GATA3↓ / TBX21↓ placement | ✓ both correct |
+| Dual certificate | Full separating residual + ranked positive unmet readouts | ✓ numerically valid; biology remains hypothetical |
+| Conditions + sensitivity | Rest/Stim8hr/Stim48hr × {z-score, log-fc} × {sig, all} | ✓ verdict stable |
+| Second axis | CD4 aging signature | (!) ran; null correctly discounts it |
+| IV / compliance | Guide non-compliance as instrumental variables (ITT vs LATE; valid-instrument subset) | ✓ verdict invariant (max \|Δcos\|=2.2e-16 rescale, 4e-4 drop) |
+| A1 · sensitivity radius | Verdict robustness in measured-SE units (measurement-error bootstrap + coordinated-bias radius) | ✓ Th1/Th2 robust to noise, flip at ≈0.03 SE-units; aging axes fragile |
+| A3 · k-way additivity | Directional additivity retention vs recipe size (Norman-calibrated) | ✓ 0.71 (k=2) → 0.29 (k=12) |
+| A4 · weak instruments | Anderson–Rubin-style 1/π recipe-weight intervals | ✓ headline recipe clean; catches SNX5 (π≈0.07) |
+| A5 · negative controls | Housekeeping/proteasome negative-control-outcome projection | ✓ 4.1–5.5× positive-over-negative enrichment |
+| A6 · construct validity | Signed cosine of master-regulator KD vectors vs Th1 axis | ✓ TBX21↓/GATA3↓ correct-signed |
+| A2 · conditional reachability | Subtype-stratified re-solve | (WIP) scaffold — needs raw single-cell counts |
 
 ---
 
@@ -208,9 +200,9 @@ fit in 6,188-dimensional space *could* reach a lot by chance. It doesn't:
 Both ends of the Th1/Th2 axis land where immunology predicts:
 
 - **GATA3↓** (remove the Th2 master TF): cosine **+0.101, rank 155 / 6,871 (97.7th pctile)** —
-  top ~2%, pointing toward Th1. ✅
+  top ~2%, pointing toward Th1. ✓
 - **TBX21↓** (remove the Th1 master TF, T-bet): cosine **−0.099, rank 6,775 / 6,871
-  (1.4th pctile)** — bottom ~1%, correctly pointing *away* from Th1. ✅
+  (1.4th pctile)** — bottom ~1%, correctly pointing *away* from Th1. ✓
 
 GATA3 was **not** hand-picked into this result; it emerges from the geometry. Note it is a
 positive *control*, not a discovery — the source screen already reports it.
@@ -307,7 +299,7 @@ mostly-one-direction target needs the null even more than a balanced one.
 
 ## 4. What to improve (ranked)
 
-1. ~~**Fold the fast greedy into `reachability.py`.**~~ **✅ DONE.** `reachability_spectrum()`
+1. ~~**Fold the fast greedy into `reachability.py`.**~~ **✓ DONE.** `reachability_spectrum()`
    now defaults to the OMP-style fast path (`refit_full=False`): score candidates by residual
    correlation, refit NNLS on the small active set. `refit_full=True` keeps the exact reference.
    Verified same selection order, ~100× faster.
@@ -318,11 +310,11 @@ mostly-one-direction target needs the null even more than a balanced one.
 3. **Report the greedy spectrum as "the recipe," retire the dense support for interpretation.**
    Keep the dense fit for the reachable-fraction; use the sparse path for anything a biologist
    reads. *(Adopted in the atlas: nominations come from the greedy path only.)*
-4. ~~**Add a signed-reachability mode.**~~ **✅ DONE.** `signed_reachability()` fits knockdown
+4. ~~**Add a signed-reachability mode.**~~ **✓ DONE.** `signed_reachability()` fits knockdown
    (LOF) and sign-flipped activation (GOF) generators in two stages, reports the LOF/GOF/neither
    split, and certifies each stage. See §5. This became the centerpiece of the
    expansion.
-5. ~~**Cache the reduced matrices as a shipped artifact.**~~ **✅ DONE.** `analysis_cache/atlas_work/inputs.npz`
+5. ~~**Cache the reduced matrices as a shipped artifact.**~~ **✓ DONE.** `analysis_cache/atlas_work/inputs.npz`
    bundles all three per-condition effect matrices + the four transition targets; the atlas
    reruns from it in minutes without touching the 16.8 GB file.
 6. **Broaden the positive control.** GATA3/TBX21 is a two-point check; a fuller validation would
@@ -1011,7 +1003,7 @@ were run to close the sharpest of those gaps, and lays out the rest as a ranked 
 > unifies fraction and recipe (§8.3.5), a two-part activation-certificate validation (§8.3.6), a
 > directional-genetics cross-check (§8.3.7), ChEMBL mechanism-of-action grounding (§8.3.8), and a
 > forward-predictor head-to-head (§8.3.9).** The only items that remain open require a wet lab
-> or a GPU-hosted foundation model; they are marked as such in §8.4–§8.5. Every result below is
+> or a GPU-hosted foundation model; they require a wet lab or a GPU-hosted foundation model, and are flagged as such. Every result below is
 > backed by a saved CSV and a publication-grade figure.
 
 ---
@@ -1510,142 +1502,6 @@ Table: `forward_predictor_headtohead.csv` *(table not in repo)*.
 
 ---
 
-### 8.4 Methodological agenda — making the method itself stronger
-
-Ranked by value-per-effort. Items marked ✅ are delivered (above or in Part 1, Results); the
-rest are open, with the cheapest in-silico wins first.
-
-1. **✅ Non-negativity ablation (§8.3.1)** — L4 resolved.
-2. **✅ Propagate generator uncertainty into the verdict (§8.3.3)** — the biggest *unlisted*
-   gap, now closed. The dictionary is bootstrapped with the data-derived unit-noise model
-   (`zscore = log_fc/lfcSE` exactly), B = 200 per cell; the reachable/infeasible verdict never
-   flips (flip rate 0.0 in all 12 cells), with the aging-axis fine-grade caveat noted.
-3. **✅ Held-out / stability certificate test (§8.3.6)** — L1's in-silico half resolved. A
-   within-screen activation hold-out is impossible (CRISPRi has no activation arm), so the
-   certificate ranking's *reproducibility* (cross-half ρ = 0.65, z ≈ 35) plus a
-   literature/genetics cross-reference stand in. The remaining half — a prospective activation
-   arm — is wet-lab (W1 in the limitations plan). The honest caveat (top genes are markers/
-   negative regulators, not canonical drivers) is now documented.
-4. **✅ Unify the dense-vs-sparse split with one group-sparse object (§8.3.5).** The non-negative
-   group-sparse cone gives the fraction and the recipe from one fit, retaining ≥95% of the
-   dense reachable cosine, and makes the collinearity explicit (GATA3 resolved into its own
-   group).
-5. **✅ Report the dictionary's effective rank / conditioning (§8.3.4).** Stable numerical rank
-   ~10–15, participation-ratio rank ~3,400, condition number 379–706 — the near-degeneracy is
-   now a stated geometric property that grounds why the greedy genes (LAT2, RARA) are not the
-   canonical regulators.
-6. **Move additivity from calibrated-borrowed to modeled (L2) — open.** The magnitude-
-   saturation law (`M* = 13.9`, `§8.2.2`) is a real improvement but fit on K562
-   CRISPRa. The bounded second-order interaction term (L2 option 3) converts additivity from an
-   assumption into a modeled, bounded residual. This needs the in-domain double-knockdown data
-   (W2 in the limitations plan), so it is gated on a wet-lab measurement.
-
-**On the "novel algorithm" question specifically:** foreground the anisotropy-corrected null
-(`§8.2.4`) as *the* methodological result. It is currently an §8.2.4 subsection; it is
-the one piece of genuinely new derivation here (a closed form with a testable prediction,
-validated at Pearson 0.995), and it is what lets the significance test be both cheap and
-interpretable. Name it as a contribution, not a footnote.
-
----
-
-### 8.5 Experimental agenda — what a pharma reviewer would require before acting
-
-Putting on the target-selection hat: the framing (measured-not-inferred, genetic support,
-modality triage) is the right register, but as evidence for *acting* on a nomination the
-following are what a discovery team would demand. Ordered by how load-bearing they are; items
-already tracked in the limitations plan are marked.
-
-1. **A functional endpoint, not a transcriptional cosine (new).** The whole verdict is
-   signature-matching, and the project's own guardrail concedes a signature match is not
-   proof of functional rescue. A held-out cosine of 0.45 says nothing about whether the cell
-   *behaves* Th1. Require the reachable recipe to move a **functional readout** — IFN-γ
-   secretion, proliferation, persistence — not just the transcriptome. This transcriptome →
-   phenotype gap is the first thing a team asks and is on no current list.
-2. **Prospective test of *both* sides of one verdict (L1).** Reachable side: the minimal
-   knockdown set actually shifts cells toward Th1. Infeasible side: the certificate's CRISPRa
-   genes (LYAR, IKZF3, CRTAM, CBLB…) actually install the Th1 program. The infeasible-side
-   experiment is the one that makes the paper *right* rather than merely hard to dismiss.
-3. **◑ Genetic-to-pharmacological effect translation (new) — mechanism-level check delivered
-   (§8.3.8), signature-level check still open.** A CRISPRi knockdown is chronic, near-complete
-   genetic LOF; a drug gives partial, reversible, dose-dependent, off-target LOF. The ChEMBL
-   mechanism-of-action grounding now confirms an approved/clinical **LOF-direction** compound
-   exists for 6 of 10 green-light nominations and, decisively, flags **2 wrong-direction**
-   targets (IFNGR1, RARA — agonist-only). What remains is the *signature-level* connectivity
-   check — does a tool compound's transcriptome match the CRISPRi vector? — which needs a
-   LINCS/CMap L1000 connector (not available here) or a dose-response.
-4. **✅ Collateral-specificity screen (§8.3.2, new).** Delivered above for the four atlas axes;
-   the natural extension is projecting each recipe onto off-target states a team actually
-   fears (exhaustion, Treg→Teff, viability) once those signatures are in hand.
-5. **In-domain epistasis (L2).** ~50–100 double knockdowns measured in CD4⁺ T cells, spanning
-   the recipe sizes the oracle proposes. No team will trust an additivity ceiling borrowed
-   from a different cell type *and* a different modality (K562 CRISPRa → CD4 CRISPRi).
-6. **Robustness across donors / genotypes (L6).** The effect matrix is donor-collapsed, so
-   leave-one-donor-out is impossible on the primary data. Per-donor effect vectors + LODO, or
-   the external-validity claim stays "demonstrated once."
-7. **✅ Directional genetics, not just association count (§8.3.7, new).** "IRF1 has 17
-   immune-disease associations" is a portfolio-enrichment signal; the directional cross-check
-   found 2 concordant nominations, 7 indeterminate, and — importantly — **IRF1 flagged
-   MIXED/wrong-direction** (a discordant asthma eQTL), demonstrating that count is not
-   direction. The remaining rigor step is formal colocalisation / Mendelian randomization to
-   move "indeterminate" to a verdict.
-8. **✅ Head-to-head on the overlapping task (§8.3.9, L3).** The recipe was benchmarked against a
-   linear forward predictor and DE ranking on a common held-out split. The oracle does not win
-   on raw prediction (the unconstrained ridge does — via 50% impossible negative weights) but
-   leads among physically realizable methods, closing the "maybe it just cannot predict"
-   escape. The GEARS/CPA/scGPT-class comparison is remote-GPU-dependent and remains open.
-
-The genuinely *new* asks from the pharma lens — not in the original limitations plan — were the
-**functional endpoint (1, wet-lab, still open)**, the **genetic→pharmacological translation
-(3, mechanism-level now delivered)**, the **collateral-specificity profile (4, delivered for
-the atlas axes)**, and **directional genetics (7, delivered)**. Of these, only the functional
-endpoint now strictly requires a wet lab.
-
----
-
-### 8.6 One documentation fix (done)
-
-The positioning docs were already reconciled to the survey's true size — **91 prior methods**
-(the `method_comparison_matrix.csv` has 92 rows because it includes this work's own row) — in
-Part 2, Novelty & Impact (and the former `IMPACT.md`, now merged into it), consistent with Part 3, Related Work and
-`limitations_and_reinforcement_plan.tex` (L3). One residual slipped through: a single prose
-line in `Part 2, Novelty & Impact §2e` still described the survey as "34 methods across three research
-communities" while the quantitative counts two paragraphs below already read "91 prior methods
-/ 14 measured." That stray "34" is now corrected to "91 prior methods," so the survey size is
-stated consistently throughout. Part 3, Related Work states the headline counts over the 91 prior
-methods (this work's row excluded); nothing further remains to reconcile.
-
----
-
-### 8.7 Bottom line — a novel formulation with one novel algorithm
-
-It is a **novel formulation with one novel algorithm**, not a new optimizer — and it should be
-sold as exactly that. The nine results shipped here strengthen it on every axis a critic
-reaches for first, and — just as important — they surface the honest negatives that make the
-work credible:
-
-- **The cone earns its place.** The sign constraint is what makes an infeasibility certificate
-  possible (§8.3.1); the unconstrained alternative's apparent edge is 50%-composed of impossible
-  activations, at the single-cell scale (§8.3.1) and at the whole-atlas prediction scale (§8.3.9).
-- **The verdict is robust where it matters.** Propagating generator measurement noise leaves
-  the reachable/infeasible verdict unflipped in all 12 cells (§8.3.3); the near-degenerate
-  geometry is now a *stated* property (§8.3.4); and the two-object dense/greedy split collapses
-  into one group-sparse cone that keeps ≥95% of the reachable cosine (§8.3.5).
-- **The novel output is reproducible but bounded.** The activation certificate's ranking is
-  reproducible (z ≈ 35) and partially corroborated, with the honest caveat that its top genes
-  are markers/negative-regulators rather than the canonical drivers (§8.3.6).
-- **The pharmacology check does its job — by saying no.** Directional genetics flags a
-  high-count nomination (IRF1) as wrong-direction (§8.3.7); ChEMBL grounding confirms a
-  LOF-direction drug for six nominations and flags two (IFNGR1, RARA) as agonist-only (§8.3.8).
-  A grounding step that only ever confirmed would not be worth running.
-
-What genuinely remains needs a bench or a GPU, not more convex analysis: a **functional
-endpoint** (does the recipe make the cell *behave* Th1, not just match its transcriptome —
-W1), **in-domain double-knockdown epistasis** (W2), **per-donor leave-one-donor-out** (W3), a
-**signature-level LINCS/CMap connectivity** check, and a **GEARS/CPA/scGPT-class** predictor
-comparison. The convex core has now been pushed as far as in-silico work can take it.
-
----
-
 ## 9. Bottom line for the hackathon
 
 The method does what the project claims: it converts a screen into a **falsifiable reachability
@@ -1654,58 +1510,6 @@ and biologically coherent — *knockdown removes Th2, cannot install Th1, and he
 that force the difference.* The honest framing is not "we polarize cells by knockdown" but
 "we can tell you, with a certificate, exactly how far a knockdown screen can get and where it
 provably stops." That is the decision-useful claim, and it is supported end-to-end.
-
-### Artifacts produced
-
-*Method module: `reachability.py`. Cached inputs: `analysis_cache/atlas_work/inputs.npz` (all
-three per-condition effect matrices + four transition targets) and
-`notebooks/cache/E_{Rest,Stim8hr,Stim48hr}.npz`.*
-
-**Notebooks**
-- `notebooks/01_exploratory_data_analysis.ipynb` — Tier-1 QC + data audit
-- `notebooks/02_reachability_on_tier2.ipynb` — the Th2→Th1 headline pipeline (validated end-to-end)
-- `notebooks/03_generalizability_and_impact.ipynb` — cross-dataset K562 CRISPRa demo
-- `notebooks/04_experimental_design_toolkit.ipynb` — `design_experiment()`: verdict → calibrated recipe → modality triage (see §7)
-- `notebooks/05_target_id_showcase.ipynb` — "From screen to shortlist" pharma target-ID walkthrough
-- `notebooks/08_deg_weighted_evaluation.ipynb` — DEG-weighted evaluation & metric calibration (Needles-in-the-Haystack robustness test; §8.2.5)
-- `notebooks/06_reinforcement_analyses.ipynb` — L1/L2/L4/L5 reinforcement battery (see Appendix C, Reinforcement Analyses)
-- `notebooks/07_cross_celltype_transfer.ipynb` — K562/RPE1 cross-cell-type transfer (see Appendix B, Cross-Cell-Type Transfer)
-
-**Headline figures** (`notebooks/figures/`)
-- `fig1_reachability_spectrum.png` — reachable cosine vs k with null band
-- `fig2_decomposition_certificate.png` — reachable/activation split + CRISPRa candidates
-- `fig3_condition_comparison.png` — reachability across culture conditions
-- `fig4_positive_control.png` — GATA3↓ / TBX21↓ placement in the alignment distribution
-- `fig5_heldout_null.png` — held-out cosine vs shuffled-target null (z ≈ 24, 60 shuffles)
-
-**Expansion figures** (`notebooks/figures/`)
-- `fig_atlas_decomposition.png` — LOF/GOF/neither across the 12 atlas cells
-- `fig_modality_triage.png` — genetics × druggability triage of the 102 knockdown nodes
-- `nb03_fig1_norman_spectrum.png`, `nb03_fig2_norman_decomposition.png` — K562 CRISPRa demo
-
-**Post-hackathon advance figures (§8.2)**
-- `fig_positive_control_enrichment.png` — regulator-panel positive control (TF AUROC = 1.00)
-- `fig_additivity_risk.png` — Norman saturation-law fit + per-recipe additivity risk (all < 0.1)
-- `fig_anisotropy_null.png` — closed-form anisotropy-corrected null vs empirical shuffled null
-
-**Tables** (`results/`)
-- Headline (nb02): `table1_verdict.csv`, `table2_minimal_recipe.csv`,
-  `table3_activation_certificate.csv`, `condition_comparison.csv`, `table5_null_summary.csv`
-- Expansion: `atlas_reachability.csv` (12 cells), `modality_intervention_map.csv` (102 nodes),
-  `genetics_crossverification.csv` (52 genetically-supported nominations),
-  `tractability_grounding.csv`, `dataset_catalog.csv` (13 transfer datasets)
-- K562 demo: `norman_table1_verdict.csv` … `norman_table5_null_summary.csv`
-- Post-hackathon (§8.2): `positive_control_enrichment.csv`, `positive_control_stats.csv`,
-  `atlas_additivity_risk.csv`, `norman_additivity_calibration.csv`,
-  `anisotropy_null_validation.csv`
-- Reinforcement (nb06, `analysis_cache/nb_out/`): `L4_constraint_ablation.csv` (NNLS-vs-unconstrained),
-  `L5_reachable_cosine_ceiling.csv` (achievable ceiling), `L2_magnitude_capped_recipes.csv` +
-  `L2_recipe_reliability_detail.csv` (per-recipe additivity reliability),
-  `L1_certificate_test_scaffold.json` (synthetic dual-modality certificate test)
-- Cross-cell-type (nb07, `analysis_cache/czi_data/`): `cross_celltype_effects.npz` (aligned K562/RPE1 basis),
-  `per_perturbation_transfer.csv` (843 perturbations), `transfer_summary.json`
-
----
 
 <a id="part-2"></a>
 
@@ -1942,7 +1746,7 @@ Th2→Th1 shift is reachable by knockdown; 28% requires activation, concentrated
 {TBX21, STAT4, ...}" is a far richer, more falsifiable claim than a single verdict, and
 it is a direct consequence of the geometry already in hand.
 
-**(d) Turn the additivity caveat into a model feature. ✅ done (post-hackathon).**
+**(d) Turn the additivity caveat into a model feature. ✓ done (post-hackathon).**
 The original plan was to penalise co-selecting genes with *collinear* effect vectors
 (shared downstream program → predicted sub-additivity). Calibrating against the 126
 measured Norman doubles **refuted that specific mechanism** (Spearman ρ ≈ −0.16 with
@@ -3629,67 +3433,6 @@ effect matrices.
 Th1 directly or through TBX21/GATA3, refining the minimal recipe toward direct actors — is
 developed under B2.)*
 
-### Implementation architecture — where each item lives (notebook vs prose)
-
-The repo organizes notebooks by **audience/question** (01 explore → 02 headline method → 03
-generalizability → 04 experimental-design toolkit → 05 pharma showcase → 06 robustness
-battery → 07 transportability → 08 evaluation), not by technique. Causal inference is a *lens
-over existing work*, so it should be connective tissue, not a standalone notebook.
-
-**Do not create a `causal_inference.ipynb`** — it would fight the audience-axis organization,
-duplicate this doc, and re-implement what 02/06/07 already compute. A reviewer opens a
-notebook asking "can I trust this verdict?", not "where is the causal inference?" — the
-causal machinery is the answer, not the question.
-
-Placement (forced by the fact that Part A produces computed output and Part B does not):
-
-| Item | Home | Rationale |
-|---|---|---|
-| A1 sensitivity radius ★, A4 weak-instrument intervals, A5 negative-control-outcome, A6 construct validity | **NB-B "Can I trust it?"** (`notebooks/09_causal_validation_dossier.ipynb`) | these *are* the trust layer; NB-B's spine = the assumption-stack table in §7 |
-| shipped IV/compliance (`run_iv_compliance.py`) | fold into NB-B | it is the dossier's first section |
-| A2 conditional / CATE reachability | scaffold only → forward-note in `02_reachability_on_tier2` | blocked in-sandbox (needs raw single-cell counts, not present); a new capability once the data is pulled |
-| A3 k-way additivity bound | augment `06_reinforcement_analyses` | additivity already lives here; A3 is its cardinality-aware extension |
-| B1 spillover, B2 mediation, B3 dynamic, B4 transportability | **prose only** — this doc + manuscript Future Work | experimental designs with no computable output; a protocol in a notebook is a category error |
-| B1/B2 experiment *designs*; B4 template | optional stubs in `04_experimental_design_toolkit`; forward-note in `07_cross_celltype_transfer` | 04 already turns a verdict into a runnable experiment; 07 is the transportability template |
-
-Net for a full A+B build: **one new notebook (NB-B)** + three augmentations (02, 06, 07) +
-optional design stubs in 04. Zero of Part B becomes a notebook. (NB-C, the certificate
-deep-dive, is a separately-planned showcase notebook and is orthogonal to this — do not merge
-them.)
-
-### Build status
-
-Part A is built and executed; Part B is threaded into the manuscript Future Work. The
-computable analyses live in `notebooks/09_causal_validation_dossier.ipynb` (the trust
-dossier) with their result files in the repo root.
-
-| Item | Status | Deliverable |
-|---|---|---|
-| **A1** verdict sensitivity radius ★ | **built** | `a1_sensitivity_radius.csv`, `fig_a1_sensitivity.png` — Th1/Th2 robust to measurement error, flip under ≈8 % coordinated bias (≈0.03 SE-units); aging axes fragile at Stim48hr |
-| **A3** k-way additivity bound | **built** | `a3_kway_additivity_bound.csv` — directional retention 0.71 (k=2) → 0.29 (k=12); augments notebook 06 §3b |
-| **A4** weak-instrument intervals | **built** | `a4_weak_instrument_intervals.csv` — AR-style 1/π set; catches SNX5 (π≈0.07 → weight-multiplier CI [4.4, 398]) |
-| **A5** negative-control outcomes | **built** | `a5_negative_control_outcome.csv` — 4.1–5.5× positive-over-negative-control mass enrichment |
-| **A6** directional construct validity | **built** | `a6_construct_validity.csv` — TBX21↓/GATA3↓ correct-signed; STAT6 notable vs null |
-| **A2** conditional reachability | **scaffold** | `a2_conditional_reachability_scaffold.py` + schema — blocked in-sandbox (raw single-cell counts absent); notebook 02 §8b forward-note |
-| **B1** cytokine-spillover / SUTVA | **prose + design stub** | manuscript Future Work; notebook 04 §9b design stub |
-| **B2** mediation | **prose + design stub** | manuscript Future Work; notebook 04 §9b design stub |
-| **B3** dynamic reachability / g-methods | **prose** | manuscript Future Work |
-| **B4** transportability / selection diagram | **prose** | manuscript Future Work; notebook 07 forward-note |
-
-The single most useful *next* build, once raw single-cell counts are available, is **A2** —
-it is the one Part-A analysis that is designed but not executed, and it directly addresses the
-homogeneous-effect assumption (IV) that the pooled ATE cannot see.
-
-Beyond trust, the same Part-A objects form the **counterfactual explanation** of the verdict
-developed in §6 — the recipe is an actionable counterfactual, the signed decomposition is its
-contrastive foil, the activation certificate is the cross-modality witness, and the A1 radius
-is an assumption-level counterfactual. Because the action space is the cone's non-negativity
-constraint and each generator is a measured interventional effect, these counterfactuals are
-*feasible* and *causally valid* by construction — the two properties post-hoc explanation
-methods for black-box models cannot guarantee.
-
----
-
 ## 9. Validation ledger — the honest audit
 
 *A candid audit of which core assumptions are actually validated, which are not yet, and the
@@ -3742,85 +3485,6 @@ the in-sample cone cosine to 1e-4, so the headline 0.448 is **71% of the achieva
 
 That is a **healthy** place to be at a hackathon: the hard machinery is done, and the
 remaining work is a well-defined validation layer, not open-ended research.
-
-### 9.3 Experiments that can be conducted (prioritized)
-
-**Tier A — closes a named validation gap (do these first)**
-
-1. **Pre-registered biological-recovery test** *(closes gap #5 — highest value).* Freeze the
-   hypothesis — "known master regulators of the target state rank in the top-k of the recipe
-   and align above marker genes" — **before** looking, then test it on an *independent* axis
-   (the aging axis, or a fresh lineage transition) and/or an independent dataset. Converts
-   AUROC = 1.00 from suggestive to confirmatory. *CPU-cheap; needs one labeled independent
-   axis.*
-2. **Out-of-sample double-perturbation prediction** *(hardens gap #3).* Fit the cone on single
-   perturbations, **predict** the measured double, report held-out cosine + magnitude error —
-   on Norman *and* the Day-2 combinatorial screens. Turns "additivity is a reasonable
-   approximation" into "additivity predicts unseen combinations to within X%." *Data: Norman
-   (have) + Replogle/Adamson (Day-2 fetch).*
-3. **Gain-of-function transfer on the Joung TF atlas** *(closes gap #4).* Test the
-   "must-activate" certificate against real overexpression ground truth (GSE216463). Already
-   in roadmap Day 2. *Data: Day-2 fetch.* **◐ Scaffolded (nb06 L1):** the scorer is now
-   packaged as a runnable `held_out_modality_test` and verified on synthetic ground truth
-   (AUROC 0.999, z 8.9); it runs unchanged the moment a dual-arm CRISPRi+CRISPRa screen on one
-   axis is in hand — see `analysis_cache/nb_out/L1_certificate_test_scaffold.json`.
-4. **Negative-control / specificity test** *(new — reviewers always ask).* Run transitions
-   that *should* be unreachable (cross-lineage jumps, or targets beyond the shuffle null) and
-   confirm the method returns low reach + high must-activate + non-significant corrected p.
-   Establishes the false-positive behavior. *CPU-cheap; uses existing data.*
-5. **Leave-one-donor-out cross-validation** *(closes the donor half of gap #2).* Rebuild the
-   cone dropping each donor; confirm the verdict is stable. Now affordable because the
-   analytic null replaces the ~12-min empirical null. *CPU-moderate; uses existing CD4 data.*
-
-**Tier B — extends impact and generalizability**
-
-6. **Saturation-law cross-dataset transfer** (Replogle + Adamson) — roadmap Day 2.
-7. **Retrospective pharma-value analysis** *(the impact money-shot).* Cross-reference the
-   existing 102-target triage (reachable × druggable × genetically-supported) against
-   historical clinical outcomes via Open Targets / openFDA. Question: do reachable +
-   genetically-supported + tractable targets show measurably better historical success?
-   Connects the method's output directly to the "genetic support → 2.6× approval odds" and
-   "~90% of programs fail" framing in Part 2, Novelty & Impact. *Data: allowlisted public APIs.*
-8. **Linearity / distance-from-reference boundary** *(defines the operating envelope).*
-   Characterize how the reachable cosine degrades as the target moves further from the
-   reference state — the honest statement of where the local-linear cone is trustworthy.
-
-**Roadmap fit:** #3 and #6 are already Day 2. #1, #2, #4 are natural Day-2 afternoon
-additions (they reuse the same fetched data). #5, #7, #8 are strong **stretch goals** or a
-post-hackathon manuscript track.
-
-### 9.4 New notebooks — by audience and impact
-
-Three distinct readers want three distinct stories. Each notebook is a self-contained
-narrative that *shows* the method, not just describes it.
-
-- **NB-A · "From screen to shortlist" — for pharma target-ID** *(most impactful to pharma)* —
-  **✓ BUILT (`notebooks/05_target_id_showcase.ipynb`)**. A decision-useful walkthrough: pick a
-  disease-relevant transition → reachability verdict → reach vs. must-activate split → ranked
-  knockdown/activation recipe → druggability + human-genetics triage → modality call. Ends
-  with a one-page "target dossier." Reuses `design_experiment()` and the 102-node triage.
-  *This is the notebook a target-ID or BD team would actually open.*
-- **NB-B · "Can I trust it?" — for reviewers / methods readers** *(manuscript backbone)*. One
-  notebook that runs the whole validation layer in sequence: the pre-registered recovery test,
-  the null calibration, the out-of-sample additivity prediction, the negative controls, and
-  cross-dataset concordance. The "validation dossier" a referee needs. *Built as
-  `notebooks/09_causal_validation_dossier.ipynb`, with its role also served by
-  `06_reinforcement_analyses.ipynb` (the L1–L5 validation battery) and
-  `07_cross_celltype_transfer.ipynb` (cross-cell-type generalization).*
-- **NB-C · "The certificate: when NOT to run the experiment" — the differentiator**. Focuses
-  on the one thing no ranking tool has: the Farkas/activation certificate. Take an unreachable
-  transition, *prove* it, name the genes that must be activated, and contrast with the (wrong)
-  shortlist a naive correlation ranking would return. The clearest answer to "why this and not
-  a gene-ranking heatmap?" NB-C (the certificate deep-dive) remains the sharpest one-figure
-  differentiator if time allows.
-
-*The validation ledger is grounded in a direct read of Part 1, Results (§3 held-out validation,
-§5 signed decomposition, §6 post-hackathon advances) plus the two reinforcement writeups
-Appendix C, Reinforcement Analyses (L1/L2/L4/L5) and Appendix B, Cross-Cell-Type Transfer
-(K562/RPE1 transfer). Every number above is quoted from the repo's own results — no number is
-introduced here that a linked CSV or notebook does not reproduce.*
-
----
 
 ## 10. Adversarial dataset appraisal (Reviewer 2)
 
@@ -4484,183 +4148,7 @@ the #1 limitation becomes a ready-to-run experiment. All outputs are in `nb_out/
 
 <a id="appendix-d"></a>
 
-# Appendix D · Formulation Assessment
-
-*An adversarial audit of the core mathematical reduction, grounded in numbers recomputed
-from `analysis_cache/atlas_work/inputs.npz` (E_Rest: 6871 perturbations × 10,282 genes;
-targets t_toward_Th1/Th2/younger/older). Companion figure: `formulation_diagnostics.png`.*
-
-The question is not "is NNLS on a cone a good idea" (it is) but "is it the formulation the
-physics *forces*, or a convenient one, and do recent advances in convex geometry / control /
-optimal transport offer a strictly better object?" Below, each candidate upgrade is tested,
-not asserted.
-
----
-
-## 0 · What the data says the formulation actually *is*
-
-Two measurements reframe the whole question:
-
-| quantity | value | consequence |
-|---|---|---|
-| in-sample unconstrained fit cos(proj_row(E)(d), d) | **1.0000** | P(6871) > G_readout(6188): the system is **underdetermined**. Any target is exactly in the span. |
-| held-out cost of non-negativity (NNLS vs unconstrained) | **+0.043** (Th1), −0.011…+0.043 across 12 cells | The cone's real job is **implicit regularization**, and its true price is already measured (L4). |
-
-**Implication.** The reachability signal does **not** come from the linear span (that is full,
-trivially). It comes entirely from the **non-negativity constraint** turning an underdetermined
-system into a well-posed one whose feasible set has a boundary. So the honest headline is not
-"d lies in the span" — it's "d lies in the *cone*, and the cone is a data-driven regularizer
-whose out-of-sample cost we have quantified." That is a subtler and more defensible claim than
-the current framing, which leans on span-membership language that is in-sample vacuous.
-
----
-
-## 1 · The reduction IS forced (three ways), so most "upgrades" are wrong
-
-**1a. Non-negativity is not a modeling choice — it is the assay.** CRISPRi applies a knockdown
-or does not; there is no negative dose. Co-perturbation is (approximately) additive. Those two
-facts *are* `C = {Eᵀw : w ≥ 0}`, a finitely generated (polyhedral) convex cone. Any formulation
-that drops w ≥ 0 is answering a different, non-physical question (and the L4 ablation shows the
-unconstrained fit buys its 0.043 with ~3,500 negative weights — unrealizable).
-
-**1b. Nonlinearity / kernelization HURTS.** The intuitive upgrade — "combinations aren't linear,
-use a kernel cone / quadratic feature map to capture synergy" — was tested directly. Top-20
-generators + 190 pairwise synergy features, non-negative, held-out on Th1:
-
-| model | held-out cosine |
-|---|---|
-| linear cone (top-20 generators) | **0.422** |
-| + 190 pairwise synergy features | **0.395** (−0.027) |
-
-Synergy features *reduce* held-out fit. This is exactly what the project's own Norman-2019
-epistasis calibration already predicts: directional non-additivity is ≈ measurement noise
-(median cos rises 0.64→0.81 with effect size), and the only robust epistasis is **magnitude
-saturation** (sub-additive), which shrinks the reachable set rather than bending it into new
-directions. So a nonlinear reachable set would be *smaller*, not richer. **Verdict: linearity is
-the right first-order model; the epistasis correction belongs (as it already is) in a magnitude
-penalty, not in the geometry.**
-
-**1c. The verdict inherits classical optimality certificates.** NNLS is a convex QP; its KKT
-conditions are Farkas' lemma for cones. The certificate residual (max_p ⟨e_p, ρ⟩ ≈ 1e-11) is a
-numerical proof of the "outside" verdict. No new theory is needed here and none should be
-claimed.
-
----
-
-## 2 · The ONE free rigor upgrade: name the Moreau decomposition
-
-The signed LOF / GOF / neither split is presented in `reachability.py` as a *construction*
-("we fit LOF, then GOF on the residual, and the three squared norms happen to sum to 1"). It is
-not a happy accident — it is the **Moreau decomposition** theorem: for a closed convex cone C
-with polar cone C°, every vector decomposes **uniquely and orthogonally** as
-`d = P_C(d) + P_C°(d)` with `⟨P_C(d), P_C°(d)⟩ = 0`. Verified on the real data:
-
-| target | cos(fit, residual) | Pythagorean gap ‖d‖²−(‖fit‖²+‖resid‖²) | residual in polar cone (max ⟨e_p,ρ⟩) |
-|---|---|---|---|
-| Th1 | −1.1e-16 | −2.9e-11 | 1.0e-11 |
-| Th2 | 8.5e-17 | 0.0 | 1.1e-11 |
-| older | −2.5e-16 | 3.6e-12 | 2.9e-12 |
-
-The "neither" residual **is** the polar-cone projection; the certificate direction ρ **is** an
-element of C°. Citing Moreau (1962) turns three empirical facts into one named theorem and gives
-the exact-orthogonality claim a citation instead of a numerical coincidence. **This is the single
-highest-leverage, lowest-risk change: one paragraph, real mathematical grounding, zero new code.**
-
----
-
-## 3 · Genuine formulation opportunities (ranked by payoff / honesty)
-
-These are real, but each is an *addition* to the cone, not a replacement of it.
-
-**3.1 — Report the cone as a regularizer with a formal complexity control (HIGH).**
-Since the span is full in-sample, the interesting quantity is the cone's generalization gap.
-Two principled handles the current work doesn't use:
-- **Conic / statistical dimension** (Amelunxen–Lotz–McCoy–Tropp 2014, "Living on the edge"):
-  the phase-transition theory of random cone programs gives the *expected* reachable fraction
-  of a random target as a function of the cone's statistical dimension δ(C). That is a
-  first-principles null for "how much should a random target be reachable" — a closed-form
-  companion to the existing shuffled-target and analytic-anisotropy nulls, and arguably a
-  cleaner one because it is a property of the cone geometry, not of a resampling procedure.
-- The held-out cone cost (0.043) is an *empirical* effective-dof measure; δ(C) would make it
-  theoretical.
-
-**3.2 — Distributionally-robust / chance-constrained membership (HIGH, partly built).**
-The verdict is a point decision on a noisy Ê. NB-B already does the right *empirical* thing
-(resample E ~ N(Ê, SE²), worst-case coordinated-bias adversary β*, Anderson–Rubin weight
-intervals). The formulation upgrade is to make "is d ∈ C" itself **robust**: replace the point
-cone with an ambiguity set and ask "is d in the cone for *all* E in a norm-ball / for the cone
-with probability ≥ 1−ε". This is a tractable robust-conic / RO program (Ben-Tal–El Ghaoui–
-Nemirovski), and it converts the Monte-Carlo sensitivity radius into a *certified* robust
-feasibility verdict — the certificate then proves "outside under every plausible E", which is
-strictly stronger than "outside at Ê". This is the most defensible "advance the theory" move
-and it fuses cleanly with the existing A1 machinery rather than replacing it.
-
-**3.3 — Recipe sparsity as an explicit program, not a greedy afterthought (MEDIUM).**
-The dense NNLS "recipe" is 715 generators; the greedy top-10 hold ~6% of the weight. The paper
-already reports a knee (k≈4–5) via a greedy spectrum, but the *formulation* could own this:
-non-negative LASSO / elastic-net cone (add λ‖w‖₁ to the NNLS objective) gives a principled
-sparsity-accuracy frontier with a regularization path, instead of a post-hoc greedy heuristic.
-Combined with the existing magnitude-saturation penalty this is a single penalized-NNLS program
-whose solution is *both* additive-safe and short. Low theoretical novelty, high practical honesty.
-
-**3.4 — Dynamics: the cone is a one-step reachable set (MEDIUM/SPECULATIVE).**
-The deepest limitation is conceptual: `{Eᵀw : w ≥ 0}` is the set reachable in **one additive
-step** from the current state, assuming effects measured at one time compose. Cell-state change
-is a *trajectory*. Two literatures formalize the multi-step version:
-- **Data-driven reachability / zonotopes** (control theory, active 2024–25): propagate a
-  reachable *set* through steps with set-valued arithmetic. A cone is the ray-limit of a
-  zonotope; the honest generalization of "reachable" over T steps is a reachable-set recursion.
-- **Koopman operator** methods learn a linear operator advancing observables, turning nonlinear
-  state dynamics into a linear (hence cone-compatible) propagator — a principled way to compose
-  effects across time rather than assuming one-shot additivity.
-- **Schrödinger-bridge / entropic-OT** perturbation models (e.g. neural SB, 2025) treat the
-  target as a *distribution* to transport to, not a single mean shift d — which also naturally
-  handles the fact that E and d are population means with spread.
-These are genuine reformulations, not tweaks, and each is a paper on its own. For the current
-scope they belong in "future directions," clearly flagged as changing the object from
-one-step-mean-shift to trajectory/distributional reachability. **Do not claim them as done.**
-
-**3.5 — Distributional target (MEDIUM).** d is a mean shift; the assay gives a full distribution.
-Optimal-transport / MMD distance to the target *distribution* (rather than cosine to the mean
-vector) is a strictly richer objective and connects to 3.4's SB view. This is the most
-"physics-formulation-flavored" upgrade that is still tractable on current data.
-
----
-
-## 4 · What NOT to do (traps that look like upgrades)
-
-- **Don't drop non-negativity for a linear-subspace method.** In-sample it is vacuous (cos=1);
-  held-out it is unrealizable (negative knockdowns). The cone is the point.
-- **Don't kernelize for synergy.** Tested: it hurts held-out (§1b) and contradicts the measured
-  epistasis structure.
-- **Don't claim a "new convex method."** NNLS/Farkas/Moreau/KKT are classical. The novelty is the
-  *reduction* (perturbation-atlas reachability ≡ conic membership) + the closed-form
-  anisotropy null. Overclaiming the optimization is the fastest way to lose a reviewer.
-- **Don't prove convexity from scratch.** It is inherited. Cite, don't re-derive.
-
----
-
-## 5 · Bottom line
-
-The non-negative cone / NNLS reduction is **correct and, for a one-step mean-shift model, close
-to optimal** — three independent tests (span is full so the constraint is the whole signal;
-kernel synergy hurts; epistasis is magnitude-only) say the geometry is right and most "richer"
-objects are worse. The formulation is under-*credited* more than it is under-*powered*: the
-Moreau decomposition (§2) should be named, and the cone should be presented as a data-driven
-regularizer with a conic-dimension null (§3.1) rather than via in-sample span language.
-
-The one direction where recent math genuinely raises the ceiling is **robust/chance-constrained
-conic membership** (§3.2) — it upgrades the certificate from "outside at the point estimate" to
-"outside under every plausible effect matrix," it is tractable, and it fuses with the sensitivity
-analysis already built. The trajectory/distributional reformulations (§3.4–3.5: zonotope
-reachable-set recursion, Koopman propagators, Schrödinger-bridge OT targets) are the honest
-"next paper," and should be scoped as changing the *object*, not tuning the *solver*.
-
----
-
-<a id="appendix-e"></a>
-
-# Appendix E · Response to Reviewer 2 — Dataset Limitations
+# Appendix D · Response to Reviewer 2 — Dataset Limitations
 
 *Companion to the adversarial dataset appraisal, now consolidated into the "Reviewer 2" section of Part 4, Trust & Causal Inference (§10). Each limitation raised
 there is addressed here by one of four remedies — **reframe**, **new analysis**, **state**, or

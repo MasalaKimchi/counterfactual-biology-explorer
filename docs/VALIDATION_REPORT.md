@@ -39,7 +39,7 @@ fact ledgers, and method documentation.
 | Literature matrix | `method_comparison_matrix.csv` | 92 rows including this work; 91 prior; 14 prior rows rated fully measured; no prior row rated fully measured + full feasibility verdict |
 | Core software | `pytest tests/test_reachability.py -vv -s` | 11/11 passed in 154.89 s on the final audit run |
 | Manuscript render | all 25 pages rendered and inspected | no clipping, overlap, broken figures, or unreadable glyphs |
-| Technical dossier render | all 101 pages rendered to a contact sheet; first pages inspected at full resolution | no clipping, overlap, missing figures, or broken glyphs observed |
+| Technical dossier render | all 99 pages rendered to images; representative pages inspected at full resolution | no clipping, overlap, missing figures, or broken glyphs observed |
 
 ## Material issues corrected
 

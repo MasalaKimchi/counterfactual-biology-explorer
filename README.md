@@ -2,6 +2,8 @@
 
 **Built with Claude — Life Sciences Hackathon · Research / Lab Track**
 
+![Cell-State Reachability at a glance — the reframe; the Th2→Th1 flagship verdict (held-out cosine 0.448, above all 60 shuffled targets, KKT residual 1.1×10⁻¹¹, verdict "partially reachable"); the signed 39/25/35 LOF/GOF/neither decomposition; the four outputs; and the honest-scope line.](docs/figures/fig_at_a_glance.png)
+
 ## Can knockdown point a cell where you want it to go?
 
 A GPS does more than suggest a route: it can tell you when the road you need is not on the

@@ -58,4 +58,3 @@ manuscript/**/*.aux
 # ── Process / operating docs — kept local, not part of the deliverable ─────────
 AGENTS.md
 CLAUDE.md
-CHANGES.md
