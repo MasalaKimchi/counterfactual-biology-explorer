@@ -58,3 +58,6 @@ manuscript/**/*.aux
 # ── Process / operating docs — kept local, not part of the deliverable ─────────
 AGENTS.md
 CLAUDE.md
+
+# ── Phase 2 planning doc — local only, never push (post-hackathon internal plan) ─
+phase2_plan.md
