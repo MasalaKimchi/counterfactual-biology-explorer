@@ -40,6 +40,7 @@ target_measured = int(target_scope["shared_screen_genes"])
 target_analyzed = int(target_scope["registered_genes"])
 transfer = findings["cross_source_directional_transfer"]
 arce = findings["arce_external_validation"]["spearman"]
+arce_activation = findings["arce_external_validation"]["activation_score_robustness"]
 if len(split_values) != 12:
     raise ValueError("unexpected source-bound split count")
 
@@ -269,8 +270,12 @@ label(
     x + 1.8,
     29.0,
     f"Arce rank alignment: {arce['Resting_Teff']:.3f} / {arce['Stimulated_Teff']:.3f} / {arce['Resting_Treg']:.3f}\n"
-    "not donor or state validation",
-    size=8.4,
+    f"S14 selected-panel A-vs-B ranks (n=2): {min(arce_activation['donor_spearman'].values()):.2f}–"
+    f"{max(arce_activation['donor_spearman'].values()):.2f}; four-stratum signs: "
+    f"{min(arce_activation['all_two_guides_two_donors_same_sign_fraction'].values()):.0%}–"
+    f"{max(arce_activation['all_two_guides_two_donors_same_sign_fraction'].values()):.0%}\n"
+    "descriptive robustness, not donor/state validation",
+    size=7.7,
     color=MUTE,
     style="italic",
     va="top",

@@ -180,7 +180,8 @@ an additional direct readout is located.
    cytokine agreement. Never treat CRISPRa as scale-matched negative CRISPRi.
 3. Use [Arce et al.](https://doi.org/10.1038/s41586-024-08314-y) GSE271090/GSE278572 for
    context sign reversals and RNA/protein agreement. The first S1 IL2RA/CD25 ranking
-   benchmark is implemented; donor/guide-grain S14 and orthogonal S20/S4 endpoints remain.
+   benchmark and S14/S8 donor/guide supplied-score robustness are implemented; orthogonal
+   S20/S4 RNA/protein endpoints and independent donors remain.
 4. Retain Norman/Replogle only as out-of-domain numerical and combination benchmarks.
 
 Exit gate: reported conclusions name the assay, cell system, modality, donor unit, and
@@ -296,8 +297,9 @@ reviews precede manuscript wording.
    interval coverage, power, abstention, and coefficient-equivalence analysis. Exit only
    if target-specific performance clears the best frozen baseline with calibrated
    uncertainty.
-3. **Independent compact benchmarks.** The aggregate Arce S1 IL2RA/CD25 transfer is now
-   implemented. Next add its donor/guide and RNA/protein strata, then Schmidt CRISPRa/i
+3. **Independent compact benchmarks.** The aggregate Arce S1 IL2RA/CD25 transfer and
+   S14/S8 donor/guide supplied-score robustness are implemented. Next add orthogonal
+   RNA/protein strata, then Schmidt CRISPRa/i
    orientation and cytokine transfer. Treat the Goudy triple as descriptive until sample
    mapping and reuse terms are resolved. Exit only with dataset-specific grain,
    confounding, and claim ceilings attached to every result.

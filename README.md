@@ -22,6 +22,7 @@ nor a trajectory.
 | **25,672 → 11,616 → 7,960 → 6,188 genes** | Target union → shared sources → concordant signs → screen-measured registered target. |
 | **+0.087 / +0.090 logFC cosine** | Ota→Höllbacher / reverse mean improvement over the better of a mean ray and best single atom across six correlated splits. Directional only: normalized RMSE does not improve. |
 | **Arce Spearman 0.148 / 0.084 / 0.088** | Cross-study CRISPRi-transcript to CRISPR-KO CD25 ranking alignment in resting Teff / stimulated Teff / resting Treg; modest and context dependent. |
+| **Selected-panel donor A-vs-B target-rank concordance 0.73–0.93; four-stratum sign agreement 50–64%** | Authors' preselected 28-regulator panel, exactly two donors/two guides; descriptive supplied-score concordance with guide heterogeneity, not genome-wide or donor validation. |
 
 The systemic harness independently checks NNLS solutions, provenance and axis faults,
 group leakage, exact uncertainty around familywise error, common-response confounding,
@@ -81,7 +82,7 @@ candidate ranking.
 | [`validation.py`](validation.py) | Oracle, label/provenance, grouped-split, and multiplicity contracts |
 | [`scripts/run_validation_harness.py`](scripts/run_validation_harness.py) | Deterministic systemic synthetic stress harness |
 | [`scripts/run_source_reconstruction.py`](scripts/run_source_reconstruction.py) | Full-file-hash-bound target and cross-source reconstruction |
-| [`scripts/run_arce_external_validation.py`](scripts/run_arce_external_validation.py) | Independent CRISPRi-transcript to CRISPR-KO CD25 benchmark |
+| [`scripts/run_arce_external_validation.py`](scripts/run_arce_external_validation.py) | Independent CD25 transfer plus donor/guide supplied-score robustness |
 | [`results/findings.json`](results/findings.json) | Canonical machine-readable findings |
 | [`docs/SCIENTIFIC_VALIDATION_PLAN.md`](docs/SCIENTIFIC_VALIDATION_PLAN.md) | Ordered statistical, ML, and biological execution program |
 
@@ -90,7 +91,8 @@ candidate ranking.
 - The primary effects are donor-collapsed and random-gene splits are correlated.
 - The target was constructed from sources reused by the source study.
 - Source-transfer baselines are limited; directional gains do not imply magnitude accuracy.
-- Arce S1 is aggregate CRISPR-KO screening, not donor-level validation.
+- Arce S1 is aggregate; S14 adds two-donor/two-guide robustness for an incompletely
+  specified supplied score, not donor-population or functional validation.
 - Established polarized Th2 cells, donor/guide holdout, direct combinations, matched
   CRISPRa, chromatin, durability, fitness, and functional state conversion remain untested.
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run the frozen Arce S1 external IL2RA ranking benchmark.
+"""Run the frozen Arce external IL2RA and supplied-score benchmarks.
 
 The screen outcomes are used only after guide-count eligibility and Zhu-generator
 availability/admission have been fixed. The benchmark is deliberately narrow: it
@@ -37,6 +37,24 @@ DEFAULT_CONFIG = ROOT / "configs" / "arce_external_validation.json"
 _MAIN_NS = "http://schemas.openxmlformats.org/spreadsheetml/2006/main"
 _DOC_REL_NS = "http://schemas.openxmlformats.org/officeDocument/2006/relationships"
 _PKG_REL_NS = "http://schemas.openxmlformats.org/package/2006/relationships"
+
+S14_COLUMNS = [
+    "cell", "orig.ident", "nCount_RNA", "nFeature_RNA", "n_sgrna_features",
+    "sgrna", "n_sgrna_umis", "sg_target", "has_sgrna", "nCount_HTO",
+    "nFeature_HTO", "nCount_ADT", "nFeature_ADT", "donor", "percent.mt",
+    "percent.ribo", "HTO_maxID", "HTO_margin", "HTO_classification",
+    "HTO_classification.global", "hash.ID", "nCount_TCRVJ", "nFeature_TCRVJ",
+    "nCount_SCT", "nFeature_SCT", "S.Score", "G2M.Score", "Phase",
+    "CC.Difference", "SCT.weight", "ADT.weight", "activation.score",
+]
+S14_SELECTED_COLUMNS = (
+    "cell", "n_sgrna_features", "sgrna", "sg_target", "has_sgrna", "donor",
+    "HTO_maxID", "HTO_classification.global", "activation.score",
+)
+S8_COLUMNS = [
+    "sg_target", "median.activation.score", "mean.activation.score", "HTO_maxID",
+    "statistic", "p.value", "method", "alternative", "stars", "padj",
+]
 
 
 def sha256_bytes(payload: bytes) -> str:
@@ -91,6 +109,22 @@ def _xlsx_shared_strings(book: zipfile.ZipFile) -> list[str]:
     output = []
     for item in root.findall(f"{{{_MAIN_NS}}}si"):
         output.append("".join(node.text or "" for node in item.iter(f"{{{_MAIN_NS}}}t")))
+    return output
+
+
+def _xlsx_shared_strings_stream(book: zipfile.ZipFile) -> list[str]:
+    """Read shared strings without retaining their expanded XML tree."""
+
+    if "xl/sharedStrings.xml" not in book.namelist():
+        return []
+    output: list[str] = []
+    with book.open("xl/sharedStrings.xml") as handle:
+        for _, item in ET.iterparse(handle, events=("end",)):
+            if item.tag == f"{{{_MAIN_NS}}}si":
+                output.append(
+                    "".join(node.text or "" for node in item.iter(f"{{{_MAIN_NS}}}t"))
+                )
+                item.clear()
     return output
 
 
@@ -162,9 +196,51 @@ def parse_xlsx_table(payload: bytes, sheet_name: str) -> tuple[list[str], list[l
     return headers, rows[1:]
 
 
-def verify_and_read_screen_member(config: dict[str, Any]) -> tuple[bytes, dict[str, Any]]:
+def iter_xlsx_selected_rows(
+    payload: bytes,
+    sheet_name: str,
+    expected_headers: list[str],
+    selected_fields: tuple[str, ...],
+):
+    """Stream selected XLSX columns after verifying the complete ordered header."""
+
+    selected = set(selected_fields)
+    if not selected <= set(expected_headers):
+        raise ValueError("selected XLSX fields are absent from expected headers")
+    with zipfile.ZipFile(io.BytesIO(payload)) as book:
+        shared = _xlsx_shared_strings_stream(book)
+        sheet_path = _xlsx_sheet_path(book, sheet_name)
+        header_seen = False
+        index_to_field = {index: field for index, field in enumerate(expected_headers)}
+        with book.open(sheet_path) as handle:
+            for _, row in ET.iterparse(handle, events=("end",)):
+                if row.tag != f"{{{_MAIN_NS}}}row":
+                    continue
+                values: dict[int, Any] = {}
+                for cell in row.findall(f"{{{_MAIN_NS}}}c"):
+                    index = _column_index(cell.attrib.get("r", ""))
+                    if not header_seen or index_to_field.get(index) in selected:
+                        values[index] = _xlsx_value(cell, shared)
+                if not header_seen:
+                    width = max(values, default=-1) + 1
+                    headers = [values.get(index) for index in range(width)]
+                    if headers != expected_headers:
+                        raise InputError("XLSX header/order differs from the frozen schema")
+                    header_seen = True
+                else:
+                    yield {
+                        field: values.get(expected_headers.index(field))
+                        for field in selected_fields
+                    }
+                row.clear()
+        if not header_seen:
+            raise InputError("XLSX sheet is empty")
+
+
+def verify_and_read_arce_members(
+    config: dict[str, Any]
+) -> tuple[dict[str, bytes], dict[str, Any]]:
     archive_spec = config["dataset"]["archive"]
-    member_spec = config["dataset"]["screen_member"]
     archive_path = ROOT / archive_spec["path"]
     if not archive_path.is_file():
         raise FileNotFoundError(archive_path)
@@ -176,25 +252,39 @@ def verify_and_read_screen_member(config: dict[str, Any]) -> tuple[bytes, dict[s
     archive_md5 = md5_file(archive_path)
     if archive_md5 != archive_spec["md5"]:
         raise InputError("Arce archive MD5 differs from the frozen contract")
+    member_keys = [
+        key for key in (
+            "screen_member", "activation_cells_member", "activation_summary_member"
+        )
+        if key in config["dataset"]
+    ]
+    payloads: dict[str, bytes] = {}
+    identities: dict[str, Any] = {}
     with zipfile.ZipFile(archive_path) as archive:
-        try:
-            payload = archive.read(member_spec["path"])
-        except KeyError as exc:
-            raise InputError("Arce archive is missing the frozen S1 member") from exc
-    if len(payload) != member_spec["bytes"]:
-        raise InputError("Arce S1 member byte length differs from the frozen contract")
-    member_hash = sha256_bytes(payload)
-    if member_hash != member_spec["sha256"]:
-        raise InputError("Arce S1 member SHA-256 differs from the frozen contract")
-    return payload, {
+        for key in member_keys:
+            member_spec = config["dataset"][key]
+            try:
+                payload = archive.read(member_spec["path"])
+            except KeyError as exc:
+                raise InputError(f"Arce archive is missing frozen member {key}") from exc
+            if len(payload) != member_spec["bytes"]:
+                raise InputError(f"Arce {key} byte length differs from the frozen contract")
+            member_hash = sha256_bytes(payload)
+            if member_hash != member_spec["sha256"]:
+                raise InputError(f"Arce {key} SHA-256 differs from the frozen contract")
+            payloads[key] = payload
+            identities[key] = {
+                "path": member_spec["path"],
+                "bytes": len(payload),
+                "sha256": member_hash,
+                "sheet": member_spec["sheet"],
+            }
+    return payloads, {
         "archive_path": archive_spec["path"],
         "archive_bytes": archive_spec["bytes"],
         "archive_md5": archive_md5,
         "archive_sha256": archive_hash,
-        "member_path": member_spec["path"],
-        "member_bytes": len(payload),
-        "member_sha256": member_hash,
-        "sheet": member_spec["sheet"],
+        "members": identities,
     }
 
 
@@ -293,6 +383,196 @@ def load_s1(payload: bytes, config: dict[str, Any]) -> dict[str, dict[str, Any]]
     if eligible != config["expected"]["four_guide_eligible"]:
         raise InputError("Arce S1 four-guide eligibility differs from the frozen contract")
     return screen
+
+
+def _truthy_xlsx(value: Any) -> bool:
+    return value is True or value == 1 or str(value).strip().lower() == "true"
+
+
+def load_s14(payload: bytes, config: dict[str, Any]) -> dict[str, Any]:
+    """Stream and validate S14 while retaining only registered score strata."""
+
+    benchmark = config["activation_benchmark"]
+    member = config["dataset"]["activation_cells_member"]
+    cells: set[str] = set()
+    groups: dict[tuple[str, str, str, str], list[float]] = {}
+    pooled: dict[tuple[str, str], list[float]] = {}
+    target_guides: dict[str, set[str]] = {}
+    guide_targets: dict[str, set[str]] = {}
+    context_counts: dict[str, int] = {}
+    donor_counts: dict[str, int] = {}
+    rows = 0
+    for row_number, row in enumerate(
+        iter_xlsx_selected_rows(
+            payload, member["sheet"], S14_COLUMNS, S14_SELECTED_COLUMNS
+        ),
+        start=2,
+    ):
+        rows += 1
+        if any(row[field] is None for field in S14_SELECTED_COLUMNS):
+            raise InputError(f"S14 row {row_number}: missing registered field")
+        cell = str(row["cell"]).strip()
+        guide = str(row["sgrna"]).strip()
+        target = str(row["sg_target"]).strip()
+        donor = str(row["donor"]).strip()
+        context = str(row["HTO_maxID"]).strip()
+        if not cell or cell in cells:
+            raise InputError(f"S14 row {row_number}: cell is empty or duplicated")
+        cells.add(cell)
+        if row["n_sgrna_features"] != 1:
+            raise InputError(f"S14 row {row_number}: expected one sgRNA feature")
+        if not _truthy_xlsx(row["has_sgrna"]):
+            raise InputError(f"S14 row {row_number}: has_sgrna is not true")
+        if str(row["HTO_classification.global"]).strip() != "Singlet":
+            raise InputError(f"S14 row {row_number}: cell is not an HTO singlet")
+        if donor not in benchmark["donors"] or context not in benchmark["contexts"]:
+            raise InputError(f"S14 row {row_number}: unknown donor or context")
+        try:
+            score = float(row["activation.score"])
+        except (TypeError, ValueError) as exc:
+            raise InputError(f"S14 row {row_number}: activation.score is not numeric") from exc
+        if not math.isfinite(score):
+            raise InputError(f"S14 row {row_number}: activation.score is not finite")
+        groups.setdefault((target, guide, donor, context), []).append(score)
+        pooled.setdefault((target, context), []).append(score)
+        target_guides.setdefault(target, set()).add(guide)
+        guide_targets.setdefault(guide, set()).add(target)
+        context_counts[context] = context_counts.get(context, 0) + 1
+        donor_counts[donor] = donor_counts.get(donor, 0) + 1
+
+    expected = config["expected"]
+    if rows != expected["activation_rows"] or len(cells) != expected["activation_unique_cells"]:
+        raise InputError("Arce S14 row or unique-cell count differs from the frozen contract")
+    if context_counts != expected["activation_context_counts"]:
+        raise InputError("Arce S14 context counts differ from the frozen contract")
+    if donor_counts != expected["activation_donor_counts"]:
+        raise InputError("Arce S14 donor counts differ from the frozen contract")
+    if len(target_guides) != expected["activation_targets"]:
+        raise InputError("Arce S14 target count differs from the frozen contract")
+    if len(guide_targets) != expected["activation_guides"]:
+        raise InputError("Arce S14 guide count differs from the frozen contract")
+    if any(len(targets) != 1 for targets in guide_targets.values()):
+        raise InputError("Arce S14 guide maps to multiple targets")
+    control = benchmark["control_target"]
+    if target_guides.get(control) != set(benchmark["control_guides"]):
+        raise InputError("Arce S14 Non-Targeting guide identities differ")
+    regular_targets = sorted(set(target_guides) - {control})
+    if len(regular_targets) != expected["activation_regular_targets"]:
+        raise InputError("Arce S14 regular-target count differs")
+    if any(
+        len(target_guides[target]) != benchmark["regular_guides_per_target"]
+        for target in regular_targets
+    ):
+        raise InputError("Arce S14 regular target does not have exactly two guides")
+    if len(groups) != expected["activation_guide_groups"]:
+        raise InputError("Arce S14 guide-stratum count differs from the frozen contract")
+    target_group_count = len({(target, donor, context) for target, _, donor, context in groups})
+    if target_group_count != expected["activation_target_groups"]:
+        raise InputError("Arce S14 target-stratum count differs from the frozen contract")
+    expected_groups = {
+        (target, guide, donor, context)
+        for target, guides in target_guides.items()
+        for guide in guides
+        for donor in benchmark["donors"]
+        for context in benchmark["contexts"]
+    }
+    if set(groups) != expected_groups:
+        raise InputError("Arce S14 donor/guide/context factorial is incomplete")
+    sizes = [len(values) for values in groups.values()]
+    if "activation_guide_group_cells_min" in expected:
+        if (
+            min(sizes) != expected["activation_guide_group_cells_min"]
+            or float(np.median(sizes)) != expected["activation_guide_group_cells_median"]
+            or max(sizes) != expected["activation_guide_group_cells_max"]
+            or sum(size < 20 for size in sizes)
+            != expected["activation_strata_below_20_cells"]
+        ):
+            raise InputError("Arce S14 guide-stratum size distribution differs")
+    return {
+        "groups": groups,
+        "pooled": pooled,
+        "target_guides": {key: tuple(sorted(value)) for key, value in target_guides.items()},
+        "regular_targets": tuple(regular_targets),
+        "data_quality": {
+            "rows": rows,
+            "unique_cells": len(cells),
+            "targets": len(target_guides),
+            "regular_targets": len(regular_targets),
+            "guides": len(guide_targets),
+            "guide_groups": len(groups),
+            "target_groups": target_group_count,
+            "context_counts": context_counts,
+            "donor_counts": donor_counts,
+            "guide_group_cells_min": min(sizes),
+            "guide_group_cells_median": float(np.median(sizes)),
+            "guide_group_cells_max": max(sizes),
+            "missing_registered_fields": 0,
+            "non_singlets": 0,
+        },
+    }
+
+
+def load_s8_and_check_reproduction(
+    payload: bytes, activation: dict[str, Any], config: dict[str, Any]
+) -> dict[str, Any]:
+    member = config["dataset"]["activation_summary_member"]
+    headers, raw_rows = parse_xlsx_table(payload, member["sheet"])
+    if headers != S8_COLUMNS:
+        raise InputError("Arce S8 header/order differs from the frozen schema")
+    if len(raw_rows) != config["expected"]["activation_summary_rows"]:
+        raise InputError("Arce S8 row count differs from the frozen contract")
+    index = {field: position for position, field in enumerate(headers)}
+    observed: dict[tuple[str, str], tuple[float, float]] = {}
+    control = config["activation_benchmark"]["control_target"]
+    inferential_fields = ("statistic", "p.value", "method", "alternative", "padj")
+    for row_number, raw in enumerate(raw_rows, start=2):
+        raw = [*raw, *([None] * (len(headers) - len(raw)))]
+        target = str(raw[index["sg_target"]]).strip()
+        context = str(raw[index["HTO_maxID"]]).strip()
+        key = (target, context)
+        if key in observed:
+            raise InputError(f"S8 row {row_number}: duplicate target/context")
+        median = _finite_number(
+            raw[index["median.activation.score"]],
+            field="median.activation.score",
+            row_number=row_number,
+        )
+        mean = _finite_number(
+            raw[index["mean.activation.score"]],
+            field="mean.activation.score",
+            row_number=row_number,
+        )
+        missing_inference = [
+            raw[index[field]] is None
+            or str(raw[index[field]]).strip().upper() in {"", "NA"}
+            for field in inferential_fields
+        ]
+        if target == control:
+            if not all(missing_inference):
+                raise InputError("S8 Non-Targeting row unexpectedly contains inference fields")
+        elif any(missing_inference):
+            raise InputError("S8 perturbation row is missing a published inference field")
+        observed[key] = (median, mean)
+    if set(observed) != set(activation["pooled"]):
+        raise InputError("Arce S8 and S14 target/context axes differ")
+    median_errors = []
+    mean_errors = []
+    for key, values in activation["pooled"].items():
+        published_median, published_mean = observed[key]
+        median_errors.append(abs(float(np.median(values)) - published_median))
+        mean_errors.append(abs(float(np.mean(values)) - published_mean))
+    tolerance = config["activation_benchmark"]["reproduction_tolerance"]
+    if max(median_errors) > tolerance or max(mean_errors) > tolerance:
+        raise InputError("Arce S8 aggregates do not reproduce from S14")
+    return {
+        "status": "PASS",
+        "rows": len(observed),
+        "maximum_absolute_median_error": max(median_errors),
+        "maximum_absolute_mean_error": max(mean_errors),
+        "tolerance": tolerance,
+        "role": "archival aggregate reproduction only; S8 is derived from S14",
+        "published_p_values_used_for_inference": False,
+    }
 
 
 def predictor_identity(predictors: dict[str, dict[str, Any]]) -> str:
@@ -447,6 +727,141 @@ def build_prediction_rows(
             row["observed_rank_abs"] = float(observed_rank)
             row["predicted_rank_abs"] = float(predicted_rank)
     return rows
+
+
+def build_activation_guide_rows(
+    activation: dict[str, Any],
+    predictors: dict[str, dict[str, Any]],
+    config: dict[str, Any],
+) -> list[dict[str, Any]]:
+    """Compute equally guide-weighted within-donor/context control contrasts."""
+
+    benchmark = config["activation_benchmark"]
+    groups = activation["groups"]
+    control = benchmark["control_target"]
+    medians = {key: float(np.median(values)) for key, values in groups.items()}
+    rows: list[dict[str, Any]] = []
+    for context in benchmark["contexts"]:
+        for donor in benchmark["donors"]:
+            control_medians = [
+                medians[(control, guide, donor, context)]
+                for guide in benchmark["control_guides"]
+            ]
+            baseline = float(np.median(control_medians))
+            for target in activation["regular_targets"]:
+                predictor = predictors.get(target)
+                for guide in activation["target_guides"][target]:
+                    values = groups[(target, guide, donor, context)]
+                    guide_median = medians[(target, guide, donor, context)]
+                    rows.append(
+                        {
+                            "target": target,
+                            "guide": guide,
+                            "donor": donor,
+                            "context": context,
+                            "n_cells": len(values),
+                            "guide_median_supplied_activation_score": guide_median,
+                            "ntc_baseline_median_of_guide_medians": baseline,
+                            "supplied_activation_score_delta": guide_median - baseline,
+                            "support_flag_lt_20_cells": len(values) < 20,
+                            "generator_available": predictor is not None,
+                            "generator_admitted": False if predictor is None else predictor["admitted"],
+                        }
+                    )
+    return rows
+
+
+def summarize_activation_robustness(
+    rows: list[dict[str, Any]], config: dict[str, Any]
+) -> dict[str, Any]:
+    """Report guide/donor reliability without treating cells as replicates."""
+
+    benchmark = config["activation_benchmark"]
+    result: dict[str, Any] = {}
+    for context in benchmark["contexts"]:
+        selected = [row for row in rows if row["context"] == context]
+        deltas = {
+            (row["target"], row["donor"], row["guide"]): row[
+                "supplied_activation_score_delta"
+            ]
+            for row in selected
+        }
+        target_donor: dict[tuple[str, str], float] = {}
+        guide_pairs: dict[str, tuple[list[float], list[float]]] = {}
+        guide_sign_agree = []
+        all_four_sign_agree = []
+        for donor in benchmark["donors"]:
+            first_values: list[float] = []
+            second_values: list[float] = []
+            for target in sorted({row["target"] for row in selected}):
+                guides = sorted(
+                    row["guide"]
+                    for row in selected
+                    if row["target"] == target and row["donor"] == donor
+                )
+                values = [deltas[(target, donor, guide)] for guide in guides]
+                target_donor[(target, donor)] = float(np.median(values))
+                first_values.append(values[0])
+                second_values.append(values[1])
+                guide_sign_agree.append(np.sign(values[0]) == np.sign(values[1]))
+            guide_pairs[donor] = (first_values, second_values)
+        targets = sorted({row["target"] for row in selected})
+        for target in targets:
+            values = [
+                row["supplied_activation_score_delta"]
+                for row in selected
+                if row["target"] == target
+            ]
+            signs = np.sign(values)
+            all_four_sign_agree.append(bool(np.all(signs == signs[0]) and signs[0] != 0))
+        donor_a = [target_donor[(target, benchmark["donors"][0])] for target in targets]
+        donor_b = [target_donor[(target, benchmark["donors"][1])] for target in targets]
+        guide_correlations = {}
+        for donor, (first_values, second_values) in guide_pairs.items():
+            guide_correlations[donor] = {
+                "spearman": float(spearmanr(first_values, second_values).statistic),
+                "kendall": float(kendalltau(first_values, second_values).statistic),
+            }
+        result[context] = {
+            "targets": len(targets),
+            "guide_pair_sign_agreement_fraction": float(np.mean(guide_sign_agree)),
+            "guide_pair_sign_agreement_n": int(np.count_nonzero(guide_sign_agree)),
+            "guide_pair_comparisons": len(guide_sign_agree),
+            "all_two_guides_two_donors_same_nonzero_sign_fraction": float(
+                np.mean(all_four_sign_agree)
+            ),
+            "all_two_guides_two_donors_same_nonzero_sign_n": int(
+                np.count_nonzero(all_four_sign_agree)
+            ),
+            "guide_rank_concordance_by_donor": guide_correlations,
+            "donor_rank_concordance": {
+                "spearman": float(spearmanr(donor_a, donor_b).statistic),
+                "kendall": float(kendalltau(donor_a, donor_b).statistic),
+                "sign_agreement_fraction": float(
+                    np.mean(np.sign(donor_a) == np.sign(donor_b))
+                ),
+            },
+        }
+    sparse = [row for row in rows if row["support_flag_lt_20_cells"]]
+    return {
+        "estimand": benchmark["estimand"],
+        "inference": benchmark["inference"],
+        "panel_provenance": benchmark["panel_provenance"],
+        "score_claim_ceiling": benchmark["score_claim_ceiling"],
+        "all_strata_retained": True,
+        "outcome_based_filtering": False,
+        "strata_below_20_cells": len(sparse),
+        "minimum_cell_strata": [
+            {
+                key: row[key]
+                for key in ("target", "guide", "donor", "context", "n_cells")
+            }
+            for row in sparse
+        ],
+        "contexts": result,
+        "published_s8_p_values_used": False,
+        "cell_level_inference_emitted": False,
+    }
 
 
 def _top_targets(targets: list[str], values: np.ndarray, k: int) -> set[str]:
@@ -615,20 +1030,35 @@ def render_predictions(rows: list[dict[str, Any]]) -> str:
     return output.getvalue()
 
 
-def write_predictions(path: Path, rows: list[dict[str, Any]]) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(render_predictions(rows), encoding="utf-8", newline="")
-
-
-def run(config_path: Path) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+def run(
+    config_path: Path,
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]], dict[str, Any]]:
     config = json.loads(config_path.read_text(encoding="utf-8"))
     if config.get("schema_version") != "1.0.0":
         raise InputError("unsupported Arce external-validation config schema")
-    payload, screen_identity = verify_and_read_screen_member(config)
-    screen = load_s1(payload, config)
+    payloads, arce_identity = verify_and_read_arce_members(config)
+    screen = load_s1(payloads["screen_member"], config)
+    activation = load_s14(payloads["activation_cells_member"], config)
+    activation_reproduction = load_s8_and_check_reproduction(
+        payloads["activation_summary_member"], activation, config
+    )
     predictors, generator_identity = load_generator(config)
     attrition = _check_attrition(screen, predictors, config)
     rows = build_prediction_rows(screen, predictors, config)
+    activation_rows = build_activation_guide_rows(activation, predictors, config)
+    activation_robustness = summarize_activation_robustness(activation_rows, config)
+    activation_available = sum(
+        target in predictors for target in activation["regular_targets"]
+    )
+    activation_admitted = sum(
+        target in predictors and predictors[target]["admitted"]
+        for target in activation["regular_targets"]
+    )
+    if (
+        activation_available != config["expected"]["activation_generator_available"]
+        or activation_admitted != config["expected"]["activation_generator_admitted"]
+    ):
+        raise InputError("Arce S14/Zhu target attrition differs from the frozen contract")
     benchmark = config["benchmark"]
     context_metrics = {
         context: evaluate_context(
@@ -646,7 +1076,7 @@ def run(config_path: Path) -> tuple[list[dict[str, Any]], dict[str, Any]]:
         "claim_ceiling": config["claim_ceiling"],
         "config_sha256": sha256_file(config_path),
         "input_verification": {
-            "arce": screen_identity,
+            "arce": arce_identity,
             "zhu_generator": generator_identity,
         },
         "selection_contract": {
@@ -660,21 +1090,36 @@ def run(config_path: Path) -> tuple[list[dict[str, Any]], dict[str, Any]]:
         },
         "attrition": attrition,
         "contexts": context_metrics,
+        "activation_data_quality": activation["data_quality"],
+        "activation_summary_reproduction": activation_reproduction,
+        "activation_attrition": {
+            "regular_targets": len(activation["regular_targets"]),
+            "zhu_rest_available": activation_available,
+            "zhu_rest_admitted": activation_admitted,
+            "role": "provenance annotation only; no IL2RA-to-activation.score association is computed",
+        },
+        "activation_robustness": activation_robustness,
         "limitations": [
             "S1 is an aggregate functional screen and does not expose donor-level effects.",
             "The Zhu predictor is donor-collapsed CRISPRi whereas Arce S1 is CRISPR-KO CD25/IL2RA screening.",
             "Permutation intervals quantify target-label exchangeability, not biological donor uncertainty.",
             "All context-by-metric permutation p-values are unadjusted exploratory diagnostics across correlated tests; they support no FWER- or FDR-controlled inference.",
+            "S8 is a deterministic pooled-cell summary of S14, not independent replication; its cell-level tests are not used.",
+            "The supplied activation.score has no frozen gene set, formula, normalization, or independence proof in the local tables.",
+            "S14 is the authors' preselected 28-regulator panel; concordance is conditional on that panel and is neither genome-wide generality nor independent validation.",
+            "Two donors permit descriptive concordance only, not donor-population inference or donor generalization.",
+            "The Zhu IL2RA one-gene predictor and supplied global activation.score are endpoint-mismatched, so their correlation is intentionally not reported.",
         ],
         "permutation_inference": benchmark["multiplicity"],
     }
-    return rows, metadata
+    return rows, activation_rows, metadata
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", type=Path, default=DEFAULT_CONFIG)
     parser.add_argument("--predictions", type=Path)
+    parser.add_argument("--activation-guide-effects", type=Path)
     parser.add_argument("--metadata", type=Path)
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument("--write", action="store_true")
@@ -687,18 +1132,27 @@ def main() -> None:
     config_path = args.config if args.config.is_absolute() else ROOT / args.config
     config = json.loads(config_path.read_text(encoding="utf-8"))
     prediction_path = args.predictions or ROOT / config["outputs"]["predictions"]
+    activation_path = (
+        args.activation_guide_effects
+        or ROOT / config["outputs"]["activation_guide_effects"]
+    )
     metadata_path = args.metadata or ROOT / config["outputs"]["metadata"]
-    rows, metadata = run(config_path)
+    rows, activation_rows, metadata = run(config_path)
     prediction_text = render_predictions(rows)
+    activation_text = render_predictions(activation_rows)
     metadata_text = json.dumps(metadata, indent=2, sort_keys=True) + "\n"
     if args.write:
         prediction_path.parent.mkdir(parents=True, exist_ok=True)
         prediction_path.write_text(prediction_text, encoding="utf-8", newline="")
+        activation_path.parent.mkdir(parents=True, exist_ok=True)
+        activation_path.write_text(activation_text, encoding="utf-8", newline="")
         metadata_path.parent.mkdir(parents=True, exist_ok=True)
         metadata_path.write_text(metadata_text, encoding="utf-8")
     elif args.check:
         if prediction_path.read_text(encoding="utf-8") != prediction_text:
             raise AssertionError(f"prediction artifact differs: {prediction_path}")
+        if activation_path.read_text(encoding="utf-8") != activation_text:
+            raise AssertionError(f"activation artifact differs: {activation_path}")
         if metadata_path.read_text(encoding="utf-8") != metadata_text:
             raise AssertionError(f"metadata artifact differs: {metadata_path}")
     print(
@@ -707,7 +1161,9 @@ def main() -> None:
                 "status": "PASS",
                 "mode": "write" if args.write else "check" if args.check else "preview",
                 "analysis_eligible": metadata["attrition"]["analysis_eligible"],
+                "activation_guide_rows": len(activation_rows),
                 "predictions": str(prediction_path),
+                "activation_guide_effects": str(activation_path),
                 "metadata": str(metadata_path),
             },
             sort_keys=True,

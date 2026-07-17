@@ -38,8 +38,11 @@ reconstructing the retired pipeline.
 enforces outcome-independent eligibility, extracts the Zhu `Rest` IL2RA predictor, and
 evaluates 480 perturbations in three CRISPR-KO CD25 screen contexts. Tiny workbook/H5
 fixtures test failure modes, guide eligibility, selection isolation, orientation,
-determinism, and check-mode drift. This is modest cross-study/cross-modality ranking
-alignment, not donor-level or whole-state validation.
+determinism, and check-mode drift. The same runner streams S14, verifies all 520
+donor/guide/context strata, and reproduces 116 S8 aggregates to <5.7×10⁻¹³. Unequal-size
+fixtures prove that controls are weighted by guide rather than pooled cell count. This is
+modest transfer plus descriptive supplied-score robustness, not donor-population or
+whole-state validation.
 
 ## Canonical evidence status
 
@@ -48,8 +51,9 @@ alignment, not donor-level or whole-state validation.
 | Source-bound random-gene alignment? | 0.444 ± 0.018 across 12 hash-frozen splits | Descriptive; correlated splits |
 | Target-source directional transfer? | Positive cosine gain over mean/best-single in 6/6 splits both ways | Directional only; nRMSE not improved |
 | Independent functional-screen transfer? | Arce Spearman 0.148 / 0.084 / 0.088 | Modest, context dependent |
+| Arce selected-panel concordance? | Within-dataset A-vs-B target-rank concordance 0.73–0.93; four-stratum sign agreement 50–64% | Descriptive; preselected 28 regulators, two donors, supplied score |
 | Software/statistical contracts? | All six systemic scenarios pass | Synthetic certification only |
-| Donor/guide generality? | Donor-collapsed primary case study; aggregate Arce S1 | Not tested |
+| Primary-model donor/guide generality? | Donor-collapsed primary case study | Not tested |
 | Functional state conversion? | No established-state prospective assay | Not tested |
 
 ## Artifact consistency

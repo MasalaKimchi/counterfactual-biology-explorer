@@ -90,10 +90,10 @@ the 17–45 GB donor/guide/pseudobulk objects:
 
 | Dataset | Exact archive | Bytes | Terms and allowed use |
 |---|---|---:|---|
-| Arce Perturb-CITE, Zenodo 13924126 / GSE278572 | [`data_tables.zip`](https://zenodo.org/api/records/13924126/files/data_tables.zip/content), MD5 `886ed0fea0b9dc0625355c2e4928077c`, SHA-256 `dc9e2efb04d24f1a6d4b8db6a8b1d5cd01c935777c3740088be339de5b5062b4` | 57,967,623 | **Implemented**: CRISPRi IL2RA transcript → CRISPR-KO CD25 ranking transfer; not state or donor validation |
+| Arce Perturb-CITE, Zenodo 13924126 / GSE278572 | [`data_tables.zip`](https://zenodo.org/api/records/13924126/files/data_tables.zip/content), MD5 `886ed0fea0b9dc0625355c2e4928077c`, SHA-256 `dc9e2efb04d24f1a6d4b8db6a8b1d5cd01c935777c3740088be339de5b5062b4` | 57,967,623 | **Implemented**: S1 CRISPRi-transcript → CRISPR-KO CD25 transfer and S14/S8 donor/guide supplied-score robustness; not state or donor-population validation |
 | Schmidt screens, Zenodo 5784651 / GSE174292 | [`Genome-wide-screens.zip`](https://zenodo.org/api/records/5784651/files/Genome-wide-screens.zip/content), upstream MD5 `e0392eb7b2512720bb8cbf705ce9854f` | 26,152,593 | CC-BY-4.0; CRISPRa/CRISPRi orientation and IFNG/IL2 transfer with only two donors |
 
-The Arce runner verifies the archive and S1 workbook bytes, requires four guides in every
+The Arce runner verifies the archive plus S1/S8/S14 workbook bytes, requires four guides in every
 screen context, freezes Zhu `Rest` admission before reading Arce outcomes, and checks the
 current deterministic evidence:
 
@@ -106,6 +106,11 @@ dictionary, and 480 source-admitted analysis targets. S1 is aggregate and cannot
 donor uncertainty. Arce S9 is significant-only (absence is censored, never zero), and S4
 contains unlabelled technical replicates that must be aggregated within biological key.
 Schmidt's cell-level marker tables are likewise not donor-level inference.
+
+S14 contributes 100,087 singlet cells, 520 complete guide×donor×context strata, and four
+contexts. S8's 116 pooled summaries are exactly reproduced but are not independent data;
+its pooled-cell tests are excluded. The supplied `activation.score` lacks a frozen local
+formula/gene set and is used only for descriptive within-object robustness.
 
 ## Next dataset priorities
 

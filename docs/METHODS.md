@@ -91,6 +91,24 @@ provide no multiplicity-controlled inference or donor uncertainty. The claim cei
 cross-study/cross-modality ranking alignment, not whole-state reachability or causal
 validation.
 
+S14 is streamed from the same verified archive with its complete 32-column schema checked,
+while retaining only registered QC and score fields. Every cell must have one sgRNA,
+`has_sgrna=true`, a unique cell ID, finite supplied `activation.score`, and global HTO
+Singlet status. For target *t*, guide *g*, donor *d*, and context *c*, the guide contrast is
+the guide-cell median minus the median of the nine Non-Targeting guide-cell medians within
+the same donor/context. The two guide contrasts are equally weighted for a target/donor
+summary. All strata are retained and their cell counts disclosed.
+
+The runner exactly reproduces S8 pooled target/context means and medians as an archival
+provenance gate. It does not use S8 pooled-cell p-values, bootstrap cells as donors, or
+emit donor-population inference from two donors. Guide-pair and donor rank/sign concordance
+are descriptive. Because the local tables do not freeze the supplied score's genes,
+formula, normalization, or independence, it is not equated with functional activation or
+with the one-gene Zhu IL2RA predictor.
+The 28 regulators were preselected by the source authors using prior screen/state-specific
+evidence; target-rank and sign concordance are therefore conditional panel diagnostics,
+not genome-wide estimates or independent validation.
+
 ## Removed legacy behavior
 
 The maintained surface intentionally excludes categorical reachability labels, staged

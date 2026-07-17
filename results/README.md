@@ -10,7 +10,8 @@ artifacts.
 | `validation_harness.json` | Frozen data-free systemic stress report |
 | `source_reconstruction.json` | Full-file-hash-bound target lineage, frozen splits, and source-transfer report |
 | `evidence/arce_il2ra_context_predictions.csv` | Per-target independent cross-modality benchmark |
-| `evidence/arce_external_validation_meta.json` | Arce provenance, attrition, metrics, nulls, and claim ceiling |
+| `evidence/arce_activation_guide_effects.csv` | Donor×guide contrasts for the supplied Arce score |
+| `evidence/arce_external_validation_meta.json` | Arce provenance, transfer, robustness, and claim ceilings |
 
 Legacy tables derived from an unhashed, deleted `inputs.npz` were removed rather than
 presented as reproducible evidence. Their Git history remains available for provenance;

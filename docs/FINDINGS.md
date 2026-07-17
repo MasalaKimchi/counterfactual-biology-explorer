@@ -80,7 +80,31 @@ treatment validation.
 Sources: [`arce_external_validation_meta.json`](../results/evidence/arce_external_validation_meta.json)
 and [`arce_il2ra_context_predictions.csv`](../results/evidence/arce_il2ra_context_predictions.csv).
 
-## 5. The systemic harness exposes nonspecific success modes
+## 5. Arce donor/guide strata expose both robustness and heterogeneity
+
+The same hash-bound archive contains 100,087 S14 singlet cells across two donors, two
+guides for each member of the authors' preselected 28-regulator panel, nine Non-Targeting guides, and four Teff/Treg ×
+resting/stimulated contexts. All 520 donor×guide×context strata are present. The runner
+first takes each guide's median supplied `activation.score`, then subtracts the median of
+the nine Non-Targeting guide medians within donor and context; cells are never counted as
+biological replicates.
+
+All 116 published S8 target×context means and medians reproduce from S14 with maximum
+absolute error **5.7×10⁻¹³**. Across 28 targets, donor A-versus-B rank concordance is
+**0.73–0.93** across contexts, but only **50–64%** of targets have the same nonzero effect
+sign across both guides and both donors. One retained stratum has 8 cells; every other
+stratum has at least 20. These are descriptive robustness diagnostics. S8 is derived from
+S14, its pooled-cell p-values are unused, and two donors cannot estimate population
+uncertainty. The score's gene set, formula, normalization, and independence are not frozen,
+so it is not interpreted as CD25 protein, functional activation, Th1/Th2 identity, or
+state conversion. Panel selection used prior screen/state-specific evidence, so these
+metrics are conditional within-panel concordance, not genome-wide generality or independent
+validation. The endpoint-mismatched Zhu IL2RA-to-`activation.score` correlation is
+intentionally not reported.
+
+Source: [`arce_activation_guide_effects.csv`](../results/evidence/arce_activation_guide_effects.csv).
+
+## 6. The systemic harness exposes nonspecific success modes
 
 The data-free harness independently checks the NNLS solver and fails closed on axis and
 provenance corruption. Its structured-specificity scenario produces high raw cosine from
@@ -92,7 +116,7 @@ contracts only.
 
 ## What remains unknown
 
-Claim-bearing biological evidence still requires donor- and guide-held-out effects,
+Claim-bearing biological evidence still requires primary-model donor- and guide-held-out effects,
 module/pathway holdouts, stronger nested baselines, calibrated structured nulls, measured
 in-domain combinations, paired CRISPRi/CRISPRa, chromatin and protein/function endpoints,
 durability and fitness, and prospective testing from an established polarized starting

@@ -4,10 +4,14 @@
 from __future__ import annotations
 
 import argparse
+import csv
+from collections import Counter, defaultdict
 import hashlib
 import json
 from pathlib import Path
 import statistics
+
+from scipy.stats import spearmanr
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -101,6 +105,96 @@ def _mean_metric(direction: dict, model: str, metric: str) -> float:
     )
 
 
+def validate_activation_csv(ledger: dict, metadata: dict) -> None:
+    path = EVIDENCE / "arce_activation_guide_effects.csv"
+    expected_fields = [
+        "target", "guide", "donor", "context", "n_cells",
+        "guide_median_supplied_activation_score",
+        "ntc_baseline_median_of_guide_medians",
+        "supplied_activation_score_delta", "support_flag_lt_20_cells",
+        "generator_available", "generator_admitted",
+    ]
+    with path.open(newline="", encoding="utf-8") as handle:
+        reader = csv.DictReader(handle)
+        if reader.fieldnames != expected_fields:
+            raise AssertionError("Arce activation CSV schema differs")
+        rows = list(reader)
+    if len(rows) != ledger["perturbation_guide_strata"]:
+        raise AssertionError("Arce activation CSV row count differs")
+    keys = {
+        (row["target"], row["guide"], row["donor"], row["context"])
+        for row in rows
+    }
+    if len(keys) != len(rows):
+        raise AssertionError("Arce activation CSV has duplicate stratum keys")
+    if len({row["target"] for row in rows}) != 28 or len({row["guide"] for row in rows}) != 56:
+        raise AssertionError("Arce activation CSV target/guide axes differ")
+    if {row["donor"] for row in rows} != {"A", "B"}:
+        raise AssertionError("Arce activation CSV donor axis differs")
+    contexts = set(ledger["donor_spearman"])
+    if {row["context"] for row in rows} != contexts:
+        raise AssertionError("Arce activation CSV context axis differs")
+    if Counter(row["context"] for row in rows) != Counter({context: 112 for context in contexts}):
+        raise AssertionError("Arce activation CSV context counts differ")
+    if Counter(row["donor"] for row in rows) != Counter({"A": 224, "B": 224}):
+        raise AssertionError("Arce activation CSV donor counts differ")
+
+    grouped: dict[tuple[str, str, str], list[dict[str, str]]] = defaultdict(list)
+    sparse = []
+    for row in rows:
+        n_cells = int(row["n_cells"])
+        observed_delta = float(row["supplied_activation_score_delta"])
+        expected_delta = (
+            float(row["guide_median_supplied_activation_score"])
+            - float(row["ntc_baseline_median_of_guide_medians"])
+        )
+        assert_close(observed_delta, expected_delta)
+        flag = row["support_flag_lt_20_cells"] == "true"
+        if flag != (n_cells < 20):
+            raise AssertionError("Arce activation support flag differs from cell count")
+        if flag:
+            sparse.append((row["target"], row["guide"], row["donor"], row["context"], n_cells))
+        grouped[(row["target"], row["donor"], row["context"])].append(row)
+    if sparse != [("SOCS3", "SOCS3_2_CRISPRi", "A", "Resting-Treg", 8)]:
+        raise AssertionError("Arce activation sparse-stratum identity differs")
+    if len(grouped) != 224 or any(len(group) != 2 for group in grouped.values()):
+        raise AssertionError("Arce activation CSV does not have two guides per target/donor/context")
+
+    targets = sorted({row["target"] for row in rows})
+    for context in sorted(contexts):
+        donor_values = {}
+        all_four_same = []
+        for donor in ("A", "B"):
+            donor_values[donor] = [
+                statistics.median(
+                    float(row["supplied_activation_score_delta"])
+                    for row in grouped[(target, donor, context)]
+                )
+                for target in targets
+            ]
+        observed_rho = float(spearmanr(donor_values["A"], donor_values["B"]).statistic)
+        assert_close(observed_rho, ledger["donor_spearman"][context])
+        assert_close(
+            observed_rho,
+            metadata["contexts"][context]["donor_rank_concordance"]["spearman"],
+        )
+        for target in targets:
+            values = [
+                float(row["supplied_activation_score_delta"])
+                for donor in ("A", "B")
+                for row in grouped[(target, donor, context)]
+            ]
+            all_four_same.append(all(value > 0 for value in values) or all(value < 0 for value in values))
+        fraction = statistics.mean(all_four_same)
+        assert_close(fraction, ledger["all_two_guides_two_donors_same_sign_fraction"][context])
+        assert_close(
+            fraction,
+            metadata["contexts"][context][
+                "all_two_guides_two_donors_same_nonzero_sign_fraction"
+            ],
+        )
+
+
 def validate_values(findings: dict) -> None:
     if findings.get("schema_version") != "2.0.0":
         raise AssertionError("unsupported findings schema")
@@ -177,15 +271,19 @@ def validate_values(findings: dict) -> None:
     if arce["config_sha256"] != sha256(arce_config_path):
         raise AssertionError("Arce report/config identity differs")
     arce_input = arce["input_verification"]
+    arce_members = arce_input["arce"]["members"]
     if (
         arce_input["arce"]["archive_sha256"]
         != arce_config["dataset"]["archive"]["sha256"]
-        or arce_input["arce"]["member_sha256"]
-        != arce_config["dataset"]["screen_member"]["sha256"]
         or arce_input["zhu_generator"]["predictor_sha256"]
         != arce_config["generator"]["predictor_sha256"]
     ):
         raise AssertionError("Arce input identities differ from the frozen contract")
+    for key in (
+        "screen_member", "activation_cells_member", "activation_summary_member"
+    ):
+        if arce_members[key]["sha256"] != arce_config["dataset"][key]["sha256"]:
+            raise AssertionError(f"Arce {key} identity differs from the frozen contract")
     source_input = source["data_quality"]["input_verification"]["de_stats"]
     if (
         arce_input["zhu_generator"]["path"] != source_input["path"]
@@ -202,6 +300,48 @@ def validate_values(findings: dict) -> None:
         assert_close(arce["contexts"][context]["point"]["spearman"], value)
     for context, value in ledger["top_25_overlap"].items():
         assert arce["contexts"][context]["point"]["top_k"]["25"]["overlap"] == value
+    activation = ledger["activation_score_robustness"]
+    data_quality = arce["activation_data_quality"]
+    reproduction = arce["activation_summary_reproduction"]
+    robustness = arce["activation_robustness"]
+    assert data_quality["rows"] == activation["s14_cells"]
+    assert data_quality["guide_groups"] == activation["guide_strata"]
+    for field in ("min", "median", "max"):
+        assert_close(
+            data_quality[f"guide_group_cells_{field}"],
+            arce_config["expected"][f"activation_guide_group_cells_{field}"],
+        )
+    assert reproduction["rows"] == activation["s8_aggregate_rows_reproduced"]
+    if reproduction["published_p_values_used_for_inference"]:
+        raise AssertionError("Arce S8 cell-level p-values entered current inference")
+    assert_close(
+        max(
+            reproduction["maximum_absolute_mean_error"],
+            reproduction["maximum_absolute_median_error"],
+        ),
+        activation["maximum_absolute_s8_error"],
+    )
+    if not robustness["all_strata_retained"] or robustness["cell_level_inference_emitted"]:
+        raise AssertionError("Arce activation robustness violated its claim contract")
+    assert (
+        robustness["strata_below_20_cells"]
+        == arce_config["expected"]["activation_strata_below_20_cells"]
+    )
+    for context, value in activation["donor_spearman"].items():
+        assert_close(
+            robustness["contexts"][context]["donor_rank_concordance"]["spearman"],
+            value,
+        )
+    for context, value in activation[
+        "all_two_guides_two_donors_same_sign_fraction"
+    ].items():
+        assert_close(
+            robustness["contexts"][context][
+                "all_two_guides_two_donors_same_nonzero_sign_fraction"
+            ],
+            value,
+        )
+    validate_activation_csv(activation, robustness)
 
     harness = json.loads((RESULTS / "validation_harness.json").read_text())
     ledger = findings["systemic_harness"]

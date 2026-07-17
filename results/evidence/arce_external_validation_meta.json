@@ -1,4 +1,157 @@
 {
+  "activation_attrition": {
+    "regular_targets": 28,
+    "role": "provenance annotation only; no IL2RA-to-activation.score association is computed",
+    "zhu_rest_admitted": 19,
+    "zhu_rest_available": 24
+  },
+  "activation_data_quality": {
+    "context_counts": {
+      "Resting-Teff": 27078,
+      "Resting-Treg": 19001,
+      "Stimulated-Teff": 29549,
+      "Stimulated-Treg": 24459
+    },
+    "donor_counts": {
+      "A": 48386,
+      "B": 51701
+    },
+    "guide_group_cells_max": 426,
+    "guide_group_cells_median": 188.0,
+    "guide_group_cells_min": 8,
+    "guide_groups": 520,
+    "guides": 65,
+    "missing_registered_fields": 0,
+    "non_singlets": 0,
+    "regular_targets": 28,
+    "rows": 100087,
+    "target_groups": 232,
+    "targets": 29,
+    "unique_cells": 100087
+  },
+  "activation_robustness": {
+    "all_strata_retained": true,
+    "cell_level_inference_emitted": false,
+    "contexts": {
+      "Resting-Teff": {
+        "all_two_guides_two_donors_same_nonzero_sign_fraction": 0.6428571428571429,
+        "all_two_guides_two_donors_same_nonzero_sign_n": 18,
+        "donor_rank_concordance": {
+          "kendall": 0.5767195767195767,
+          "sign_agreement_fraction": 0.8571428571428571,
+          "spearman": 0.7471264367816092
+        },
+        "guide_pair_comparisons": 56,
+        "guide_pair_sign_agreement_fraction": 0.875,
+        "guide_pair_sign_agreement_n": 49,
+        "guide_rank_concordance_by_donor": {
+          "A": {
+            "kendall": 0.31746031746031744,
+            "spearman": 0.4444444444444444
+          },
+          "B": {
+            "kendall": 0.13756613756613756,
+            "spearman": 0.16803503010399565
+          }
+        },
+        "targets": 28
+      },
+      "Resting-Treg": {
+        "all_two_guides_two_donors_same_nonzero_sign_fraction": 0.6071428571428571,
+        "all_two_guides_two_donors_same_nonzero_sign_n": 17,
+        "donor_rank_concordance": {
+          "kendall": 0.5767195767195767,
+          "sign_agreement_fraction": 0.8214285714285714,
+          "spearman": 0.7339901477832512
+        },
+        "guide_pair_comparisons": 56,
+        "guide_pair_sign_agreement_fraction": 0.7857142857142857,
+        "guide_pair_sign_agreement_n": 44,
+        "guide_rank_concordance_by_donor": {
+          "A": {
+            "kendall": 0.2380952380952381,
+            "spearman": 0.32676518883415434
+          },
+          "B": {
+            "kendall": 0.4074074074074074,
+            "spearman": 0.5610290093048714
+          }
+        },
+        "targets": 28
+      },
+      "Stimulated-Teff": {
+        "all_two_guides_two_donors_same_nonzero_sign_fraction": 0.5357142857142857,
+        "all_two_guides_two_donors_same_nonzero_sign_n": 15,
+        "donor_rank_concordance": {
+          "kendall": 0.783068783068783,
+          "sign_agreement_fraction": 0.8214285714285714,
+          "spearman": 0.9310344827586207
+        },
+        "guide_pair_comparisons": 56,
+        "guide_pair_sign_agreement_fraction": 0.6964285714285714,
+        "guide_pair_sign_agreement_n": 39,
+        "guide_rank_concordance_by_donor": {
+          "A": {
+            "kendall": 0.3544973544973545,
+            "spearman": 0.4428024083196497
+          },
+          "B": {
+            "kendall": 0.5079365079365079,
+            "spearman": 0.6776135741652982
+          }
+        },
+        "targets": 28
+      },
+      "Stimulated-Treg": {
+        "all_two_guides_two_donors_same_nonzero_sign_fraction": 0.5,
+        "all_two_guides_two_donors_same_nonzero_sign_n": 14,
+        "donor_rank_concordance": {
+          "kendall": 0.6084656084656085,
+          "sign_agreement_fraction": 0.8214285714285714,
+          "spearman": 0.7619047619047619
+        },
+        "guide_pair_comparisons": 56,
+        "guide_pair_sign_agreement_fraction": 0.75,
+        "guide_pair_sign_agreement_n": 42,
+        "guide_rank_concordance_by_donor": {
+          "A": {
+            "kendall": 0.6031746031746031,
+            "spearman": 0.7367268746579091
+          },
+          "B": {
+            "kendall": 0.3862433862433862,
+            "spearman": 0.5019157088122606
+          }
+        },
+        "targets": 28
+      }
+    },
+    "estimand": "target-guide median supplied activation.score minus the median of nine Non-Targeting guide medians within donor and context; target summaries are the median of two guide effects",
+    "inference": "descriptive donor and guide robustness only; cells are measurements within strata and n=2 donors does not support donor-population inference",
+    "minimum_cell_strata": [
+      {
+        "context": "Resting-Treg",
+        "donor": "A",
+        "guide": "SOCS3_2_CRISPRi",
+        "n_cells": 8,
+        "target": "SOCS3"
+      }
+    ],
+    "outcome_based_filtering": false,
+    "panel_provenance": "authors' preselected 28-regulator Perturb-seq panel; within-panel concordance is not genome-wide generality or independent validation",
+    "published_s8_p_values_used": false,
+    "score_claim_ceiling": "authors' supplied activation.score in this processed object; formula, gene set, normalization, and independence are not established",
+    "strata_below_20_cells": 1
+  },
+  "activation_summary_reproduction": {
+    "maximum_absolute_mean_error": 5.684341886080801e-13,
+    "maximum_absolute_median_error": 5.115907697472721e-13,
+    "published_p_values_used_for_inference": false,
+    "role": "archival aggregate reproduction only; S8 is derived from S14",
+    "rows": 116,
+    "status": "PASS",
+    "tolerance": 1e-10
+  },
   "attrition": {
     "analysis_eligible": 480,
     "four_guide_eligible": 1347,
@@ -7,7 +160,7 @@
   },
   "benchmark": "arce_il2ra_context_transfer_v1",
   "claim_ceiling": "cross-study/cross-modality ranking alignment, not state reachability/donor generalization/causal validation",
-  "config_sha256": "217ab5ded9ef4cb49a1ed7ff8230f03a1383a422895260d1d23d35f7db22f05e",
+  "config_sha256": "76276b6d1d0212b16a2fd9bd172868e72fd696ae4704d5f575fc6a3c39d1e905",
   "contexts": {
     "Resting_Teff": {
       "n_targets": 480,
@@ -218,10 +371,26 @@
       "archive_md5": "886ed0fea0b9dc0625355c2e4928077c",
       "archive_path": "data/Arce_data_tables.zip",
       "archive_sha256": "dc9e2efb04d24f1a6d4b8db6a8b1d5cd01c935777c3740088be339de5b5062b4",
-      "member_bytes": 384225,
-      "member_path": "data_tables/S1_all_screens_gene_summary.xlsx",
-      "member_sha256": "f03aa438d0a3a555129bb16e6d24d94b11b9f896e72a425e84256ab36fc5c82e",
-      "sheet": "S1_all_screens_gene_summary"
+      "members": {
+        "activation_cells_member": {
+          "bytes": 29140658,
+          "path": "data_tables/S14_metadata_Treg_Teff_perturbseq.xlsx",
+          "sha256": "ee33fc765234e073aaac9bf394ea067df63f196c22bb6c7b6dbbead09ee2343b",
+          "sheet": "metadata_Treg_total_Teff_total_"
+        },
+        "activation_summary_member": {
+          "bytes": 21824,
+          "path": "data_tables/S8_perturb_seq_activation_scoring_summary_table.xlsx",
+          "sha256": "90c58844937d744465c6de4f3306c9b37c01983a72a6c1e816df1b7d7907ee57",
+          "sheet": "Perturb_seq_activation_scoring_"
+        },
+        "screen_member": {
+          "bytes": 384225,
+          "path": "data_tables/S1_all_screens_gene_summary.xlsx",
+          "sha256": "f03aa438d0a3a555129bb16e6d24d94b11b9f896e72a425e84256ab36fc5c82e",
+          "sheet": "S1_all_screens_gene_summary"
+        }
+      }
     },
     "zhu_generator": {
       "admitted_rows": 6871,
@@ -240,7 +409,12 @@
     "S1 is an aggregate functional screen and does not expose donor-level effects.",
     "The Zhu predictor is donor-collapsed CRISPRi whereas Arce S1 is CRISPR-KO CD25/IL2RA screening.",
     "Permutation intervals quantify target-label exchangeability, not biological donor uncertainty.",
-    "All context-by-metric permutation p-values are unadjusted exploratory diagnostics across correlated tests; they support no FWER- or FDR-controlled inference."
+    "All context-by-metric permutation p-values are unadjusted exploratory diagnostics across correlated tests; they support no FWER- or FDR-controlled inference.",
+    "S8 is a deterministic pooled-cell summary of S14, not independent replication; its cell-level tests are not used.",
+    "The supplied activation.score has no frozen gene set, formula, normalization, or independence proof in the local tables.",
+    "S14 is the authors' preselected 28-regulator panel; concordance is conditional on that panel and is neither genome-wide generality nor independent validation.",
+    "Two donors permit descriptive concordance only, not donor-population inference or donor generalization.",
+    "The Zhu IL2RA one-gene predictor and supplied global activation.score are endpoint-mismatched, so their correlation is intentionally not reported."
   ],
   "permutation_inference": "none; all permutation p-values are unadjusted exploratory diagnostics across correlated metrics and contexts",
   "schema_version": "1.0.0",

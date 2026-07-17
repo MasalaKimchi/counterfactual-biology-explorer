@@ -74,10 +74,31 @@
       "Stimulated_Teff": 9,
       "Resting_Treg": 5
     },
-    "interpretation": "Modest cross-study, cross-modality ranking alignment; not state reachability, donor generalization, or causal validation.",
+    "activation_score_robustness": {
+      "s14_cells": 100087,
+      "guide_strata": 520,
+      "perturbation_guide_strata": 448,
+      "s8_aggregate_rows_reproduced": 116,
+      "maximum_absolute_s8_error": 5.684341886080801e-13,
+      "donor_spearman": {
+        "Resting-Teff": 0.7471264367816092,
+        "Stimulated-Teff": 0.9310344827586207,
+        "Resting-Treg": 0.7339901477832512,
+        "Stimulated-Treg": 0.7619047619047619
+      },
+      "all_two_guides_two_donors_same_sign_fraction": {
+        "Resting-Teff": 0.6428571428571429,
+        "Stimulated-Teff": 0.5357142857142857,
+        "Resting-Treg": 0.6071428571428571,
+        "Stimulated-Treg": 0.5
+      },
+      "interpretation": "Exact reproduction and within-object descriptive concordance in the authors' preselected 28-regulator panel, with guide heterogeneity; not genome-wide generality, independent replication, donor-population inference, functional activation, or state validation."
+    },
+    "interpretation": "Modest S1 cross-study/cross-modality ranking alignment plus S14 donor/guide robustness for a supplied, incompletely specified score; not state reachability, donor generalization, or causal validation.",
     "sources": [
       "results/evidence/arce_external_validation_meta.json",
-      "results/evidence/arce_il2ra_context_predictions.csv"
+      "results/evidence/arce_il2ra_context_predictions.csv",
+      "results/evidence/arce_activation_guide_effects.csv"
     ]
   },
   "systemic_harness": {
@@ -96,7 +117,7 @@
     "reason": "The archived multisplit and shuffle pipeline depended on an unhashed, deleted inputs.npz whose gene order was not preserved. These values are provenance, not current findings."
   },
   "open_requirements": [
-    "donor- and guide-held-out evaluation",
+    "primary-model donor- and guide-held-out evaluation",
     "module/pathway holdouts and calibrated structured nulls",
     "nested PCA, ridge, unconstrained and capacity-matched baselines",
     "measured in-domain perturbation combinations",

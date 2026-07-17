@@ -17,6 +17,18 @@
       "bytes": 384225,
       "sha256": "f03aa438d0a3a555129bb16e6d24d94b11b9f896e72a425e84256ab36fc5c82e",
       "sheet": "S1_all_screens_gene_summary"
+    },
+    "activation_cells_member": {
+      "path": "data_tables/S14_metadata_Treg_Teff_perturbseq.xlsx",
+      "bytes": 29140658,
+      "sha256": "ee33fc765234e073aaac9bf394ea067df63f196c22bb6c7b6dbbead09ee2343b",
+      "sheet": "metadata_Treg_total_Teff_total_"
+    },
+    "activation_summary_member": {
+      "path": "data_tables/S8_perturb_seq_activation_scoring_summary_table.xlsx",
+      "bytes": 21824,
+      "sha256": "90c58844937d744465c6de4f3306c9b37c01983a72a6c1e816df1b7d7907ee57",
+      "sheet": "Perturb_seq_activation_scoring_"
     }
   },
   "generator": {
@@ -53,6 +65,34 @@
     "permutation_interval": [0.025, 0.975],
     "multiplicity": "none; all permutation p-values are unadjusted exploratory diagnostics across correlated metrics and contexts"
   },
+  "activation_benchmark": {
+    "name": "arce_supplied_activation_score_robustness_v1",
+    "contexts": [
+      "Resting-Teff",
+      "Stimulated-Teff",
+      "Resting-Treg",
+      "Stimulated-Treg"
+    ],
+    "donors": ["A", "B"],
+    "control_target": "Non-Targeting",
+    "control_guides": [
+      "Non-Targeting_1_CRISPRi",
+      "Non-Targeting_2_CRISPRi",
+      "Non-Targeting_3_CRISPRi",
+      "Non-Targeting_4_CRISPRi",
+      "Non-Targeting_5_CRISPRi",
+      "Non-Targeting_6_CRISPRi",
+      "Non-Targeting_7_CRISPRi",
+      "Non-Targeting_8_CRISPRi",
+      "Non-Targeting_9_CRISPRi"
+    ],
+    "regular_guides_per_target": 2,
+    "reproduction_tolerance": 1e-10,
+    "estimand": "target-guide median supplied activation.score minus the median of nine Non-Targeting guide medians within donor and context; target summaries are the median of two guide effects",
+    "inference": "descriptive donor and guide robustness only; cells are measurements within strata and n=2 donors does not support donor-population inference",
+    "panel_provenance": "authors' preselected 28-regulator Perturb-seq panel; within-panel concordance is not genome-wide generality or independent validation",
+    "score_claim_ceiling": "authors' supplied activation.score in this processed object; formula, gene set, normalization, and independence are not established"
+  },
   "expected": {
     "screen_rows": 1351,
     "four_guide_eligible": 1347,
@@ -60,11 +100,33 @@
     "generator_admitted_rows": 6871,
     "generator_available_eligible": 1259,
     "analysis_eligible": 480,
+    "activation_rows": 100087,
+    "activation_unique_cells": 100087,
+    "activation_targets": 29,
+    "activation_regular_targets": 28,
+    "activation_guides": 65,
+    "activation_guide_groups": 520,
+    "activation_target_groups": 232,
+    "activation_guide_group_cells_min": 8,
+    "activation_guide_group_cells_median": 188.0,
+    "activation_guide_group_cells_max": 426,
+    "activation_strata_below_20_cells": 1,
+    "activation_summary_rows": 116,
+    "activation_generator_available": 24,
+    "activation_generator_admitted": 19,
+    "activation_context_counts": {
+      "Resting-Teff": 27078,
+      "Stimulated-Teff": 29549,
+      "Resting-Treg": 19001,
+      "Stimulated-Treg": 24459
+    },
+    "activation_donor_counts": {"A": 48386, "B": 51701},
     "effect_rows": 33983,
     "effect_genes": 10282
   },
   "outputs": {
     "predictions": "results/evidence/arce_il2ra_context_predictions.csv",
+    "activation_guide_effects": "results/evidence/arce_activation_guide_effects.csv",
     "metadata": "results/evidence/arce_external_validation_meta.json"
   }
 }
