@@ -56,7 +56,33 @@ the better baseline on the test coordinates is disclosed. This is a construction
 diagnostic, not predictive superiority, donor generalization, or biological validation.
 Z-score results are sensitivity-only.
 
-## 4. Independent Arce transfer is modest and context dependent
+## 4. Donor-pair transfer retains weak direction but fails magnitude
+
+The released donor H5MU contains six two-donor modalities. All six share 1,584 complete
+`Rest` perturbation atoms, and 8,949 genes are common to both target sources and the
+donor object. For each of three complementary 2-vs-2 donor partitions, the runner fits
+NNLS weights on one donor-pair dictionary, one target source, and one random half of the
+genes. It applies those weights unchanged to the complementary donor pair, opposite
+target source, and held-out genes. The common-ray and best-single identity/scalar are
+also selected only from the training side and frozen before testing.
+
+The two mixed-run partitions contribute 24 run-balanced correlated challenges across
+both donor directions, both target-source directions, and three fixed gene splits. Median
+cone cosine is **0.031**, a **+0.032** gain over the training-selected best single; 18/24
+challenges have positive cosine gain. Magnitude fails: median normalized RMSE is **1.153**
+for the cone versus **1.018** for the best single, with improvement in only 1/24
+challenges and none over the zero/common-response baselines. The 12 fully run-confounded
+donors-1–2 versus donors-3–4 challenges are reported separately and not headlined.
+
+This is a published-pipeline sensitivity, not leakage-free donor generalization. The
+modalities are two-donor summaries, released presence is conditioned on DE eligibility,
+gene splits are correlated, and four fixed donors cannot support donor-population
+inference at 0.05. The result therefore narrows the utility claim: some directional
+structure transfers, but predictive magnitude does not.
+
+Source: [`donor_pair_transfer.json`](../results/donor_pair_transfer.json).
+
+## 5. Independent Arce transfer is modest and context dependent
 
 The compact Arce benchmark compares the frozen negative Zhu IL2RA log-fold-change score
 with an independent CRISPR-KO CD25/IL2RA screen. Selection uses only four-guide coverage
@@ -80,7 +106,7 @@ treatment validation.
 Sources: [`arce_external_validation_meta.json`](../results/evidence/arce_external_validation_meta.json)
 and [`arce_il2ra_context_predictions.csv`](../results/evidence/arce_il2ra_context_predictions.csv).
 
-## 5. Arce donor/guide strata expose both robustness and heterogeneity
+## 6. Arce donor/guide strata expose both robustness and heterogeneity
 
 The same hash-bound archive contains 100,087 S14 singlet cells across two donors, two
 guides for each member of the authors' preselected 28-regulator panel, nine Non-Targeting guides, and four Teff/Treg ×
@@ -104,7 +130,42 @@ intentionally not reported.
 
 Source: [`arce_activation_guide_effects.csv`](../results/evidence/arce_activation_guide_effects.csv).
 
-## 6. The systemic harness exposes nonspecific success modes
+## 7. Source-selected arrayed follow-up is transcriptomically specific and cytokine-consistent
+
+The source authors arrayed nine screen-selected perturbations and released bulk RNA-seq
+plus IL-10/IL-21 flow percentages for six additional donor labels (Donor5–Donor10). The
+runner binds both tables to author commit `848d62f`, verifies every input byte, uses the
+`Stim8hr` screen profiles, intersects 8,976 Ensembl genes, and masks all nine panel target
+genes from every profile before transcriptome scoring (8,967 coordinates per profile).
+
+Every arrayed bulk profile retrieves its matching screen perturbation first among all nine
+(top-1 **9/9**, MRR **1.0**). Median raw cosine is **0.549**, versus a median **0.283**
+gain over the common source-panel response. After subtracting each assay's across-panel
+gene mean—a Systema-style specificity sensitivity—median cosine is **0.580** and retrieval
+remains 9/9. Median normalized RMSE is **1.012** raw and **1.052** centered, so magnitude
+calibration is not supported despite strong identity and directional structure.
+
+Flow effects are `log2(percent positive / donor mean NTC percent positive)` within donor;
+targets then give every observed donor equal weight. Donor coverage is uneven (three to
+six). Across all nine targets, Spearman correlation between donor-median flow effect and
+screen/bulk RNA cytokine log fold change is **0.817/0.717** for IL-10 and **0.833/0.850**
+for IL-21. Synchronized exhaustive target-label diagnostics over these four correlations
+are conditional on the selected panel; maximum-statistic tail fractions are 0.020, 0.062,
+0.015, and 0.011, respectively. Unequal donor count/composition means target
+exchangeability is not established. These fractions are not inferential p-values or
+multiplicity-adjusted inference, do not undo upstream selection, and are not
+donor-population inference.
+
+This supports same-study cross-platform replication and direct cytokine consistency for
+the measured panel. It does not establish held-out target discovery, guide robustness,
+population generalization, durable state conversion, function, fitness, chromatin
+remodeling, or intervention efficacy.
+
+Sources: [`zhu_arrayed_validation_meta.json`](../results/evidence/zhu_arrayed_validation_meta.json),
+[`zhu_arrayed_profile_metrics.csv`](../results/evidence/zhu_arrayed_profile_metrics.csv), and
+[`zhu_arrayed_flow_effects.csv`](../results/evidence/zhu_arrayed_flow_effects.csv).
+
+## 8. The systemic harness exposes nonspecific success modes
 
 The data-free harness independently checks the NNLS solver and fails closed on axis and
 provenance corruption. Its structured-specificity scenario produces high raw cosine from
@@ -116,8 +177,9 @@ contracts only.
 
 ## What remains unknown
 
-Claim-bearing biological evidence still requires primary-model donor- and guide-held-out effects,
-module/pathway holdouts, stronger nested baselines, calibrated structured nulls, measured
+Claim-bearing biological evidence still requires leakage-safe donor- and guide-held-out
+effects rebuilt from pseudobulk, module/pathway holdouts, stronger nested baselines,
+calibrated structured nulls, measured
 in-domain combinations, paired CRISPRi/CRISPRa, chromatin and protein/function endpoints,
 durability and fitness, and prospective testing from an established polarized starting
 state. Until then the appropriate output is a model-relative direction test and the next

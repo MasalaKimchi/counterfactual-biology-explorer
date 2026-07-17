@@ -109,6 +109,66 @@ The 28 regulators were preselected by the source authors using prior screen/stat
 evidence; target-rank and sign concordance are therefore conditional panel diagnostics,
 not genome-wide estimates or independent validation.
 
+## Source-selected arrayed RNA/protein follow-up
+
+The Zhu author repository contributes arrayed bulk-RNA differential-expression summaries
+for nine source-selected perturbations and IL-10/IL-21 flow percentages in follow-up donor
+labels Donor5–Donor10. The tables and aggregate H5AD are full-file SHA-256-bound. The
+screen side uses `Stim8hr` log fold change without consulting aggregate admission,
+guide-correlation, donor-correlation, significance, or follow-up outcomes.
+
+Bulk and screen profiles intersect on 8,976 Ensembl IDs. All nine panel target genes are
+masked from every profile before computing cosine, Pearson, Spearman, normalized RMSE, and
+retrieval rank among all nine source profiles. Raw profiles are compared with the common
+source-panel response. A specificity sensitivity subtracts the across-nine-perturbation
+mean separately for every gene and assay before rescoring; this panel centering is not a
+replacement biological estimand.
+
+Within each donor and cytokine, the flow baseline is the arithmetic mean of every
+available NTC-labeled measurement. A perturbation effect is
+`log2(percent_positive / donor_NTC_mean)`. Donor measurements are never pooled as cells;
+target summaries are the equal-donor median, with mean/range and donor count retained.
+Coverage is unbalanced and no missing target/donor is imputed.
+
+All `9! = 362,880` target-label assignments are enumerated. Retrieval top-1/MRR and four
+primary Spearman associations (screen/bulk RNA × IL-10/IL-21 donor-median flow) are
+recomputed synchronously; the correlation family records a one-sided maximum-statistic
+tail fraction. Because donor count, composition, and NTC replication differ by target,
+target exchangeability is not established. These exhaustive fractions are conditional
+diagnostics, not inferential p-values or multiplicity-adjusted inference. They do not
+replay upstream panel selection and provide neither held-out-discovery nor donor-population
+inference. The claim ceiling is measured same-study cross-platform replication and
+cytokine consistency.
+
+## Staged donor/guide validation contract
+
+The released donor-pair H5MU stage is implemented on `Rest` log fold change. Its six
+modalities represent every two-donor combination among four donors. The analysis requires
+the 1,584 perturbation atoms present in every modality and constructs an 8,949-gene target
+universe from both target sources plus donor-H5MU gene symbols without using held-out
+source signs. For each of three complementary 2-vs-2 partitions, both donor directions,
+both target-source directions, and seeds 0–2, the runner fits NNLS on one donor pair,
+source, and half-gene split. It applies identical coefficients to the complementary donor
+pair, other source, and held-out genes.
+
+The common-response ray and best-single atom/scalar are selected solely on the training
+dictionary, target source, and fit genes; their identity and scale remain frozen on test.
+The two mixed-run donor partitions yield 24 primary descriptive challenges. The donors
+1–2 versus 3–4 partition yields 12 fully run-confounded sensitivities reported separately.
+All challenges are correlated and no donor-population p-value or confidence interval is
+emitted. The released modalities omit DE-ineligible targets, so complete-case presence is
+potentially effectiveness-selected.
+
+The next released-object stage is reciprocal `guide_1`/`guide_2` H5MU transfer under the
+same frozen-coefficient and training-only-baseline rules.
+
+A leakage-safe donor/guide claim therefore requires structural-QC re-estimation from the
+pseudobulk count object. Universe construction must exclude `keep_effective_guides`,
+aggregate `ontarget_significant`, held-out DE/sign/correlation fields, and any filter whose
+outcome independence is not demonstrated. With four donors, all partitions remain
+fixed-cohort descriptive challenges; exact donor-population significance at 0.05 is
+mathematically unavailable.
+
 ## Removed legacy behavior
 
 The maintained surface intentionally excludes categorical reachability labels, staged

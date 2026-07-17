@@ -39,8 +39,10 @@ target_total = int(target_scope["union_genes"])
 target_measured = int(target_scope["shared_screen_genes"])
 target_analyzed = int(target_scope["registered_genes"])
 transfer = findings["cross_source_directional_transfer"]
+donor = findings["donor_pair_transfer"]["run_balanced"]
 arce = findings["arce_external_validation"]["spearman"]
 arce_activation = findings["arce_external_validation"]["activation_score_robustness"]
+arrayed = findings["zhu_arrayed_followup"]
 if len(split_values) != 12:
     raise ValueError("unexpected source-bound split count")
 
@@ -237,7 +239,7 @@ label(
 
 # 3. Retrospective challenge
 x = xs[2]
-step_header(x, 3, "Challenge", "source-bound + independent tests")
+step_header(x, 3, "Challenge", "source-bound + measured transfer tests")
 
 label(x + 1.8, 66.5, f"{split_mean:.3f} ± {split_sd:.3f}", size=23, color=TEAL, weight="bold")
 label(x + 1.9, 61.7, "mean ± SD, 12 hash-frozen gene splits", size=8.8, color=NAVY, weight="bold")
@@ -254,28 +256,32 @@ mean_x = sx0 + (split_mean - lo) / (hi - lo) * (sx1 - sx0)
 ax.add_line(Line2D([mean_x, mean_x], [sy - 2.4, sy + 2.4], color=NAVY, lw=2.5, zorder=4))
 label(x + 1.9, 44.3, f"range: {min(split_values):.3f}–{max(split_values):.3f}", size=8.7, color=NAVY, weight="bold")
 
-box(x + 1.7, 31.1, pw - 3.4, 8.5, fc=GRAY_LIGHT, ec="#D8DDE0", lw=1.0, radius=0.6)
-label(x + 3.0, 37.2, "Cross-source cosine gain", size=8.5, color=NAVY, weight="bold")
+box(x + 1.7, 30.6, pw - 3.4, 9.0, fc=GRAY_LIGHT, ec="#D8DDE0", lw=1.0, radius=0.6)
+label(x + 3.0, 37.2, "Frozen transfer challenges", size=8.5, color=NAVY, weight="bold")
 label(
     x + 3.0,
-    33.2,
-    f"+{transfer['ota_to_hollbacker']['mean_cosine_improvement_over_test_selected_better_baseline']:.3f} / "
+    33.4,
+    f"Source gain +{transfer['ota_to_hollbacker']['mean_cosine_improvement_over_test_selected_better_baseline']:.3f} / "
     f"+{transfer['hollbacker_to_ota']['mean_cosine_improvement_over_test_selected_better_baseline']:.3f}\n"
-    "magnitude error not improved",
-    size=8.2,
+    f"Donor-pair gain +{donor['median_cosine_improvement_over_training_best_single']:.3f}; "
+    f"nRMSE {donor['median_cone_normalized_rmse']:.3f} vs "
+    f"{donor['median_training_best_single_normalized_rmse']:.3f}",
+    size=7.6,
     color=MUTE,
 )
 
 label(
     x + 1.8,
-    29.0,
-    f"Arce rank alignment: {arce['Resting_Teff']:.3f} / {arce['Stimulated_Teff']:.3f} / {arce['Resting_Treg']:.3f}\n"
-    f"S14 selected-panel A-vs-B ranks (n=2): {min(arce_activation['donor_spearman'].values()):.2f}–"
-    f"{max(arce_activation['donor_spearman'].values()):.2f}; four-stratum signs: "
+    28.4,
+    f"Arce ranks: {arce['Resting_Teff']:.3f}/{arce['Stimulated_Teff']:.3f}/{arce['Resting_Treg']:.3f}; donor ranks: "
+    f"{min(arce_activation['donor_spearman'].values()):.2f}–"
+    f"{max(arce_activation['donor_spearman'].values()):.2f}; signs: "
     f"{min(arce_activation['all_two_guides_two_donors_same_sign_fraction'].values()):.0%}–"
     f"{max(arce_activation['all_two_guides_two_donors_same_sign_fraction'].values()):.0%}\n"
-    "descriptive robustness, not donor/state validation",
-    size=7.7,
+    f"Zhu arrayed RNA: 9/9 retrieved; centered cosine "
+    f"{arrayed['profile_replication']['panel_centered_median_cosine']:.3f}\n"
+    "RNA→flow cytokine ranks: 0.72–0.85; descriptive, not donor/state validation",
+    size=6.8,
     color=MUTE,
     style="italic",
     va="top",

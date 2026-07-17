@@ -1,0 +1,254 @@
+{
+  "benchmark": "zhu_source_selected_arrayed_followup_v1",
+  "claim_ceiling": "source-selected cross-platform replication and cytokine consistency in follow-up donors; not held-out discovery, state reachability, donor-population inference, or intervention efficacy",
+  "conditional_permutation": {
+    "cytokine_rank_association": {
+      "bulk_IL10": {
+        "exhaustive_one_sided_max_stat_tail_fraction": 0.06185515873015873,
+        "exhaustive_one_sided_tail_fraction": 0.01843309082892416,
+        "spearman": 0.7166666666666667
+      },
+      "bulk_IL21": {
+        "exhaustive_one_sided_max_stat_tail_fraction": 0.011452821869488537,
+        "exhaustive_one_sided_tail_fraction": 0.003036816578483245,
+        "spearman": 0.8499999999999999
+      },
+      "screen_IL10": {
+        "exhaustive_one_sided_max_stat_tail_fraction": 0.019722773368606703,
+        "exhaustive_one_sided_tail_fraction": 0.005384700176366843,
+        "spearman": 0.8166666666666665
+      },
+      "screen_IL21": {
+        "exhaustive_one_sided_max_stat_tail_fraction": 0.015346671075837743,
+        "exhaustive_one_sided_tail_fraction": 0.004133597883597883,
+        "spearman": 0.8333333333333333
+      }
+    },
+    "interpretation": "Exhaustive conditional target-label diagnostics within the source-selected nine-perturbation panel. Unequal donor count/composition and upstream panel selection leave target exchangeability unestablished, so tail fractions are not inferential p-values, multiplicity-adjusted inference, population inference, or held-out-discovery inference.",
+    "permutations": 362880,
+    "retrieval": {
+      "panel_centered": {
+        "exhaustive_mrr_tail_fraction": 2.7557319223985893e-06,
+        "exhaustive_top1_tail_fraction": 2.7557319223985893e-06,
+        "mrr": 1.0,
+        "top1": 1.0
+      },
+      "raw": {
+        "exhaustive_mrr_tail_fraction": 2.7557319223985893e-06,
+        "exhaustive_top1_tail_fraction": 2.7557319223985893e-06,
+        "mrr": 1.0,
+        "top1": 1.0
+      }
+    }
+  },
+  "config_sha256": "2fb793c1fff7f513c2666502548b698e49b45ea4bb40a61e2699c27737e9a236",
+  "design": {
+    "all_panel_target_genes_masked": true,
+    "common_genes": 8976,
+    "flow_transform": "log2(percent_positive / donor_mean_NTC_percent_positive)",
+    "followup_donor_labels": [
+      "Donor5",
+      "Donor6",
+      "Donor7",
+      "Donor8",
+      "Donor9",
+      "Donor10"
+    ],
+    "perturbations": [
+      "ATP2A2",
+      "CYB5R4",
+      "ELOB",
+      "GATA3",
+      "KDM1A",
+      "MED24",
+      "MEN1",
+      "NFKB2",
+      "SGF29"
+    ],
+    "screen_condition": "Stim8hr"
+  },
+  "flow_summary": {
+    "IL10": {
+      "ATP2A2": {
+        "donors": 5,
+        "max_log2_ratio": 3.9410677109266063,
+        "mean_log2_ratio": 1.9393365830885352,
+        "median_log2_ratio": 1.681009188192191,
+        "min_log2_ratio": -0.24961389007147228
+      },
+      "CYB5R4": {
+        "donors": 5,
+        "max_log2_ratio": 4.533938497696689,
+        "mean_log2_ratio": 2.8361601312227704,
+        "median_log2_ratio": 3.512611656496472,
+        "min_log2_ratio": 0.6508504363776133
+      },
+      "ELOB": {
+        "donors": 3,
+        "max_log2_ratio": 4.809279798982097,
+        "mean_log2_ratio": 4.54738131988026,
+        "median_log2_ratio": 4.497412621671575,
+        "min_log2_ratio": 4.335451538987108
+      },
+      "GATA3": {
+        "donors": 3,
+        "max_log2_ratio": 0.5244209587861056,
+        "mean_log2_ratio": 0.1633399678541014,
+        "median_log2_ratio": 0.34951392655926206,
+        "min_log2_ratio": -0.3839149817830635
+      },
+      "KDM1A": {
+        "donors": 5,
+        "max_log2_ratio": 0.002468255590749891,
+        "mean_log2_ratio": -0.4240231137122879,
+        "median_log2_ratio": -0.27563444261342734,
+        "min_log2_ratio": -0.9719856238304035
+      },
+      "MED24": {
+        "donors": 4,
+        "max_log2_ratio": -0.2829339632714986,
+        "mean_log2_ratio": -0.8427857920654066,
+        "median_log2_ratio": -0.9506655351333089,
+        "min_log2_ratio": -1.1868781347235098
+      },
+      "MEN1": {
+        "donors": 3,
+        "max_log2_ratio": 6.345409528226526,
+        "mean_log2_ratio": 4.8178528374845495,
+        "median_log2_ratio": 4.266961635669434,
+        "min_log2_ratio": 3.841187348557689
+      },
+      "NFKB2": {
+        "donors": 5,
+        "max_log2_ratio": 3.6057210608879533,
+        "mean_log2_ratio": 2.0805634185565007,
+        "median_log2_ratio": 1.684797768300951,
+        "min_log2_ratio": 0.804528877978841
+      },
+      "SGF29": {
+        "donors": 6,
+        "max_log2_ratio": 2.049243519019849,
+        "mean_log2_ratio": 1.2687902918578786,
+        "median_log2_ratio": 1.519249745911823,
+        "min_log2_ratio": -0.0734805976425488
+      }
+    },
+    "IL21": {
+      "ATP2A2": {
+        "donors": 5,
+        "max_log2_ratio": 3.6832645743329597,
+        "mean_log2_ratio": 2.4166982495768865,
+        "median_log2_ratio": 2.6661442569765095,
+        "min_log2_ratio": 0.20645087746742652
+      },
+      "CYB5R4": {
+        "donors": 5,
+        "max_log2_ratio": -0.1550693964928334,
+        "mean_log2_ratio": -0.9137956163419865,
+        "median_log2_ratio": -0.7618402628052354,
+        "min_log2_ratio": -2.2137792910317398
+      },
+      "ELOB": {
+        "donors": 3,
+        "max_log2_ratio": 0.3960328382777488,
+        "mean_log2_ratio": -0.2634797022527518,
+        "median_log2_ratio": -0.12469574744931461,
+        "min_log2_ratio": -1.0617761975866897
+      },
+      "GATA3": {
+        "donors": 3,
+        "max_log2_ratio": 1.6158785775038502,
+        "mean_log2_ratio": 1.0916322278040738,
+        "median_log2_ratio": 0.8451143980218287,
+        "min_log2_ratio": 0.8139037078865421
+      },
+      "KDM1A": {
+        "donors": 5,
+        "max_log2_ratio": 0.9050515959447374,
+        "mean_log2_ratio": 0.026075028867161888,
+        "median_log2_ratio": 0.5646629391106256,
+        "min_log2_ratio": -2.2598671267551107
+      },
+      "MED24": {
+        "donors": 4,
+        "max_log2_ratio": -0.18403194763768774,
+        "mean_log2_ratio": -1.1853832548272945,
+        "median_log2_ratio": -1.3773667095547688,
+        "min_log2_ratio": -1.8027676525619523
+      },
+      "MEN1": {
+        "donors": 3,
+        "max_log2_ratio": 1.3476147385510118,
+        "mean_log2_ratio": 0.905271122877345,
+        "median_log2_ratio": 0.6855394554727336,
+        "min_log2_ratio": 0.6826591746082895
+      },
+      "NFKB2": {
+        "donors": 5,
+        "max_log2_ratio": 1.948553234581324,
+        "mean_log2_ratio": 1.402357940822647,
+        "median_log2_ratio": 1.5600878320821268,
+        "min_log2_ratio": 0.6419524793059856
+      },
+      "SGF29": {
+        "donors": 6,
+        "max_log2_ratio": 2.5396231929451405,
+        "mean_log2_ratio": 1.3725549101896126,
+        "median_log2_ratio": 1.2184596251189252,
+        "min_log2_ratio": -0.22239242133644802
+      }
+    }
+  },
+  "input_verification": {
+    "bulk_rna": {
+      "bytes": 13952871,
+      "hash_verified": true,
+      "path": "data/IL10IL21bulkRNAseq_DESeq2_results.csv",
+      "sha256_actual": "c20418a9285b10104dbae362b825971f86f97425800a92269e4433ce780e666d",
+      "sha256_expected": "c20418a9285b10104dbae362b825971f86f97425800a92269e4433ce780e666d"
+    },
+    "flow": {
+      "bytes": 2200,
+      "hash_verified": true,
+      "path": "data/IL10_IL21_arrayed_validation.csv",
+      "sha256_actual": "f60cdda392d6f29d10a539727ff7324b04d17e35c0512c889b733e00380b83dc",
+      "sha256_expected": "f60cdda392d6f29d10a539727ff7324b04d17e35c0512c889b733e00380b83dc"
+    },
+    "screen": {
+      "bytes": 16786240107,
+      "hash_verified": true,
+      "path": "data/GWCD4i.DE_stats.h5ad",
+      "sha256_actual": "c355f535ff32cf7ba1edc49cf9c6039fe84f2c9ebe4d005515cba75790cfbb62",
+      "sha256_expected": "c355f535ff32cf7ba1edc49cf9c6039fe84f2c9ebe4d005515cba75790cfbb62"
+    }
+  },
+  "limitations": [
+    "The nine perturbations were selected upstream using the source screen; this is measured follow-up, not held-out target discovery.",
+    "Donor coverage varies by perturbation (three to six), so each target summary gives donors equal weight and remains descriptive.",
+    "The conditional label permutations do not undo upstream panel selection and are not donor-population inference.",
+    "Unequal donor count/composition and NTC replication leave target exchangeability unestablished; exhaustive tail fractions are not inferential p-values or multiplicity-adjusted inference.",
+    "Cytokine-positive percentages do not establish durable cell-state conversion, function, fitness, chromatin remodeling, or intervention efficacy."
+  ],
+  "profile_summary": {
+    "panel_centered": {
+      "cosine": 0.579978150629429,
+      "normalized_rmse": 1.0521083462106524,
+      "pearson": 0.5781256727750266,
+      "spearman": 0.5080854232765735
+    },
+    "raw": {
+      "cosine": 0.5492858628301112,
+      "median_cosine_gain_over_common_source": 0.2826379170866942,
+      "normalized_rmse": 1.0120994782340578,
+      "pearson": 0.549812934254465,
+      "spearman": 0.46111253411387637
+    }
+  },
+  "provenance": {
+    "author_commit": "848d62fc2b7027f7218d6fc5f5b0c37255dc94af",
+    "author_repository": "https://github.com/emdann/GWT_perturbseq_analysis_2025",
+    "selection_status": "All nine perturbations were selected upstream from the genome-scale screen for arrayed follow-up. Outcome-label permutation diagnostics are conditional on this selected panel."
+  },
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

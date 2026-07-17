@@ -1,0 +1,96 @@
+{
+  "schema_version": "1.0.0",
+  "generated_on": "2026-07-17",
+  "benchmark": "zhu_published_eligibility_donor_pair_source_transfer_v1",
+  "claim_ceiling": "fixed-four-donor, published-eligibility robustness sensitivity; not leakage-free donor holdout, donor-population inference, predictive utility, or state reachability",
+  "inputs": {
+    "donor_h5mu": {
+      "path": "data/GWCD4i.DE_stats.by_donors.h5mu",
+      "bytes": 16866278447,
+      "sha256": "2ee3cf90925600eb044619021da2bdd47d661f306a204586652256facf17af64"
+    },
+    "target_table": {
+      "path": "data/Th2_Th1_polarization_signature_DE_results_full.suppl_table.csv",
+      "bytes": 6155771,
+      "sha256": "c47d2df21414ca85e7aa255f4148904eec700fbcd9debc2f734ec97049698444"
+    }
+  },
+  "target": {
+    "gene_field": "variable",
+    "contrast_field": "contrast",
+    "sources": {
+      "hollbacker": "Th2_vs_Th1 (Hollbacker 2021)",
+      "ota": "Th2_vs_Th1 (Ota 2021)"
+    },
+    "value_fields": ["log_fc"],
+    "orientation_multiplier": -1.0
+  },
+  "h5mu": {
+    "modalities": [
+      "CE0006864_CE0008162",
+      "CE0006864_CE0008678",
+      "CE0006864_CE0010866",
+      "CE0008162_CE0008678",
+      "CE0008162_CE0010866",
+      "CE0008678_CE0010866"
+    ],
+    "condition": "Rest",
+    "condition_field": "culture_condition",
+    "gene_id_field": "gene_ids",
+    "gene_symbol_field": "gene_name",
+    "layer": "log_fc",
+    "required_layers": ["log_fc", "lfcSE", "zscore"]
+  },
+  "donors": {
+    "D1": {"id": "CE0008162", "rest_run": "R1"},
+    "D2": {"id": "CE0010866", "rest_run": "R1"},
+    "D3": {"id": "CE0008678", "rest_run": "R2"},
+    "D4": {"id": "CE0006864", "rest_run": "R2"}
+  },
+  "partitions": [
+    {
+      "id": "d1_d2_vs_d3_d4",
+      "left": "CE0008162_CE0010866",
+      "right": "CE0006864_CE0008678",
+      "run_confounded": true
+    },
+    {
+      "id": "d1_d3_vs_d2_d4",
+      "left": "CE0008162_CE0008678",
+      "right": "CE0006864_CE0010866",
+      "run_confounded": false
+    },
+    {
+      "id": "d1_d4_vs_d2_d3",
+      "left": "CE0006864_CE0008162",
+      "right": "CE0008678_CE0010866",
+      "run_confounded": false
+    }
+  ],
+  "analysis": {
+    "gene_order": "lexicographic_gene_symbol",
+    "rng": "numpy.default_rng(seed)",
+    "split_seeds": [0, 1, 2],
+    "directions": [
+      ["hollbacker", "ota"],
+      ["ota", "hollbacker"]
+    ],
+    "baselines": ["zero", "training_common_ray", "training_best_single"],
+    "inference": "descriptive correlated challenges; no donor-population p-values or confidence intervals"
+  },
+  "expected": {
+    "modalities": 6,
+    "genes": 10273,
+    "rest_atoms": 1584,
+    "shared_target_genes": 8949,
+    "modality_rows": {
+      "CE0006864_CE0008162": 4880,
+      "CE0006864_CE0008678": 4880,
+      "CE0006864_CE0010866": 4880,
+      "CE0008162_CE0008678": 4879,
+      "CE0008162_CE0010866": 4880,
+      "CE0008678_CE0010866": 4880
+    }
+  },
+  "output": "results/donor_pair_transfer.json"
+}

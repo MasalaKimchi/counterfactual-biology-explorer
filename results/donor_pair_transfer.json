@@ -1,0 +1,2408 @@
+{
+  "benchmark": "zhu_published_eligibility_donor_pair_source_transfer_v1",
+  "challenges": [
+    {
+      "comparisons": {
+        "training_best_single": {
+          "cosine_improvement": 0.013079101819124812,
+          "normalized_rmse_improvement": -0.09201265662368452
+        },
+        "training_common_ray": {
+          "cosine_improvement": 0.06794801886719731,
+          "normalized_rmse_improvement": -0.09642438784797425
+        },
+        "zero": {
+          "cosine_improvement": 0.06794801886719731,
+          "normalized_rmse_improvement": -0.09642438784797425
+        }
+      },
+      "fit_gene_sha256": "9d8f346ab623c29b4ecd9e01369e99458f6e622ed66b55368df60a42d453488b",
+      "fit_genes": 4474,
+      "metrics": {
+        "cone": {
+          "cosine": 0.06794801886719731,
+          "norm_ratio": 0.5226604241694743,
+          "normalized_rmse": 1.0964243878479742,
+          "sign_agreement": 0.5056983240223464
+        },
+        "training_best_single": {
+          "cosine": 0.0548689170480725,
+          "norm_ratio": 0.16374280684265577,
+          "normalized_rmse": 1.0044117312242897,
+          "sign_agreement": 0.5231284916201118
+        },
+        "training_common_ray": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        },
+        "zero": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        }
+      },
+      "partition": "d1_d2_vs_d3_d4",
+      "run_confounded": true,
+      "score_gene_sha256": "5a32f16a33e0073e0e088ea95dd933e0be5b8242f65d54472657519905ad88aa",
+      "score_genes": 4475,
+      "seed": 0,
+      "test_modality": "CE0006864_CE0008678",
+      "test_target_source": "ota",
+      "train_modality": "CE0008162_CE0010866",
+      "train_target_source": "hollbacker",
+      "training": {
+        "best_single_alpha": 0.25710319664991677,
+        "best_single_key": "ENSG00000163600_Rest",
+        "coefficient_sha256": "be40c1c50c6c249e26f8db2d2abe711a1986afd50a2dfb705f338afbfe329899",
+        "common_alpha": 0.0,
+        "cone_fit_cosine": 0.5466862075079849,
+        "cone_kkt_violation": 3.330669073875469e-16,
+        "cone_support": 161
+      }
+    },
+    {
+      "comparisons": {
+        "training_best_single": {
+          "cosine_improvement": 0.06888024689169643,
+          "normalized_rmse_improvement": -0.18220126656563274
+        },
+        "training_common_ray": {
+          "cosine_improvement": 0.06064890316871408,
+          "normalized_rmse_improvement": -0.1934914841621327
+        },
+        "zero": {
+          "cosine_improvement": 0.06064890316871408,
+          "normalized_rmse_improvement": -0.1934914841621327
+        }
+      },
+      "fit_gene_sha256": "6417fa3ba293467351e20dac1ba752c11817c9a8aa4f64d0209c763a9424ba55",
+      "fit_genes": 4474,
+      "metrics": {
+        "cone": {
+          "cosine": 0.06064890316871408,
+          "norm_ratio": 0.7149425774642078,
+          "normalized_rmse": 1.1934914841621327,
+          "sign_agreement": 0.5039106145251396
+        },
+        "training_best_single": {
+          "cosine": -0.008231343722982355,
+          "norm_ratio": 0.14268472310179975,
+          "normalized_rmse": 1.0112902175965,
+          "sign_agreement": 0.5025698324022346
+        },
+        "training_common_ray": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        },
+        "zero": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        }
+      },
+      "partition": "d1_d2_vs_d3_d4",
+      "run_confounded": true,
+      "score_gene_sha256": "159c3fe5f0e8a26d666f34dd62232b030d72164f58ed47da40f74cfebe0dea09",
+      "score_genes": 4475,
+      "seed": 1,
+      "test_modality": "CE0006864_CE0008678",
+      "test_target_source": "ota",
+      "train_modality": "CE0008162_CE0010866",
+      "train_target_source": "hollbacker",
+      "training": {
+        "best_single_alpha": 0.2822346448673716,
+        "best_single_key": "ENSG00000108599_Rest",
+        "coefficient_sha256": "e0d18b4e1ec0e26e6b1da53c44a0117220eaaa8d909d6077b4090d5c6b40c0b4",
+        "common_alpha": 0.0,
+        "cone_fit_cosine": 0.5653717843224246,
+        "cone_kkt_violation": 1.4432899320127031e-15,
+        "cone_support": 205
+      }
+    },
+    {
+      "comparisons": {
+        "training_best_single": {
+          "cosine_improvement": -0.00788965576662778,
+          "normalized_rmse_improvement": -0.11532271876471789
+        },
+        "training_common_ray": {
+          "cosine_improvement": 0.014176777351143576,
+          "normalized_rmse_improvement": -0.11824819663596031
+        },
+        "zero": {
+          "cosine_improvement": 0.014176777351143576,
+          "normalized_rmse_improvement": -0.11824819663596031
+        }
+      },
+      "fit_gene_sha256": "5d95978b64023b6ea42dfad10dde756919c52acd29a444b0e78fb833197c1c59",
+      "fit_genes": 4474,
+      "metrics": {
+        "cone": {
+          "cosine": 0.014176777351143576,
+          "norm_ratio": 0.5148563258606077,
+          "normalized_rmse": 1.1182481966359603,
+          "sign_agreement": 0.5115083798882681
+        },
+        "training_best_single": {
+          "cosine": 0.022066433117771355,
+          "norm_ratio": 0.10173099006627163,
+          "normalized_rmse": 1.0029254778712424,
+          "sign_agreement": 0.506145251396648
+        },
+        "training_common_ray": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        },
+        "zero": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        }
+      },
+      "partition": "d1_d2_vs_d3_d4",
+      "run_confounded": true,
+      "score_gene_sha256": "806c71bd5169f4e90985c88f5aa5c06037ef1ccdda8f42841f586da24e46af7a",
+      "score_genes": 4475,
+      "seed": 2,
+      "test_modality": "CE0006864_CE0008678",
+      "test_target_source": "ota",
+      "train_modality": "CE0008162_CE0010866",
+      "train_target_source": "hollbacker",
+      "training": {
+        "best_single_alpha": 0.2353486458207134,
+        "best_single_key": "ENSG00000108599_Rest",
+        "coefficient_sha256": "cbaed9804ddef698297f30641ea6123d75c7953d4e2f1b846a0793207ca8ce0d",
+        "common_alpha": 0.0,
+        "cone_fit_cosine": 0.5346891326378738,
+        "cone_kkt_violation": 5.551115123125782e-16,
+        "cone_support": 197
+      }
+    },
+    {
+      "comparisons": {
+        "training_best_single": {
+          "cosine_improvement": 0.15549185581792352,
+          "normalized_rmse_improvement": -0.16226774572225322
+        },
+        "training_common_ray": {
+          "cosine_improvement": 0.07054521223774166,
+          "normalized_rmse_improvement": -0.20132145362007425
+        },
+        "zero": {
+          "cosine_improvement": 0.07054521223774166,
+          "normalized_rmse_improvement": -0.20132145362007425
+        }
+      },
+      "fit_gene_sha256": "9d8f346ab623c29b4ecd9e01369e99458f6e622ed66b55368df60a42d453488b",
+      "fit_genes": 4474,
+      "metrics": {
+        "cone": {
+          "cosine": 0.07054521223774166,
+          "norm_ratio": 0.7399851736215204,
+          "normalized_rmse": 1.2013214536200743,
+          "sign_agreement": 0.5568715083798883
+        },
+        "training_best_single": {
+          "cosine": -0.08494664358018186,
+          "norm_ratio": 0.2097541201645851,
+          "normalized_rmse": 1.039053707897821,
+          "sign_agreement": 0.4949720670391061
+        },
+        "training_common_ray": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        },
+        "zero": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        }
+      },
+      "partition": "d1_d2_vs_d3_d4",
+      "run_confounded": true,
+      "score_gene_sha256": "5a32f16a33e0073e0e088ea95dd933e0be5b8242f65d54472657519905ad88aa",
+      "score_genes": 4475,
+      "seed": 0,
+      "test_modality": "CE0006864_CE0008678",
+      "test_target_source": "hollbacker",
+      "train_modality": "CE0008162_CE0010866",
+      "train_target_source": "ota",
+      "training": {
+        "best_single_alpha": 0.31219102947159855,
+        "best_single_key": "ENSG00000086730_Rest",
+        "coefficient_sha256": "d2c49396fe6bd4eb75c01d1e624af075734d16abf35419e2f1f9f0ade98bc98b",
+        "common_alpha": 0.0,
+        "cone_fit_cosine": 0.6046361063761337,
+        "cone_kkt_violation": 4.440892098500625e-16,
+        "cone_support": 168
+      }
+    },
+    {
+      "comparisons": {
+        "training_best_single": {
+          "cosine_improvement": 0.04052320132736732,
+          "normalized_rmse_improvement": -0.371164848668033
+        },
+        "training_common_ray": {
+          "cosine_improvement": 0.029759576598799325,
+          "normalized_rmse_improvement": -0.41727175009910344
+        },
+        "zero": {
+          "cosine_improvement": 0.029759576598799325,
+          "normalized_rmse_improvement": -0.41727175009910344
+        }
+      },
+      "fit_gene_sha256": "6417fa3ba293467351e20dac1ba752c11817c9a8aa4f64d0209c763a9424ba55",
+      "fit_genes": 4474,
+      "metrics": {
+        "cone": {
+          "cosine": 0.029759576598799325,
+          "norm_ratio": 1.0345206656285837,
+          "normalized_rmse": 1.4172717500991034,
+          "sign_agreement": 0.551731843575419
+        },
+        "training_best_single": {
+          "cosine": -0.010763624728567995,
+          "norm_ratio": 0.2965725183444733,
+          "normalized_rmse": 1.0461069014310704,
+          "sign_agreement": 0.5081564245810056
+        },
+        "training_common_ray": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        },
+        "zero": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        }
+      },
+      "partition": "d1_d2_vs_d3_d4",
+      "run_confounded": true,
+      "score_gene_sha256": "159c3fe5f0e8a26d666f34dd62232b030d72164f58ed47da40f74cfebe0dea09",
+      "score_genes": 4475,
+      "seed": 1,
+      "test_modality": "CE0006864_CE0008678",
+      "test_target_source": "hollbacker",
+      "train_modality": "CE0008162_CE0010866",
+      "train_target_source": "ota",
+      "training": {
+        "best_single_alpha": 0.40159745912142375,
+        "best_single_key": "ENSG00000163600_Rest",
+        "coefficient_sha256": "96a6143b194aaf18b13e4c250c6b080e399b0673ec0065cd4809ed175c48f002",
+        "common_alpha": 0.0,
+        "cone_fit_cosine": 0.6048691932739706,
+        "cone_kkt_violation": 9.992007221626407e-16,
+        "cone_support": 193
+      }
+    },
+    {
+      "comparisons": {
+        "training_best_single": {
+          "cosine_improvement": 0.04826801480210656,
+          "normalized_rmse_improvement": -0.1971572595471962
+        },
+        "training_common_ray": {
+          "cosine_improvement": 0.010189707477111272,
+          "normalized_rmse_improvement": -0.2245862843262103
+        },
+        "zero": {
+          "cosine_improvement": 0.010189707477111272,
+          "normalized_rmse_improvement": -0.2245862843262103
+        }
+      },
+      "fit_gene_sha256": "5d95978b64023b6ea42dfad10dde756919c52acd29a444b0e78fb833197c1c59",
+      "fit_genes": 4474,
+      "metrics": {
+        "cone": {
+          "cosine": 0.010189707477111272,
+          "norm_ratio": 0.7170952159422405,
+          "normalized_rmse": 1.2245862843262103,
+          "sign_agreement": 0.5427932960893854
+        },
+        "training_best_single": {
+          "cosine": -0.038078307324995286,
+          "norm_ratio": 0.20079479381260223,
+          "normalized_rmse": 1.027429024779014,
+          "sign_agreement": 0.5032402234636871
+        },
+        "training_common_ray": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        },
+        "zero": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        }
+      },
+      "partition": "d1_d2_vs_d3_d4",
+      "run_confounded": true,
+      "score_gene_sha256": "806c71bd5169f4e90985c88f5aa5c06037ef1ccdda8f42841f586da24e46af7a",
+      "score_genes": 4475,
+      "seed": 2,
+      "test_modality": "CE0006864_CE0008678",
+      "test_target_source": "hollbacker",
+      "train_modality": "CE0008162_CE0010866",
+      "train_target_source": "ota",
+      "training": {
+        "best_single_alpha": 0.29172122690626745,
+        "best_single_key": "ENSG00000163600_Rest",
+        "coefficient_sha256": "4dfcfa63b4721fa5d89b7b30530fce3cb5f55dd019afaf4f046bee72b16e3b6c",
+        "common_alpha": 0.0,
+        "cone_fit_cosine": 0.5705589041310086,
+        "cone_kkt_violation": 1.3616118632603218e-16,
+        "cone_support": 175
+      }
+    },
+    {
+      "comparisons": {
+        "training_best_single": {
+          "cosine_improvement": 0.0725334733856055,
+          "normalized_rmse_improvement": -0.05047637599465338
+        },
+        "training_common_ray": {
+          "cosine_improvement": 0.045687817310300596,
+          "normalized_rmse_improvement": -0.06286603327873896
+        },
+        "zero": {
+          "cosine_improvement": 0.045687817310300596,
+          "normalized_rmse_improvement": -0.06286603327873896
+        }
+      },
+      "fit_gene_sha256": "9d8f346ab623c29b4ecd9e01369e99458f6e622ed66b55368df60a42d453488b",
+      "fit_genes": 4474,
+      "metrics": {
+        "cone": {
+          "cosine": 0.045687817310300596,
+          "norm_ratio": 0.40869137286900475,
+          "normalized_rmse": 1.062866033278739,
+          "sign_agreement": 0.5173184357541899
+        },
+        "training_best_single": {
+          "cosine": -0.026845656075304893,
+          "norm_ratio": 0.13332146734864259,
+          "normalized_rmse": 1.0123896572840856,
+          "sign_agreement": 0.5065921787709498
+        },
+        "training_common_ray": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        },
+        "zero": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        }
+      },
+      "partition": "d1_d2_vs_d3_d4",
+      "run_confounded": true,
+      "score_gene_sha256": "5a32f16a33e0073e0e088ea95dd933e0be5b8242f65d54472657519905ad88aa",
+      "score_genes": 4475,
+      "seed": 0,
+      "test_modality": "CE0008162_CE0010866",
+      "test_target_source": "ota",
+      "train_modality": "CE0006864_CE0008678",
+      "train_target_source": "hollbacker",
+      "training": {
+        "best_single_alpha": 0.2197169911207412,
+        "best_single_key": "ENSG00000166432_Rest",
+        "coefficient_sha256": "a9ac66025dfc7078ddfa8302b60ddf3fb7ec5709f4e9a8c4db12457f585eb6cf",
+        "common_alpha": 0.0,
+        "cone_fit_cosine": 0.43865460184834354,
+        "cone_kkt_violation": 1.5392703481012575e-16,
+        "cone_support": 141
+      }
+    },
+    {
+      "comparisons": {
+        "training_best_single": {
+          "cosine_improvement": 0.025855537371769342,
+          "normalized_rmse_improvement": -0.14564983684116162
+        },
+        "training_common_ray": {
+          "cosine_improvement": 0.013498027576404571,
+          "normalized_rmse_improvement": -0.15856471483881074
+        },
+        "zero": {
+          "cosine_improvement": 0.013498027576404571,
+          "normalized_rmse_improvement": -0.15856471483881074
+        }
+      },
+      "fit_gene_sha256": "6417fa3ba293467351e20dac1ba752c11817c9a8aa4f64d0209c763a9424ba55",
+      "fit_genes": 4474,
+      "metrics": {
+        "cone": {
+          "cosine": 0.013498027576404571,
+          "norm_ratio": 0.5986940590205589,
+          "normalized_rmse": 1.1585647148388107,
+          "sign_agreement": 0.5188826815642458
+        },
+        "training_best_single": {
+          "cosine": -0.01235750979536477,
+          "norm_ratio": 0.14934981260326752,
+          "normalized_rmse": 1.0129148779976491,
+          "sign_agreement": 0.5139664804469274
+        },
+        "training_common_ray": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        },
+        "zero": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        }
+      },
+      "partition": "d1_d2_vs_d3_d4",
+      "run_confounded": true,
+      "score_gene_sha256": "159c3fe5f0e8a26d666f34dd62232b030d72164f58ed47da40f74cfebe0dea09",
+      "score_genes": 4475,
+      "seed": 1,
+      "test_modality": "CE0008162_CE0010866",
+      "test_target_source": "ota",
+      "train_modality": "CE0006864_CE0008678",
+      "train_target_source": "hollbacker",
+      "training": {
+        "best_single_alpha": 0.1972476601326224,
+        "best_single_key": "ENSG00000106615_Rest",
+        "coefficient_sha256": "c87747a1e23405b19e9d04c5355defeb89a06f7b9184ee07c76ab4c15e394f79",
+        "common_alpha": 0.0,
+        "cone_fit_cosine": 0.48100962323680224,
+        "cone_kkt_violation": 1.3322676295501877e-15,
+        "cone_support": 159
+      }
+    },
+    {
+      "comparisons": {
+        "training_best_single": {
+          "cosine_improvement": 0.04962760956637435,
+          "normalized_rmse_improvement": -0.03455485346613196
+        },
+        "training_common_ray": {
+          "cosine_improvement": 0.0655113700444489,
+          "normalized_rmse_improvement": -0.04015150620866925
+        },
+        "zero": {
+          "cosine_improvement": 0.0655113700444489,
+          "normalized_rmse_improvement": -0.04015150620866925
+        }
+      },
+      "fit_gene_sha256": "5d95978b64023b6ea42dfad10dde756919c52acd29a444b0e78fb833197c1c59",
+      "fit_genes": 4474,
+      "metrics": {
+        "cone": {
+          "cosine": 0.0655113700444489,
+          "norm_ratio": 0.35912147796524924,
+          "normalized_rmse": 1.0401515062086693,
+          "sign_agreement": 0.5159776536312849
+        },
+        "training_best_single": {
+          "cosine": 0.01588376047807455,
+          "norm_ratio": 0.12301415697654629,
+          "normalized_rmse": 1.0055966527425373,
+          "sign_agreement": 0.5097206703910615
+        },
+        "training_common_ray": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        },
+        "zero": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        }
+      },
+      "partition": "d1_d2_vs_d3_d4",
+      "run_confounded": true,
+      "score_gene_sha256": "806c71bd5169f4e90985c88f5aa5c06037ef1ccdda8f42841f586da24e46af7a",
+      "score_genes": 4475,
+      "seed": 2,
+      "test_modality": "CE0008162_CE0010866",
+      "test_target_source": "ota",
+      "train_modality": "CE0006864_CE0008678",
+      "train_target_source": "hollbacker",
+      "training": {
+        "best_single_alpha": 0.19162082019719748,
+        "best_single_key": "ENSG00000106615_Rest",
+        "coefficient_sha256": "8989c2f1078b3a8916c31095f543a2f12e903fcde286530a64c510149fc17952",
+        "common_alpha": 0.0,
+        "cone_fit_cosine": 0.47075030079299673,
+        "cone_kkt_violation": 1.1102230246251563e-15,
+        "cone_support": 140
+      }
+    },
+    {
+      "comparisons": {
+        "training_best_single": {
+          "cosine_improvement": 0.0722952707092103,
+          "normalized_rmse_improvement": -0.1062701588741839
+        },
+        "training_common_ray": {
+          "cosine_improvement": 0.02329741139462048,
+          "normalized_rmse_improvement": -0.14322952635592023
+        },
+        "zero": {
+          "cosine_improvement": 0.02329741139462048,
+          "normalized_rmse_improvement": -0.14322952635592023
+        }
+      },
+      "fit_gene_sha256": "9d8f346ab623c29b4ecd9e01369e99458f6e622ed66b55368df60a42d453488b",
+      "fit_genes": 4474,
+      "metrics": {
+        "cone": {
+          "cosine": 0.02329741139462048,
+          "norm_ratio": 0.5778391314749681,
+          "normalized_rmse": 1.1432295263559202,
+          "sign_agreement": 0.515754189944134
+        },
+        "training_best_single": {
+          "cosine": -0.04899785931458982,
+          "norm_ratio": 0.22972336346102612,
+          "normalized_rmse": 1.0369593674817363,
+          "sign_agreement": 0.47910614525139666
+        },
+        "training_common_ray": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        },
+        "zero": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        }
+      },
+      "partition": "d1_d2_vs_d3_d4",
+      "run_confounded": true,
+      "score_gene_sha256": "5a32f16a33e0073e0e088ea95dd933e0be5b8242f65d54472657519905ad88aa",
+      "score_genes": 4475,
+      "seed": 0,
+      "test_modality": "CE0008162_CE0010866",
+      "test_target_source": "hollbacker",
+      "train_modality": "CE0006864_CE0008678",
+      "train_target_source": "ota",
+      "training": {
+        "best_single_alpha": 0.32925424751533683,
+        "best_single_key": "ENSG00000166432_Rest",
+        "coefficient_sha256": "9c2d05f7f111996a32175e21640e20b3cd7d454bf34ced6b4d7a7001e96467d3",
+        "common_alpha": 0.0,
+        "cone_fit_cosine": 0.5131827568789974,
+        "cone_kkt_violation": 1.3884337247561674e-16,
+        "cone_support": 139
+      }
+    },
+    {
+      "comparisons": {
+        "training_best_single": {
+          "cosine_improvement": 0.01975331713041588,
+          "normalized_rmse_improvement": -0.26921734887813464
+        },
+        "training_common_ray": {
+          "cosine_improvement": -0.043581862245376746,
+          "normalized_rmse_improvement": -0.31665520885621645
+        },
+        "zero": {
+          "cosine_improvement": -0.043581862245376746,
+          "normalized_rmse_improvement": -0.31665520885621645
+        }
+      },
+      "fit_gene_sha256": "6417fa3ba293467351e20dac1ba752c11817c9a8aa4f64d0209c763a9424ba55",
+      "fit_genes": 4474,
+      "metrics": {
+        "cone": {
+          "cosine": -0.043581862245376746,
+          "norm_ratio": 0.8140196289642546,
+          "normalized_rmse": 1.3166552088562165,
+          "sign_agreement": 0.5108379888268156
+        },
+        "training_best_single": {
+          "cosine": -0.06333517937579262,
+          "norm_ratio": 0.254685913418424,
+          "normalized_rmse": 1.0474378599780818,
+          "sign_agreement": 0.4855865921787709
+        },
+        "training_common_ray": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        },
+        "zero": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        }
+      },
+      "partition": "d1_d2_vs_d3_d4",
+      "run_confounded": true,
+      "score_gene_sha256": "159c3fe5f0e8a26d666f34dd62232b030d72164f58ed47da40f74cfebe0dea09",
+      "score_genes": 4475,
+      "seed": 1,
+      "test_modality": "CE0008162_CE0010866",
+      "test_target_source": "hollbacker",
+      "train_modality": "CE0006864_CE0008678",
+      "train_target_source": "ota",
+      "training": {
+        "best_single_alpha": 0.3392093147957446,
+        "best_single_key": "ENSG00000218891_Rest",
+        "coefficient_sha256": "d3a1369c6f416c7b0992c4f6a0c0531c66e114d4b90c64da20855b5b33d10cf3",
+        "common_alpha": 0.0,
+        "cone_fit_cosine": 0.5148217584172204,
+        "cone_kkt_violation": 2.109423746787797e-15,
+        "cone_support": 159
+      }
+    },
+    {
+      "comparisons": {
+        "training_best_single": {
+          "cosine_improvement": 0.04586460967874069,
+          "normalized_rmse_improvement": -0.11253575643764635
+        },
+        "training_common_ray": {
+          "cosine_improvement": 0.01991632573366934,
+          "normalized_rmse_improvement": -0.1262562587811118
+        },
+        "zero": {
+          "cosine_improvement": 0.01991632573366934,
+          "normalized_rmse_improvement": -0.1262562587811118
+        }
+      },
+      "fit_gene_sha256": "5d95978b64023b6ea42dfad10dde756919c52acd29a444b0e78fb833197c1c59",
+      "fit_genes": 4474,
+      "metrics": {
+        "cone": {
+          "cosine": 0.01991632573366934,
+          "norm_ratio": 0.5384236260432751,
+          "normalized_rmse": 1.1262562587811118,
+          "sign_agreement": 0.5068156424581005
+        },
+        "training_best_single": {
+          "cosine": -0.025948283945071347,
+          "norm_ratio": 0.14228539375110874,
+          "normalized_rmse": 1.0137205023434654,
+          "sign_agreement": 0.4940782122905028
+        },
+        "training_common_ray": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        },
+        "zero": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        }
+      },
+      "partition": "d1_d2_vs_d3_d4",
+      "run_confounded": true,
+      "score_gene_sha256": "806c71bd5169f4e90985c88f5aa5c06037ef1ccdda8f42841f586da24e46af7a",
+      "score_genes": 4475,
+      "seed": 2,
+      "test_modality": "CE0008162_CE0010866",
+      "test_target_source": "hollbacker",
+      "train_modality": "CE0006864_CE0008678",
+      "train_target_source": "ota",
+      "training": {
+        "best_single_alpha": 0.1873391819765431,
+        "best_single_key": "ENSG00000106615_Rest",
+        "coefficient_sha256": "c4e0b52f2c384bb087866f1d8a2d10bed1c07916d71ecbba84e7a5003f7ba0e4",
+        "common_alpha": 0.0,
+        "cone_fit_cosine": 0.4913561804140943,
+        "cone_kkt_violation": 2.6645352591003753e-15,
+        "cone_support": 154
+      }
+    },
+    {
+      "comparisons": {
+        "training_best_single": {
+          "cosine_improvement": 0.08009777359877937,
+          "normalized_rmse_improvement": -0.06149564823734388
+        },
+        "training_common_ray": {
+          "cosine_improvement": 0.09017733086564214,
+          "normalized_rmse_improvement": -0.06909651708732367
+        },
+        "zero": {
+          "cosine_improvement": 0.09017733086564214,
+          "normalized_rmse_improvement": -0.06909651708732367
+        }
+      },
+      "fit_gene_sha256": "9d8f346ab623c29b4ecd9e01369e99458f6e622ed66b55368df60a42d453488b",
+      "fit_genes": 4474,
+      "metrics": {
+        "cone": {
+          "cosine": 0.09017733086564214,
+          "norm_ratio": 0.4788922827909542,
+          "normalized_rmse": 1.0690965170873237,
+          "sign_agreement": 0.5249162011173184
+        },
+        "training_best_single": {
+          "cosine": 0.010079557266862767,
+          "norm_ratio": 0.1340194958739565,
+          "normalized_rmse": 1.0076008688499798,
+          "sign_agreement": 0.48022346368715085
+        },
+        "training_common_ray": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        },
+        "zero": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        }
+      },
+      "partition": "d1_d3_vs_d2_d4",
+      "run_confounded": false,
+      "score_gene_sha256": "5a32f16a33e0073e0e088ea95dd933e0be5b8242f65d54472657519905ad88aa",
+      "score_genes": 4475,
+      "seed": 0,
+      "test_modality": "CE0006864_CE0010866",
+      "test_target_source": "ota",
+      "train_modality": "CE0008162_CE0008678",
+      "train_target_source": "hollbacker",
+      "training": {
+        "best_single_alpha": 0.2549308068280389,
+        "best_single_key": "ENSG00000163946_Rest",
+        "coefficient_sha256": "48209fab2660eb37db40dd6be57c6d53eae2892c6f76f3769938b91f818a3b26",
+        "common_alpha": 0.0,
+        "cone_fit_cosine": 0.4695033775607218,
+        "cone_kkt_violation": 4.440892098500625e-16,
+        "cone_support": 190
+      }
+    },
+    {
+      "comparisons": {
+        "training_best_single": {
+          "cosine_improvement": 0.04714601145094753,
+          "normalized_rmse_improvement": -0.14541010298563473
+        },
+        "training_common_ray": {
+          "cosine_improvement": 0.08866818481388386,
+          "normalized_rmse_improvement": -0.15273140505985672
+        },
+        "zero": {
+          "cosine_improvement": 0.08866818481388386,
+          "normalized_rmse_improvement": -0.15273140505985672
+        }
+      },
+      "fit_gene_sha256": "6417fa3ba293467351e20dac1ba752c11817c9a8aa4f64d0209c763a9424ba55",
+      "fit_genes": 4474,
+      "metrics": {
+        "cone": {
+          "cosine": 0.08866818481388386,
+          "norm_ratio": 0.6688851607887863,
+          "normalized_rmse": 1.1527314050598567,
+          "sign_agreement": 0.5173184357541899
+        },
+        "training_best_single": {
+          "cosine": 0.04152217336293633,
+          "norm_ratio": 0.16966387810143166,
+          "normalized_rmse": 1.007321302074222,
+          "sign_agreement": 0.48089385474860336
+        },
+        "training_common_ray": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        },
+        "zero": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        }
+      },
+      "partition": "d1_d3_vs_d2_d4",
+      "run_confounded": false,
+      "score_gene_sha256": "159c3fe5f0e8a26d666f34dd62232b030d72164f58ed47da40f74cfebe0dea09",
+      "score_genes": 4475,
+      "seed": 1,
+      "test_modality": "CE0006864_CE0010866",
+      "test_target_source": "ota",
+      "train_modality": "CE0008162_CE0008678",
+      "train_target_source": "hollbacker",
+      "training": {
+        "best_single_alpha": 0.3051204657218226,
+        "best_single_key": "ENSG00000163946_Rest",
+        "coefficient_sha256": "1aff507d49d4b62563e0a4810063bf5f576a6e1e796283962efe762b26b8d125",
+        "common_alpha": 0.0,
+        "cone_fit_cosine": 0.5198827701353537,
+        "cone_kkt_violation": 3.330669073875469e-16,
+        "cone_support": 196
+      }
+    },
+    {
+      "comparisons": {
+        "training_best_single": {
+          "cosine_improvement": 0.0023879132607225045,
+          "normalized_rmse_improvement": -0.0643581309810558
+        },
+        "training_common_ray": {
+          "cosine_improvement": 0.10143540131078468,
+          "normalized_rmse_improvement": -0.05980138426680481
+        },
+        "zero": {
+          "cosine_improvement": 0.10143540131078468,
+          "normalized_rmse_improvement": -0.05980138426680481
+        }
+      },
+      "fit_gene_sha256": "5d95978b64023b6ea42dfad10dde756919c52acd29a444b0e78fb833197c1c59",
+      "fit_genes": 4474,
+      "metrics": {
+        "cone": {
+          "cosine": 0.10143540131078468,
+          "norm_ratio": 0.46676828339630877,
+          "normalized_rmse": 1.0598013842668048,
+          "sign_agreement": 0.5166480446927374
+        },
+        "training_best_single": {
+          "cosine": 0.09904748805006218,
+          "norm_ratio": 0.1258369524184051,
+          "normalized_rmse": 0.995443253285749,
+          "sign_agreement": 0.5188826815642458
+        },
+        "training_common_ray": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        },
+        "zero": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        }
+      },
+      "partition": "d1_d3_vs_d2_d4",
+      "run_confounded": false,
+      "score_gene_sha256": "806c71bd5169f4e90985c88f5aa5c06037ef1ccdda8f42841f586da24e46af7a",
+      "score_genes": 4475,
+      "seed": 2,
+      "test_modality": "CE0006864_CE0010866",
+      "test_target_source": "ota",
+      "train_modality": "CE0008162_CE0008678",
+      "train_target_source": "hollbacker",
+      "training": {
+        "best_single_alpha": 0.19996228586646309,
+        "best_single_key": "ENSG00000109320_Rest",
+        "coefficient_sha256": "109fd42060a1c57c844b964589078d33b929b4151e8d7e42d8b51db49be87d26",
+        "common_alpha": 0.0,
+        "cone_fit_cosine": 0.49707082431334426,
+        "cone_kkt_violation": 1.210496068922631e-16,
+        "cone_support": 199
+      }
+    },
+    {
+      "comparisons": {
+        "training_best_single": {
+          "cosine_improvement": 0.020853420797575434,
+          "normalized_rmse_improvement": -0.15538784576554798
+        },
+        "training_common_ray": {
+          "cosine_improvement": 0.09383101479042064,
+          "normalized_rmse_improvement": -0.16391843354913216
+        },
+        "zero": {
+          "cosine_improvement": 0.09383101479042064,
+          "normalized_rmse_improvement": -0.16391843354913216
+        }
+      },
+      "fit_gene_sha256": "9d8f346ab623c29b4ecd9e01369e99458f6e622ed66b55368df60a42d453488b",
+      "fit_genes": 4474,
+      "metrics": {
+        "cone": {
+          "cosine": 0.09383101479042064,
+          "norm_ratio": 0.6967492341967217,
+          "normalized_rmse": 1.1639184335491322,
+          "sign_agreement": 0.5358659217877095
+        },
+        "training_best_single": {
+          "cosine": 0.0729775939928452,
+          "norm_ratio": 0.2228431194484552,
+          "normalized_rmse": 1.0085305877835842,
+          "sign_agreement": 0.5336312849162012
+        },
+        "training_common_ray": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        },
+        "zero": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        }
+      },
+      "partition": "d1_d3_vs_d2_d4",
+      "run_confounded": false,
+      "score_gene_sha256": "5a32f16a33e0073e0e088ea95dd933e0be5b8242f65d54472657519905ad88aa",
+      "score_genes": 4475,
+      "seed": 0,
+      "test_modality": "CE0006864_CE0010866",
+      "test_target_source": "hollbacker",
+      "train_modality": "CE0008162_CE0008678",
+      "train_target_source": "ota",
+      "training": {
+        "best_single_alpha": 0.36865169205176357,
+        "best_single_key": "ENSG00000163946_Rest",
+        "coefficient_sha256": "b7589c6a27f0d28c32e6cd3876e460d40cda0c3edeff4b6ce913c331714bed2f",
+        "common_alpha": 0.0,
+        "cone_fit_cosine": 0.5285523270150099,
+        "cone_kkt_violation": 1.1102230246251563e-15,
+        "cone_support": 170
+      }
+    },
+    {
+      "comparisons": {
+        "training_best_single": {
+          "cosine_improvement": -0.04945535364956416,
+          "normalized_rmse_improvement": -0.36238036996728673
+        },
+        "training_common_ray": {
+          "cosine_improvement": 0.05210234865160364,
+          "normalized_rmse_improvement": -0.3637792948520113
+        },
+        "zero": {
+          "cosine_improvement": 0.05210234865160364,
+          "normalized_rmse_improvement": -0.3637792948520113
+        }
+      },
+      "fit_gene_sha256": "6417fa3ba293467351e20dac1ba752c11817c9a8aa4f64d0209c763a9424ba55",
+      "fit_genes": 4474,
+      "metrics": {
+        "cone": {
+          "cosine": 0.05210234865160364,
+          "norm_ratio": 0.98086960679654,
+          "normalized_rmse": 1.3637792948520113,
+          "sign_agreement": 0.5141899441340783
+        },
+        "training_best_single": {
+          "cosine": 0.1015577023011678,
+          "norm_ratio": 0.21607308841576478,
+          "normalized_rmse": 1.0013989248847246,
+          "sign_agreement": 0.5331843575418994
+        },
+        "training_common_ray": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        },
+        "zero": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        }
+      },
+      "partition": "d1_d3_vs_d2_d4",
+      "run_confounded": false,
+      "score_gene_sha256": "159c3fe5f0e8a26d666f34dd62232b030d72164f58ed47da40f74cfebe0dea09",
+      "score_genes": 4475,
+      "seed": 1,
+      "test_modality": "CE0006864_CE0010866",
+      "test_target_source": "hollbacker",
+      "train_modality": "CE0008162_CE0008678",
+      "train_target_source": "ota",
+      "training": {
+        "best_single_alpha": 0.33074004004178237,
+        "best_single_key": "ENSG00000163946_Rest",
+        "coefficient_sha256": "774865eec4a93ad4cbeb9f5eade76db8b1ff8b4f87e9bf762cb19bf9c1436c02",
+        "common_alpha": 0.0,
+        "cone_fit_cosine": 0.5499196269277012,
+        "cone_kkt_violation": 9.992007221626407e-16,
+        "cone_support": 187
+      }
+    },
+    {
+      "comparisons": {
+        "training_best_single": {
+          "cosine_improvement": 0.06938495874421785,
+          "normalized_rmse_improvement": -0.14231670548166941
+        },
+        "training_common_ray": {
+          "cosine_improvement": 0.09149307349069409,
+          "normalized_rmse_improvement": -0.15490564900120485
+        },
+        "zero": {
+          "cosine_improvement": 0.09149307349069409,
+          "normalized_rmse_improvement": -0.15490564900120485
+        }
+      },
+      "fit_gene_sha256": "5d95978b64023b6ea42dfad10dde756919c52acd29a444b0e78fb833197c1c59",
+      "fit_genes": 4474,
+      "metrics": {
+        "cone": {
+          "cosine": 0.09149307349069409,
+          "norm_ratio": 0.676452935867309,
+          "normalized_rmse": 1.1549056490012048,
+          "sign_agreement": 0.5376536312849162
+        },
+        "training_best_single": {
+          "cosine": 0.022108114746476233,
+          "norm_ratio": 0.18281012865934698,
+          "normalized_rmse": 1.0125889435195354,
+          "sign_agreement": 0.5124022346368715
+        },
+        "training_common_ray": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        },
+        "zero": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        }
+      },
+      "partition": "d1_d3_vs_d2_d4",
+      "run_confounded": false,
+      "score_gene_sha256": "806c71bd5169f4e90985c88f5aa5c06037ef1ccdda8f42841f586da24e46af7a",
+      "score_genes": 4475,
+      "seed": 2,
+      "test_modality": "CE0006864_CE0010866",
+      "test_target_source": "hollbacker",
+      "train_modality": "CE0008162_CE0008678",
+      "train_target_source": "ota",
+      "training": {
+        "best_single_alpha": 0.2711447583605756,
+        "best_single_key": "ENSG00000037241_Rest",
+        "coefficient_sha256": "ce97979ea60db92ee4d30194ae6e31fff15de0813190b2305e0f399b45e3e030",
+        "common_alpha": 0.0,
+        "cone_fit_cosine": 0.5260890337157353,
+        "cone_kkt_violation": 2.2204460492503126e-16,
+        "cone_support": 185
+      }
+    },
+    {
+      "comparisons": {
+        "training_best_single": {
+          "cosine_improvement": 0.0701262118367545,
+          "normalized_rmse_improvement": -0.07990819857545572
+        },
+        "training_common_ray": {
+          "cosine_improvement": 0.03709002546356606,
+          "normalized_rmse_improvement": -0.095047475579362
+        },
+        "zero": {
+          "cosine_improvement": 0.03709002546356606,
+          "normalized_rmse_improvement": -0.095047475579362
+        }
+      },
+      "fit_gene_sha256": "9d8f346ab623c29b4ecd9e01369e99458f6e622ed66b55368df60a42d453488b",
+      "fit_genes": 4474,
+      "metrics": {
+        "cone": {
+          "cosine": 0.03709002546356606,
+          "norm_ratio": 0.48486747438392186,
+          "normalized_rmse": 1.095047475579362,
+          "sign_agreement": 0.5184357541899441
+        },
+        "training_best_single": {
+          "cosine": -0.03303618637318845,
+          "norm_ratio": 0.14472528674767007,
+          "normalized_rmse": 1.0151392770039063,
+          "sign_agreement": 0.5079329608938548
+        },
+        "training_common_ray": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        },
+        "zero": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        }
+      },
+      "partition": "d1_d3_vs_d2_d4",
+      "run_confounded": false,
+      "score_gene_sha256": "5a32f16a33e0073e0e088ea95dd933e0be5b8242f65d54472657519905ad88aa",
+      "score_genes": 4475,
+      "seed": 0,
+      "test_modality": "CE0008162_CE0008678",
+      "test_target_source": "ota",
+      "train_modality": "CE0006864_CE0010866",
+      "train_target_source": "hollbacker",
+      "training": {
+        "best_single_alpha": 0.24858765978022465,
+        "best_single_key": "ENSG00000086730_Rest",
+        "coefficient_sha256": "97a958647281bbaec77fd0d00334e2fc51d3e53a1988a3073aa846b3f8ca48f5",
+        "common_alpha": 0.0,
+        "cone_fit_cosine": 0.5461983652719248,
+        "cone_kkt_violation": 9.992007221626407e-16,
+        "cone_support": 155
+      }
+    },
+    {
+      "comparisons": {
+        "training_best_single": {
+          "cosine_improvement": -0.056961177051962,
+          "normalized_rmse_improvement": -0.11777540938693365
+        },
+        "training_common_ray": {
+          "cosine_improvement": 0.007865681835853866,
+          "normalized_rmse_improvement": -0.12139343745739972
+        },
+        "zero": {
+          "cosine_improvement": 0.007865681835853866,
+          "normalized_rmse_improvement": -0.12139343745739972
+        }
+      },
+      "fit_gene_sha256": "6417fa3ba293467351e20dac1ba752c11817c9a8aa4f64d0209c763a9424ba55",
+      "fit_genes": 4474,
+      "metrics": {
+        "cone": {
+          "cosine": 0.007865681835853866,
+          "norm_ratio": 0.5153941150524235,
+          "normalized_rmse": 1.1213934374573997,
+          "sign_agreement": 0.5135195530726256
+        },
+        "training_best_single": {
+          "cosine": 0.06482685888781586,
+          "norm_ratio": 0.17183932499018847,
+          "normalized_rmse": 1.003618028070466,
+          "sign_agreement": 0.5316201117318435
+        },
+        "training_common_ray": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        },
+        "zero": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        }
+      },
+      "partition": "d1_d3_vs_d2_d4",
+      "run_confounded": false,
+      "score_gene_sha256": "159c3fe5f0e8a26d666f34dd62232b030d72164f58ed47da40f74cfebe0dea09",
+      "score_genes": 4475,
+      "seed": 1,
+      "test_modality": "CE0008162_CE0008678",
+      "test_target_source": "ota",
+      "train_modality": "CE0006864_CE0010866",
+      "train_target_source": "hollbacker",
+      "training": {
+        "best_single_alpha": 0.2994988460759984,
+        "best_single_key": "ENSG00000108599_Rest",
+        "coefficient_sha256": "da29f1180e5c1c3f6e514112783a344987a6833d6dafa21a26a8e6fe2af6de6d",
+        "common_alpha": 0.0,
+        "cone_fit_cosine": 0.5503927415020466,
+        "cone_kkt_violation": 5.551115123125782e-16,
+        "cone_support": 169
+      }
+    },
+    {
+      "comparisons": {
+        "training_best_single": {
+          "cosine_improvement": 0.019424694270945078,
+          "normalized_rmse_improvement": -0.05392152135405759
+        },
+        "training_common_ray": {
+          "cosine_improvement": 0.029288528740756044,
+          "normalized_rmse_improvement": -0.06021381811986437
+        },
+        "zero": {
+          "cosine_improvement": 0.029288528740756044,
+          "normalized_rmse_improvement": -0.06021381811986437
+        }
+      },
+      "fit_gene_sha256": "5d95978b64023b6ea42dfad10dde756919c52acd29a444b0e78fb833197c1c59",
+      "fit_genes": 4474,
+      "metrics": {
+        "cone": {
+          "cosine": 0.029288528740756044,
+          "norm_ratio": 0.382716255508335,
+          "normalized_rmse": 1.0602138181198644,
+          "sign_agreement": 0.5204469273743016
+        },
+        "training_best_single": {
+          "cosine": 0.009863834469810968,
+          "norm_ratio": 0.12265338079680961,
+          "normalized_rmse": 1.0062922967658068,
+          "sign_agreement": 0.4976536312849162
+        },
+        "training_common_ray": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        },
+        "zero": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        }
+      },
+      "partition": "d1_d3_vs_d2_d4",
+      "run_confounded": false,
+      "score_gene_sha256": "806c71bd5169f4e90985c88f5aa5c06037ef1ccdda8f42841f586da24e46af7a",
+      "score_genes": 4475,
+      "seed": 2,
+      "test_modality": "CE0008162_CE0008678",
+      "test_target_source": "ota",
+      "train_modality": "CE0006864_CE0010866",
+      "train_target_source": "hollbacker",
+      "training": {
+        "best_single_alpha": 0.19488269171568462,
+        "best_single_key": "ENSG00000106615_Rest",
+        "coefficient_sha256": "0731ebdfb02bd28bd34cf33b2942dd563a767b10e82b776011a9adc9d1a7fa9b",
+        "common_alpha": 0.0,
+        "cone_fit_cosine": 0.5158665501748774,
+        "cone_kkt_violation": 4.440892098500625e-16,
+        "cone_support": 163
+      }
+    },
+    {
+      "comparisons": {
+        "training_best_single": {
+          "cosine_improvement": 0.07280710259159341,
+          "normalized_rmse_improvement": -0.1368059194083624
+        },
+        "training_common_ray": {
+          "cosine_improvement": 0.000865010952817022,
+          "normalized_rmse_improvement": -0.19259212056345065
+        },
+        "zero": {
+          "cosine_improvement": 0.000865010952817022,
+          "normalized_rmse_improvement": -0.19259212056345065
+        }
+      },
+      "fit_gene_sha256": "9d8f346ab623c29b4ecd9e01369e99458f6e622ed66b55368df60a42d453488b",
+      "fit_genes": 4474,
+      "metrics": {
+        "cone": {
+          "cosine": 0.000865010952817022,
+          "norm_ratio": 0.6506932300030333,
+          "normalized_rmse": 1.1925921205634507,
+          "sign_agreement": 0.5206703910614525
+        },
+        "training_best_single": {
+          "cosine": -0.07194209163877639,
+          "norm_ratio": 0.2742661796356895,
+          "normalized_rmse": 1.0557862011550883,
+          "sign_agreement": 0.4849162011173184
+        },
+        "training_common_ray": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        },
+        "zero": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        }
+      },
+      "partition": "d1_d3_vs_d2_d4",
+      "run_confounded": false,
+      "score_gene_sha256": "5a32f16a33e0073e0e088ea95dd933e0be5b8242f65d54472657519905ad88aa",
+      "score_genes": 4475,
+      "seed": 0,
+      "test_modality": "CE0008162_CE0008678",
+      "test_target_source": "hollbacker",
+      "train_modality": "CE0006864_CE0010866",
+      "train_target_source": "ota",
+      "training": {
+        "best_single_alpha": 0.40970386984944646,
+        "best_single_key": "ENSG00000086730_Rest",
+        "coefficient_sha256": "d0823651efc2fd0bf383b9f88e258247cdc6555117d939fd9963bc47111463fd",
+        "common_alpha": 0.0,
+        "cone_fit_cosine": 0.6214185187615625,
+        "cone_kkt_violation": 4.440892098500625e-16,
+        "cone_support": 154
+      }
+    },
+    {
+      "comparisons": {
+        "training_best_single": {
+          "cosine_improvement": -0.0787158552272531,
+          "normalized_rmse_improvement": -0.2958342770140494
+        },
+        "training_common_ray": {
+          "cosine_improvement": -0.07192045275661549,
+          "normalized_rmse_improvement": -0.3504010248512355
+        },
+        "zero": {
+          "cosine_improvement": -0.07192045275661549,
+          "normalized_rmse_improvement": -0.3504010248512355
+        }
+      },
+      "fit_gene_sha256": "6417fa3ba293467351e20dac1ba752c11817c9a8aa4f64d0209c763a9424ba55",
+      "fit_genes": 4474,
+      "metrics": {
+        "cone": {
+          "cosine": -0.07192045275661549,
+          "norm_ratio": 0.8384396295426821,
+          "normalized_rmse": 1.3504010248512355,
+          "sign_agreement": 0.4770949720670391
+        },
+        "training_best_single": {
+          "cosine": 0.006795402470637617,
+          "norm_ratio": 0.341694197838189,
+          "normalized_rmse": 1.054566747837186,
+          "sign_agreement": 0.49251396648044693
+        },
+        "training_common_ray": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        },
+        "zero": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        }
+      },
+      "partition": "d1_d3_vs_d2_d4",
+      "run_confounded": false,
+      "score_gene_sha256": "159c3fe5f0e8a26d666f34dd62232b030d72164f58ed47da40f74cfebe0dea09",
+      "score_genes": 4475,
+      "seed": 1,
+      "test_modality": "CE0008162_CE0008678",
+      "test_target_source": "hollbacker",
+      "train_modality": "CE0006864_CE0010866",
+      "train_target_source": "ota",
+      "training": {
+        "best_single_alpha": 0.47035161535020237,
+        "best_single_key": "ENSG00000121940_Rest",
+        "coefficient_sha256": "1ad364e2426fcd51745b4e4da649d2c603be2cd0e49e23f1d322c94b14f7eeb1",
+        "common_alpha": 0.0,
+        "cone_fit_cosine": 0.6031722948218734,
+        "cone_kkt_violation": 4.440892098500625e-16,
+        "cone_support": 166
+      }
+    },
+    {
+      "comparisons": {
+        "training_best_single": {
+          "cosine_improvement": 0.02162751887902802,
+          "normalized_rmse_improvement": -0.13718871583838554
+        },
+        "training_common_ray": {
+          "cosine_improvement": -0.004611979176297427,
+          "normalized_rmse_improvement": -0.16100703741288647
+        },
+        "zero": {
+          "cosine_improvement": -0.004611979176297427,
+          "normalized_rmse_improvement": -0.16100703741288647
+        }
+      },
+      "fit_gene_sha256": "5d95978b64023b6ea42dfad10dde756919c52acd29a444b0e78fb833197c1c59",
+      "fit_genes": 4474,
+      "metrics": {
+        "cone": {
+          "cosine": -0.004611979176297427,
+          "norm_ratio": 0.5852681877001374,
+          "normalized_rmse": 1.1610070374128865,
+          "sign_agreement": 0.5132960893854749
+        },
+        "training_best_single": {
+          "cosine": -0.026239498055325446,
+          "norm_ratio": 0.1948769121222641,
+          "normalized_rmse": 1.023818321574501,
+          "sign_agreement": 0.4855865921787709
+        },
+        "training_common_ray": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        },
+        "zero": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        }
+      },
+      "partition": "d1_d3_vs_d2_d4",
+      "run_confounded": false,
+      "score_gene_sha256": "806c71bd5169f4e90985c88f5aa5c06037ef1ccdda8f42841f586da24e46af7a",
+      "score_genes": 4475,
+      "seed": 2,
+      "test_modality": "CE0008162_CE0008678",
+      "test_target_source": "hollbacker",
+      "train_modality": "CE0006864_CE0010866",
+      "train_target_source": "ota",
+      "training": {
+        "best_single_alpha": 0.31069235941718504,
+        "best_single_key": "ENSG00000163600_Rest",
+        "coefficient_sha256": "2f456960b4168b183eb8ad3f95813f80f1919c0ae602e5a53c44e1b1a030a4c3",
+        "common_alpha": 0.0,
+        "cone_fit_cosine": 0.5534079370342254,
+        "cone_kkt_violation": 6.661338147750938e-16,
+        "cone_support": 161
+      }
+    },
+    {
+      "comparisons": {
+        "training_best_single": {
+          "cosine_improvement": 0.03574661594763085,
+          "normalized_rmse_improvement": -0.13032035492948268
+        },
+        "training_common_ray": {
+          "cosine_improvement": 0.0807859103408699,
+          "normalized_rmse_improvement": -0.13637352430358218
+        },
+        "zero": {
+          "cosine_improvement": 0.0807859103408699,
+          "normalized_rmse_improvement": -0.13637352430358218
+        }
+      },
+      "fit_gene_sha256": "9d8f346ab623c29b4ecd9e01369e99458f6e622ed66b55368df60a42d453488b",
+      "fit_genes": 4474,
+      "metrics": {
+        "cone": {
+          "cosine": 0.0807859103408699,
+          "norm_ratio": 0.6265616427142943,
+          "normalized_rmse": 1.1363735243035822,
+          "sign_agreement": 0.5188826815642458
+        },
+        "training_best_single": {
+          "cosine": 0.04503929439323905,
+          "norm_ratio": 0.16408347798534703,
+          "normalized_rmse": 1.0060531693740995,
+          "sign_agreement": 0.4880446927374302
+        },
+        "training_common_ray": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        },
+        "zero": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        }
+      },
+      "partition": "d1_d4_vs_d2_d3",
+      "run_confounded": false,
+      "score_gene_sha256": "5a32f16a33e0073e0e088ea95dd933e0be5b8242f65d54472657519905ad88aa",
+      "score_genes": 4475,
+      "seed": 0,
+      "test_modality": "CE0008678_CE0010866",
+      "test_target_source": "ota",
+      "train_modality": "CE0006864_CE0008162",
+      "train_target_source": "hollbacker",
+      "training": {
+        "best_single_alpha": 0.13371289334804118,
+        "best_single_key": "ENSG00000174437_Rest",
+        "coefficient_sha256": "a282dc7f7ca7213a3dc3bf2b29d3317de41727fb4dd5393aa44a714959b58302",
+        "common_alpha": 0.0,
+        "cone_fit_cosine": 0.5148966220369923,
+        "cone_kkt_violation": 7.771561172376094e-16,
+        "cone_support": 196
+      }
+    },
+    {
+      "comparisons": {
+        "training_best_single": {
+          "cosine_improvement": 0.07481472734547584,
+          "normalized_rmse_improvement": -0.216057781450393
+        },
+        "training_common_ray": {
+          "cosine_improvement": 0.01739366660428825,
+          "normalized_rmse_improvement": -0.25212635836930564
+        },
+        "zero": {
+          "cosine_improvement": 0.01739366660428825,
+          "normalized_rmse_improvement": -0.25212635836930564
+        }
+      },
+      "fit_gene_sha256": "6417fa3ba293467351e20dac1ba752c11817c9a8aa4f64d0209c763a9424ba55",
+      "fit_genes": 4474,
+      "metrics": {
+        "cone": {
+          "cosine": 0.01739366660428825,
+          "norm_ratio": 0.7711329829206922,
+          "normalized_rmse": 1.2521263583693056,
+          "sign_agreement": 0.5191061452513966
+        },
+        "training_best_single": {
+          "cosine": -0.057421060741187586,
+          "norm_ratio": 0.21959026447029828,
+          "normalized_rmse": 1.0360685769189126,
+          "sign_agreement": 0.4788826815642458
+        },
+        "training_common_ray": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        },
+        "zero": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        }
+      },
+      "partition": "d1_d4_vs_d2_d3",
+      "run_confounded": false,
+      "score_gene_sha256": "159c3fe5f0e8a26d666f34dd62232b030d72164f58ed47da40f74cfebe0dea09",
+      "score_genes": 4475,
+      "seed": 1,
+      "test_modality": "CE0008678_CE0010866",
+      "test_target_source": "ota",
+      "train_modality": "CE0006864_CE0008162",
+      "train_target_source": "hollbacker",
+      "training": {
+        "best_single_alpha": 0.2335442444059388,
+        "best_single_key": "ENSG00000106615_Rest",
+        "coefficient_sha256": "bf98bb762759c94380db07928757e6a805586ea6c72c1bcd4f3b79dfa9d776a9",
+        "common_alpha": 0.0,
+        "cone_fit_cosine": 0.5268525184770909,
+        "cone_kkt_violation": 8.88178419700125e-16,
+        "cone_support": 202
+      }
+    },
+    {
+      "comparisons": {
+        "training_best_single": {
+          "cosine_improvement": 0.09114062143773807,
+          "normalized_rmse_improvement": -0.1327843347497366
+        },
+        "training_common_ray": {
+          "cosine_improvement": 0.04632121591132751,
+          "normalized_rmse_improvement": -0.15285213253380903
+        },
+        "zero": {
+          "cosine_improvement": 0.04632121591132751,
+          "normalized_rmse_improvement": -0.15285213253380903
+        }
+      },
+      "fit_gene_sha256": "5d95978b64023b6ea42dfad10dde756919c52acd29a444b0e78fb833197c1c59",
+      "fit_genes": 4474,
+      "metrics": {
+        "cone": {
+          "cosine": 0.04632121591132751,
+          "norm_ratio": 0.6218328965323683,
+          "normalized_rmse": 1.152852132533809,
+          "sign_agreement": 0.5137430167597765
+        },
+        "training_best_single": {
+          "cosine": -0.04481940552641056,
+          "norm_ratio": 0.16145005704085322,
+          "normalized_rmse": 1.0200677977840724,
+          "sign_agreement": 0.4706145251396648
+        },
+        "training_common_ray": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        },
+        "zero": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        }
+      },
+      "partition": "d1_d4_vs_d2_d3",
+      "run_confounded": false,
+      "score_gene_sha256": "806c71bd5169f4e90985c88f5aa5c06037ef1ccdda8f42841f586da24e46af7a",
+      "score_genes": 4475,
+      "seed": 2,
+      "test_modality": "CE0008678_CE0010866",
+      "test_target_source": "ota",
+      "train_modality": "CE0006864_CE0008162",
+      "train_target_source": "hollbacker",
+      "training": {
+        "best_single_alpha": 0.19762672955793437,
+        "best_single_key": "ENSG00000106615_Rest",
+        "coefficient_sha256": "efba574212badb09607d9c33f3bd4f707bffadd06a32fffd433d061a77583185",
+        "common_alpha": 0.0,
+        "cone_fit_cosine": 0.5033548024684005,
+        "cone_kkt_violation": 9.992007221626407e-16,
+        "cone_support": 192
+      }
+    },
+    {
+      "comparisons": {
+        "training_best_single": {
+          "cosine_improvement": -0.022915259681440547,
+          "normalized_rmse_improvement": -0.35276734707851665
+        },
+        "training_common_ray": {
+          "cosine_improvement": 0.019129719418241483,
+          "normalized_rmse_improvement": -0.37035835369225456
+        },
+        "zero": {
+          "cosine_improvement": 0.019129719418241483,
+          "normalized_rmse_improvement": -0.37035835369225456
+        }
+      },
+      "fit_gene_sha256": "9d8f346ab623c29b4ecd9e01369e99458f6e622ed66b55368df60a42d453488b",
+      "fit_genes": 4474,
+      "metrics": {
+        "cone": {
+          "cosine": 0.019129719418241483,
+          "norm_ratio": 0.9562785676270862,
+          "normalized_rmse": 1.3703583536922546,
+          "sign_agreement": 0.5376536312849162
+        },
+        "training_best_single": {
+          "cosine": 0.04204497909968203,
+          "norm_ratio": 0.23507149802558786,
+          "normalized_rmse": 1.017591006613738,
+          "sign_agreement": 0.4994413407821229
+        },
+        "training_common_ray": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        },
+        "zero": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        }
+      },
+      "partition": "d1_d4_vs_d2_d3",
+      "run_confounded": false,
+      "score_gene_sha256": "5a32f16a33e0073e0e088ea95dd933e0be5b8242f65d54472657519905ad88aa",
+      "score_genes": 4475,
+      "seed": 0,
+      "test_modality": "CE0008678_CE0010866",
+      "test_target_source": "hollbacker",
+      "train_modality": "CE0006864_CE0008162",
+      "train_target_source": "ota",
+      "training": {
+        "best_single_alpha": 0.22566327263469782,
+        "best_single_key": "ENSG00000149480_Rest",
+        "coefficient_sha256": "7f9dd83c2ad0ea72abf8388b830be4630e6e86ac945600609255bc7eaf15abe3",
+        "common_alpha": 0.0,
+        "cone_fit_cosine": 0.5727887745661738,
+        "cone_kkt_violation": 2.2204460492503126e-16,
+        "cone_support": 209
+      }
+    },
+    {
+      "comparisons": {
+        "training_best_single": {
+          "cosine_improvement": -0.005460906540569202,
+          "normalized_rmse_improvement": -0.4882158691531773
+        },
+        "training_common_ray": {
+          "cosine_improvement": -0.03617821874623114,
+          "normalized_rmse_improvement": -0.5240713673004187
+        },
+        "zero": {
+          "cosine_improvement": -0.03617821874623114,
+          "normalized_rmse_improvement": -0.5240713673004187
+        }
+      },
+      "fit_gene_sha256": "6417fa3ba293467351e20dac1ba752c11817c9a8aa4f64d0209c763a9424ba55",
+      "fit_genes": 4474,
+      "metrics": {
+        "cone": {
+          "cosine": -0.03617821874623114,
+          "norm_ratio": 1.1145182643180989,
+          "normalized_rmse": 1.5240713673004187,
+          "sign_agreement": 0.5135195530726256
+        },
+        "training_best_single": {
+          "cosine": -0.030717312205661935,
+          "norm_ratio": 0.24120209922171296,
+          "normalized_rmse": 1.0358554981472414,
+          "sign_agreement": 0.49787709497206706
+        },
+        "training_common_ray": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        },
+        "zero": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        }
+      },
+      "partition": "d1_d4_vs_d2_d3",
+      "run_confounded": false,
+      "score_gene_sha256": "159c3fe5f0e8a26d666f34dd62232b030d72164f58ed47da40f74cfebe0dea09",
+      "score_genes": 4475,
+      "seed": 1,
+      "test_modality": "CE0008678_CE0010866",
+      "test_target_source": "hollbacker",
+      "train_modality": "CE0006864_CE0008162",
+      "train_target_source": "ota",
+      "training": {
+        "best_single_alpha": 0.2139722913401383,
+        "best_single_key": "ENSG00000149480_Rest",
+        "coefficient_sha256": "10c9ac2dbfe1d5da9cac0c1999c8778f92f4722d16b703d297c5739c646c30e7",
+        "common_alpha": 0.0,
+        "cone_fit_cosine": 0.5604057656668585,
+        "cone_kkt_violation": 1.5543122344752188e-15,
+        "cone_support": 199
+      }
+    },
+    {
+      "comparisons": {
+        "training_best_single": {
+          "cosine_improvement": 0.012528583543857764,
+          "normalized_rmse_improvement": -0.3004151041833196
+        },
+        "training_common_ray": {
+          "cosine_improvement": -0.007706111006385402,
+          "normalized_rmse_improvement": -0.3196636564315891
+        },
+        "zero": {
+          "cosine_improvement": -0.007706111006385402,
+          "normalized_rmse_improvement": -0.3196636564315891
+        }
+      },
+      "fit_gene_sha256": "5d95978b64023b6ea42dfad10dde756919c52acd29a444b0e78fb833197c1c59",
+      "fit_genes": 4474,
+      "metrics": {
+        "cone": {
+          "cosine": -0.007706111006385402,
+          "norm_ratio": 0.8534393762681134,
+          "normalized_rmse": 1.3196636564315891,
+          "sign_agreement": 0.5088268156424581
+        },
+        "training_best_single": {
+          "cosine": -0.020234694550243165,
+          "norm_ratio": 0.1779496996984845,
+          "normalized_rmse": 1.0192485522482695,
+          "sign_agreement": 0.5027932960893855
+        },
+        "training_common_ray": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        },
+        "zero": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        }
+      },
+      "partition": "d1_d4_vs_d2_d3",
+      "run_confounded": false,
+      "score_gene_sha256": "806c71bd5169f4e90985c88f5aa5c06037ef1ccdda8f42841f586da24e46af7a",
+      "score_genes": 4475,
+      "seed": 2,
+      "test_modality": "CE0008678_CE0010866",
+      "test_target_source": "hollbacker",
+      "train_modality": "CE0006864_CE0008162",
+      "train_target_source": "ota",
+      "training": {
+        "best_single_alpha": 0.18438780058423312,
+        "best_single_key": "ENSG00000149480_Rest",
+        "coefficient_sha256": "b5268177eeb87fa3db0852708eb4b41d33eaf203f3b4d1b2b045a78c31a93a46",
+        "common_alpha": 0.0,
+        "cone_fit_cosine": 0.5248424925673658,
+        "cone_kkt_violation": 9.992007221626407e-16,
+        "cone_support": 195
+      }
+    },
+    {
+      "comparisons": {
+        "training_best_single": {
+          "cosine_improvement": 0.039404010132529185,
+          "normalized_rmse_improvement": -0.030132168162799733
+        },
+        "training_common_ray": {
+          "cosine_improvement": 0.024492183511054602,
+          "normalized_rmse_improvement": -0.052547880321413
+        },
+        "zero": {
+          "cosine_improvement": 0.024492183511054602,
+          "normalized_rmse_improvement": -0.052547880321413
+        }
+      },
+      "fit_gene_sha256": "9d8f346ab623c29b4ecd9e01369e99458f6e622ed66b55368df60a42d453488b",
+      "fit_genes": 4474,
+      "metrics": {
+        "cone": {
+          "cosine": 0.024492183511054602,
+          "norm_ratio": 0.3538201468276232,
+          "normalized_rmse": 1.052547880321413,
+          "sign_agreement": 0.5027932960893855
+        },
+        "training_best_single": {
+          "cosine": -0.014911826621474585,
+          "norm_ratio": 0.1985272772044023,
+          "normalized_rmse": 1.0224157121586133,
+          "sign_agreement": 0.49162011173184356
+        },
+        "training_common_ray": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        },
+        "zero": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        }
+      },
+      "partition": "d1_d4_vs_d2_d3",
+      "run_confounded": false,
+      "score_gene_sha256": "5a32f16a33e0073e0e088ea95dd933e0be5b8242f65d54472657519905ad88aa",
+      "score_genes": 4475,
+      "seed": 0,
+      "test_modality": "CE0006864_CE0008162",
+      "test_target_source": "ota",
+      "train_modality": "CE0008678_CE0010866",
+      "train_target_source": "hollbacker",
+      "training": {
+        "best_single_alpha": 0.34193881746659194,
+        "best_single_key": "ENSG00000108599_Rest",
+        "coefficient_sha256": "c65b6374f5d1097be961a617c29875e2ceccac77c9013cbccda5398788366efd",
+        "common_alpha": 0.0,
+        "cone_fit_cosine": 0.497761512619389,
+        "cone_kkt_violation": 3.4405821670049385e-16,
+        "cone_support": 133
+      }
+    },
+    {
+      "comparisons": {
+        "training_best_single": {
+          "cosine_improvement": 0.028246158063777924,
+          "normalized_rmse_improvement": -0.051671752889762335
+        },
+        "training_common_ray": {
+          "cosine_improvement": 0.029630744697297904,
+          "normalized_rmse_improvement": -0.08558629098444603
+        },
+        "zero": {
+          "cosine_improvement": 0.029630744697297904,
+          "normalized_rmse_improvement": -0.08558629098444603
+        }
+      },
+      "fit_gene_sha256": "6417fa3ba293467351e20dac1ba752c11817c9a8aa4f64d0209c763a9424ba55",
+      "fit_genes": 4474,
+      "metrics": {
+        "cone": {
+          "cosine": 0.029630744697297904,
+          "norm_ratio": 0.45315828359492727,
+          "normalized_rmse": 1.085586290984446,
+          "sign_agreement": 0.5193296089385475
+        },
+        "training_best_single": {
+          "cosine": 0.0013845866335199801,
+          "norm_ratio": 0.264027289109125,
+          "normalized_rmse": 1.0339145380946837,
+          "sign_agreement": 0.5007821229050279
+        },
+        "training_common_ray": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        },
+        "zero": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        }
+      },
+      "partition": "d1_d4_vs_d2_d3",
+      "run_confounded": false,
+      "score_gene_sha256": "159c3fe5f0e8a26d666f34dd62232b030d72164f58ed47da40f74cfebe0dea09",
+      "score_genes": 4475,
+      "seed": 1,
+      "test_modality": "CE0006864_CE0008162",
+      "test_target_source": "ota",
+      "train_modality": "CE0008678_CE0010866",
+      "train_target_source": "hollbacker",
+      "training": {
+        "best_single_alpha": 0.42661711497009425,
+        "best_single_key": "ENSG00000108599_Rest",
+        "coefficient_sha256": "f48a6022280115b33627e5702998884ffc23dd88351174d0a88e0bb29cef3316",
+        "common_alpha": 0.0,
+        "cone_fit_cosine": 0.5530986043963118,
+        "cone_kkt_violation": 1.3322676295501877e-15,
+        "cone_support": 158
+      }
+    },
+    {
+      "comparisons": {
+        "training_best_single": {
+          "cosine_improvement": 0.07613785383711856,
+          "normalized_rmse_improvement": -0.013709294719834508
+        },
+        "training_common_ray": {
+          "cosine_improvement": 0.06781553324144442,
+          "normalized_rmse_improvement": -0.02955919193884826
+        },
+        "zero": {
+          "cosine_improvement": 0.06781553324144442,
+          "normalized_rmse_improvement": -0.02955919193884826
+        }
+      },
+      "fit_gene_sha256": "5d95978b64023b6ea42dfad10dde756919c52acd29a444b0e78fb833197c1c59",
+      "fit_genes": 4474,
+      "metrics": {
+        "cone": {
+          "cosine": 0.06781553324144442,
+          "norm_ratio": 0.3219632781745748,
+          "normalized_rmse": 1.0295591919388483,
+          "sign_agreement": 0.5170949720670391
+        },
+        "training_best_single": {
+          "cosine": -0.00832232059567414,
+          "norm_ratio": 0.1706197781401401,
+          "normalized_rmse": 1.0158498972190138,
+          "sign_agreement": 0.5036871508379889
+        },
+        "training_common_ray": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        },
+        "zero": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        }
+      },
+      "partition": "d1_d4_vs_d2_d3",
+      "run_confounded": false,
+      "score_gene_sha256": "806c71bd5169f4e90985c88f5aa5c06037ef1ccdda8f42841f586da24e46af7a",
+      "score_genes": 4475,
+      "seed": 2,
+      "test_modality": "CE0006864_CE0008162",
+      "test_target_source": "ota",
+      "train_modality": "CE0008678_CE0010866",
+      "train_target_source": "hollbacker",
+      "training": {
+        "best_single_alpha": 0.3282288318889408,
+        "best_single_key": "ENSG00000108599_Rest",
+        "coefficient_sha256": "fd15c14a9858348e295eb3b1ed30939242cf489da29158397a404823d2110aab",
+        "common_alpha": 0.0,
+        "cone_fit_cosine": 0.5156576383810442,
+        "cone_kkt_violation": 1.6653345369377344e-15,
+        "cone_support": 152
+      }
+    },
+    {
+      "comparisons": {
+        "training_best_single": {
+          "cosine_improvement": 0.10504189846328171,
+          "normalized_rmse_improvement": -0.05334212866700505
+        },
+        "training_common_ray": {
+          "cosine_improvement": 0.06080860946335444,
+          "normalized_rmse_improvement": -0.09865850759079331
+        },
+        "zero": {
+          "cosine_improvement": 0.06080860946335444,
+          "normalized_rmse_improvement": -0.09865850759079331
+        }
+      },
+      "fit_gene_sha256": "9d8f346ab623c29b4ecd9e01369e99458f6e622ed66b55368df60a42d453488b",
+      "fit_genes": 4474,
+      "metrics": {
+        "cone": {
+          "cosine": 0.06080860946335444,
+          "norm_ratio": 0.519881809820875,
+          "normalized_rmse": 1.0986585075907933,
+          "sign_agreement": 0.5101675977653631
+        },
+        "training_best_single": {
+          "cosine": -0.044233288999927275,
+          "norm_ratio": 0.2634075988906321,
+          "normalized_rmse": 1.0453163789237883,
+          "sign_agreement": 0.4878212290502793
+        },
+        "training_common_ray": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        },
+        "zero": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        }
+      },
+      "partition": "d1_d4_vs_d2_d3",
+      "run_confounded": false,
+      "score_gene_sha256": "5a32f16a33e0073e0e088ea95dd933e0be5b8242f65d54472657519905ad88aa",
+      "score_genes": 4475,
+      "seed": 0,
+      "test_modality": "CE0006864_CE0008162",
+      "test_target_source": "hollbacker",
+      "train_modality": "CE0008678_CE0010866",
+      "train_target_source": "ota",
+      "training": {
+        "best_single_alpha": 0.4245413488566328,
+        "best_single_key": "ENSG00000086730_Rest",
+        "coefficient_sha256": "1eb9cfbf726da60fff2681b8b3f14d98580f270495a09dcb4a840df1b0cbd156",
+        "common_alpha": 0.0,
+        "cone_fit_cosine": 0.5858576301428571,
+        "cone_kkt_violation": 1.1102230246251563e-15,
+        "cone_support": 131
+      }
+    },
+    {
+      "comparisons": {
+        "training_best_single": {
+          "cosine_improvement": 0.04683230521851893,
+          "normalized_rmse_improvement": -0.1159036516469738
+        },
+        "training_common_ray": {
+          "cosine_improvement": 0.024559364355669147,
+          "normalized_rmse_improvement": -0.18562002904394048
+        },
+        "zero": {
+          "cosine_improvement": 0.024559364355669147,
+          "normalized_rmse_improvement": -0.18562002904394048
+        }
+      },
+      "fit_gene_sha256": "6417fa3ba293467351e20dac1ba752c11817c9a8aa4f64d0209c763a9424ba55",
+      "fit_genes": 4474,
+      "metrics": {
+        "cone": {
+          "cosine": 0.024559364355669147,
+          "norm_ratio": 0.6619744690148768,
+          "normalized_rmse": 1.1856200290439405,
+          "sign_agreement": 0.5077094972067039
+        },
+        "training_best_single": {
+          "cosine": -0.02227294086284978,
+          "norm_ratio": 0.3582388355199185,
+          "normalized_rmse": 1.0697163773969667,
+          "sign_agreement": 0.4779888268156425
+        },
+        "training_common_ray": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        },
+        "zero": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        }
+      },
+      "partition": "d1_d4_vs_d2_d3",
+      "run_confounded": false,
+      "score_gene_sha256": "159c3fe5f0e8a26d666f34dd62232b030d72164f58ed47da40f74cfebe0dea09",
+      "score_genes": 4475,
+      "seed": 1,
+      "test_modality": "CE0006864_CE0008162",
+      "test_target_source": "hollbacker",
+      "train_modality": "CE0008678_CE0010866",
+      "train_target_source": "ota",
+      "training": {
+        "best_single_alpha": 0.49268151539606064,
+        "best_single_key": "ENSG00000108599_Rest",
+        "coefficient_sha256": "75f9599bc46afdb5ccca152d2cff7925264fa570f2571833a55de2f0efcb2dd1",
+        "common_alpha": 0.0,
+        "cone_fit_cosine": 0.6037704613597258,
+        "cone_kkt_violation": 1.4432899320127031e-15,
+        "cone_support": 143
+      }
+    },
+    {
+      "comparisons": {
+        "training_best_single": {
+          "cosine_improvement": -0.025811580167309507,
+          "normalized_rmse_improvement": 0.17559617291546759
+        },
+        "training_common_ray": {
+          "cosine_improvement": 0.03336107498600193,
+          "normalized_rmse_improvement": -0.0759523517366858
+        },
+        "zero": {
+          "cosine_improvement": 0.03336107498600193,
+          "normalized_rmse_improvement": -0.0759523517366858
+        }
+      },
+      "fit_gene_sha256": "5d95978b64023b6ea42dfad10dde756919c52acd29a444b0e78fb833197c1c59",
+      "fit_genes": 4474,
+      "metrics": {
+        "cone": {
+          "cosine": 0.03336107498600193,
+          "norm_ratio": 0.4318412181950794,
+          "normalized_rmse": 1.0759523517366858,
+          "sign_agreement": 0.5267039106145252
+        },
+        "training_best_single": {
+          "cosine": 0.05917265515331144,
+          "norm_ratio": 0.814073385499278,
+          "normalized_rmse": 1.2515485246521534,
+          "sign_agreement": 0.5184357541899441
+        },
+        "training_common_ray": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        },
+        "zero": {
+          "cosine": 0.0,
+          "norm_ratio": 0.0,
+          "normalized_rmse": 1.0,
+          "sign_agreement": 0.0
+        }
+      },
+      "partition": "d1_d4_vs_d2_d3",
+      "run_confounded": false,
+      "score_gene_sha256": "806c71bd5169f4e90985c88f5aa5c06037ef1ccdda8f42841f586da24e46af7a",
+      "score_genes": 4475,
+      "seed": 2,
+      "test_modality": "CE0006864_CE0008162",
+      "test_target_source": "hollbacker",
+      "train_modality": "CE0008678_CE0010866",
+      "train_target_source": "ota",
+      "training": {
+        "best_single_alpha": 0.30217177535835316,
+        "best_single_key": "ENSG00000159079_Rest",
+        "coefficient_sha256": "41e29605bf11ecaf41246a28fe3c2fa5ff802831e5d03753ff7bee9d207b5f51",
+        "common_alpha": 0.0,
+        "cone_fit_cosine": 0.547399064239423,
+        "cone_kkt_violation": 1.2573687880523818e-16,
+        "cone_support": 148
+      }
+    }
+  ],
+  "claim_ceiling": "fixed-four-donor, published-eligibility robustness sensitivity; not leakage-free donor holdout, donor-population inference, predictive utility, or state reachability",
+  "config_sha256": "2527fc221117442b5ff12ce8da0169bee702d5a24ffc34b4a65bceb7978c78e5",
+  "data_quality": {
+    "between_source_target_cosine": 0.7906120971093459,
+    "eligibility_warning": "Released modalities contain published two-donor DE-eligible targets; complete presence can select on effectiveness.",
+    "genes": 10273,
+    "h5mu_encoding": "MuData 0.1.0",
+    "modalities": {
+      "CE0006864_CE0008162": {
+        "condition_counts": {
+          "Rest": 1584,
+          "Stim48hr": 1602,
+          "Stim8hr": 1694
+        },
+        "rows": 4880
+      },
+      "CE0006864_CE0008678": {
+        "condition_counts": {
+          "Rest": 1584,
+          "Stim48hr": 1602,
+          "Stim8hr": 1694
+        },
+        "rows": 4880
+      },
+      "CE0006864_CE0010866": {
+        "condition_counts": {
+          "Rest": 1584,
+          "Stim48hr": 1602,
+          "Stim8hr": 1694
+        },
+        "rows": 4880
+      },
+      "CE0008162_CE0008678": {
+        "condition_counts": {
+          "Rest": 1584,
+          "Stim48hr": 1601,
+          "Stim8hr": 1694
+        },
+        "rows": 4879
+      },
+      "CE0008162_CE0010866": {
+        "condition_counts": {
+          "Rest": 1584,
+          "Stim48hr": 1602,
+          "Stim8hr": 1694
+        },
+        "rows": 4880
+      },
+      "CE0008678_CE0010866": {
+        "condition_counts": {
+          "Rest": 1584,
+          "Stim48hr": 1602,
+          "Stim8hr": 1694
+        },
+        "rows": 4880
+      }
+    },
+    "rest_atoms_complete_all_modalities": 1584,
+    "shared_target_genes": 8949
+  },
+  "input_verification": {
+    "donor_h5mu": {
+      "bytes": 16866278447,
+      "hash_verified": true,
+      "path": "data/GWCD4i.DE_stats.by_donors.h5mu",
+      "sha256_actual": "2ee3cf90925600eb044619021da2bdd47d661f306a204586652256facf17af64",
+      "sha256_expected": "2ee3cf90925600eb044619021da2bdd47d661f306a204586652256facf17af64"
+    },
+    "target_table": {
+      "bytes": 6155771,
+      "hash_verified": true,
+      "path": "data/Th2_Th1_polarization_signature_DE_results_full.suppl_table.csv",
+      "sha256_actual": "c47d2df21414ca85e7aa255f4148904eec700fbcd9debc2f734ec97049698444",
+      "sha256_expected": "c47d2df21414ca85e7aa255f4148904eec700fbcd9debc2f734ec97049698444"
+    }
+  },
+  "limitations": [
+    "The six modalities are released two-donor summaries, not individual-donor effects.",
+    "Published DE eligibility determines modality presence and can select on perturbation effectiveness.",
+    "Three donor partitions, both directions, two target-source directions, and gene splits are correlated challenges, not independent replicates.",
+    "D1+D2 versus D3+D4 is fully confounded with Rest sequencing run; mixed-run partitions are reported separately.",
+    "Four donors cannot support donor-population significance at 0.05 by an exact donor sign-flip test."
+  ],
+  "protocol": {
+    "baseline_application": "select atom/scalar only on training genes, donor pair, and target source; apply unchanged identity/scalar to test dictionary",
+    "coefficient_application": "fit on one donor-pair dictionary and source target; apply identical coefficients to the complementary donor-pair dictionary and other source target on held-out genes",
+    "condition": "Rest",
+    "gene_order": "lexicographic_gene_symbol",
+    "inference": "descriptive correlated challenges; no donor-population p-values or confidence intervals",
+    "layer": "log_fc",
+    "split_rng": "numpy.default_rng(seed)",
+    "split_seeds": [
+      0,
+      1,
+      2
+    ],
+    "target_gene_universe": "both target sources and donor-H5MU gene symbols; no held-out-source sign filter"
+  },
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "summary": {
+    "all_partitions": {
+      "challenges": 36,
+      "fraction_cosine_improvement_positive_over_training_best_single": 0.8055555555555556,
+      "fraction_cosine_improvement_positive_over_training_common_ray": 0.8611111111111112,
+      "fraction_cosine_improvement_positive_over_zero": 0.8611111111111112,
+      "fraction_normalized_rmse_improvement_positive_over_training_best_single": 0.027777777777777776,
+      "fraction_normalized_rmse_improvement_positive_over_training_common_ray": 0,
+      "fraction_normalized_rmse_improvement_positive_over_zero": 0,
+      "median_cone_cosine": 0.029695160648048613,
+      "median_cone_normalized_rmse": 1.152791768796833,
+      "median_cosine_improvement_over_training_best_single": 0.039963605729948254,
+      "median_cosine_improvement_over_training_common_ray": 0.029695160648048613,
+      "median_cosine_improvement_over_zero": 0.029695160648048613,
+      "median_normalized_rmse_improvement_over_training_best_single": -0.13155234483960965,
+      "median_normalized_rmse_improvement_over_training_common_ray": -0.15279176879683287,
+      "median_normalized_rmse_improvement_over_zero": -0.15279176879683287,
+      "median_training_best_single_cosine": -0.009542972662121067,
+      "median_training_best_single_normalized_rmse": 1.0167204519163757,
+      "median_training_common_ray_cosine": 0.0,
+      "median_training_common_ray_normalized_rmse": 1.0,
+      "median_zero_cosine": 0.0,
+      "median_zero_normalized_rmse": 1.0
+    },
+    "run_balanced_only": {
+      "challenges": 24,
+      "fraction_cosine_improvement_positive_over_training_best_single": 0.75,
+      "fraction_cosine_improvement_positive_over_training_common_ray": 0.8333333333333334,
+      "fraction_cosine_improvement_positive_over_zero": 0.8333333333333334,
+      "fraction_normalized_rmse_improvement_positive_over_training_best_single": 0.041666666666666664,
+      "fraction_normalized_rmse_improvement_positive_over_training_common_ray": 0,
+      "fraction_normalized_rmse_improvement_positive_over_zero": 0,
+      "median_cone_cosine": 0.03149590984164992,
+      "median_cone_normalized_rmse": 1.152791768796833,
+      "median_cosine_improvement_over_training_best_single": 0.03199638700570439,
+      "median_cosine_improvement_over_training_common_ray": 0.03149590984164992,
+      "median_cosine_improvement_over_zero": 0.03149590984164992,
+      "median_normalized_rmse_improvement_over_training_best_single": -0.13155234483960965,
+      "median_normalized_rmse_improvement_over_training_common_ray": -0.15279176879683287,
+      "median_normalized_rmse_improvement_over_zero": -0.15279176879683287,
+      "median_training_best_single_cosine": 0.004089994552078799,
+      "median_training_best_single_normalized_rmse": 1.0184197794310037,
+      "median_training_common_ray_cosine": 0.0,
+      "median_training_common_ray_normalized_rmse": 1.0,
+      "median_zero_cosine": 0.0,
+      "median_zero_normalized_rmse": 1.0
+    },
+    "run_confounded_only": {
+      "challenges": 12,
+      "fraction_cosine_improvement_positive_over_training_best_single": 0.9166666666666666,
+      "fraction_cosine_improvement_positive_over_training_common_ray": 0.9166666666666666,
+      "fraction_cosine_improvement_positive_over_zero": 0.9166666666666666,
+      "fraction_normalized_rmse_improvement_positive_over_training_best_single": 0,
+      "fraction_normalized_rmse_improvement_positive_over_training_common_ray": 0,
+      "fraction_normalized_rmse_improvement_positive_over_zero": 0,
+      "median_cone_cosine": 0.026528493996709902,
+      "median_cone_normalized_rmse": 1.1508971205973655,
+      "median_cosine_improvement_over_training_best_single": 0.047066312240423624,
+      "median_cosine_improvement_over_training_common_ray": 0.026528493996709902,
+      "median_cosine_improvement_over_zero": 0.026528493996709902,
+      "median_normalized_rmse_improvement_over_training_best_single": -0.13048627780293975,
+      "median_normalized_rmse_improvement_over_training_common_ray": -0.15089712059736549,
+      "median_normalized_rmse_improvement_over_zero": -0.15089712059736549,
+      "median_training_best_single_cosine": -0.01915289687021806,
+      "median_training_best_single_normalized_rmse": 1.0133176901705574,
+      "median_training_common_ray_cosine": 0.0,
+      "median_training_common_ray_normalized_rmse": 1.0,
+      "median_zero_cosine": 0.0,
+      "median_zero_normalized_rmse": 1.0
+    }
+  }
+}

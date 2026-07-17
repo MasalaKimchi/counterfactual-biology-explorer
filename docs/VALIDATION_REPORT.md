@@ -34,6 +34,15 @@ reconstructing the retired pipeline.
 
 ## What is independently evaluated
 
+`scripts/run_donor_pair_transfer.py` verifies the 16.9 GB donor H5MU and target-table
+bytes, validates all six two-donor modalities, freezes gene splits, and applies NNLS
+weights plus training-selected baselines unchanged to the complementary donor pair and
+opposite target source. Tests cover H5 schema corruption, axis alignment, training-only
+baseline selection, run-balance classification, and deterministic output. The 24
+run-balanced challenges show weak directional gain but worse magnitude error. Released
+presence is DE-eligibility-selected, so this certifies a published-pipeline fixed-cohort
+sensitivity—not leakage-free donor generality.
+
 `scripts/run_arce_external_validation.py` verifies Arce archive/member hashes and schema,
 enforces outcome-independent eligibility, extracts the Zhu `Rest` IL2RA predictor, and
 evaluates 480 perturbations in three CRISPR-KO CD25 screen contexts. Tiny workbook/H5
@@ -44,21 +53,34 @@ fixtures prove that controls are weighted by guide rather than pooled cell count
 modest transfer plus descriptive supplied-score robustness, not donor-population or
 whole-state validation.
 
+`scripts/run_zhu_arrayed_validation.py` verifies the aggregate screen and two compact
+author-table hashes, masks all nine panel target genes from every profile, and evaluates source-to-arrayed
+bulk-RNA identity both raw and after panel centering. It normalizes IL-10/IL-21 flow within
+donor against all available NTC measurements and enumerates all 362,880 target-label
+permutations with synchronized maxT for four RNA-to-flow rank associations. Tiny fixtures
+cover hash drift, outcome-independent screen selection, duplicate bulk keys, donor-control
+normalization, all-panel-target masking, retrieval, and exhaustive enumeration determinism. The panel
+was source-selected and donor coverage is unbalanced, so this certifies cross-platform
+follow-up only.
+
 ## Canonical evidence status
 
 | Question | Evidence | Status |
 |---|---|---|
 | Source-bound random-gene alignment? | 0.444 ± 0.018 across 12 hash-frozen splits | Descriptive; correlated splits |
 | Target-source directional transfer? | Positive cosine gain over mean/best-single in 6/6 splits both ways | Directional only; nRMSE not improved |
+| Published-eligibility donor-pair transfer? | Run-balanced median cosine gain +0.032; nRMSE 1.153 vs 1.018 | Weak direction; magnitude fails; four fixed donors |
 | Independent functional-screen transfer? | Arce Spearman 0.148 / 0.084 / 0.088 | Modest, context dependent |
 | Arce selected-panel concordance? | Within-dataset A-vs-B target-rank concordance 0.73–0.93; four-stratum sign agreement 50–64% | Descriptive; preselected 28 regulators, two donors, supplied score |
+| Zhu arrayed transcriptome replication? | Matching target retrieves 9/9; median panel-centered cosine 0.580 | Source-selected same-study follow-up; nRMSE 1.052 |
+| Zhu cytokine consistency? | Screen/bulk RNA versus donor-median flow Spearman 0.717–0.850 | Six follow-up donor labels with unequal target coverage; conditional panel diagnostic |
 | Software/statistical contracts? | All six systemic scenarios pass | Synthetic certification only |
-| Primary-model donor/guide generality? | Donor-collapsed primary case study | Not tested |
+| Leakage-safe primary-model donor/guide generality? | Donor-pair released-object sensitivity only | Not tested |
 | Functional state conversion? | No established-state prospective assay | Not tested |
 
 ## Artifact consistency
 
-`scripts/validate_findings.py` cross-checks the ledger against both external reports and
+`scripts/validate_findings.py` cross-checks the ledger against all external reports and
 the systemic harness, requires report `PASS`, requires full source hashes, checks split-ID
 hashes, and validates SHA-256/bytes/executable bits for every canonical file. The central
 figure reads only the ledger and is rendered twice to confirm deterministic PNG/PDF output.
@@ -72,5 +94,5 @@ python -m pip install -r requirements.txt
 
 External regeneration additionally requires the gitignored registered inputs and
 `requirements-external.txt`. Scientific readiness remains **Needs revision** until the
-donor/source/guide, stronger-baseline, structured-null, measured-outcome, and prospective
+leakage-safe donor/guide, stronger-baseline, structured-null, measured-outcome, and prospective
 gates in the [scientific validation plan](SCIENTIFIC_VALIDATION_PLAN.md) pass.

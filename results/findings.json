@@ -61,6 +61,24 @@
     "interpretation": "Directional construction-sensitivity diagnostic only; magnitude calibration and stronger baseline superiority are not supported.",
     "source": "results/source_reconstruction.json"
   },
+  "donor_pair_transfer": {
+    "benchmark": "zhu_published_eligibility_donor_pair_source_transfer_v1",
+    "modalities": 6,
+    "rest_atoms_complete_all_modalities": 1584,
+    "shared_target_genes": 8949,
+    "correlated_challenges": 36,
+    "run_balanced_challenges": 24,
+    "run_balanced": {
+      "median_cone_cosine": 0.03149590984164992,
+      "median_cosine_improvement_over_training_best_single": 0.03199638700570439,
+      "fraction_cosine_improvement_positive_over_training_best_single": 0.75,
+      "median_cone_normalized_rmse": 1.152791768796833,
+      "median_training_best_single_normalized_rmse": 1.0184197794310037,
+      "fraction_normalized_rmse_improvement_positive_over_training_best_single": 0.041666666666666664
+    },
+    "interpretation": "Frozen-weight donor-pair plus target-source transfer retains only weak directional gain and fails magnitude calibration. Released H5MU presence is DE-eligibility selected, modalities are two-donor summaries, and four donors support fixed-cohort robustness only.",
+    "source": "results/donor_pair_transfer.json"
+  },
   "arce_external_validation": {
     "benchmark": "arce_il2ra_context_transfer_v1",
     "analysis_targets": 480,
@@ -101,6 +119,34 @@
       "results/evidence/arce_activation_guide_effects.csv"
     ]
   },
+  "zhu_arrayed_followup": {
+    "benchmark": "zhu_source_selected_arrayed_followup_v1",
+    "perturbations": 9,
+    "followup_donor_labels": 6,
+    "common_genes": 8976,
+    "scored_genes_per_profile": 8967,
+    "profile_replication": {
+      "raw_median_cosine": 0.5492858628301112,
+      "raw_median_cosine_gain_over_common_source": 0.2826379170866942,
+      "raw_median_normalized_rmse": 1.0120994782340578,
+      "panel_centered_median_cosine": 0.579978150629429,
+      "panel_centered_median_normalized_rmse": 1.0521083462106524,
+      "raw_top1_retrieval": 1.0,
+      "panel_centered_top1_retrieval": 1.0
+    },
+    "rna_to_donor_median_flow_spearman": {
+      "screen_IL10": 0.8166666666666665,
+      "bulk_IL10": 0.7166666666666667,
+      "screen_IL21": 0.8333333333333333,
+      "bulk_IL21": 0.8499999999999999
+    },
+    "interpretation": "Source-selected same-study cross-platform replication and cytokine consistency in six follow-up donor labels; unequal coverage and upstream target selection preclude held-out-discovery or donor-population inference, and magnitude calibration is not supported.",
+    "sources": [
+      "results/evidence/zhu_arrayed_validation_meta.json",
+      "results/evidence/zhu_arrayed_profile_metrics.csv",
+      "results/evidence/zhu_arrayed_flow_effects.csv"
+    ]
+  },
   "systemic_harness": {
     "status": "PASS",
     "scenarios": 6,
@@ -117,12 +163,12 @@
     "reason": "The archived multisplit and shuffle pipeline depended on an unhashed, deleted inputs.npz whose gene order was not preserved. These values are provenance, not current findings."
   },
   "open_requirements": [
-    "primary-model donor- and guide-held-out evaluation",
+    "leakage-safe pseudobulk donor- and guide-held-out evaluation",
     "module/pathway holdouts and calibrated structured nulls",
     "nested PCA, ridge, unconstrained and capacity-matched baselines",
     "measured in-domain perturbation combinations",
     "paired CRISPRi and CRISPRa dictionaries",
-    "protein, chromatin, function, fitness and durability",
+    "independent whole-state protein, chromatin, function, fitness and durability",
     "prospective established-state validation"
   ]
 }

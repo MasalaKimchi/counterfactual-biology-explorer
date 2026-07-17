@@ -9,9 +9,13 @@ artifacts.
 | `manifest.json` | SHA-256, byte length, and executable bit for every maintained artifact |
 | `validation_harness.json` | Frozen data-free systemic stress report |
 | `source_reconstruction.json` | Full-file-hash-bound target lineage, frozen splits, and source-transfer report |
+| `donor_pair_transfer.json` | Frozen-weight complementary donor-pair and target-source transfer sensitivity |
 | `evidence/arce_il2ra_context_predictions.csv` | Per-target independent cross-modality benchmark |
 | `evidence/arce_activation_guide_effects.csv` | Donor×guide contrasts for the supplied Arce score |
 | `evidence/arce_external_validation_meta.json` | Arce provenance, transfer, robustness, and claim ceilings |
+| `evidence/zhu_arrayed_profile_metrics.csv` | Raw and panel-centered screen-to-arrayed bulk-RNA profile replication |
+| `evidence/zhu_arrayed_flow_effects.csv` | Within-donor NTC-normalized IL-10/IL-21 follow-up effects |
+| `evidence/zhu_arrayed_validation_meta.json` | Pinned provenance, exact panel-label diagnostics, summaries, and claim ceiling |
 
 Legacy tables derived from an unhashed, deleted `inputs.npz` were removed rather than
 presented as reproducible evidence. Their Git history remains available for provenance;

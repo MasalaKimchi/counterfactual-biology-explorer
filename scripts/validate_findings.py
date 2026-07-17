@@ -8,6 +8,7 @@ import csv
 from collections import Counter, defaultdict
 import hashlib
 import json
+import math
 from pathlib import Path
 import statistics
 
@@ -31,15 +32,21 @@ MANIFEST_PATHS = [
     "configs/validation_harness.json",
     "configs/source_reconstruction.json",
     "configs/arce_external_validation.json",
+    "configs/zhu_arrayed_validation.json",
+    "configs/donor_pair_transfer.json",
     "data/README.md",
     "data/fetch_de_stats.sh",
     "tests/test_reachability.py",
     "tests/test_validation.py",
     "tests/test_source_reconstruction.py",
     "tests/test_arce_external_validation.py",
+    "tests/test_zhu_arrayed_validation.py",
+    "tests/test_donor_pair_transfer.py",
     "scripts/run_validation_harness.py",
     "scripts/run_source_reconstruction.py",
     "scripts/run_arce_external_validation.py",
+    "scripts/run_zhu_arrayed_validation.py",
+    "scripts/run_donor_pair_transfer.py",
     "scripts/validate_findings.py",
     "docs/FINDINGS.md",
     "docs/METHODS.md",
@@ -51,6 +58,7 @@ MANIFEST_PATHS = [
     "results/findings.json",
     "results/validation_harness.json",
     "results/source_reconstruction.json",
+    "results/donor_pair_transfer.json",
     "results/README.md",
 ]
 
@@ -193,6 +201,157 @@ def validate_activation_csv(ledger: dict, metadata: dict) -> None:
                 "all_two_guides_two_donors_same_nonzero_sign_fraction"
             ],
         )
+
+
+def validate_zhu_arrayed(ledger: dict) -> None:
+    metadata_path = EVIDENCE / "zhu_arrayed_validation_meta.json"
+    metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
+    config_path = ROOT / "configs" / "zhu_arrayed_validation.json"
+    config = json.loads(config_path.read_text(encoding="utf-8"))
+    if metadata.get("status") != "PASS" or metadata["benchmark"] != ledger["benchmark"]:
+        raise AssertionError("Zhu arrayed benchmark did not pass")
+    if metadata["config_sha256"] != sha256(config_path):
+        raise AssertionError("Zhu arrayed report/config identity differs")
+    for name, identity in metadata["input_verification"].items():
+        if (
+            not identity["hash_verified"]
+            or identity["sha256_actual"] != identity["sha256_expected"]
+            or identity["sha256_expected"] != config["inputs"][name]["sha256"]
+        ):
+            raise AssertionError("Zhu arrayed input identity was not fully verified")
+    design = metadata["design"]
+    assert len(design["perturbations"]) == ledger["perturbations"]
+    assert len(design["followup_donor_labels"]) == ledger["followup_donor_labels"]
+    assert design["common_genes"] == ledger["common_genes"]
+    if (
+        not config["analysis"]["mask_all_panel_target_genes"]
+        or not design["all_panel_target_genes_masked"]
+        or ledger["scored_genes_per_profile"]
+        != ledger["common_genes"] - ledger["perturbations"]
+    ):
+        raise AssertionError("Zhu arrayed panel-target masking contract differs")
+
+    profile_path = EVIDENCE / "zhu_arrayed_profile_metrics.csv"
+    with profile_path.open(newline="", encoding="utf-8") as handle:
+        profile_rows = list(csv.DictReader(handle))
+    if len(profile_rows) != 2 * ledger["perturbations"]:
+        raise AssertionError("Zhu arrayed profile row count differs")
+    if {(row["scale"], row["target"]) for row in profile_rows} != {
+        (scale, target)
+        for scale in ("raw", "panel_centered")
+        for target in design["perturbations"]
+    }:
+        raise AssertionError("Zhu arrayed profile keys differ")
+    if {int(row["genes_scored"]) for row in profile_rows} != {
+        ledger["scored_genes_per_profile"]
+    }:
+        raise AssertionError("Zhu arrayed profile gene count differs")
+    if any(int(row["retrieval_rank"]) != 1 for row in profile_rows):
+        raise AssertionError("Zhu arrayed matching profile is not always rank one")
+
+    profile = ledger["profile_replication"]
+    raw = metadata["profile_summary"]["raw"]
+    centered = metadata["profile_summary"]["panel_centered"]
+    retrieval = metadata["conditional_permutation"]["retrieval"]
+    assert_close(raw["cosine"], profile["raw_median_cosine"])
+    assert_close(
+        raw["median_cosine_gain_over_common_source"],
+        profile["raw_median_cosine_gain_over_common_source"],
+    )
+    assert_close(raw["normalized_rmse"], profile["raw_median_normalized_rmse"])
+    assert_close(centered["cosine"], profile["panel_centered_median_cosine"])
+    assert_close(
+        centered["normalized_rmse"], profile["panel_centered_median_normalized_rmse"]
+    )
+    assert_close(retrieval["raw"]["top1"], profile["raw_top1_retrieval"])
+    assert_close(
+        retrieval["panel_centered"]["top1"], profile["panel_centered_top1_retrieval"]
+    )
+    if metadata["conditional_permutation"]["permutations"] != math.factorial(
+        ledger["perturbations"]
+    ):
+        raise AssertionError("Zhu arrayed permutation enumeration differs")
+    for name, expected in ledger["rna_to_donor_median_flow_spearman"].items():
+        assert_close(
+            metadata["conditional_permutation"]["cytokine_rank_association"][name][
+                "spearman"
+            ],
+            expected,
+        )
+
+    flow_path = EVIDENCE / "zhu_arrayed_flow_effects.csv"
+    with flow_path.open(newline="", encoding="utf-8") as handle:
+        flow_rows = list(csv.DictReader(handle))
+    if len(flow_rows) != 78:
+        raise AssertionError("Zhu arrayed donor/cytokine row count differs")
+    keys = {
+        (row["target"], row["donor"], row["cytokine"]) for row in flow_rows
+    }
+    if len(keys) != len(flow_rows):
+        raise AssertionError("Zhu arrayed flow rows have duplicate keys")
+    coverage = Counter((row["target"], row["cytokine"]) for row in flow_rows)
+    if min(coverage.values()) != 3 or max(coverage.values()) != 6:
+        raise AssertionError("Zhu arrayed donor coverage differs")
+    for row in flow_rows:
+        expected = math.log2(
+            float(row["percent_positive"])
+            / float(row["donor_ntc_mean_percent_positive"])
+        )
+        assert_close(float(row["log2_ratio_to_donor_ntc"]), expected)
+
+
+def validate_donor_pair(ledger: dict) -> None:
+    report = json.loads((RESULTS / "donor_pair_transfer.json").read_text(encoding="utf-8"))
+    config_path = ROOT / "configs" / "donor_pair_transfer.json"
+    config = json.loads(config_path.read_text(encoding="utf-8"))
+    if report.get("status") != "PASS" or report["benchmark"] != ledger["benchmark"]:
+        raise AssertionError("donor-pair benchmark did not pass")
+    if report["config_sha256"] != sha256(config_path):
+        raise AssertionError("donor-pair report/config identity differs")
+    for name, identity in report["input_verification"].items():
+        if (
+            not identity["hash_verified"]
+            or identity["sha256_actual"] != identity["sha256_expected"]
+            or identity["sha256_expected"] != config["inputs"][name]["sha256"]
+        ):
+            raise AssertionError("donor-pair input identity was not fully verified")
+
+    quality = report["data_quality"]
+    if len(quality["modalities"]) != ledger["modalities"]:
+        raise AssertionError("donor-pair modality count differs")
+    if quality["rest_atoms_complete_all_modalities"] != ledger["rest_atoms_complete_all_modalities"]:
+        raise AssertionError("donor-pair complete Rest atom count differs")
+    if quality["shared_target_genes"] != ledger["shared_target_genes"]:
+        raise AssertionError("donor-pair shared target universe differs")
+    if "published two-donor DE-eligible" not in quality["eligibility_warning"]:
+        raise AssertionError("donor-pair eligibility-selection warning is missing")
+
+    challenges = report["challenges"]
+    balanced = [row for row in challenges if not row["run_confounded"]]
+    if len(challenges) != ledger["correlated_challenges"] or len(balanced) != ledger["run_balanced_challenges"]:
+        raise AssertionError("donor-pair challenge counts differ")
+    for row in challenges:
+        for field in ("fit_gene_sha256", "score_gene_sha256"):
+            if len(row[field]) != 64:
+                raise AssertionError("donor-pair gene split identities are not hash-frozen")
+    if "select atom/scalar only on training" not in report["protocol"]["baseline_application"]:
+        raise AssertionError("donor-pair baselines are not declared training-only")
+    if "no donor-population p-values" not in report["protocol"]["inference"]:
+        raise AssertionError("donor-pair inference ceiling is missing")
+
+    observed = report["summary"]["run_balanced_only"]
+    expected = ledger["run_balanced"]
+    if observed["challenges"] != ledger["run_balanced_challenges"]:
+        raise AssertionError("donor-pair run-balanced summary count differs")
+    for field in (
+        "median_cone_cosine",
+        "median_cosine_improvement_over_training_best_single",
+        "fraction_cosine_improvement_positive_over_training_best_single",
+        "median_cone_normalized_rmse",
+        "median_training_best_single_normalized_rmse",
+        "fraction_normalized_rmse_improvement_positive_over_training_best_single",
+    ):
+        assert_close(observed[field], expected[field])
 
 
 def validate_values(findings: dict) -> None:
@@ -342,6 +501,9 @@ def validate_values(findings: dict) -> None:
             value,
         )
     validate_activation_csv(activation, robustness)
+
+    validate_zhu_arrayed(findings["zhu_arrayed_followup"])
+    validate_donor_pair(findings["donor_pair_transfer"])
 
     harness = json.loads((RESULTS / "validation_harness.json").read_text())
     ledger = findings["systemic_harness"]

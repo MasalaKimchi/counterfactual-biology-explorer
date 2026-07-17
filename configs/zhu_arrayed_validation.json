@@ -1,0 +1,79 @@
+{
+  "schema_version": "1.0.0",
+  "generated_on": "2026-07-17",
+  "benchmark": "zhu_source_selected_arrayed_followup_v1",
+  "claim_ceiling": "source-selected cross-platform replication and cytokine consistency in follow-up donors; not held-out discovery, state reachability, donor-population inference, or intervention efficacy",
+  "provenance": {
+    "author_repository": "https://github.com/emdann/GWT_perturbseq_analysis_2025",
+    "author_commit": "848d62fc2b7027f7218d6fc5f5b0c37255dc94af",
+    "selection_status": "All nine perturbations were selected upstream from the genome-scale screen for arrayed follow-up. Outcome-label permutation diagnostics are conditional on this selected panel."
+  },
+  "inputs": {
+    "screen": {
+      "path": "data/GWCD4i.DE_stats.h5ad",
+      "bytes": 16786240107,
+      "sha256": "c355f535ff32cf7ba1edc49cf9c6039fe84f2c9ebe4d005515cba75790cfbb62"
+    },
+    "bulk_rna": {
+      "path": "data/IL10IL21bulkRNAseq_DESeq2_results.csv",
+      "bytes": 13952871,
+      "sha256": "c20418a9285b10104dbae362b825971f86f97425800a92269e4433ce780e666d",
+      "url": "https://raw.githubusercontent.com/emdann/GWT_perturbseq_analysis_2025/848d62fc2b7027f7218d6fc5f5b0c37255dc94af/metadata/suppl_tables/IL10IL21bulkRNAseq_DESeq2_results.csv"
+    },
+    "flow": {
+      "path": "data/IL10_IL21_arrayed_validation.csv",
+      "bytes": 2200,
+      "sha256": "f60cdda392d6f29d10a539727ff7324b04d17e35c0512c889b733e00380b83dc",
+      "url": "https://raw.githubusercontent.com/emdann/GWT_perturbseq_analysis_2025/848d62fc2b7027f7218d6fc5f5b0c37255dc94af/metadata/suppl_tables/IL10_IL21_arrayed_validation.csv"
+    }
+  },
+  "screen": {
+    "condition": "Stim8hr",
+    "condition_field": "culture_condition",
+    "perturbation_field": "target_contrast_gene_name",
+    "gene_id_field": "gene_ids",
+    "gene_symbol_field": "gene_name",
+    "layer": "log_fc"
+  },
+  "panel": {
+    "perturbations": [
+      "ATP2A2",
+      "CYB5R4",
+      "ELOB",
+      "GATA3",
+      "KDM1A",
+      "MED24",
+      "MEN1",
+      "NFKB2",
+      "SGF29"
+    ],
+    "cytokines": {
+      "IL10": "IL10_perc",
+      "IL21": "IL21_perc"
+    },
+    "control_prefix": "NTC"
+  },
+  "analysis": {
+    "mask_all_panel_target_genes": true,
+    "profile_scales": ["raw", "panel_centered"],
+    "flow_transform": "log2(percent_positive / donor_mean_NTC_percent_positive)",
+    "flow_primary_summary": "equal-donor median",
+    "conditional_permutation_family": "one-sided synchronized target-label enumeration with a maximum-statistic tail fraction over screen/bulk RNA x IL10/IL21 Spearman correlations; inferential exchangeability is not established",
+    "exact_target_label_permutations": 362880
+  },
+  "expected": {
+    "screen_rows": 33983,
+    "screen_genes": 10282,
+    "bulk_rows": 95796,
+    "bulk_genes_per_perturbation": 10644,
+    "common_genes": 8976,
+    "scored_genes_per_profile": 8967,
+    "flow_rows": 53,
+    "donors": ["Donor5", "Donor6", "Donor7", "Donor8", "Donor9", "Donor10"]
+  },
+  "outputs": {
+    "profile_metrics": "results/evidence/zhu_arrayed_profile_metrics.csv",
+    "flow_effects": "results/evidence/zhu_arrayed_flow_effects.csv",
+    "metadata": "results/evidence/zhu_arrayed_validation_meta.json"
+  }
+}

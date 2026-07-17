@@ -28,17 +28,23 @@ Highest-priority objects:
 | Object | Bytes | Use |
 |---|---:|---|
 | `Th2_Th1_polarization_signature_DE_results_full.suppl_table.csv` | 6,155,771 | Exact target-construction input; fetched from the author repository |
+| `IL10IL21bulkRNAseq_DESeq2_results.csv` | 13,952,871 | Arrayed bulk-RNA follow-up for nine source-selected perturbations |
+| `IL10_IL21_arrayed_validation.csv` | 2,200 | IL-10/IL-21 flow percentages for Donor5–Donor10 and matched NTC controls |
 | `GWCD4i.DE_stats.by_donors.h5mu` | 16,866,278,447 | Disjoint donor-pair transfer |
 | `GWCD4i.DE_stats.by_guide.h5mu` | 29,424,424,894 | Guide-held-out replication |
 | `GWCD4i.pseudobulk_merged.h5ad` | 44,566,657,140 | Controlled re-aggregation and alternate DE models |
 | `GWCD4i.DE_stats.h5ad` | 16,786,240,107 | 33,983 perturbation-condition profiles × 10,282 genes; log FC, z-score, p, adjusted p, base mean, and LFC SE |
 
-Frozen source identities used by `configs/source_reconstruction.json`:
+Frozen source identities used by `configs/source_reconstruction.json` and
+`configs/zhu_arrayed_validation.json`:
 
 | Object | SHA-256 |
 |---|---|
 | `GWCD4i.DE_stats.h5ad` | `c355f535ff32cf7ba1edc49cf9c6039fe84f2c9ebe4d005515cba75790cfbb62` |
 | `Th2_Th1_polarization_signature_DE_results_full.suppl_table.csv` | `c47d2df21414ca85e7aa255f4148904eec700fbcd9debc2f734ec97049698444` |
+| `IL10IL21bulkRNAseq_DESeq2_results.csv` | `c20418a9285b10104dbae362b825971f86f97425800a92269e4433ce780e666d` |
+| `IL10_IL21_arrayed_validation.csv` | `f60cdda392d6f29d10a539727ff7324b04d17e35c0512c889b733e00380b83dc` |
+| `GWCD4i.DE_stats.by_donors.h5mu` | `2ee3cf90925600eb044619021da2bdd47d661f306a204586652256facf17af64` |
 
 The target CSV is pinned to author commit
 [`848d62f`](https://github.com/emdann/GWT_perturbseq_analysis_2025/tree/848d62fc2b7027f7218d6fc5f5b0c37255dc94af),
@@ -53,12 +59,14 @@ Download one allow-listed object with:
 
 ```bash
 ./data/fetch_de_stats.sh Th2_Th1_polarization_signature_DE_results_full.suppl_table.csv
+./data/fetch_de_stats.sh IL10IL21bulkRNAseq_DESeq2_results.csv
+./data/fetch_de_stats.sh IL10_IL21_arrayed_validation.csv
+./data/fetch_de_stats.sh GWCD4i.DE_stats.by_donors.h5mu
 ```
 
-The default remains `GWCD4i.DE_stats.h5ad`. Downloads use a `.part` path and verify the
-registered byte length before atomic rename. The helper does not provide resumable S3
-transfer; interrupted large downloads must be restarted. Record SHA-256 and retrieval date
-in the dataset card before analysis.
+The default remains `GWCD4i.DE_stats.h5ad`. HTTPS downloads resume from a `.part` path,
+verify registered byte length, and then rename atomically. Record SHA-256 and retrieval
+date in the dataset card before analysis.
 
 With both frozen files present, run the source-bound reconstruction separately from the
 small CI suite:
@@ -72,6 +80,37 @@ python scripts/run_source_reconstruction.py --check results/source_reconstructio
 This reconstructs target lineage and aggregate-screen source-transfer diagnostics. It
 does not substitute for donor- or guide-level objects.
 
+With the two compact follow-up tables present, the source-selected arrayed benchmark adds
+8,967 transcript coordinates per perturbation after masking all nine panel target genes,
+plus donor-normalized IL-10 and
+IL-21 flow readouts:
+
+```bash
+python scripts/run_zhu_arrayed_validation.py --check
+```
+
+The nine targets were chosen upstream using the same source study. Donor coverage ranges
+from three to six, and target-label permutations are conditional on that panel. This is
+same-study cross-platform follow-up in six additional donor labels—not held-out discovery,
+donor-population inference, or state conversion.
+
+The donor-pair H5MU stage is implemented:
+
+```bash
+python scripts/run_donor_pair_transfer.py --check
+```
+
+It fits on one two-donor modality and target source, then freezes coefficients and
+training-selected baselines for the complementary donor pair, opposite target source,
+and held-out genes. Across 24 run-balanced correlated challenges, median cosine gain over
+the frozen best single is +0.032, while normalized RMSE is worse (1.153 versus 1.018).
+This is a published-pipeline sensitivity, not predictive utility. The next stages are
+reciprocal-guide H5MU and structural-QC re-estimation from pseudobulk counts. Released
+H5MU modalities omit DE-ineligible targets, so presence itself can select on effectiveness.
+Only pseudobulk can rebuild a leakage-safe universe without `keep_effective_guides`,
+held-out DE, sign, or correlation fields. Four donors support fixed-cohort robustness,
+not donor-population significance.
+
 ## Target sources
 
 - Ota et al., *Cell* 2021, DOI 10.1016/j.cell.2021.03.056, NBDC E-GEAD-397.
@@ -83,7 +122,7 @@ analysis has 6,188 genes after requiring both sources, concordant signs, and scr
 measurement. Source-transfer validation must return to the independent Ota and
 Höllbacher inputs and must not select coordinates using the held-out source.
 
-## Compact independent benchmarks
+## Compact external benchmarks
 
 These archives are small enough to exercise the external-data harness before downloading
 the 17–45 GB donor/guide/pseudobulk objects:

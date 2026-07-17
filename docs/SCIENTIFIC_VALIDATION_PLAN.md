@@ -1,8 +1,9 @@
 # Scientific Validation Plan
 
-**Review status (2026-07-17): Needs revision before inferential or biological
-reachability claims.** The current repository supports a retrospective, donor-collapsed
-directional-geometry result. It does not yet support state conversion, intervention
+**Review status (2026-07-17): strengthened measured follow-up; still not ready for
+inferential or biological reachability claims.** The repository supports retrospective,
+donor-collapsed directional geometry, cross-source diagnostics, and source-selected
+arrayed RNA/cytokine replication. It does not yet support state conversion, intervention
 utility, donor generalization, target-specific significance, or coefficient-based
 prioritization.
 
@@ -47,8 +48,9 @@ profile by gene. It is not a donor replicate or a cell.
 | Target input | 6,188 final coordinates after source-sharing, sign, and screen filters | Selection leakage and excluded-coordinate scope must be explicit |
 | Missing inference unit | Current result has no donor-level sampling distribution | Random-gene split SD must never be reported as biological uncertainty |
 
-The smallest remediation is to ingest the accessible donor-, guide-, pseudobulk-, and
-target-construction Zhu files, while separately resolving the documented validation table.
+The donor-pair published-eligibility sensitivity and compact arrayed
+bulk-RNA/IL-10/IL-21 follow-up are now executable. The smallest remaining primary-model
+remediation is reciprocal-guide transfer followed by leakage-safe pseudobulk re-estimation.
 
 ## Execution program
 
@@ -81,7 +83,6 @@ Inputs from the public Zhu release:
 - `GWCD4i.DE_stats.by_donors.h5mu`;
 - `GWCD4i.DE_stats.by_guide.h5mu`;
 - `Th2_Th1_polarization_signature_DE_results_full.suppl_table.csv`;
-- `Th1Th2_validation_summary.suppl_table.csv` only after a working source route is verified;
 - the existing `GWCD4i.DE_stats.h5ad` and polarization table.
 
 Actions:
@@ -96,10 +97,11 @@ Actions:
 4. Reproduce both source-specific targets without sign-based cross-source selection.
 5. Reproduce Zhu's `pert2state_model` ranking as the required same-question baseline.
 
-Current status: the aggregate H5AD/target phase is implemented with full input hashes;
-the unreconstructable archived 0.446 multisplit result was withdrawn and replaced by the
-source-bound 0.444 result. Donor-, guide-, and pseudobulk-level reconstruction and the
-same-question baseline remain exit blockers.
+Current status: the aggregate H5AD/target phase and released donor-pair H5MU sensitivity
+are implemented with full input hashes; the unreconstructable archived 0.446 multisplit
+result was withdrawn and replaced by the source-bound 0.444 result. The donor test is not
+leakage-safe because released presence is eligibility-selected. Guide transfer,
+pseudobulk re-estimation, and the same-question baseline remain exit blockers.
 
 ### Workstream 2 — independent transfer and structured inference
 
@@ -112,22 +114,28 @@ Actions:
    using held-out source signs or magnitudes.
 2. **Donor-pair transfer:** fit on one donor pair and score on the disjoint pair across
    every complementary 2-vs-2 partition. Report donors 1–2 vs 3–4 as fully
-   run-confounded, and donors 1–3 vs 2–4 and 1–4 vs 2–3 as run-balanced partitions.
+   run-confounded, and donors 1–3 vs 2–4 and 1–4 vs 2–3 as run-balanced partitions. Treat
+   the released H5MU as published-eligibility sensitivity because DE-ineligible targets
+   are absent.
 3. **Guide transfer:** define the target universe without aggregate/held-out-guide
    effectiveness, restrict reciprocal testing to targets with two usable guides, select/fit
    using one guide and evaluate another, then reverse, and report excluded single-guide
-   targets.
-4. **Grouped holdouts:** use pathway/module, source, donor, guide, context, and run blocks.
-5. **Structured nulls:** preserve gene covariance using rotations or module-level
+   targets. The released `guide_1`/`guide_2` H5MU remains descriptive because modality
+   presence can reflect the authors' effectiveness filter.
+4. **Leakage-safe re-estimation:** rebuild donor/guide effects from pseudobulk counts using
+   only declared coverage/depth QC. Exclude `keep_effective_guides`, aggregate admission,
+   held-out DE/sign/correlation fields, and any filter not proven outcome-independent.
+5. **Grouped holdouts:** use pathway/module, source, donor, guide, context, and run blocks.
+6. **Structured nulls:** preserve gene covariance using rotations or module-level
    randomization. Use ≥9,999 resamples for a primary family and maxT/Westfall–Young control
    across contexts, target directions, metrics, and preprocessing variants.
-6. **Nested baselines:** tune only inside training folds. Include best single atom,
+7. **Nested baselines:** tune only inside training folds. Include best single atom,
    common-effect mean, PCA/ridge, unconstrained least squares, sparse/non-negative ridge,
    and capacity-matched random dictionaries.
-7. **Metrics:** cosine, normalized RMSE, norm ratio, DE-sign recovery, top-DE precision and
+8. **Metrics:** cosine, normalized RMSE, norm ratio, DE-sign recovery, top-DE precision and
    recall, pathway-direction agreement, target retrieval rank, and improvement over the
    strongest frozen baseline.
-8. **Identifiability:** report active-matrix rank, singular values, strict-complementarity
+9. **Identifiability:** report active-matrix rank, singular values, strict-complementarity
    margin, fitted-point stability, and coefficient equivalence sets. Never interpret one
    coefficient vector when alternatives fit equivalently.
 
@@ -141,29 +149,31 @@ Exit gates:
 - calibration cannot pass by universal abstention;
 - no headline depends on sign-concordance selection using its evaluation source.
 
-### Workstream 3 — documented measured follow-up (retrieval blocked)
+Current donor-pair result: all six modalities share 1,584 complete `Rest` atoms and an
+8,949-gene source-defined universe. Across 24 run-balanced correlated challenges, median
+cosine is 0.031 with +0.032 gain over the training-selected frozen best single, but median
+normalized RMSE is worse (1.153 versus 1.018) and improves in only 1/24 challenges. This
+supports neither predictive utility nor donor-population generalization. It establishes
+the execution contract and makes the guide/pseudobulk stages more urgent, not less.
 
-**Lead experts:** T-cell biologist and assay statistician; analysis must be frozen before
-opening outcome columns.
+### Workstream 3 — source-selected arrayed RNA/cytokine follow-up
 
-First resolve retrieval of Zhu's documented but currently unavailable
-`Th1Th2_validation_summary.suppl_table.csv`. The VCP schema describes arrayed CRISPRi
-under non-polarized, Th1-polarized, and Th2-polarized culture with bulk-RNA state scores
-and flow-protein outcomes, but no working public object key has been verified.
+**Status:** implemented for the author-released IL-10/IL-21 follow-up.
 
-Actions:
+The pinned author repository supplies arrayed bulk-RNA profiles for nine source-selected
+perturbations and IL-10/IL-21 flow percentages in Donor5–Donor10. The maintained runner
+masks all nine panel target genes, evaluates 8,967 transcript coordinates, adds
+Systema-style panel centering, performs nine-way retrieval, normalizes flow within donor
+against all available NTC measurements, and exhaustively enumerates all 9! synchronized
+target-label assignments as conditional diagnostics rather than inferential p-values.
 
-1. Freeze the candidate universe, score, sign, and exclusions before reading validation
-   outcomes.
-2. Evaluate continuous Th1 and Th2 score direction, rank, and error without refitting.
-3. Evaluate IFN-γ protein direction/rank and culture-context reversals.
-4. Report that the arrayed targets were selected after the source discovery screen; this
-   is source-selected measured follow-up, not held-out or prospective validation.
-
-Exit gate: source-selected candidates show RNA-score and IFN-γ flow concordance in the
-preregistered direction across donors. RNA can challenge stress, apoptosis, and cell-cycle
-signatures if gene-level data are accessible; viability selection remains untested unless
-an additional direct readout is located.
+Current result: matching perturbation retrieval is 9/9 raw and panel-centered; median
+centered cosine is 0.580; RNA-to-flow cytokine rank associations are 0.717–0.850. Median
+normalized RMSE remains at or above one, donor coverage is uneven, and all targets were
+selected upstream. The exit claim is therefore same-study cross-platform replication and
+cytokine consistency only—not held-out discovery, population generalization, or state
+conversion. The separately documented `Th1Th2_validation_summary.suppl_table.csv` remains
+optional until a working immutable source is verified; it is no longer an execution blocker.
 
 ### Workstream 4 — combination and modality stress tests
 
@@ -258,10 +268,13 @@ data-free and runs in pull-request CI.
 
 The next statistical/nightly expansion must sweep block-correlation levels and add full
 adaptive-pipeline replay, partial alternatives, heteroskedasticity, donor heterogeneity,
-run confounding, combination synergy/antagonism/saturation, interval coverage, power, and
-abstention. Use at least
-2,000 simulations per scenario, while primary real-data inference uses ≥9,999 structured
-resamples.
+donor-specific sign reversal, guide efficiency/missingness/off-target mixtures, run
+confounding, common-response strength, combination synergy/antagonism/saturation,
+interval coverage, power, and abstention risk-coverage. Use at least 2,000 simulations per
+scenario, while primary real-data inference uses ≥9,999 structured resamples. Require a
+one-sided 95% familywise-error upper bound ≤0.075 at nominal 0.05, interval coverage
+0.925–0.975, ≥0.80 power at the frozen practical margin, and ≥0.80 retained coverage so
+universal abstention cannot pass.
 
 Recent evaluation frameworks motivate perturbation-specific references, multiple metrics,
 retrieval/rank tests, and strong simple baselines: [Systema](https://doi.org/10.1038/s41587-025-02777-8)
@@ -287,10 +300,11 @@ reviews precede manuscript wording.
 ## Execution order and release gates
 
 1. **Source-bound reconstruction.** The target lineage, aggregate-screen diagnostics, and
-   bidirectional source transfer now regenerate from full-hash-bound H5AD/CSV inputs.
-   Extend the same contract to donor-, guide-, and pseudobulk-level objects, keeping log
-   fold change primary and z-score sensitivity-only. Exit only when a clean external-data
-   run reproduces every claim-bearing table in its declared scope.
+   bidirectional source transfer, donor-pair sensitivity, and source-selected arrayed
+   RNA/cytokine follow-up now regenerate from full-hash-bound inputs. Extend the same
+   contract next to guide H5MU, then leakage-safe pseudobulk re-estimation, keeping log fold
+   change primary and z-score sensitivity-only. Exit only when a clean external-data run
+   reproduces every claim-bearing table in its declared scope.
 2. **Transfer and calibration.** Run leakage-safe Ota-to-Höllbacher and reverse transfer,
    followed by donor-, guide-, module-, pathway-, context-, and run-held-out evaluation.
    Add covariance-preserving nulls, nested baselines, multiple metrics, multiplicity,
@@ -298,8 +312,9 @@ reviews precede manuscript wording.
    if target-specific performance clears the best frozen baseline with calibrated
    uncertainty.
 3. **Independent compact benchmarks.** The aggregate Arce S1 IL2RA/CD25 transfer and
-   S14/S8 donor/guide supplied-score robustness are implemented. Next add orthogonal
-   RNA/protein strata, then Schmidt CRISPRa/i
+   S14/S8 donor/guide supplied-score robustness are implemented; the same-study Zhu
+   arrayed bulk-RNA/IL-10/IL-21 follow-up is a separate source-selected benchmark. Next
+   add orthogonal independent RNA/protein strata, then Schmidt CRISPRa/i
    orientation and cytokine transfer. Treat the Goudy triple as descriptive until sample
    mapping and reuse terms are resolved. Exit only with dataset-specific grain,
    confounding, and claim ceilings attached to every result.
@@ -319,6 +334,7 @@ Required tables:
 4. synthetic FPR, power, coverage, and abstention;
 5. source/donor/guide/context transfer with intervals;
 6. coefficient equivalence and combination regret.
+7. source-selected arrayed profile retrieval and equal-donor cytokine effects.
 
 Required figures:
 
@@ -328,7 +344,8 @@ Required figures:
 4. multi-metric baseline comparison;
 5. fitted-point and equivalence-set stability;
 6. additive prediction versus measured combinations;
-7. prospective RNA/protein/chromatin/function concordance if generated.
+7. arrayed RNA retrieval and RNA-to-cytokine concordance with donor coverage;
+8. prospective RNA/protein/chromatin/function concordance if generated.
 
 ## Claim ceiling
 
