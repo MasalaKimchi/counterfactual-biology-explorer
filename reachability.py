@@ -29,7 +29,7 @@ class ProjectionResult:
     dual_separator: np.ndarray | None
     cosine: float
     residual_fraction: float
-    objective: float
+    relative_objective: float
     kkt_violation: float
     geometry_status: str
     polarity_violation: float | None
@@ -55,10 +55,14 @@ def _stable_norm(x: np.ndarray) -> float:
 
 
 def _weighted_cosine(a: np.ndarray, b: np.ndarray, q: np.ndarray) -> float:
-    qa = np.sqrt(q) * a
-    qb = np.sqrt(q) * b
-    denom = _stable_norm(qa) * _stable_norm(qb)
-    return 0.0 if denom == 0.0 else float(np.dot(qa, qb) / denom)
+    normalized_q = q / np.max(q)
+    qa = np.sqrt(normalized_q) * a
+    qb = np.sqrt(normalized_q) * b
+    norm_a = _stable_norm(qa)
+    norm_b = _stable_norm(qb)
+    if norm_a == 0.0 or norm_b == 0.0:
+        return 0.0
+    return float(np.dot(qa / norm_a, qb / norm_b))
 
 
 def _canonical_problem(
@@ -104,9 +108,14 @@ def _canonical_problem(
     kept_effects = effects[:, mask]
     kept_target = target[mask]
     kept_weights = weights[mask]
+    # A positive global rescaling of W leaves the minimizer and all normalized
+    # geometry unchanged. Normalize it to prevent avoidable derived overflow.
+    kept_weights = kept_weights / np.max(kept_weights)
+    if np.any(kept_weights == 0):
+        raise InputError("gene-weight dynamic range is not representable")
     weighted_target = np.sqrt(kept_weights) * kept_target
-    if _stable_norm(weighted_target) <= np.sqrt(np.finfo(float).tiny):
-        raise InputError("target is zero or below numerical resolution")
+    if _stable_norm(weighted_target) == 0.0:
+        raise InputError("target is zero or below floating-point resolution")
     return kept_effects, kept_target, kept_weights, mask
 
 
@@ -139,37 +148,48 @@ def project_cone(
     bw = sqrt_q * target_kept
 
     atom_norms = np.array([_stable_norm(aw_all[:, i]) for i in range(aw_all.shape[1])])
-    active_atoms = atom_norms > np.sqrt(np.finfo(float).tiny)
+    active_atoms = atom_norms > 0.0
     coefficients = np.zeros(effects_full.shape[0], dtype=float)
     nonzero_norms = atom_norms[active_atoms]
     unit_atoms = aw_all[:, active_atoms] / nonzero_norms
+    norm_b = _stable_norm(bw)
     if np.any(active_atoms):
         # Normalize columns so positive atom rescaling cannot change conditioning
-        # or the fitted cone point, then map coefficients back to input units.
-        solved, _ = nnls(unit_atoms, bw)
-        coefficients[active_atoms] = solved / nonzero_norms
+        # or the fitted cone point. Normalize the target as well so valid very small
+        # or very large directions do not inherit avoidable solver-scale failures.
+        try:
+            solved, _ = nnls(unit_atoms, bw / norm_b)
+        except RuntimeError as exc:
+            raise InputError("NNLS solver failed numerical certification") from exc
+        coefficients[active_atoms] = solved * norm_b / nonzero_norms
 
     fitted_kept = coefficients @ effects_kept
     residual_kept = target_kept - fitted_kept
+    if not np.all(np.isfinite(coefficients)) or not np.all(np.isfinite(fitted_kept)):
+        raise InputError("projection is not representable at the supplied numerical scale")
     rw = sqrt_q * residual_kept
     fitw = sqrt_q * fitted_kept
-    norm_b = _stable_norm(bw)
     norm_fit = _stable_norm(fitw)
     norm_r = _stable_norm(rw)
-    scale = max(norm_b, norm_fit, np.sqrt(np.finfo(float).tiny))
+    scale = max(norm_b, norm_fit)
     eps = np.finfo(float).eps
 
     # Atom-scale-invariant KKT diagnostics.
-    gamma = unit_atoms.T @ rw / scale
+    gamma = unit_atoms.T @ (rw / scale)
     contributions = coefficients[active_atoms] * nonzero_norms / scale
     active = contributions > 100 * np.sqrt(eps)
     primal = float(np.max(np.maximum(-coefficients[active_atoms], 0) * nonzero_norms / scale, initial=0))
     dual = float(np.max(np.maximum(gamma, 0), initial=0))
     stationarity = float(np.max(np.abs(gamma[active]), initial=0))
     complementarity = float(np.max(np.abs(contributions * gamma), initial=0))
-    projection_identity = abs(norm_b**2 - norm_fit**2 - norm_r**2) / (
-        norm_b**2 + eps * scale**2
-    )
+    relative_b = norm_b / scale
+    relative_fit = norm_fit / scale
+    relative_residual = norm_r / scale
+    projection_identity = abs(
+        relative_b * relative_b
+        - relative_fit * relative_fit
+        - relative_residual * relative_residual
+    ) / (relative_b * relative_b + eps)
     kkt = max(primal, dual, stationarity, complementarity, projection_identity)
 
     fitted = np.zeros_like(target_full, dtype=float)
@@ -180,32 +200,48 @@ def project_cone(
     transformed_residual[mask] = rw
 
     relative_separation = norm_r / scale
-    tolerance = separator_tolerance
-    if tolerance is None:
-        tolerance = max(100 * np.sqrt(eps), 1e-10)
+    geometry_tolerance = separator_tolerance
+    if geometry_tolerance is None:
+        geometry_tolerance = max(100 * np.sqrt(eps), 1e-10)
+    certification_tolerance = 1e-8
 
-    if relative_separation <= tolerance:
+    if not np.isfinite(kkt) or kkt > certification_tolerance:
+        raise InputError("projection failed KKT numerical certification")
+
+    if relative_separation <= geometry_tolerance:
         geometry_status = "inside_tolerance"
         separator = None
         polarity = orthogonality = separation = None
     else:
         geometry_status = "outside_model_cone"
         separator = np.zeros_like(target_full, dtype=float)
+        # q has canonical max(q)=1. A dual separator is only defined up to
+        # positive scale, so this avoids avoidable overflow without changing it.
         separator_kept = q * residual_kept
+        if not np.all(np.isfinite(separator_kept)):
+            raise InputError("separator is not representable at the supplied numerical scale")
         separator[mask] = separator_kept
-        cone_dot = effects_kept @ separator_kept
         polarity = float(
             np.max(
-                np.maximum(cone_dot[active_atoms], 0)
-                / (nonzero_norms * norm_r),
+                np.maximum(unit_atoms.T @ (rw / norm_r), 0),
                 initial=0,
             )
         )
-        numerator = abs(float(np.dot(fitted_kept, separator_kept)))
-        orthogonality = 0.0 if norm_fit == 0.0 and numerator <= eps * scale**2 else (
-            float("inf") if norm_fit == 0.0 else numerator / (norm_fit * norm_r)
+        orthogonality = (
+            0.0
+            if norm_fit == 0.0
+            else abs(float(np.dot(fitw / norm_fit, rw / norm_r)))
         )
-        separation = float(np.dot(target_kept, separator_kept) / (norm_b * norm_r))
+        separation = float(np.dot(bw / norm_b, rw / norm_r))
+        if (
+            not np.isfinite(polarity)
+            or not np.isfinite(orthogonality)
+            or not np.isfinite(separation)
+            or polarity > certification_tolerance
+            or orthogonality > certification_tolerance
+            or separation <= 0
+        ):
+            raise InputError("separator failed numerical certification")
 
     return ProjectionResult(
         coefficients=coefficients,
@@ -215,7 +251,7 @@ def project_cone(
         dual_separator=separator,
         cosine=_weighted_cosine(fitted_kept, target_kept, q),
         residual_fraction=relative_separation,
-        objective=0.5 * norm_r**2,
+        relative_objective=0.5 * (norm_r / norm_b) * (norm_r / norm_b),
         kkt_violation=kkt,
         geometry_status=geometry_status,
         polarity_violation=polarity,
@@ -276,7 +312,12 @@ def held_out_alignment(
     fit = project_cone(
         effects[:, fit_idx], target[fit_idx], gene_weights=weights[fit_idx]
     )
-    frozen = fit.coefficients @ effects
+    with np.errstate(over="ignore", invalid="ignore"):
+        frozen = fit.coefficients @ effects
+    if not np.all(np.isfinite(frozen)):
+        raise InputError(
+            "held-out prediction is not representable at the supplied numerical scale"
+        )
     return HeldOutResult(
         coefficients=fit.coefficients,
         fit_cosine=_weighted_cosine(frozen[fit_idx], target[fit_idx], weights[fit_idx]),

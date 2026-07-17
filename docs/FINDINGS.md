@@ -12,7 +12,7 @@ conversion, functional rescue, intervention efficacy, biological necessity, or t
 validation.
 
 The dictionary contains donor-collapsed primary-CD4 CRISPRi differential-expression
-z-score profiles measured in resting cells. The target is constructed from two external
+z-score profiles measured in the source study's post-expansion `Rest` condition. The target is constructed from two external
 Th1-vs-Th2 source contrasts. The perturbations were not applied to established polarized
 Th2 cells.
 
@@ -54,8 +54,8 @@ Source: [`baseline_comparison.csv`](../results/evidence/baseline_comparison.csv)
 The previous “71% of modality ceiling” statement divided held-out cosine by a quantity
 that was numerically the in-sample cosine. It was not an independent biological ceiling.
 The retained descriptive replacement is a floor-to-synthetic-reachable-reference dynamic-range
-fraction: **0.463** under uniform weighting and **0.615** under transition-specificity
-weighting.
+fraction: **0.463** under the primary uniform metric. An opaque secondary weighting was
+removed rather than interpreted biologically.
 
 The reference comprises 40 reachable-by-construction noisy synthetic targets; it is not a
 biological positive control. This is a sensitivity description, not a probability that the
@@ -84,8 +84,7 @@ and [`context_runbalance_caveat.json`](../results/evidence/context_runbalance_ca
 These checks address specific mechanisms. They do not establish absence of batch,
 cell-state-composition, donor, or other biological confounding.
 
-Sources: [`confounder_robustness.csv`](../results/evidence/confounder_robustness.csv) and
-[`confounder_robustness_summary.json`](../results/evidence/confounder_robustness_summary.json).
+Source: [`confounder_robustness_summary.json`](../results/evidence/confounder_robustness_summary.json).
 
 ## 6. The generator filter was already active
 
@@ -94,8 +93,7 @@ A stricter top-half effect-size filter improves held-out cosine from 0.4464 to a
 **0.4580**. This addresses generator admission under the source test; it does not turn
 the dictionary into noise-free causal effects.
 
-Sources: [`generator_significance.csv`](../results/evidence/generator_significance.csv) and
-[`generator_significance_summary.json`](../results/evidence/generator_significance_summary.json).
+Source: [`generator_significance_summary.json`](../results/evidence/generator_significance_summary.json).
 
 ## 7. Directional ranking has a narrow curated benchmark
 
@@ -103,8 +101,7 @@ On a curated 13-gene polarization panel, the signed cone ranking has directional
 **1.0**, versus **0.5** for an effect-magnitude baseline. The panel is small and curated;
 this does not replace comparison with a frozen GRN-derived ranking or prospective assay.
 
-Sources: [`ranking_validation.csv`](../results/evidence/ranking_validation.csv) and
-[`ranking_validation_summary.json`](../results/evidence/ranking_validation_summary.json).
+Source: [`ranking_validation_summary.json`](../results/evidence/ranking_validation_summary.json).
 
 ## 8. Combination semantics are unstable
 
@@ -117,9 +114,7 @@ cosine between measured and additive double effects is 0.712.
 This is a useful failure demonstration: a coarse threshold can look stable while the
 retired staged proxy changes. It does not validate primary-CD4 CRISPRi combinations.
 
-Sources: [`additivity_verdict_flip.csv`](../results/evidence/additivity_verdict_flip.csv),
-[`additivity_verdict_flip_summary.json`](../results/evidence/additivity_verdict_flip_summary.json),
-and [`norman_table4_additivity.csv`](../results/evidence/norman_table4_additivity.csv).
+Source: [`combination_additivity_sensitivity.json`](../results/evidence/combination_additivity_sensitivity.json).
 
 ## 9. Target construction matters
 
@@ -130,11 +125,13 @@ magnitude depends on source and filtering choices.
 Sources: [`reviewer2_ota_hollbacher_meta.json`](../results/evidence/reviewer2_ota_hollbacher_meta.json)
 and [`reviewer2_ota_hollbacher_split.csv`](../results/evidence/reviewer2_ota_hollbacher_split.csv).
 
-Only **9,831/25,672** target-table genes intersect the screen, and **38/50** strongest
-target DE genes survive that intersection. Source-only held-out cosines are **0.438** for
-Ota and **0.342** for Höllbacher, versus 0.446 for the sign-concordant merge. The headline
-therefore applies only to the measured, jointly signed subset; it is not evidence about the
-unobserved target coordinates.
+Only **9,831/25,672** genes in the union of target-source tables intersect the screen, and
+**38/50** strongest target-table DE genes survive that coverage check. The registered
+merged estimand is narrower: the sources share **11,616** genes, **7,960** have concordant
+signs, and **6,188** remain after screen intersection. Source-only held-out cosines are
+**0.438** for Ota and **0.342** for Höllbacher, versus 0.446 for the concordant merge. The
+headline therefore applies only to those 6,188 measured, jointly signed coordinates; it
+is not evidence about the excluded or unobserved target coordinates.
 
 Source: [`reviewer2_deg_survival.csv`](../results/evidence/reviewer2_deg_survival.csv).
 

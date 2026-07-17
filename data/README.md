@@ -1,50 +1,83 @@
 # External data
 
-Scientific data are intentionally local and ignored by Git. The maintained repository
-ships frozen selected evidence, not the 16.8 GB source matrix.
+Scientific source data stay local and are ignored by Git. The repository ships a compact
+frozen evidence bundle and a data-free validation harness, not the large source matrices.
 
-## Primary source
+## Primary source: Zhu et al.
 
-Zhu et al. 2025, genome-scale CRISPRi Perturb-seq in primary human CD4 cells:
+Genome-scale CRISPRi Perturb-seq in primary human CD4 cells from four donors and three
+assay conditions:
 
-- doi:10.64898/2025.12.23.696273
-- SRA SRP643211 / GEO GSE314342
+- preprint: https://doi.org/10.64898/2025.12.23.696273
+- GEO/SRA: GSE314342 / SRP643211
+- source code: https://github.com/emdann/GWT_perturbseq_analysis_2025
+- public data prefix: `s3://genome-scale-tcell-perturb-seq/marson2025_data/`
+- VCP release: [v1.0 dataset page](https://virtualcellmodels.cziscience.com/dataset/genome-scale-tcell-perturb-seq?access_dataset=true)
+- licensing: VCP labels the dataset MIT and applies its Acceptable Use Policy; the
+  analysis code is separately MIT; mirror terms must be recorded independently
 
-- `GWCD4i.DE_stats.h5ad`
-- 33,983 perturbation-condition profiles × 10,282 readout genes
-- relevant layers include `log_fc`, `zscore`, `p_value`, `adj_p_value`, `baseMean`, and
-  `lfcSE`
-
-Obtain the artifact through the CZI Virtual Cells Platform:
+List the public objects without credentials:
 
 ```bash
-vcp data search "Primary Human CD4+ T Cell Perturb-seq" --exact
+aws s3 ls --no-sign-request \
+  s3://genome-scale-tcell-perturb-seq/marson2025_data/
 ```
 
-Registration and CLI documentation:
-https://chanzuckerberg.github.io/vcp-cli/usage/data.html
+Highest-priority objects:
 
-Open supplementary tables are also available from the source-analysis repository:
-https://github.com/emdann/GWT_perturbseq_analysis_2025/tree/master/metadata/suppl_tables
+| Object | Bytes | Use |
+|---|---:|---|
+| `Th2_Th1_polarization_signature_DE_results_full.suppl_table.csv` | 6,155,771 | Exact target-construction input; fetched from the author repository |
+| `GWCD4i.DE_stats.by_donors.h5mu` | 16,866,278,447 | Disjoint donor-pair transfer |
+| `GWCD4i.DE_stats.by_guide.h5mu` | 29,424,424,894 | Guide-held-out replication |
+| `GWCD4i.pseudobulk_merged.h5ad` | 44,566,657,140 | Controlled re-aggregation and alternate DE models |
+| `GWCD4i.DE_stats.h5ad` | 16,786,240,107 | 33,983 perturbation-condition profiles × 10,282 genes; log FC, z-score, p, adjusted p, base mean, and LFC SE |
 
-## External challenge sources
+The VCP schema also documents `Th1Th2_validation_summary.suppl_table.csv`, but no working
+public S3 or author-repository object was verified on 2026-07-17. Treat retrieval as
+unresolved; do not present this table as an executable benchmark until a source route is
+confirmed.
 
-- Ota et al., *Cell* 2021, doi:10.1016/j.cell.2021.03.056, NBDC E-GEAD-397.
-- Höllbacher et al., *ImmunoHorizons* 2020,
-  doi:10.4049/immunohorizons.2000037, GEO GSE149090.
-- Norman et al., *Science* 2019, doi:10.1126/science.aax4438, GEO GSE133344.
+Download one allow-listed object with:
 
-The committed case-study target does not re-download these studies independently. It uses
-the Zhu supplementary polarization table and the frozen upstream transformation in
-`src/4_polarization_signatures/polarization_signature.ipynb`: same-sign Ota/Höllbacher
-Wald z-scores are averaged, sign-flipped from Th2-vs-Th1 to the Th1-like direction, and
-intersected with screen genes. See [`docs/METHODS.md`](../docs/METHODS.md).
+```bash
+./data/fetch_de_stats.sh Th2_Th1_polarization_signature_DE_results_full.suppl_table.csv
+```
+
+The default remains `GWCD4i.DE_stats.h5ad`. Downloads use a `.part` path and verify the
+registered byte length before atomic rename. The helper does not provide resumable S3
+transfer; interrupted large downloads must be restarted. Record SHA-256 and retrieval date
+in the dataset card before analysis.
+
+## Target sources
+
+- Ota et al., *Cell* 2021, DOI 10.1016/j.cell.2021.03.056, NBDC E-GEAD-397.
+- Höllbacher et al., *ImmunoHorizons* 2020, DOI
+  10.4049/immunohorizons.2000037, GEO GSE149090.
+
+The current target uses the Zhu supplementary polarization table. Its registered merged
+analysis has 6,188 genes after requiring both sources, concordant signs, and screen
+measurement. Source-transfer validation must return to the independent Ota and
+Höllbacher inputs and must not select coordinates using the held-out source.
+
+## Additional frozen benchmark candidates
+
+- Goudy et al. primary-T-cell CRISPRoff/Cas9: GSE306915; methylation GSE306917.
+- Schmidt et al. primary-T-cell CRISPRa/CRISPRi: GSE190604, GSE174255, GSE190846.
+- Arce et al. Teff/Treg Perturb-CITE resources: GSE271090, GSE278572.
+- Norman combinations: GSE133344, out-of-domain numerical/combination stress only.
+- Replogle K562/RPE1: Figshare 20029387, out-of-domain numerical/context stress only.
+
+See [`docs/SCIENTIFIC_VALIDATION_PLAN.md`](../docs/SCIENTIFIC_VALIDATION_PLAN.md) for
+the exact evaluation and claim ceiling for each resource.
 
 ## Data policy
 
 - Never force-add H5AD, H5MU, CSV, NPZ, or raw-count payloads under `data/`.
-- The current case study uses a donor-collapsed differential-expression summary, not raw
-  cells or donor-level effects.
-- Selected frozen result tables live in [`results/evidence/`](../results/evidence/).
-- A future real-data runner must accept an explicit external input path, record its hash,
-  and fail closed when the file is unavailable.
+- Every analysis input needs an accession, exact object key, version/retrieval date,
+  byte length, SHA-256, license/terms status, gene namespace, orientation, units,
+  donor/guide/context/batch fields, and missingness profile.
+- A missing donor or guide estimate remains missing; it is never silently replaced by a
+  collapsed average.
+- Claim-bearing tables must be regenerated by the external-data runner, not copied from
+  an interactive notebook.

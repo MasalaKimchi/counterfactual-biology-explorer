@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0.0",
+  "seed": 20260717,
+  "oracle_trials": 48,
+  "grouped_splits": 12,
+  "null_trials": 200,
+  "null_resamples": 499,
+  "n_hypotheses": 5,
+  "thresholds": {
+    "max_oracle_fitted_error": 1e-08,
+    "max_oracle_objective_error": 1e-10,
+    "max_degenerate_fitted_error": 1e-08,
+    "max_group_leakage": 0,
+    "max_null_familywise_error_rate": 0.1
+  }
+}

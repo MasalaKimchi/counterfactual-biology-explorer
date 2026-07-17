@@ -13,13 +13,21 @@ The test suite covers:
 - exact inside, boundary, and outside projections in an orthant;
 - the metric-correct weighted separator (`W rho`), polarity, and orthogonality;
 - zero-weight coordinate exclusion;
-- target scaling from `1e-6` to `1e6`;
-- positive atom rescaling through `1e16`, duplicate atoms, and zero atoms;
+- target scaling from `1e-250` to `1e154`, plus overflow-safe diagnostics at `1e200`;
+- representably tiny atoms (`1e-154`), common weight scales through `1e308`, positive
+  atom rescaling through `1e16`, duplicate atoms, and zero atoms;
 - frozen held-out coefficients;
 - conservative plus-one empirical p-values with ties;
 - fail-closed handling of zero, non-finite, misaligned, fractional/boolean-index,
   non-boolean-mask, and invalid-weight inputs;
 - absence of removed legacy decision APIs.
+
+The systemic harness additionally compares 48 randomized problems with an independent
+active-set oracle, injects eight label/provenance faults, challenges rescaling and
+degeneracy, enforces zero module leakage across 12 grouped splits, and simulates maxT
+familywise behavior. The frozen report passes all five scenarios; its realized fast-check
+familywise error is 0.035 across 200 null trials. This is software/statistical-contract
+validation, not biological validation.
 
 The maintained implementation emits geometry and diagnostics only. It does not emit a
 biological reachability verdict.
@@ -48,7 +56,7 @@ PDF hashes before the manifest is updated.
 | Driven only by generator magnitude? | Exceeds registered norm-matched null | Not explained by this check |
 | Generator significance filter absent? | All 6,871 Rest generators source-flagged significant | Concern addressed for admission |
 | Robust combination semantics? | Retired-v0 diagnostics: 1/126 threshold flips, 100/126 staged proxy flips | Removed heuristics are unstable |
-| Target fully observed? | 9,831/25,672 genes; 38/50 strongest DE genes | No; measured subset only |
+| Target fully observed? | 9,831/25,672 raw coverage; 6,188 genes in final merged analysis | No; filtered measured subset only |
 | Donor-general? | Donor-collapsed inputs | Not tested |
 | Functional conversion/rescue? | No prospective functional assay | Not tested |
 
@@ -73,3 +81,7 @@ python -m pip install -r requirements.txt
 ```
 
 Exit code zero requires tests, demo, findings validation, and artifact hashes to pass.
+
+Overall scientific readiness remains **Needs revision**. See the
+[scientific validation plan](SCIENTIFIC_VALIDATION_PLAN.md) for the donor/source/guide,
+structured-null, measured-outcome, and prospective gates.

@@ -40,6 +40,7 @@ finding_by_id = {entry["id"]: entry for entry in findings["updated_findings"]}
 target_scope = finding_by_id["target_observation_scope"]["values"]
 target_total = int(target_scope["target_genes_total"])
 target_measured = int(target_scope["target_genes_in_screen"])
+target_analyzed = int(target_scope["final_analyzed_genes"])
 top_50_measured = int(target_scope["top_50_surviving"])
 if len(split_values) != 12 or n_null != 60:
     raise ValueError("unexpected registered split/shuffle counts")
@@ -159,21 +160,21 @@ for x in xs:
 
 # 1. Inputs
 x = xs[0]
-step_header(x, 1, "Inputs", "two separately sourced objects")
+step_header(x, 1, "Inputs", "source objects reused from Zhu workflow")
 
 box(x + 1.7, 60.0, pw - 3.4, 11.0, fc=BLUE_LIGHT, ec="#C9D7E8", lw=1.0, radius=0.6)
 label(x + 3.0, 68.0, "TARGET DIRECTION  d", size=8.4, color=BLUE, weight="bold")
-label(x + 3.0, 64.5, "Constructed external Th1-vs-Th2\ndirection (two source contrasts)", size=9.2, color=NAVY)
+label(x + 3.0, 64.5, "External Th1-vs-Th2 population contrast\n(not an observed trajectory)", size=9.2, color=NAVY)
 
 box(x + 1.7, 44.7, pw - 3.4, 11.0, fc=TEAL_LIGHT, ec="#BDD9D2", lw=1.0, radius=0.6)
 label(x + 3.0, 52.7, "EFFECT DICTIONARY  E", size=8.4, color=TEAL, weight="bold")
-label(x + 3.0, 49.2, "Screen-derived CRISPRi DE z-scores\nin resting primary CD4 cells", size=9.2, color=NAVY)
+label(x + 3.0, 49.2, "Screen-derived CRISPRi DE z-scores\nin post-expansion Rest CD4 cells", size=9.2, color=NAVY)
 
 label(
     x + 1.8,
     36.8,
-    f"Only {target_measured:,} / {target_total:,} target genes\n"
-    f"intersect the screen ({top_50_measured} / top 50)\n"
+    f"Raw screen overlap: {target_measured:,} / {target_total:,}\n"
+    f"Final merged analysis: {target_analyzed:,} genes\n"
     "Dictionary is donor-collapsed; not\nmeasured in polarized Th2 cells",
     size=8.7,
     color=MUTE,

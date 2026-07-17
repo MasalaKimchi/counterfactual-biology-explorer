@@ -4,5 +4,5 @@
   "genes_shared": 11616,
   "genes_sign_concordant_kept": 7960,
   "pct_concordant": 68.5,
-  "interpretation": "Directionally stable across sources (all z 29-37, strongly reachable); headline reachable cosine 0.627 sits above either source alone (Ota 0.560, Hollbacher 0.511) because the sign-concordance filter keeps only mutually-agreed genes, which modestly raises the cosine. Verdict does NOT depend on source choice; exact magnitude does."
+  "interpretation": "The sources share a broad direction, but sign-concordance selects mutually agreeing genes and the merged analysis is not an independent source-transfer test."
 }

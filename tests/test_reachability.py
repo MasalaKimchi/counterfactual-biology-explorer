@@ -32,7 +32,7 @@ def test_weighted_separator_uses_metric_residual():
 
     np.testing.assert_allclose(result.coefficients, [1.2], atol=1e-12)
     np.testing.assert_allclose(result.residual, [0.8, -0.2], atol=1e-12)
-    np.testing.assert_allclose(result.dual_separator, [0.8, -0.8], atol=1e-12)
+    np.testing.assert_allclose(result.dual_separator, [0.2, -0.2], atol=1e-12)
     assert effects @ result.dual_separator <= 1e-12
     assert abs(result.fitted @ result.dual_separator) < 1e-12
     assert target @ result.dual_separator > 0
@@ -48,7 +48,7 @@ def test_zero_weight_coordinates_are_explicitly_excluded():
     np.testing.assert_allclose(result.residual, [0.0, 0.0], atol=1e-12)
 
 
-@pytest.mark.parametrize("scale", [1e-6, 1.0, 1e6])
+@pytest.mark.parametrize("scale", [1e-250, 1e-154, 1e-6, 1.0, 1e6, 1e154])
 def test_target_scale_invariance(scale):
     effects = np.eye(3)
     target = np.array([1.0, -1.0, 0.5])
@@ -57,6 +57,57 @@ def test_target_scale_invariance(scale):
     np.testing.assert_allclose(scaled.fitted / scale, base.fitted, rtol=1e-9, atol=1e-10)
     assert scaled.cosine == pytest.approx(base.cosine, abs=1e-10)
     assert scaled.residual_fraction == pytest.approx(base.residual_fraction, abs=1e-10)
+    assert np.isfinite(scaled.relative_objective)
+    assert scaled.kkt_violation < 1e-8
+
+
+def test_relative_objective_remains_finite_at_large_scale():
+    result = rx.project_cone(np.eye(2), 1e200 * np.array([1.0, -1.0]))
+    assert result.relative_objective == pytest.approx(0.25)
+    assert np.isfinite(result.relative_objective)
+
+
+def test_extreme_small_scale_separator_is_certified():
+    result = rx.project_cone(np.eye(2), 1e-153 * np.array([1.0, -1.0]))
+    assert result.geometry_status == "outside_model_cone"
+    assert result.dual_separator is not None
+    assert result.kkt_violation < 1e-8
+    assert result.polarity_violation < 1e-8
+    assert result.orthogonality_error < 1e-8
+    assert result.separation_margin > 0
+
+
+def test_representably_small_atom_is_not_discarded():
+    result = rx.project_cone(np.array([[1e-154, 0.0]]), np.array([1.0, 1.0]))
+    np.testing.assert_allclose(result.fitted, [1.0, 0.0], atol=1e-12)
+    assert result.coefficients[0] == pytest.approx(1e154)
+
+
+def test_large_common_gene_weight_scale_is_normalized_safely():
+    result = rx.project_cone(
+        np.eye(2),
+        np.array([1e200, -1e200]),
+        gene_weights=np.array([1e308, 1e308]),
+    )
+    np.testing.assert_allclose(result.fitted / 1e200, [1.0, 0.0], atol=1e-12)
+    assert result.kkt_violation < 1e-8
+
+
+def test_held_out_prediction_overflow_fails_closed():
+    effects = np.array([[1e-200, 1e200]])
+    target = np.ones(2)
+    with pytest.raises(rx.InputError, match="held-out prediction is not representable"):
+        rx.held_out_alignment(effects, target, [0], [1])
+
+
+def test_nnls_iteration_failure_is_wrapped_as_input_error():
+    rng = np.random.default_rng(22)
+    effects = rng.normal(size=(7, 12))
+    effects[-1] = effects[-2] + 1e-12 * rng.normal(size=12)
+    target = rng.normal(size=12)
+    weights = np.exp(rng.uniform(-5, 5, size=12))
+    with pytest.raises(rx.InputError, match="NNLS solver failed"):
+        rx.project_cone(effects, target, gene_weights=weights)
 
 
 def test_atom_scale_duplicate_and_zero_atom_do_not_change_fit():

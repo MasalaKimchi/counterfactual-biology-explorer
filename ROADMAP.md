@@ -1,62 +1,57 @@
 # Roadmap
 
-The repository is intentionally small after consolidation. New work should earn its way
-into the maintained surface through explicit gates.
+The detailed gates, datasets, expert handoffs, and prospective assay are in
+[`docs/SCIENTIFIC_VALIDATION_PLAN.md`](docs/SCIENTIFIC_VALIDATION_PLAN.md). This page is
+the concise execution order.
 
-## 1. Numerical certification
+## Completed in the current revision
 
-- Add an independent active-set oracle for small NNLS cases.
-- Register well-conditioned, rank-deficient, duplicated, rescaled, and ill-conditioned
-  fixtures.
-- Compare objectives and fitted points rather than non-identifiable coefficients.
-- Preserve atom-scale-invariant KKT and separator diagnostics.
+- target-lineage correction: 25,672 union → 11,616 shared → 7,960 sign-concordant →
+  6,188 analyzed;
+- target-scale normalization and fail-closed KKT/separator certification;
+- independent active-set oracle and degenerate-cone stress tests;
+- labelled axis/provenance contract and injected input faults;
+- grouped split and maxT utilities;
+- deterministic data-free harness report in pull-request CI.
 
-Exit: exact fixtures and randomized oracle grids pass without reinstating legacy verdicts.
+## Next frozen release: source-data reconstruction
 
-## 2. Labelled inputs
+1. Ingest Zhu donor-pair, guide-level, pseudobulk, and target-construction files; resolve
+   the currently unavailable arrayed Th1/Th2 validation-table route.
+2. Record immutable dataset cards and hashes.
+3. Regenerate the real-data evidence from source summaries.
+4. Make log fold change primary and z-score geometry sensitivity-only.
+5. Reproduce Zhu's own `pert2state_model` as the same-question baseline.
 
-- Replace bare arrays at the public boundary with labelled gene axes and provenance.
-- Require identifier namespace, modality, orientation, context, time, units, and hashes.
-- Reject duplicate/missing genes and mixed effect scales.
+Exit: a clean external-data run regenerates all claim-bearing tables.
 
-Exit: deliberate reorder, namespace, unit, and orientation corruptions fail closed.
+## Next inferential release: transfer and calibration
 
-## 3. Systemic harness
+1. Ota→Höllbacher and Höllbacher→Ota source transfer without held-out-source sign
+   selection.
+2. Complementary donor-pair and guide-held-out transfer.
+3. Module/pathway/context/run splits and covariance-preserving nulls.
+4. Nested baselines, multiple metrics, maxT control, interval coverage, power, and
+   coefficient-equivalence analysis.
 
-- Add a single `load → align → fit → validate → report` runner.
-- Emit immutable JSON, manifest, metrics, and Markdown report artifacts.
-- Add fault injection for every stage and atomic failure semantics.
-- Keep v0.1 single-process and data-free in pull-request CI.
+Exit: target-specific performance clears the best frozen baseline with calibrated
+source/donor/guide-held-out uncertainty.
 
-Exit: a fresh clone produces a deterministic synthetic report in under five minutes.
+## Biological validation release
 
-## 4. Statistical contract
+1. Resolve and then score the VCP-documented arrayed polarized-culture RNA and flow
+   validation without refitting.
+2. Quantify additivity error for one measured four-donor primary-T-cell triple.
+3. Test CRISPRa orientation and RNA/protein context transfer.
 
-- Add module/pathway, source-study, donor, context, guide, and combination splits.
-- Register structured nulls and maxT familywise correction.
-- Gate false-positive rate, power, abstention, interval coverage, and approximation regret.
-- Report equivalence sets unless independent units identify one candidate.
+Exit: frozen predictions agree with measured molecular outcomes across donors and
+modalities, within each dataset's stated claim ceiling.
 
-Exit: calibration cannot pass by always abstaining, and no dataset can choose its null or
-baseline after outcomes are visible.
+## Prospective biology
 
-## 5. Frozen real-data ladder
+Preregister established-memory-Th2 and naïve-derived-Th2 experiments with independent
+donors, matched CRISPRi/CRISPRa, singles and selected combinations, RNA, protein/cytokine,
+chromatin, fitness, lineage, durability, and functional readouts.
 
-1. Norman K562 CRISPRa singles-to-doubles with selection frozen before measured doubles.
-2. Zhu primary-CD4 CRISPRi with log-fold-change-primary analysis and source-block target
-   transfer.
-3. Replogle K562/RPE1 with frozen cross-context support and coefficients.
-4. Paired primary-T-cell CRISPRi/CRISPRa when available.
-
-Exit: every suite has a dataset card, content hashes, explicit units, matched baselines,
-and claim-specific approval.
-
-## 6. Prospective biology
-
-Before any conversion or efficacy language, preregister an experiment with an established
-polarized starting state, power-derived independent donors, matched modalities, singles and
-selected combinations, RNA plus protein/cytokine/fitness/durability readouts, and frozen
-analysis.
-
-This prospective program is not a software-release dependency; the corresponding
-biological claims are blocked until it succeeds.
+Exit: only coordinated, durable, within-lineage molecular and functional movement permits
+cautious partial-reprogramming language.

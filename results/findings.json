@@ -63,8 +63,8 @@
     },
     {
       "id": "metric_calibration",
-      "finding": "A circular held-out-to-in-sample ceiling claim was retired. The replacement floor-to-synthetic-reachable-reference dynamic-range fraction is 0.463 under uniform weighting and 0.615 under transition-specificity weighting.",
-      "values": {"uniform": 0.46268945092548447, "specificity": 0.6151593455423952},
+      "finding": "A circular held-out-to-in-sample ceiling claim was retired. The retained floor-to-synthetic-reachable-reference dynamic-range fraction is 0.463 under the primary uniform metric.",
+      "values": {"uniform": 0.46268945092548447},
       "source": "results/evidence/metric_calibration.csv"
     },
     {
@@ -95,7 +95,7 @@
       "id": "combination_scope",
       "finding": "Across 126 Norman K562 CRISPRa doubles, one retired legacy-v0 threshold label and 100 staged E-to-negative-E proxy labels flip. These are sensitivity diagnostics for removed heuristics, not mechanistic modality labels or validation of CD4 CRISPRi combinations.",
       "values": {"n": 126, "threshold_flips": 1, "modality_flips": 100, "median_measured_additive_cosine": 0.7119866324793709},
-      "source": "results/evidence/additivity_verdict_flip_summary.json"
+      "source": "results/evidence/combination_additivity_sensitivity.json"
     },
     {
       "id": "target_source_agreement",
@@ -105,10 +105,13 @@
     },
     {
       "id": "target_observation_scope",
-      "finding": "The case study sees only the screen-intersecting, sign-concordant target subset: 9,831 of 25,672 target genes intersect the screen and 38 of the 50 strongest target DE genes survive. Source-only held-out cosines are 0.438 for Ota and 0.342 for Hollbacher, versus 0.446 for the concordant merge.",
+      "finding": "Of 25,672 unique genes in the union of target-source tables, 9,831 overlap the screen. The registered merged estimand is narrower: 11,616 genes are shared by both sources, 7,960 have concordant signs, and 6,188 remain after screen intersection. Thirty-eight of the 50 strongest target-table DE genes overlap the screen. Source-only held-out cosines are 0.438 for Ota and 0.342 for Hollbacher, versus 0.446 for the concordant merge.",
       "values": {
         "target_genes_total": 25672,
         "target_genes_in_screen": 9831,
+        "target_genes_shared_between_sources": 11616,
+        "target_genes_sign_concordant": 7960,
+        "final_analyzed_genes": 6188,
         "top_50_surviving": 38,
         "ota_only_held_out": 0.4383,
         "hollbacher_only_held_out": 0.3415,

@@ -5,9 +5,23 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$ROOT"
 export PYTHONPATH="$ROOT${PYTHONPATH:+:$PYTHONPATH}"
 
-python -c "import numpy, scipy; print('numpy', numpy.__version__, '| scipy', scipy.__version__)"
+python - <<'PY'
+from importlib.metadata import version
+from pathlib import Path
+
+expected = dict(
+    line.strip().split("==", 1)
+    for line in Path("requirements.txt").read_text().splitlines()
+    if line.strip() and not line.lstrip().startswith("#")
+)
+actual = {package: version(package) for package in expected}
+if actual != expected:
+    raise SystemExit(f"environment mismatch: expected {expected}, found {actual}")
+print("verified environment:", ", ".join(f"{key}={value}" for key, value in actual.items()))
+PY
 python -m pytest -q
 python reachability.py
+python scripts/run_validation_harness.py --check results/validation_harness.json
 python scripts/validate_findings.py
 
-echo "Reproduction complete: strict geometry, frozen findings, and artifact lineage pass."
+echo "Reproduction complete: geometry, systemic harness, frozen findings, and lineage pass."

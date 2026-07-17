@@ -9,14 +9,14 @@
     "ablated_z": 25.902381839533486,
     "n_cellcycle_genes_removed": 46,
     "frac_target_norm_on_cellcycle": 0.07284809554952695,
-    "verdict": "cell-cycle NOT load-bearing"
+    "interpretation": "The registered cell-cycle ablation changes the held-out score only slightly."
   },
   "magnitude_deconfound": {
     "cone_heldout": 0.4464114605104187,
     "norm_matched_null_mean": 0.39711749553064324,
     "norm_matched_null_z": 2.8479991055797687,
     "weight_norm_spearman_rho": 0.0346118882760355,
-    "verdict": "direction-driven (beats norm-matched null)"
+    "interpretation": "The registered score exceeds this norm-matched diagnostic null."
   },
   "guide_efficiency": {
     "late_rescaling_invariance": [
@@ -130,6 +130,6 @@
       }
     ]
   },
-  "single_cell_CATE_status": "NOT executable in-sandbox: needs raw counts + per-cell guide calls (a2_conditional_reachability_scaffold.py). Gene-axis ablation is the available proxy; documented as a remaining gap.",
+  "single_cell_heterogeneity_status": "Not evaluated from the donor-collapsed DE summary; cell-level counts and guide calls are required.",
   "seconds": 290.6
 }

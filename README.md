@@ -10,7 +10,7 @@ It does not predict state conversion, prescribe an intervention, or validate a t
 
 ## Main finding
 
-In donor-collapsed resting primary human CD4 data, screen-derived CRISPRi
+In donor-collapsed post-expansion `Rest` primary human CD4 data, screen-derived CRISPRi
 differential-expression z-score profiles show split-stable alignment with a constructed
 external Th1-vs-Th2 direction.
 
@@ -29,14 +29,16 @@ The updated stress tests materially narrow the claim:
 - cell-cycle ablation, magnitude matching, and positive generator rescaling do not
   explain the registered score, but do not exclude all confounding;
 - every admitted Rest generator was already source-flagged significant;
-- only 9,831/25,672 target genes intersect the screen and only 38/50 strongest target DE
-  genes survive; source-only held-out scores are 0.438 (Ota) and 0.342 (Höllbacher);
+- 9,831/25,672 target-table genes intersect the screen, but the registered merged
+  estimand narrows to 6,188 genes after requiring both sources, concordant signs, and
+  screen measurement; source-only held-out scores are 0.438 (Ota) and 0.342 (Höllbacher);
 - on 126 Norman K562 CRISPRa doubles, one retired legacy threshold label and 100 staged
   `E`-to-`-E` proxy labels flip; these are sensitivity diagnostics, not modality claims.
 
 The utility is therefore constrained, inspectable geometry—not predictive superiority.
 See [updated findings](docs/FINDINGS.md), [method](docs/METHODS.md), and
-[validation](docs/VALIDATION_REPORT.md).
+[validation](docs/VALIDATION_REPORT.md). The adversarial, manuscript-oriented execution
+program is in [the scientific validation plan](docs/SCIENTIFIC_VALIDATION_PLAN.md).
 
 ## Run the maintained surface
 
@@ -71,12 +73,15 @@ were removed.
 | Path | Role |
 |---|---|
 | [`reachability.py`](reachability.py) | Strict projection-only numerical core |
+| [`validation.py`](validation.py) | Label/provenance, oracle, grouped-split, and maxT contracts |
 | [`tests/`](tests/) | Exact geometry, invariance, failure, and held-out tests |
+| [`scripts/run_validation_harness.py`](scripts/run_validation_harness.py) | Deterministic systemic stress harness |
 | [`scripts/validate_findings.py`](scripts/validate_findings.py) | Frozen evidence and lineage validation |
 | [`results/findings.json`](results/findings.json) | Canonical machine-readable findings |
 | [`results/evidence/`](results/evidence/) | Selected supporting tables only |
 | [`docs/FINDINGS.md`](docs/FINDINGS.md) | Human-readable updated results and limitations |
 | [`docs/METHODS.md`](docs/METHODS.md) | Model and challenge semantics |
+| [`docs/SCIENTIFIC_VALIDATION_PLAN.md`](docs/SCIENTIFIC_VALIDATION_PLAN.md) | Expert-reviewed experiment and benchmark program |
 | [`ROADMAP.md`](ROADMAP.md) | Next strict-validation milestones |
 
 ## Hard boundaries
@@ -85,7 +90,7 @@ were removed.
 - Its effect space is DE z-scores, not calibrated intervention dose.
 - The diagnostic shuffle is not a structured biological null.
 - The perturbations were not measured in established polarized Th2 cells.
-- The target is restricted to the measured, sign-concordant cross-study subset.
+- The merged target is restricted to 6,188 shared-source, sign-concordant, screen-measured genes.
 - Direct combinations, matched CRISPRa, donor-held-out effects, chromatin, cytokines,
   viability, durability, and phenotype rescue remain untested.
 

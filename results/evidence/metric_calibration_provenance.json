@@ -5,7 +5,7 @@
   "in_sample_cosine": 0.6266,
   "note_identity": "sqrt(f_LOF) == in-sample cosine (f_LOF=cos_insample^2)",
   "circular_ratio": 0.7123505029926122,
-  "replacement": "floor-to-synthetic-reachable-reference dynamic-range fraction under uniform and specificity weights",
+  "replacement": "floor-to-synthetic-reachable-reference dynamic-range fraction under the primary uniform metric",
   "synthetic_reference": {
     "biological_positive_control": false,
     "seed": 5,

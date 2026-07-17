@@ -23,18 +23,24 @@ MANIFEST_PATHS = [
     "ROADMAP.md",
     "requirements.txt",
     "reachability.py",
+    "validation.py",
     "reproduce.sh",
+    "configs/validation_harness.json",
     "data/README.md",
     "data/fetch_de_stats.sh",
     "tests/test_reachability.py",
+    "tests/test_validation.py",
+    "scripts/run_validation_harness.py",
     "scripts/validate_findings.py",
     "docs/FINDINGS.md",
     "docs/METHODS.md",
+    "docs/SCIENTIFIC_VALIDATION_PLAN.md",
     "docs/VALIDATION_REPORT.md",
     "docs/figures/make_at_a_glance.py",
     "docs/figures/fig_at_a_glance.png",
     "docs/figures/fig_at_a_glance.pdf",
     "results/findings.json",
+    "results/validation_harness.json",
     "results/README.md",
 ]
 
@@ -126,7 +132,6 @@ def validate_values(findings: dict) -> None:
     metric = {row["weighting"]: row for row in rows(EVIDENCE / "metric_calibration.csv")}
     expected = by_id["metric_calibration"]["values"]
     assert_close(float(metric["uniform"]["dynamic_range_fraction"]), expected["uniform"])
-    assert_close(float(metric["specificity"]["dynamic_range_fraction"]), expected["specificity"])
 
     context = {row["condition"]: row for row in rows(EVIDENCE / "context_condition_comparison.csv")}
     for condition, value in by_id["context"]["values"].items():
@@ -144,11 +149,10 @@ def validate_values(findings: dict) -> None:
     assert_close(max_rescaling, expected["max_rescaling_delta"])
 
     generator_summary = json.loads((EVIDENCE / "generator_significance_summary.json").read_text())
-    generator_rows = {row["generator_set"]: row for row in rows(EVIDENCE / "generator_significance.csv")}
     expected = by_id["generator_filter"]["values"]
     assert generator_summary["n_generators_total"] == expected["n_generators"]
     assert_close(generator_summary["frac_generators_significant"], expected["fraction_source_significant"])
-    assert_close(float(generator_rows["effect_ge_median"]["heldout_cosine"]), expected["top_half_held_out"])
+    assert_close(generator_summary["top_half_held_out_cosine"], expected["top_half_held_out"])
 
     ranking = json.loads((EVIDENCE / "ranking_validation_summary.json").read_text())
     expected = by_id["ranking_scope"]["values"]
@@ -156,12 +160,12 @@ def validate_values(findings: dict) -> None:
     assert_close(ranking["cone_directional_auroc"], expected["cone_directional_auroc"])
     assert_close(ranking["magnitude_directional_auroc"], expected["magnitude_directional_auroc"])
 
-    combination = json.loads((EVIDENCE / "additivity_verdict_flip_summary.json").read_text())
+    combination = json.loads((EVIDENCE / "combination_additivity_sensitivity.json").read_text())
     expected = by_id["combination_scope"]["values"]
     assert combination["n_doubles"] == expected["n"]
-    assert combination["verdict_flip_count"] == expected["threshold_flips"]
-    assert combination["modality_flip_count"] == expected["modality_flips"]
-    assert_close(combination["median_cos_measured_vs_additive"], expected["median_measured_additive_cosine"])
+    assert combination["threshold_label_flips"] == expected["threshold_flips"]
+    assert combination["staged_proxy_flips"] == expected["modality_flips"]
+    assert_close(combination["median_measured_vs_additive_cosine"], expected["median_measured_additive_cosine"])
 
     target_meta = json.loads((EVIDENCE / "reviewer2_ota_hollbacher_meta.json").read_text())
     expected = by_id["target_source_agreement"]["values"]
@@ -175,9 +179,12 @@ def validate_values(findings: dict) -> None:
     assert int(coverage["all(25672)"]["surviving"]) == expected["target_genes_in_screen"]
     assert int(coverage["50"]["surviving"]) == expected["top_50_surviving"]
     assert expected["target_genes_total"] == 25672
+    assert target_meta["genes_shared"] == expected["target_genes_shared_between_sources"]
+    assert target_meta["genes_sign_concordant_kept"] == expected["target_genes_sign_concordant"]
+    assert int(source_scores["merged (registered; sign-concordant)"]["n_readout"]) == expected["final_analyzed_genes"]
     assert_close(float(source_scores["Ota 2021 only"]["held_out_cosine"]), expected["ota_only_held_out"])
-    assert_close(float(source_scores["Höllbacher 2021 only"]["held_out_cosine"]), expected["hollbacher_only_held_out"])
-    assert_close(float(source_scores["merged (headline; sign-concordant)"]["held_out_cosine"]), expected["merged_held_out"])
+    assert_close(float(source_scores["Höllbacher 2020 only"]["held_out_cosine"]), expected["hollbacher_only_held_out"])
+    assert_close(float(source_scores["merged (registered; sign-concordant)"]["held_out_cosine"]), expected["merged_held_out"])
 
     for entry in findings["updated_findings"]:
         sources = entry.get("sources", [entry.get("source")])
