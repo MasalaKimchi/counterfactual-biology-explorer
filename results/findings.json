@@ -1,13 +1,89 @@
 {
-  "schema_version": "3.2.0",
+  "schema_version": "4.0.0",
   "generated_on": "2026-07-19",
-  "objective": "Fail-closed, model-relative point-estimate cone geometry: test whether a target transcriptomic direction is representable by the non-negative cone of a measured perturbation dictionary, emit a numerical separator when it is not, and expose known evaluation failure modes with an adversarial harness. The Zhu Th2->Th1 analysis is a proving-ground case study, not the headline claim.",
-  "claim_boundary": "Retrospective, donor-collapsed, model-relative directional evidence; not calibrated biological reachability, state conversion, target validation, donor generalization, predictive superiority, prospective library design, or intervention efficacy.",
+  "objective": "Certified triage for combinatorial perturbation screens. Given measured single-gene perturbation effects, (a) rank which unmeasured combinations are most likely EMERGENT (produce a transcriptomic state outside the non-negative cone the singles can additively reach) so a screener can triage which to run, and (b) for measured combinations, emit a fail-closed, model-relative separator certifying the unreachable direction together with a measurement-noise test (bootstrap CI + noise-injection p-value) so a low signal-to-noise residual is never mistaken for biology. Built on the same fail-closed cone geometry and adversarial evaluation harness; the Zhu Th2->Th1 single-target analysis is a proving-ground case study for the geometry, not the headline claim.",
+  "claim_boundary": "Retrospective, donor-collapsed, model-relative directional evidence; not calibrated biological reachability, state conversion, target validation, donor generalization, predictive superiority, prospective library design, or intervention efficacy. Combinatorial emergence is model-relative unreachability from the supplied single-gene cone, not biological impossibility or validated synergy; prospective triage is a modest rank enrichment (2.4x over base rate vs the raw label, 1.4x vs the noise-robust label on one screen), not a solved prediction; the cone's raw ranking is not superior to a learned additive baseline (Spearman 0.98) and only the noise-aware verdict escapes the effect-size confound.",
   "dataset_context": {
     "system": "donor-collapsed primary human CD4 perturbation-condition profiles",
     "condition": "Rest",
     "modality": "CRISPRi",
     "target": "source-study-reused, selectively constructed cross-sectional population contrast oriented toward the reported Th1 centroid; neither independent nor a trajectory"
+  },
+  "combinatorial_triage": {
+    "tier": "MAIN",
+    "benchmark": "norman_combinatorial_crispra_emergence_v1",
+    "dataset": "Norman combinatorial CRISPRa screen (distributed file label cell_type=A549; canonical Norman 2019 is K562 \u2014 reported as file-label A549, no cell-line claim made)",
+    "n_single_atoms": 105,
+    "n_measured_doubles": 131,
+    "doubles_with_both_singles_measured": 131,
+    "all_doubles_outside_single_gene_cone": 131,
+    "signal_to_noise_confound": {
+      "raw_unreachable_fraction_vs_effect_magnitude_spearman": -0.56,
+      "fraction_doubles_clearing_own_split_half_noise_floor": 0.267,
+      "interpretation": "Raw normalized residual is confounded by effect magnitude: low-magnitude doubles show inflated residuals from measurement noise. This is the trap the noise test exists to catch; do NOT rank on raw unreachable_fraction alone."
+    },
+    "noise_aware_certificate": {
+      "null": "reachable target f0=project_cone(singles,target).fitted + per-gene N(0,SE); SE=|t1-t2|/2 from a random cell split-half; B=200 draws; conservative plus-one empirical p",
+      "emergence_z_vs_effect_magnitude_spearman": 0.143,
+      "bar_a_significant_p_lt_0p05": 129,
+      "bar_b_cleared_effect_size_floor_ge_1p9x": 35,
+      "two_bars_note": "bar (a) noise-injection p<0.05 (129/131) and bar (b) residual >= 1.9x its own noise floor (35/131) are DIFFERENT, increasingly strict tests; always state which is meant.",
+      "robust_examples_by_z": [
+        "SET+CEBPE",
+        "IRF1+SET",
+        "MAPK1+PRTG",
+        "DUSP9+MAPK1 (textbook Norman phosphatase-on-substrate synergy)"
+      ],
+      "per_pair_note": "BCL2L11+BAK1 passes bar (a) weakly (z=2.9, p=0.005) but not bar (b); KIF18B+KIF2C is the one raw-top headliner that is NOT significant (z=1.6, p=0.055). Do not give two pairs a shared significance label."
+    },
+    "synergy_recovery": {
+      "unreachable_fraction_vs_classic_nonadditivity_spearman": 0.736,
+      "partial_spearman_given_effect_magnitude": 0.599,
+      "interpretation": "Unreachability recovers classic non-additivity and survives control for effect size \u2014 the synergy signal is real, not only a magnitude artifact."
+    },
+    "head_to_head_baselines": {
+      "cone_raw_vs_learned_ridge_onto_singles_residual_spearman": 0.977,
+      "magnitude_confound_by_ranker_spearman": {
+        "cone_raw": -0.56,
+        "cone_z": 0.143,
+        "nonadditivity": -0.533,
+        "ridge_resid": -0.589,
+        "ols2_resid": -0.473
+      },
+      "interpretation": "On raw ranking the cone residual is not superior to a learned additive baseline (rho 0.98) or the additive null (rho 0.74). ALL raw rankers are confounded by effect magnitude (-0.47..-0.59); only the noise-aware cone_z escapes (+0.14). The certificate's value is the fail-closed separator and the noise-calibrated verdict, not raw ranking accuracy."
+    },
+    "prospective_triage": {
+      "default_score": "minus cosine between the two single-gene effect vectors (training-free)",
+      "raw_label_top20_precision_hits_precision_enrichment": [
+        12,
+        0.6,
+        2.38
+      ],
+      "noise_robust_label_top20_precision_hits_precision_enrichment": [
+        7,
+        0.35,
+        1.39
+      ],
+      "learned_ridge_leave_one_out_spearman": 0.435,
+      "learned_ridge_permutation_p": 0.002,
+      "learned_ridge_noise_robust_top20_enrichment": 2.4,
+      "interpretation": "Emergence is predictable from singles only, enabling a pre-screen before spending combinatorial wells. Modest but significant; a labeled pilot enables the learned model for the noise-robust target."
+    },
+    "cross_modality": {
+      "second_modality": "Replogle K562 essential-gene CRISPRi (loss-of-function), 1087 single-gene atoms, leave-one-out reachability spectrum",
+      "certificate_vs_realized_coverage_spearman": 0.75,
+      "crispri_raw_residual_vs_magnitude_spearman": -0.69,
+      "boundary": "Replogle has no measured doubles: this is a geometry-transfer demonstration, NOT a second double-emergence benchmark. The signal-to-noise confound is present in CRISPRi too, so the noise test is required in both modalities."
+    },
+    "artifacts": [
+      "docs/figures/fig_emergence_keystone.png",
+      "docs/figures/fig_emergence_certificate.png",
+      "docs/figures/fig_prospective_triage.png",
+      "docs/figures/fig_baseline_headtohead.png",
+      "docs/figures/fig_cross_modality.png"
+    ],
+    "api": "combicone.py (triage_combinations, certify_emergence, fit_triage_model); tests/test_combicone.py",
+    "interpretation": "Model-relative combinatorial-emergence triage; a ranked hypothesis generator with a fail-closed certificate and a measurement-noise test, not target validation, dosing, or intervention efficacy."
   },
   "source_bound_alignment": {
     "held_out_cosine_mean": 0.44361876939758904,
@@ -202,7 +278,10 @@
       "IFNG": "primary human CD8 T cells"
     },
     "assay": "genome-wide cytokine-sort functional screen",
-    "modalities": ["CRISPRa", "CRISPRi"],
+    "modalities": [
+      "CRISPRa",
+      "CRISPRi"
+    ],
     "guide_libraries": {
       "CRISPRa": "Calabrese",
       "CRISPRi": "Dolcetto"
@@ -253,8 +332,17 @@
       }
     },
     "sensitivity": {
-      "minimum_guides_per_gene_per_donor": [1, 3, 6],
-      "top_k": [50, 100, 200, 500],
+      "minimum_guides_per_gene_per_donor": [
+        1,
+        3,
+        6
+      ],
+      "top_k": [
+        50,
+        100,
+        200,
+        500
+      ],
       "status": "EXPLORATORY_POST_HOC_DESCRIPTIVE"
     },
     "claim_boundary": "Two-fixed-donor, source-selected functional-screen concordance; cross-screen rows jointly change donor plus modality/library or donor plus cytokine/cell-type context. Not transcriptomic reachability, modality or guide-library equivalence, cytokine or cell-type generality, guide-held-out replication, donor-population inference, efficacy, or target recommendation.",
@@ -323,12 +411,21 @@
     "on_target_controls": {
       "all_three_targets_negative_in_single_and_triple_donors": 4,
       "equal_sum_coordinate_cosine_median": 0.9400288383107578,
-      "equal_sum_coordinate_cosine_range": [0.8850384989749339, 0.9911701613440916],
+      "equal_sum_coordinate_cosine_range": [
+        0.8850384989749339,
+        0.9911701613440916
+      ],
       "warning_status": "SATURATED_3X3_CALIBRATION_DIAGNOSTIC_NOT_VALIDATION"
     },
     "filter_sensitivity": {
       "status": "FILTER_SENSITIVE",
-      "control_mean_cpm_thresholds": [0.5, 1.0, 2.0, 5.0, 10.0],
+      "control_mean_cpm_thresholds": [
+        0.5,
+        1.0,
+        2.0,
+        5.0,
+        10.0
+      ],
       "component_cone_median_cosine_by_threshold": {
         "0.5": 0.06958632898460396,
         "1": 0.0949207619995629,
@@ -355,12 +452,18 @@
       },
       "aavs1_guide_expression_median_cosine": 0.9941502086568064,
       "aavs1_guide_expression_median_normalized_rmse": 0.10614183202922103,
-      "aavs1_difference_norm_over_triple_effect_norm_range": [0.8902313967703294, 1.6339151977426463]
+      "aavs1_difference_norm_over_triple_effect_norm_range": [
+        0.8902313967703294,
+        1.6339151977426463
+      ]
     },
     "additive_residual": {
       "definition": "measured triple effect minus the unit-coefficient sum of constituent-single effects",
       "per_donor_relative_l2_median": 2.308400113193132,
-      "per_donor_relative_l2_range": [1.997804903406781, 3.2312426100420777],
+      "per_donor_relative_l2_range": [
+        1.997804903406781,
+        3.2312426100420777
+      ],
       "across_donor_mean_relative_l2": 2.352809296746556,
       "across_donor_mean_absolute_residual": 0.3806537761975142,
       "module_error_status": "UNAVAILABLE_NO_PREREGISTERED_MODULE_SET",
@@ -406,9 +509,15 @@
         "sensitivity": {
           "catalog_targets_per_split": 60,
           "cone_mean_cosine_median": 0.4268911525786352,
-          "cone_mean_cosine_range": [0.4093144933674676, 0.44282315545664275],
+          "cone_mean_cosine_range": [
+            0.4093144933674676,
+            0.44282315545664275
+          ],
           "soft_coverage_fraction_at_0_5_median": 0.2,
-          "soft_coverage_fraction_at_0_5_range": [0.15, 0.2833333333333333],
+          "soft_coverage_fraction_at_0_5_range": [
+            0.15,
+            0.2833333333333333
+          ],
           "strict_inside_positive_splits": 0,
           "cone_minus_best_single_mean_cosine_median": 0.18793884642554903,
           "cone_minus_common_response_mean_cosine_median": 0.21235507249306196,
@@ -438,9 +547,15 @@
           "fixed_catalog_double_effect_rows": 60,
           "library_canonical_genes_per_split": 40,
           "cone_mean_cosine_median": 0.8646924130131981,
-          "cone_mean_cosine_range": [0.8070681662666559, 0.8775472661201487],
+          "cone_mean_cosine_range": [
+            0.8070681662666559,
+            0.8775472661201487
+          ],
           "soft_coverage_fraction_at_0_5_median": 0.9833333333333333,
-          "soft_coverage_fraction_at_0_5_range": [0.9, 1.0],
+          "soft_coverage_fraction_at_0_5_range": [
+            0.9,
+            1.0
+          ],
           "strict_inside_positive_splits": 0,
           "cone_minus_best_single_mean_cosine_median": 0.10564429936388459,
           "cone_minus_common_response_mean_cosine_median": 0.3397917675064022,
@@ -462,9 +577,15 @@
         "sensitivity": {
           "catalog_targets_per_split": 60,
           "cone_mean_cosine_median": 0.7744959915457892,
-          "cone_mean_cosine_range": [0.7445850012879294, 0.8067745196678348],
+          "cone_mean_cosine_range": [
+            0.7445850012879294,
+            0.8067745196678348
+          ],
           "soft_coverage_fraction_at_0_5_median": 0.95,
-          "soft_coverage_fraction_at_0_5_range": [0.9, 0.9666666666666667],
+          "soft_coverage_fraction_at_0_5_range": [
+            0.9,
+            0.9666666666666667
+          ],
           "strict_inside_positive_splits": 0,
           "cone_minus_best_single_mean_cosine_median": 0.09505643733851654,
           "cone_minus_common_response_mean_cosine_median": 0.3624323953007439,

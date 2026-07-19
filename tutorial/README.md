@@ -1,9 +1,29 @@
-# Tutorial
+# Tutorials
 
-[`tutorial.ipynb`](tutorial.ipynb) is a deterministic, reader-facing walkthrough of the
-project's fail-closed reachability method. It runs on bounded synthetic examples and reads
-only the frozen, data-free validation-harness summary. It requires no `slice/` directory,
-download, credential, or external scientific dataset.
+Two deterministic, reader-facing notebooks. Both run on bounded synthetic examples,
+require no `slice/` directory, download, credential, or external scientific dataset, and
+emit geometry and diagnostics — not a biological verdict, dose, recipe, or wet-lab
+recommendation.
+
+### [`tutorial_combicone.ipynb`](tutorial_combicone.ipynb) — triage a combinatorial screen (start here)
+
+The pharma-facing, end-to-end walkthrough of the **CombiCone** workflow on a small synthetic
+combinatorial screen with *planted* ground truth (four emergent doubles, four additive, one
+low-magnitude "noise trap"). It shows:
+
+- **prospective triage** — ranking unmeasured combinations from the single-gene effects alone
+  (`triage_combinations`), recovering the planted-emergent pairs at the top (separation AUC 1.00);
+- **certified emergence** — the fail-closed model-relative separator plus the measurement-noise
+  test (`certify_emergence`), certifying the four emergent doubles while correctly demoting the
+  noise trap (high *raw* residual, but ~1.2x noise floor) — the signal-to-noise trap a raw
+  ranking falls into;
+- an optional **trained triage model** on a labeled pilot (`fit_triage_model`); and
+- how each step maps onto the real Norman combinatorial CRISPRa numbers.
+
+### [`tutorial.ipynb`](tutorial.ipynb) — the fail-closed reachability core
+
+A deterministic walkthrough of the underlying single-target reachability method. It runs on
+bounded synthetic examples and reads only the frozen, data-free validation-harness summary.
 
 The tutorial covers:
 

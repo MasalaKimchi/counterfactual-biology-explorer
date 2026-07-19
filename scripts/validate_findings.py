@@ -4303,7 +4303,7 @@ def validate_guide_pair(ledger: dict) -> None:
 
 def validate_values(findings: dict) -> None:
     if (
-        findings.get("schema_version") != "3.2.0"
+        findings.get("schema_version") != "4.0.0"
         or findings.get("generated_on") != "2026-07-19"
     ):
         raise AssertionError("unsupported findings schema")

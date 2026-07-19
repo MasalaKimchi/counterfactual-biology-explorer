@@ -21,6 +21,7 @@ print("verified environment:", ", ".join(f"{key}={value}" for key, value in actu
 PY
 python -m pytest -q
 python reachability.py
+python combicone.py
 python demo_library_coverage.py
 python scripts/run_validation_harness.py --check results/validation_harness.json
 python scripts/validate_findings.py

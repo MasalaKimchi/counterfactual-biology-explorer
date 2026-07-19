@@ -48,7 +48,7 @@ jobs:
           /tmp/cell-state-reachability-wheel/bin/python -m pip install dist/*.whl
           cd /tmp
           /tmp/cell-state-reachability-wheel/bin/python -c \
-            "import effect_dictionary, library_coverage, reachability, validation"
+            "import combicone, effect_dictionary, library_coverage, reachability, validation"
 
   tutorial:
     name: Execute tutorial from a clean checkout
@@ -90,6 +90,36 @@ jobs:
               ):
                   raise SystemExit(f"committed tutorial output {index} is stale")
           print("committed tutorial outputs match clean execution")
+          PY
+      - name: Execute the combinatorial-triage tutorial top to bottom
+        run: |
+          python -m jupyter nbconvert \
+            --execute \
+            --to notebook \
+            --output-dir /tmp/cell-state-reachability-notebook \
+            tutorial/tutorial_combicone.ipynb
+          python - <<'PY'
+          import nbformat
+
+          committed = nbformat.read("tutorial/tutorial_combicone.ipynb", as_version=4)
+          executed = nbformat.read(
+              "/tmp/cell-state-reachability-notebook/tutorial_combicone.ipynb", as_version=4
+          )
+          if len(committed.cells) != len(executed.cells):
+              raise SystemExit("executed combicone tutorial cell count differs")
+          for index, (expected, observed) in enumerate(zip(committed.cells, executed.cells)):
+              if expected.cell_type != observed.cell_type or expected.source != observed.source:
+                  raise SystemExit(f"executed combicone tutorial cell {index} source differs")
+              # The notebook's own assert cell is the numerical gate: nbconvert --execute
+              # fails this job if any cell raises. We check clean execution and source
+              # identity here rather than a byte-identical output match.
+              if observed.cell_type == "code":
+                  for output in observed.get("outputs", []):
+                      if output.get("output_type") == "error":
+                          raise SystemExit(
+                              f"combicone tutorial cell {index} raised on clean execution"
+                          )
+          print("combicone tutorial executes top to bottom with no errors")
           PY
 
   cache-builder-smoke:
