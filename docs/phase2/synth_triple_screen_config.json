@@ -1,0 +1,15 @@
+{
+  "n_genes": 300,
+  "n_singles": 14,
+  "single_norm": 5.0,
+  "single_density": 0.4,
+  "pair_norm": 2.5,
+  "pair_density": 0.35,
+  "n_additive": 40,
+  "n_reducible": 40,
+  "n_emergent": 40,
+  "tt_norm_lo": 1.5,
+  "tt_norm_hi": 7.0,
+  "noise_tau": 0.1,
+  "seed": 0
+}

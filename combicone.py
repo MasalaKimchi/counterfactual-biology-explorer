@@ -12,6 +12,22 @@ combinatorial screener actually pays for:
    certificate: the model-relative separator, a bootstrap CI on the unreachable
    fraction, and a noise-injection p-value.  :func:`certify_emergence`.
 
+Combination order (k-way):
+  Both entry points accept combinations of arbitrary order ``k >= 2`` (pairs,
+  triples, ...), and the cone in :func:`certify_emergence` may be built from
+  effect atoms of *any* order, not only singles. This lets you ask genuinely
+  higher-order questions:
+    * Is a measured triple emergent relative to a cone of its singles? (pass the
+      triple effect as ``measured_combo`` and the single-gene ``atoms`` as the
+      cone.)
+    * Is it emergent relative to a cone that ALSO contains the three measured
+      doubles it decomposes into? A triple that is emergent-from-singles but
+      *reachable-from-singles+doubles* carries no 3-way epistasis beyond its
+      pairwise parts — the certificate distinguishes the two.
+  The triage score generalizes the pairwise ``-cos(a, b)`` to the aggregated
+  pairwise cosine among the ``k`` singles (mean by default, max optional); at
+  ``k = 2`` it is exactly ``-cos(a, b)`` as before. See :func:`triage_combinations`.
+
 Design contract (inherited from reachability.py and NOT relaxed here):
   * ``effects`` / ``singles`` matrices are ``(n_perturbations, n_genes)``.
   * All geometry is *model-relative*: "unreachable" means "outside the non-negative
@@ -35,6 +51,7 @@ A549 / canonically K562; 105 single-gene atoms, 131 measured doubles):
 
 from __future__ import annotations
 
+import itertools
 from dataclasses import dataclass, field
 from typing import Iterable, Mapping, Sequence
 
@@ -49,15 +66,17 @@ __all__ = [
     "certify_emergence",
     "fit_triage_model",
     "single_effect_cosine",
+    "combo_cosine",
     "additive_gap",
 ]
 
 _EPS = 1e-12
 _SCOPE = (
     "model-relative: unreachable = outside the non-negative cone of the supplied "
-    "single-gene effects under the chosen metric; not a claim of biological "
-    "impossibility"
+    "effect atoms (single-gene, or lower-order for k-way certification) under the "
+    "chosen metric; not a claim of biological impossibility"
 )
+_PAIRWISE_AGG = ("mean", "max")
 
 
 # --------------------------------------------------------------------------- #
@@ -79,31 +98,72 @@ def single_effect_cosine(effect_a: np.ndarray, effect_b: np.ndarray) -> float:
     return float(np.dot(a / na, b / nb))
 
 
+def combo_cosine(
+    single_effects: Sequence[np.ndarray],
+    *,
+    agg: str = "mean",
+) -> float:
+    """Aggregated pairwise cosine among the ``k`` single-gene effects of a combo.
+
+    The k-way generalization of :func:`single_effect_cosine`. For ``k`` singles it
+    computes the ``C(k, 2)`` pairwise cosines and reduces them to a single scalar:
+
+      * ``agg="mean"`` (default): the mean pairwise cosine. Low mean cosine means
+        the constituents *collectively* push transcription in spread-out
+        directions, the k-way analog of the pairwise "orthogonal singles are more
+        emergent" signal validated on Norman.
+      * ``agg="max"``: the largest (most collinear) pairwise cosine. Using this in
+        a triage score (``-max``) makes the pick pessimistic — it demands that
+        *every* pair be spread out (a single collinear pair drags the score down).
+
+    At ``k == 2`` both reductions equal the single pairwise cosine, so a k=2 triage
+    built on this is identical to ``-cos(a, b)``.
+    """
+    if agg not in _PAIRWISE_AGG:
+        raise rx.InputError(f"agg must be one of {_PAIRWISE_AGG}, got {agg!r}")
+    effs = [np.asarray(e, dtype=float) for e in single_effects]
+    if len(effs) < 2:
+        raise rx.InputError("combo_cosine needs at least 2 single effects")
+    cosines = [
+        single_effect_cosine(effs[i], effs[j])
+        for i in range(len(effs))
+        for j in range(i + 1, len(effs))
+    ]
+    return float(np.mean(cosines) if agg == "mean" else np.max(cosines))
+
+
 def additive_gap(
     singles: np.ndarray,
-    index_a: int,
-    index_b: int,
-    *,
+    *indices: int,
     gene_weights: np.ndarray | None = None,
 ) -> float:
-    """Certified leave-the-pair-out residual of the additive prediction A+B.
+    """Certified leave-the-combo-out residual of the additive prediction sum(atoms).
 
-    Projects the *additive* vector (effect_a + effect_b) onto the cone of all OTHER
-    single-gene effects (the pair itself removed) and returns the unreachable
-    fraction. High gap = even the naive additive combination already leaves the
-    rest-of-library cone, a cheap prospective flag. Spearman +0.35 vs raw label.
+    Projects the *additive* vector (sum of the ``k`` selected single-gene effects)
+    onto the cone of all OTHER single-gene effects (the whole combo removed) and
+    returns the unreachable fraction. High gap = even the naive additive
+    combination already leaves the rest-of-library cone, a cheap prospective flag.
+    Spearman +0.35 vs raw label for pairs.
+
+    Accepts ``k >= 2`` indices variadically: ``additive_gap(singles, i, j)`` is the
+    original pair behavior; ``additive_gap(singles, i, j, l)`` is the triple analog.
     """
     singles = np.asarray(singles, dtype=float)
     n = singles.shape[0]
-    if not (0 <= index_a < n and 0 <= index_b < n) or index_a == index_b:
-        raise rx.InputError("index_a and index_b must be distinct valid rows")
-    keep = [i for i in range(n) if i not in (index_a, index_b)]
+    if len(indices) < 2:
+        raise rx.InputError("additive_gap needs at least 2 atom indices")
+    if len(set(indices)) != len(indices):
+        raise rx.InputError("indices must be distinct")
+    if any(not (0 <= i < n) for i in indices):
+        raise rx.InputError("every index must be a valid row of singles")
+    combo = set(indices)
+    keep = [i for i in range(n) if i not in combo]
     if not keep:
         raise rx.InputError(
-            "additive_gap needs at least 3 singles (the pair plus one other atom "
-            "to form the leave-pair-out cone)"
+            "additive_gap needs at least one atom outside the combo to form the "
+            "leave-combo-out cone"
         )
-    additive = singles[index_a] + singles[index_b]
+    additive = singles[list(indices)].sum(axis=0)
     result = rx.project_cone(singles[keep], additive, gene_weights=gene_weights)
     return float(result.residual_fraction)
 
@@ -117,33 +177,49 @@ class TriageResult:
 
     Attributes
     ----------
-    pairs : list[tuple[str, str]]
-        Candidate combinations, in the input order.
+    pairs : list[tuple[str, ...]]
+        Candidate combinations, in the input order. Named ``pairs`` for backward
+        compatibility; for order ``k > 2`` each entry is a ``k``-tuple. Use the
+        :attr:`combos` alias for order-neutral code.
     score : np.ndarray
         Prospective emergence score, higher = more likely emergent. Rank-only;
         not calibrated to a probability.
     rank : np.ndarray
-        1-based rank of each pair by descending score (1 = run first).
+        1-based rank of each combination by descending score (1 = run first).
     cos_ab : np.ndarray
-        Single-single cosine per pair (diagnostic).
+        Aggregated single-single cosine per combination (diagnostic). At order 2
+        this is the single pairwise cosine ``cos(a, b)``; at higher order it is the
+        mean (or max) pairwise cosine per :attr:`pairwise_agg`.
     gap : np.ndarray
-        Leave-pair-out additive gap per pair (diagnostic).
+        Leave-combo-out additive gap per combination (diagnostic).
     model : str
         "training-free" or "ridge".
+    order : int
+        Combination order ``k`` (2 = pairs, 3 = triples, ...).
+    pairwise_agg : str
+        How the per-combination pairwise cosines were reduced ("mean" or "max").
+        Meaningless at order 2 (both reduce to the single cosine); reported anyway.
     scope : str
         The model-relative scope disclaimer.
     """
 
-    pairs: list[tuple[str, str]]
+    pairs: list[tuple[str, ...]]
     score: np.ndarray
     rank: np.ndarray
     cos_ab: np.ndarray
     gap: np.ndarray
     model: str
+    order: int = 2
+    pairwise_agg: str = "mean"
     scope: str = _SCOPE
 
-    def top(self, k: int) -> list[tuple[str, str]]:
-        """The k pairs to run first (highest score)."""
+    @property
+    def combos(self) -> list[tuple[str, ...]]:
+        """Order-neutral alias for :attr:`pairs` (each entry is a ``k``-tuple)."""
+        return self.pairs
+
+    def top(self, k: int) -> list[tuple[str, ...]]:
+        """The k combinations to run first (highest score)."""
         order = np.argsort(-self.score, kind="stable")[:k]
         return [self.pairs[i] for i in order]
 
@@ -166,34 +242,55 @@ def _resolve_singles(
 def triage_combinations(
     singles: np.ndarray,
     single_names: Sequence[str],
-    candidate_pairs: Iterable[tuple[str, str]] | None = None,
+    candidate_combos: Iterable[tuple[str, ...]] | None = None,
     *,
+    order: int = 2,
+    pairwise: str = "mean",
     gene_weights: np.ndarray | None = None,
     model: "TriageModel | None" = None,
     use_gap: bool = False,
+    candidate_pairs: Iterable[tuple[str, ...]] | None = None,
 ) -> TriageResult:
     """Rank unmeasured combinations by predicted emergence, using singles only.
+
+    Supports combinations of any order ``k = order >= 2`` (pairs, triples, ...).
+    At ``order == 2`` the behavior is byte-identical to the original pairwise API.
 
     Parameters
     ----------
     singles : (n_singles, n_genes) array
         Measured single-gene effect vectors (e.g. pseudobulk mean minus control).
     single_names : sequence of str
-        Row labels for ``singles``; used to name candidate pairs.
-    candidate_pairs : iterable of (name_a, name_b), optional
-        Combinations to score. Defaults to ALL distinct unordered pairs.
+        Row labels for ``singles``; used to name candidate combinations.
+    candidate_combos : iterable of name-tuples, optional
+        Combinations to score, each a tuple of ``order`` single names. Defaults to
+        ALL distinct unordered ``order``-combinations of the singles. (The old
+        parameter name ``candidate_pairs`` is still accepted as a keyword alias for
+        backward compatibility, and remains the first positional argument.)
+    order : int
+        Combination order ``k`` for auto-generated candidates (2 = pairs, 3 =
+        triples, ...). Ignored when ``candidate_combos`` is given explicitly, but
+        then every supplied tuple must have the same length, which becomes ``order``.
+    pairwise : str
+        Reduction of the ``C(k, 2)`` pairwise cosines into the per-combination
+        score feature: "mean" (default) or "max". At ``order == 2`` both are the
+        single pairwise cosine, so the score is exactly ``-cos(a, b)``. See
+        :func:`combo_cosine`.
     gene_weights : (n_genes,) array, optional
         Per-gene metric weights passed through to the cone projection.
     model : TriageModel, optional
         A fitted ridge model from :func:`fit_triage_model`. If given, its learned
-        score is used; otherwise a training-free score is used.
+        score is used; otherwise a training-free score is used. (The model's two
+        features — aggregated cosine and leave-combo-out gap — are defined for any
+        order, but a model fitted on pairs is only strictly calibrated at that order.)
     use_gap : bool
-        If False (default), the training-free score is ``-cos(effA, effB)`` alone
-        — the strongest single validated feature on Norman. If True, the score is
-        a rank-average of low cosine and high leave-pair-out additive gap; this is
-        more expensive (an O(n) projection per pair) and scored slightly *worse* on
-        Norman (2.0x vs 2.4x raw-label enrichment), so it is off by default.
-        Always computed (and required) when ``model`` is supplied.
+        If False (default), the training-free score is ``-aggregated_cosine`` alone
+        — the k-way generalization of the strongest single validated feature on
+        Norman. If True, the score is a rank-average of low cosine and high
+        leave-combo-out additive gap; this is more expensive (an O(n) projection per
+        combination) and scored slightly *worse* on Norman for pairs (2.0x vs 2.4x
+        raw-label enrichment), so it is off by default. Always computed (and
+        required) when ``model`` is supplied.
 
     Returns
     -------
@@ -201,31 +298,64 @@ def triage_combinations(
 
     Notes
     -----
-    The default training-free score is ``-cos(effA, effB)``. On Norman it enriches
-    the top-20 picks 2.4x over base rate against a raw unreachable-fraction label
-    and 1.4x against the noise-robust label. Enabling ``use_gap`` scored slightly
-    worse (2.0x raw / 1.2x noise-robust). For the noise-robust target specifically,
-    prefer a fitted :class:`TriageModel` (LOO-CV Spearman 0.43, ~2.4x).
+    The default training-free score is ``-cos(effA, effB)`` for pairs, generalizing
+    to ``-mean_{i<j} cos(eff_i, eff_j)`` for higher order. On Norman (pairs) it
+    enriches the top-20 picks 2.4x over base rate against a raw unreachable-fraction
+    label and 1.4x against the noise-robust label. Enabling ``use_gap`` scored
+    slightly worse (2.0x raw / 1.2x noise-robust). For the noise-robust target
+    specifically, prefer a fitted :class:`TriageModel` (LOO-CV Spearman 0.43, ~2.4x).
+    No higher-order enrichment number is claimed: Norman contains no measured
+    triples, so the k>2 score is validated only on synthetic planted-epistasis data.
     """
+    if pairwise not in _PAIRWISE_AGG:
+        raise rx.InputError(f"pairwise must be one of {_PAIRWISE_AGG}, got {pairwise!r}")
+    # A fitted model dictates the cosine aggregation it was trained on, so the
+    # predict-time feature matches training.
+    if model is not None:
+        pairwise = getattr(model, "pairwise_agg", pairwise)
+    # Backward-compatible alias: candidate_pairs is the historical name.
+    if candidate_pairs is not None:
+        if candidate_combos is not None:
+            raise rx.InputError(
+                "pass combinations once: candidate_combos and candidate_pairs are "
+                "aliases"
+            )
+        candidate_combos = candidate_pairs
+
     singles, index = _resolve_singles(singles, single_names)
-    if candidate_pairs is None:
+    if candidate_combos is None:
+        if order < 2:
+            raise rx.InputError("order must be >= 2")
+        if order > len(single_names):
+            raise rx.InputError("order exceeds the number of singles")
         names = list(single_names)
-        candidate_pairs = [
-            (names[i], names[j])
-            for i in range(len(names))
-            for j in range(i + 1, len(names))
-        ]
-    pairs: list[tuple[str, str]] = []
+        candidate_combos = [tuple(c) for c in itertools.combinations(names, order)]
+    else:
+        candidate_combos = [tuple(c) for c in candidate_combos]
+        if not candidate_combos:
+            raise rx.InputError("candidate_combos is empty")
+        lengths = {len(c) for c in candidate_combos}
+        if len(lengths) != 1:
+            raise rx.InputError("all candidate combinations must have the same order")
+        order = lengths.pop()
+        if order < 2:
+            raise rx.InputError("combinations must have order >= 2")
+
+    combos: list[tuple[str, ...]] = []
     cos_ab: list[float] = []
     gap: list[float] = []
-    for a, b in candidate_pairs:
-        if a not in index or b not in index:
-            raise rx.InputError(f"unknown single in pair ({a!r}, {b!r})")
-        ia, ib = index[a], index[b]
-        pairs.append((a, b))
-        cos_ab.append(single_effect_cosine(singles[ia], singles[ib]))
+    for combo in candidate_combos:
+        if len(set(combo)) != len(combo):
+            raise rx.InputError(f"combination has repeated members: {combo!r}")
+        idxs = []
+        for name in combo:
+            if name not in index:
+                raise rx.InputError(f"unknown single in combination {combo!r}")
+            idxs.append(index[name])
+        combos.append(combo)
+        cos_ab.append(combo_cosine([singles[i] for i in idxs], agg=pairwise))
         if use_gap or model is not None:
-            gap.append(additive_gap(singles, ia, ib, gene_weights=gene_weights))
+            gap.append(additive_gap(singles, *idxs, gene_weights=gene_weights))
         else:
             gap.append(np.nan)
     cos_ab_arr = np.asarray(cos_ab, dtype=float)
@@ -246,16 +376,18 @@ def triage_combinations(
         score = -cos_ab_arr
         model_name = "training-free"
 
-    order = np.argsort(-score, kind="stable")
+    ordering = np.argsort(-score, kind="stable")
     rank = np.empty(len(score), dtype=int)
-    rank[order] = np.arange(1, len(score) + 1)
+    rank[ordering] = np.arange(1, len(score) + 1)
     return TriageResult(
-        pairs=pairs,
+        pairs=combos,
         score=np.asarray(score, dtype=float),
         rank=rank,
         cos_ab=cos_ab_arr,
         gap=gap_arr,
         model=model_name,
+        order=order,
+        pairwise_agg=pairwise,
     )
 
 
@@ -326,9 +458,10 @@ class EmergenceCertificate:
 
 
 def certify_emergence(
-    singles: np.ndarray,
-    measured_combo: np.ndarray,
+    singles: np.ndarray | None = None,
+    measured_combo: np.ndarray | None = None,
     *,
+    cone_atoms: np.ndarray | None = None,
     noise_sd: np.ndarray | float | None = None,
     gene_weights: np.ndarray | None = None,
     n_boot: int = 200,
@@ -337,7 +470,23 @@ def certify_emergence(
     alpha: float = 0.05,
     seed: int = 0,
 ) -> EmergenceCertificate:
-    """Certify whether a measured combination departs from the single-gene cone.
+    """Certify whether a measured combination departs from a cone of effect atoms.
+
+    This test is **order-agnostic**: it compares one measured effect vector against
+    the non-negative cone of a supplied set of effect atoms. It certifies pairs,
+    triples, or any higher-order combination, and the cone may be built from atoms
+    of *any* order — this is what makes k-way certification work with no change to
+    the geometry:
+
+      * **Emergent-from-singles** (the pairwise default): ``cone_atoms`` = the
+        single-gene effects, ``measured_combo`` = the k-way effect. Certifies that
+        the combination reaches a state no non-negative mix of the singles can.
+      * **Reachable-from-lower-order**: put the lower-order *measured* effects into
+        the cone too (e.g. singles + the constituent/other measured doubles) and
+        re-certify the same target. A combination that is emergent-from-singles but
+        falls *inside* this enriched cone carries no epistasis beyond what those
+        lower-order measurements already express — the certificate flips from
+        emergent to reachable, isolating genuinely higher-order structure.
 
     The observed departure is tested against the honest null "the target IS
     reachable, and the residual we see is measurement noise". We form that null by
@@ -348,10 +497,16 @@ def certify_emergence(
 
     Parameters
     ----------
-    singles : (n_singles, n_genes) array
-        Measured single-gene effects (the cone).
+    singles : (n_atoms, n_genes) array
+        The cone: measured effect atoms. Named ``singles`` for backward
+        compatibility, but any-order atoms are accepted (see ``cone_atoms``, an
+        order-neutral alias for exactly this argument).
+    cone_atoms : (n_atoms, n_genes) array, optional
+        Order-neutral alias for ``singles``. Pass exactly one of the two. Use this
+        name when the cone deliberately contains lower-order combinations, to make
+        the k-way intent explicit at the call site.
     measured_combo : (n_genes,) array
-        The measured combination effect vector to test.
+        The measured combination effect vector to test (any order).
     noise_sd : (n_genes,) array or float, optional
         Per-gene standard error of ``measured_combo``. The recommended estimate is
         ``|t1 - t2| / 2`` from a random split-half of the cells. If a scalar, used
@@ -374,6 +529,18 @@ def certify_emergence(
     -------
     EmergenceCertificate
     """
+    # Backward-compatible alias resolution: `singles` is the historical name for
+    # the cone; `cone_atoms` is the order-neutral alias. Exactly one is required.
+    if cone_atoms is not None:
+        if singles is not None:
+            raise rx.InputError(
+                "pass the cone once: `singles` and `cone_atoms` are aliases"
+            )
+        singles = cone_atoms
+    if singles is None:
+        raise rx.InputError("a cone is required (pass `singles` or `cone_atoms`)")
+    if measured_combo is None:
+        raise rx.InputError("measured_combo is required")
     singles = np.asarray(singles, dtype=float)
     target = np.asarray(measured_combo, dtype=float)
     if singles.ndim != 2 or target.ndim != 1:
@@ -461,11 +628,13 @@ def certify_emergence(
 # --------------------------------------------------------------------------- #
 @dataclass
 class TriageModel:
-    """A tiny ridge model over singles-only features (cos_ab, gap).
+    """A tiny ridge model over singles-only features (aggregated cosine, gap).
 
     Fitted on a pilot screen where some combinations have been measured and
     labeled with an emergence score (ideally the noise-robust ``z``). Interpretable
-    by design: two features, closed-form ridge. Not a deep model.
+    by design: two features, closed-form ridge. Not a deep model. ``pairwise_agg``
+    records how the cosine feature was aggregated so :func:`triage_combinations`
+    can reproduce it at predict time.
     """
 
     coef_: np.ndarray
@@ -473,6 +642,7 @@ class TriageModel:
     mean_: np.ndarray
     std_: np.ndarray
     alpha: float
+    pairwise_agg: str = "mean"
 
     def predict(self, features: np.ndarray) -> np.ndarray:
         features = np.asarray(features, dtype=float)
@@ -483,8 +653,9 @@ class TriageModel:
 def fit_triage_model(
     singles: np.ndarray,
     single_names: Sequence[str],
-    labeled_pairs: Mapping[tuple[str, str], float],
+    labeled_pairs: Mapping[tuple[str, ...], float],
     *,
+    pairwise: str = "mean",
     gene_weights: np.ndarray | None = None,
     alpha: float = 10.0,
 ) -> TriageModel:
@@ -493,9 +664,15 @@ def fit_triage_model(
     Parameters
     ----------
     singles, single_names : as in :func:`triage_combinations`.
-    labeled_pairs : mapping (name_a, name_b) -> emergence label
+    labeled_pairs : mapping combo-tuple -> emergence label
         Measured combinations with a known emergence score (prefer the noise-robust
-        ``z`` from :func:`certify_emergence`).
+        ``z`` from :func:`certify_emergence`). Each key is a tuple of single names;
+        pairs ``(a, b)`` for the original behavior, or any fixed order ``k >= 2``.
+        All keys must share the same order.
+    pairwise : str
+        Pairwise-cosine aggregation for the cosine feature ("mean" or "max"), matched
+        at predict time via the returned model's ``pairwise_agg``. Irrelevant at
+        order 2.
     gene_weights : optional per-gene metric weights.
     alpha : ridge penalty (stable across [1, 100] on Norman).
 
@@ -505,22 +682,34 @@ def fit_triage_model(
 
     Notes
     -----
-    On Norman this reaches LOO-CV Spearman ~0.43 against the noise-robust label
-    (permutation p=0.002) and top-20 precision ~2.4x base rate. Use it only when a
-    labeled pilot is available; otherwise the training-free score in
-    :func:`triage_combinations` is the honest default.
+    On Norman (pairs) this reaches LOO-CV Spearman ~0.43 against the noise-robust
+    label (permutation p=0.002) and top-20 precision ~2.4x base rate. Use it only
+    when a labeled pilot is available; otherwise the training-free score in
+    :func:`triage_combinations` is the honest default. No higher-order performance
+    is claimed (Norman has no measured triples).
     """
+    if pairwise not in _PAIRWISE_AGG:
+        raise rx.InputError(f"pairwise must be one of {_PAIRWISE_AGG}, got {pairwise!r}")
     singles, index = _resolve_singles(singles, single_names)
+    orders = {len(combo) for combo in labeled_pairs}
+    if len(orders) > 1:
+        raise rx.InputError("all labeled combinations must share the same order")
     feats = []
     y = []
-    for (a, b), label in labeled_pairs.items():
-        if a not in index or b not in index:
-            raise rx.InputError(f"unknown single in labeled pair ({a!r}, {b!r})")
-        ia, ib = index[a], index[b]
+    for combo, label in labeled_pairs.items():
+        if len(combo) < 2:
+            raise rx.InputError(f"labeled combination must have order >= 2: {combo!r}")
+        if len(set(combo)) != len(combo):
+            raise rx.InputError(f"labeled combination has repeated members: {combo!r}")
+        idxs = []
+        for name in combo:
+            if name not in index:
+                raise rx.InputError(f"unknown single in labeled combination {combo!r}")
+            idxs.append(index[name])
         feats.append(
             [
-                single_effect_cosine(singles[ia], singles[ib]),
-                additive_gap(singles, ia, ib, gene_weights=gene_weights),
+                combo_cosine([singles[i] for i in idxs], agg=pairwise),
+                additive_gap(singles, *idxs, gene_weights=gene_weights),
             ]
         )
         y.append(float(label))
@@ -542,6 +731,7 @@ def fit_triage_model(
         mean_=mean,
         std_=std,
         alpha=alpha,
+        pairwise_agg=pairwise,
     )
 
 
@@ -560,10 +750,14 @@ def _demo() -> None:
     names = ["A", "B", "C", "D"]
 
     triage = triage_combinations(singles, names)
-    print("triage model:", triage.model)
+    print("triage model:", triage.model, "order:", triage.order)
     print("run-first pair:", triage.top(1)[0])
     print("candidate pairs:", triage.pairs)
     print("triage score:", np.round(triage.score, 3).tolist())
+
+    # k-way: rank all C(4,3) triples by mean pairwise cosine (same knobs).
+    triage3 = triage_combinations(singles, names, order=3)
+    print("run-first triple:", triage3.top(1)[0], "order:", triage3.order)
 
     emergent = np.array([1.0, 1.0, 0.0, 3.0])  # big unreachable 4th-axis component
     additive = np.array([1.0, 1.0, 0.5, 0.0])  # inside the cone of A,B,C

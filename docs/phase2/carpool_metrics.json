@@ -1,0 +1,21 @@
+{
+ "screen": "CaRPool-seq GSE213957 THP1 Cas13d-KD",
+ "n_singles": 28,
+ "n_doubles": 158,
+ "n_genes": 2000,
+ "unreachable_median": 0.58067218418059,
+ "bar_a_pass": 158,
+ "bar_b_pass": 76,
+ "both_bars": 76,
+ "rho_raw_mag": -0.8171775240013448,
+ "p_raw_mag": 3.650143029752196e-39,
+ "rho_z_mag": 0.12337702838175184,
+ "p_z_mag": 0.1224871559693242,
+ "rho_tri_raw": 0.6434855231311962,
+ "p_tri_raw": 7.657621981136854e-20,
+ "rho_tri_z": 0.07661719091090256,
+ "p_tri_z": 0.33865638645877816,
+ "enrich_raw": 2.1725,
+ "enrich_z": 1.58,
+ "cos_ab_median": 0.27883616625341984
+}

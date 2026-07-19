@@ -1,0 +1,21 @@
+{
+ "screen": "Norman GSE133344 K562/A549 CRISPRa",
+ "n_singles": 105,
+ "n_doubles": 131,
+ "n_genes": 5045,
+ "unreachable_median": 0.31321068010966113,
+ "bar_a_pass": 128,
+ "bar_b_pass": 40,
+ "both_bars": 40,
+ "rho_raw_mag": -0.5598996423423904,
+ "p_raw_mag": 3.5853400474035586e-12,
+ "rho_z_mag": 0.13354508087332514,
+ "p_z_mag": 0.12834419178974493,
+ "rho_tri_raw": 0.4681417818822399,
+ "p_tri_raw": 1.7166657920353678e-08,
+ "rho_tri_z": 0.37299418139112794,
+ "p_tri_z": 1.1460455577169487e-05,
+ "enrich_raw": 2.165289256198347,
+ "enrich_z": 1.563820018365473,
+ "cos_ab_median": 0.4027936361305042
+}

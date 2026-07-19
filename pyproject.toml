@@ -53,6 +53,7 @@ py-modules = [
   "combicone",
   "effect_dictionary",
   "library_coverage",
+  "neural_baseline",
   "reachability",
   "validation",
 ]

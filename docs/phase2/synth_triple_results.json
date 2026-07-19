@@ -1,0 +1,1739 @@
+{
+  "n_triples": 120,
+  "n_boot": 200,
+  "floor_threshold": 1.9,
+  "alpha": 0.05,
+  "classes": {
+    "additive": 40,
+    "reducible": 40,
+    "emergent": 40
+  },
+  "auc_z": 1.0,
+  "auc_unreachable_fraction": 0.9246875,
+  "auc_floor_ratio": 1.0,
+  "two_bar": {
+    "TP": 36,
+    "FN": 4,
+    "FP": 0,
+    "TN": 80,
+    "sensitivity": 0.9,
+    "specificity": 1.0,
+    "precision": 1.0
+  },
+  "bar_a_only": {
+    "additive": 0,
+    "reducible": 0,
+    "emergent": 40
+  },
+  "certified_per_class": {
+    "additive": [
+      0,
+      40
+    ],
+    "reducible": [
+      0,
+      40
+    ],
+    "emergent": [
+      36,
+      40
+    ]
+  },
+  "unreachable_range_per_class": {
+    "additive": [
+      0.12719839712482697,
+      0.15778232707026382
+    ],
+    "reducible": [
+      0.04807550809283009,
+      0.07811336307677871
+    ],
+    "emergent": [
+      0.09617174747808953,
+      0.46036517658281917
+    ]
+  },
+  "per_triple": [
+    {
+      "members": [
+        2,
+        4,
+        13
+      ],
+      "class": "additive",
+      "tt_norm": 0.0,
+      "z": 0.2252396818328367,
+      "unreachable_fraction": 0.13957288071976104,
+      "floor_ratio": 1.0147601433127853,
+      "p_value": 0.3781094527363184,
+      "certified": false
+    },
+    {
+      "members": [
+        9,
+        10,
+        12
+      ],
+      "class": "additive",
+      "tt_norm": 0.0,
+      "z": -0.14802753589808013,
+      "unreachable_fraction": 0.14301083100242962,
+      "floor_ratio": 0.9890658850728995,
+      "p_value": 0.572139303482587,
+      "certified": false
+    },
+    {
+      "members": [
+        5,
+        7,
+        13
+      ],
+      "class": "emergent",
+      "tt_norm": 3.6153846153846154,
+      "z": 29.63011100709329,
+      "unreachable_fraction": 0.182692446745832,
+      "floor_ratio": 3.1599046382727076,
+      "p_value": 0.004975124378109453,
+      "certified": true
+    },
+    {
+      "members": [
+        3,
+        10,
+        12
+      ],
+      "class": "reducible",
+      "tt_norm": 0.0,
+      "z": 0.030963044796485484,
+      "unreachable_fraction": 0.05517185569165327,
+      "floor_ratio": 1.0022488480784193,
+      "p_value": 0.4626865671641791,
+      "certified": false
+    },
+    {
+      "members": [
+        1,
+        8,
+        11
+      ],
+      "class": "additive",
+      "tt_norm": 0.0,
+      "z": 0.3789800997861545,
+      "unreachable_fraction": 0.14832905376184619,
+      "floor_ratio": 1.0260907169201239,
+      "p_value": 0.3482587064676617,
+      "certified": false
+    },
+    {
+      "members": [
+        1,
+        5,
+        12
+      ],
+      "class": "emergent",
+      "tt_norm": 6.435897435897436,
+      "z": 60.53140000372439,
+      "unreachable_fraction": 0.3341106334134484,
+      "floor_ratio": 5.084297348645824,
+      "p_value": 0.004975124378109453,
+      "certified": true
+    },
+    {
+      "members": [
+        5,
+        7,
+        12
+      ],
+      "class": "reducible",
+      "tt_norm": 0.0,
+      "z": -0.5260642530103399,
+      "unreachable_fraction": 0.052024622052814266,
+      "floor_ratio": 0.9552066117631487,
+      "p_value": 0.6865671641791045,
+      "certified": false
+    },
+    {
+      "members": [
+        10,
+        11,
+        12
+      ],
+      "class": "reducible",
+      "tt_norm": 0.0,
+      "z": -0.7306621048579862,
+      "unreachable_fraction": 0.060060909861715826,
+      "floor_ratio": 0.9470594264563167,
+      "p_value": 0.7711442786069652,
+      "certified": false
+    },
+    {
+      "members": [
+        4,
+        6,
+        8
+      ],
+      "class": "reducible",
+      "tt_norm": 0.0,
+      "z": -1.4988495302627272,
+      "unreachable_fraction": 0.05236403020740679,
+      "floor_ratio": 0.90481133614387,
+      "p_value": 0.9303482587064676,
+      "certified": false
+    },
+    {
+      "members": [
+        0,
+        6,
+        9
+      ],
+      "class": "emergent",
+      "tt_norm": 6.858974358974359,
+      "z": 60.737566975327894,
+      "unreachable_fraction": 0.3224567354798389,
+      "floor_ratio": 5.268799284963275,
+      "p_value": 0.004975124378109453,
+      "certified": true
+    },
+    {
+      "members": [
+        0,
+        4,
+        6
+      ],
+      "class": "additive",
+      "tt_norm": 0.0,
+      "z": 0.2848421281181231,
+      "unreachable_fraction": 0.1497617744406836,
+      "floor_ratio": 1.0230900424261686,
+      "p_value": 0.3333333333333333,
+      "certified": false
+    },
+    {
+      "members": [
+        6,
+        11,
+        13
+      ],
+      "class": "reducible",
+      "tt_norm": 0.0,
+      "z": -0.5598008964924515,
+      "unreachable_fraction": 0.05601517807303589,
+      "floor_ratio": 0.9550510387321192,
+      "p_value": 0.7014925373134329,
+      "certified": false
+    },
+    {
+      "members": [
+        2,
+        9,
+        10
+      ],
+      "class": "reducible",
+      "tt_norm": 0.0,
+      "z": -0.5582828339086229,
+      "unreachable_fraction": 0.0608274241785222,
+      "floor_ratio": 0.9630207602626975,
+      "p_value": 0.6865671641791045,
+      "certified": false
+    },
+    {
+      "members": [
+        1,
+        2,
+        6
+      ],
+      "class": "reducible",
+      "tt_norm": 0.0,
+      "z": 0.36837617957248775,
+      "unreachable_fraction": 0.057020646159809646,
+      "floor_ratio": 1.02798903201358,
+      "p_value": 0.3034825870646766,
+      "certified": false
+    },
+    {
+      "members": [
+        9,
+        11,
+        13
+      ],
+      "class": "emergent",
+      "tt_norm": 4.884615384615385,
+      "z": 40.8099708393343,
+      "unreachable_fraction": 0.3121309154972163,
+      "floor_ratio": 4.074322126702065,
+      "p_value": 0.004975124378109453,
+      "certified": true
+    },
+    {
+      "members": [
+        1,
+        3,
+        12
+      ],
+      "class": "additive",
+      "tt_norm": 0.0,
+      "z": 1.360447789151908,
+      "unreachable_fraction": 0.15021693222536056,
+      "floor_ratio": 1.1038492430018663,
+      "p_value": 0.06965174129353234,
+      "certified": false
+    },
+    {
+      "members": [
+        0,
+        6,
+        7
+      ],
+      "class": "emergent",
+      "tt_norm": 5.730769230769231,
+      "z": 50.454651774279725,
+      "unreachable_fraction": 0.44489125558766585,
+      "floor_ratio": 4.5930994770267635,
+      "p_value": 0.004975124378109453,
+      "certified": true
+    },
+    {
+      "members": [
+        8,
+        12,
+        13
+      ],
+      "class": "reducible",
+      "tt_norm": 0.0,
+      "z": 0.521726075542342,
+      "unreachable_fraction": 0.05364891091595455,
+      "floor_ratio": 1.036436939761922,
+      "p_value": 0.2835820895522388,
+      "certified": false
+    },
+    {
+      "members": [
+        4,
+        10,
+        12
+      ],
+      "class": "reducible",
+      "tt_norm": 0.0,
+      "z": 0.2267561110795312,
+      "unreachable_fraction": 0.06157475042932866,
+      "floor_ratio": 1.0174562198991055,
+      "p_value": 0.38308457711442784,
+      "certified": false
+    },
+    {
+      "members": [
+        2,
+        6,
+        12
+      ],
+      "class": "emergent",
+      "tt_norm": 5.0256410256410255,
+      "z": 43.17527921158832,
+      "unreachable_fraction": 0.3799846164671467,
+      "floor_ratio": 4.311889805510093,
+      "p_value": 0.004975124378109453,
+      "certified": true
+    },
+    {
+      "members": [
+        3,
+        4,
+        6
+      ],
+      "class": "emergent",
+      "tt_norm": 6.576923076923077,
+      "z": 54.92355346374797,
+      "unreachable_fraction": 0.326844723678232,
+      "floor_ratio": 5.599454854292327,
+      "p_value": 0.004975124378109453,
+      "certified": true
+    },
+    {
+      "members": [
+        2,
+        4,
+        6
+      ],
+      "class": "reducible",
+      "tt_norm": 0.0,
+      "z": 0.6371033508407942,
+      "unreachable_fraction": 0.04919347483727749,
+      "floor_ratio": 1.0466715036558538,
+      "p_value": 0.263681592039801,
+      "certified": false
+    },
+    {
+      "members": [
+        1,
+        7,
+        10
+      ],
+      "class": "additive",
+      "tt_norm": 0.0,
+      "z": -0.8831631272636314,
+      "unreachable_fraction": 0.12924579244010315,
+      "floor_ratio": 0.927769980954749,
+      "p_value": 0.8009950248756219,
+      "certified": false
+    },
+    {
+      "members": [
+        8,
+        10,
+        12
+      ],
+      "class": "reducible",
+      "tt_norm": 0.0,
+      "z": -0.878600297665738,
+      "unreachable_fraction": 0.05392578294108851,
+      "floor_ratio": 0.9340841356329487,
+      "p_value": 0.8059701492537313,
+      "certified": false
+    },
+    {
+      "members": [
+        5,
+        9,
+        12
+      ],
+      "class": "reducible",
+      "tt_norm": 0.0,
+      "z": -0.22099051642500495,
+      "unreachable_fraction": 0.058306885327328334,
+      "floor_ratio": 0.9842330457567725,
+      "p_value": 0.5920398009950248,
+      "certified": false
+    },
+    {
+      "members": [
+        4,
+        12,
+        13
+      ],
+      "class": "emergent",
+      "tt_norm": 3.4743589743589745,
+      "z": 27.517001488010653,
+      "unreachable_fraction": 0.1773682817981955,
+      "floor_ratio": 2.953804020462379,
+      "p_value": 0.004975124378109453,
+      "certified": true
+    },
+    {
+      "members": [
+        0,
+        9,
+        13
+      ],
+      "class": "reducible",
+      "tt_norm": 0.0,
+      "z": 0.1753850411460014,
+      "unreachable_fraction": 0.0733211904329024,
+      "floor_ratio": 1.0111425568065264,
+      "p_value": 0.417910447761194,
+      "certified": false
+    },
+    {
+      "members": [
+        6,
+        10,
+        11
+      ],
+      "class": "additive",
+      "tt_norm": 0.0,
+      "z": 0.3727081554147832,
+      "unreachable_fraction": 0.13301476647953775,
+      "floor_ratio": 1.0263810522499066,
+      "p_value": 0.3383084577114428,
+      "certified": false
+    },
+    {
+      "members": [
+        2,
+        9,
+        12
+      ],
+      "class": "additive",
+      "tt_norm": 0.0,
+      "z": -0.1765677073111983,
+      "unreachable_fraction": 0.15778232707026382,
+      "floor_ratio": 0.9869976609876646,
+      "p_value": 0.5572139303482587,
+      "certified": false
+    },
+    {
+      "members": [
+        0,
+        3,
+        12
+      ],
+      "class": "reducible",
+      "tt_norm": 0.0,
+      "z": -0.407554057631042,
+      "unreachable_fraction": 0.058187849060327625,
+      "floor_ratio": 0.9744331304752315,
+      "p_value": 0.6517412935323383,
+      "certified": false
+    },
+    {
+      "members": [
+        4,
+        8,
+        10
+      ],
+      "class": "additive",
+      "tt_norm": 0.0,
+      "z": -0.4334433669353902,
+      "unreachable_fraction": 0.12719839712482697,
+      "floor_ratio": 0.971277625741484,
+      "p_value": 0.6417910447761194,
+      "certified": false
+    },
+    {
+      "members": [
+        0,
+        1,
+        12
+      ],
+      "class": "reducible",
+      "tt_norm": 0.0,
+      "z": -0.4402297226942529,
+      "unreachable_fraction": 0.07361822918199311,
+      "floor_ratio": 0.9689553039425775,
+      "p_value": 0.6417910447761194,
+      "certified": false
+    },
+    {
+      "members": [
+        1,
+        6,
+        12
+      ],
+      "class": "additive",
+      "tt_norm": 0.0,
+      "z": 0.2669681684260329,
+      "unreachable_fraction": 0.13788320712679153,
+      "floor_ratio": 1.0205652228429776,
+      "p_value": 0.3582089552238806,
+      "certified": false
+    },
+    {
+      "members": [
+        6,
+        11,
+        12
+      ],
+      "class": "emergent",
+      "tt_norm": 2.3461538461538463,
+      "z": 15.637408695824126,
+      "unreachable_fraction": 0.18415601869867337,
+      "floor_ratio": 2.0620808008631024,
+      "p_value": 0.004975124378109453,
+      "certified": true
+    },
+    {
+      "members": [
+        4,
+        11,
+        12
+      ],
+      "class": "additive",
+      "tt_norm": 0.0,
+      "z": -0.23638946946317815,
+      "unreachable_fraction": 0.1459125357008553,
+      "floor_ratio": 0.982296858642537,
+      "p_value": 0.5771144278606966,
+      "certified": false
+    },
+    {
+      "members": [
+        3,
+        6,
+        11
+      ],
+      "class": "emergent",
+      "tt_norm": 1.9230769230769231,
+      "z": 10.504629365387462,
+      "unreachable_fraction": 0.09868482590731811,
+      "floor_ratio": 1.81212475061856,
+      "p_value": 0.004975124378109453,
+      "certified": false
+    },
+    {
+      "members": [
+        3,
+        7,
+        10
+      ],
+      "class": "additive",
+      "tt_norm": 0.0,
+      "z": -1.284399905878108,
+      "unreachable_fraction": 0.13251193015010915,
+      "floor_ratio": 0.9102261415726551,
+      "p_value": 0.9253731343283582,
+      "certified": false
+    },
+    {
+      "members": [
+        7,
+        11,
+        13
+      ],
+      "class": "additive",
+      "tt_norm": 0.0,
+      "z": -1.0174813838335228,
+      "unreachable_fraction": 0.13233033319294704,
+      "floor_ratio": 0.9263984940685168,
+      "p_value": 0.845771144278607,
+      "certified": false
+    },
+    {
+      "members": [
+        0,
+        8,
+        9
+      ],
+      "class": "additive",
+      "tt_norm": 0.0,
+      "z": -0.4841050185792955,
+      "unreachable_fraction": 0.12817980425722425,
+      "floor_ratio": 0.964277705586246,
+      "p_value": 0.6965174129353234,
+      "certified": false
+    },
+    {
+      "members": [
+        2,
+        6,
+        10
+      ],
+      "class": "additive",
+      "tt_norm": 0.0,
+      "z": -0.3867797598498301,
+      "unreachable_fraction": 0.12991652678031076,
+      "floor_ratio": 0.9725592242144692,
+      "p_value": 0.6318407960199005,
+      "certified": false
+    },
+    {
+      "members": [
+        1,
+        3,
+        13
+      ],
+      "class": "additive",
+      "tt_norm": 0.0,
+      "z": 0.3030725594831881,
+      "unreachable_fraction": 0.1445712728216434,
+      "floor_ratio": 1.0218841627752422,
+      "p_value": 0.373134328358209,
+      "certified": false
+    },
+    {
+      "members": [
+        3,
+        5,
+        8
+      ],
+      "class": "reducible",
+      "tt_norm": 0.0,
+      "z": 0.38919391118182733,
+      "unreachable_fraction": 0.07584843693049206,
+      "floor_ratio": 1.0272216454027652,
+      "p_value": 0.3582089552238806,
+      "certified": false
+    },
+    {
+      "members": [
+        0,
+        8,
+        12
+      ],
+      "class": "emergent",
+      "tt_norm": 3.1923076923076925,
+      "z": 28.508012152366227,
+      "unreachable_fraction": 0.18959681130331824,
+      "floor_ratio": 2.939585573203703,
+      "p_value": 0.004975124378109453,
+      "certified": true
+    },
+    {
+      "members": [
+        5,
+        10,
+        12
+      ],
+      "class": "reducible",
+      "tt_norm": 0.0,
+      "z": 0.8928468176446052,
+      "unreachable_fraction": 0.0724686448670079,
+      "floor_ratio": 1.0596735451955588,
+      "p_value": 0.1791044776119403,
+      "certified": false
+    },
+    {
+      "members": [
+        4,
+        5,
+        13
+      ],
+      "class": "reducible",
+      "tt_norm": 0.0,
+      "z": 0.18479168826373774,
+      "unreachable_fraction": 0.06211070741363386,
+      "floor_ratio": 1.012676758370387,
+      "p_value": 0.417910447761194,
+      "certified": false
+    },
+    {
+      "members": [
+        2,
+        6,
+        9
+      ],
+      "class": "reducible",
+      "tt_norm": 0.0,
+      "z": -2.5207720948678127,
+      "unreachable_fraction": 0.04807550809283009,
+      "floor_ratio": 0.824294912968585,
+      "p_value": 1.0,
+      "certified": false
+    },
+    {
+      "members": [
+        3,
+        9,
+        11
+      ],
+      "class": "additive",
+      "tt_norm": 0.0,
+      "z": -0.8897240853450944,
+      "unreachable_fraction": 0.14299623452910018,
+      "floor_ratio": 0.929615645960744,
+      "p_value": 0.8159203980099502,
+      "certified": false
+    },
+    {
+      "members": [
+        0,
+        2,
+        12
+      ],
+      "class": "emergent",
+      "tt_norm": 1.641025641025641,
+      "z": 10.665692147047332,
+      "unreachable_fraction": 0.12710509042624096,
+      "floor_ratio": 1.7612675240990538,
+      "p_value": 0.004975124378109453,
+      "certified": false
+    },
+    {
+      "members": [
+        8,
+        9,
+        12
+      ],
+      "class": "reducible",
+      "tt_norm": 0.0,
+      "z": 0.40631031970045106,
+      "unreachable_fraction": 0.04830413263722532,
+      "floor_ratio": 1.029765884952792,
+      "p_value": 0.31343283582089554,
+      "certified": false
+    },
+    {
+      "members": [
+        6,
+        8,
+        10
+      ],
+      "class": "additive",
+      "tt_norm": 0.0,
+      "z": 0.3965392575532543,
+      "unreachable_fraction": 0.14111310466843166,
+      "floor_ratio": 1.028793664286423,
+      "p_value": 0.31840796019900497,
+      "certified": false
+    },
+    {
+      "members": [
+        8,
+        9,
+        11
+      ],
+      "class": "additive",
+      "tt_norm": 0.0,
+      "z": 0.1857430919357243,
+      "unreachable_fraction": 0.1405485065794999,
+      "floor_ratio": 1.01388523324458,
+      "p_value": 0.373134328358209,
+      "certified": false
+    },
+    {
+      "members": [
+        1,
+        6,
+        8
+      ],
+      "class": "emergent",
+      "tt_norm": 4.461538461538462,
+      "z": 36.688908754854,
+      "unreachable_fraction": 0.2533007933617458,
+      "floor_ratio": 3.5368229940526414,
+      "p_value": 0.004975124378109453,
+      "certified": true
+    },
+    {
+      "members": [
+        1,
+        7,
+        13
+      ],
+      "class": "additive",
+      "tt_norm": 0.0,
+      "z": 0.1514180169863773,
+      "unreachable_fraction": 0.13313094603340325,
+      "floor_ratio": 1.0127548156369064,
+      "p_value": 0.4527363184079602,
+      "certified": false
+    },
+    {
+      "members": [
+        4,
+        10,
+        11
+      ],
+      "class": "emergent",
+      "tt_norm": 5.166666666666666,
+      "z": 44.273994493974065,
+      "unreachable_fraction": 0.2667478051826447,
+      "floor_ratio": 4.17471168935616,
+      "p_value": 0.004975124378109453,
+      "certified": true
+    },
+    {
+      "members": [
+        2,
+        11,
+        12
+      ],
+      "class": "reducible",
+      "tt_norm": 0.0,
+      "z": -0.0658348794711344,
+      "unreachable_fraction": 0.06014450349045067,
+      "floor_ratio": 0.9958096231206585,
+      "p_value": 0.5373134328358209,
+      "certified": false
+    },
+    {
+      "members": [
+        4,
+        8,
+        11
+      ],
+      "class": "reducible",
+      "tt_norm": 0.0,
+      "z": 1.156010722124245,
+      "unreachable_fraction": 0.06541941334240825,
+      "floor_ratio": 1.081358533788675,
+      "p_value": 0.15422885572139303,
+      "certified": false
+    },
+    {
+      "members": [
+        8,
+        9,
+        13
+      ],
+      "class": "reducible",
+      "tt_norm": 0.0,
+      "z": -0.598817561135889,
+      "unreachable_fraction": 0.05286005521179661,
+      "floor_ratio": 0.9587630536914681,
+      "p_value": 0.7512437810945274,
+      "certified": false
+    },
+    {
+      "members": [
+        0,
+        2,
+        5
+      ],
+      "class": "additive",
+      "tt_norm": 0.0,
+      "z": -0.02752374365620503,
+      "unreachable_fraction": 0.1413706579455216,
+      "floor_ratio": 0.9981265420212484,
+      "p_value": 0.4975124378109453,
+      "certified": false
+    },
+    {
+      "members": [
+        3,
+        8,
+        10
+      ],
+      "class": "reducible",
+      "tt_norm": 0.0,
+      "z": -1.757032273509197,
+      "unreachable_fraction": 0.06307559127246369,
+      "floor_ratio": 0.8832394771286762,
+      "p_value": 0.9701492537313433,
+      "certified": false
+    },
+    {
+      "members": [
+        7,
+        10,
+        13
+      ],
+      "class": "additive",
+      "tt_norm": 0.0,
+      "z": -0.38650036807426935,
+      "unreachable_fraction": 0.1359723485914078,
+      "floor_ratio": 0.9739091248286073,
+      "p_value": 0.6467661691542289,
+      "certified": false
+    },
+    {
+      "members": [
+        0,
+        9,
+        12
+      ],
+      "class": "reducible",
+      "tt_norm": 0.0,
+      "z": 1.078727829325705,
+      "unreachable_fraction": 0.0702307089755098,
+      "floor_ratio": 1.0850481515105113,
+      "p_value": 0.15422885572139303,
+      "certified": false
+    },
+    {
+      "members": [
+        1,
+        9,
+        10
+      ],
+      "class": "additive",
+      "tt_norm": 0.0,
+      "z": -0.8967952886591146,
+      "unreachable_fraction": 0.14627670980142843,
+      "floor_ratio": 0.9409437792580102,
+      "p_value": 0.835820895522388,
+      "certified": false
+    },
+    {
+      "members": [
+        2,
+        7,
+        8
+      ],
+      "class": "emergent",
+      "tt_norm": 2.2051282051282053,
+      "z": 14.314501887869733,
+      "unreachable_fraction": 0.09617174747808953,
+      "floor_ratio": 2.033450596688529,
+      "p_value": 0.004975124378109453,
+      "certified": true
+    },
+    {
+      "members": [
+        3,
+        5,
+        12
+      ],
+      "class": "additive",
+      "tt_norm": 0.0,
+      "z": 0.33615354792298296,
+      "unreachable_fraction": 0.13334031977984198,
+      "floor_ratio": 1.0259382747966121,
+      "p_value": 0.3333333333333333,
+      "certified": false
+    },
+    {
+      "members": [
+        1,
+        7,
+        12
+      ],
+      "class": "emergent",
+      "tt_norm": 2.064102564102564,
+      "z": 13.262360068138438,
+      "unreachable_fraction": 0.12250607785451507,
+      "floor_ratio": 1.905447198891283,
+      "p_value": 0.004975124378109453,
+      "certified": true
+    },
+    {
+      "members": [
+        2,
+        5,
+        13
+      ],
+      "class": "emergent",
+      "tt_norm": 3.7564102564102564,
+      "z": 34.041581737048475,
+      "unreachable_fraction": 0.2176073704584584,
+      "floor_ratio": 3.3059094540821783,
+      "p_value": 0.004975124378109453,
+      "certified": true
+    },
+    {
+      "members": [
+        1,
+        10,
+        12
+      ],
+      "class": "emergent",
+      "tt_norm": 2.628205128205128,
+      "z": 22.914709996753015,
+      "unreachable_fraction": 0.16779066242651183,
+      "floor_ratio": 2.5234241168856415,
+      "p_value": 0.004975124378109453,
+      "certified": true
+    },
+    {
+      "members": [
+        1,
+        9,
+        13
+      ],
+      "class": "reducible",
+      "tt_norm": 0.0,
+      "z": -0.7479665018082456,
+      "unreachable_fraction": 0.054934635877569145,
+      "floor_ratio": 0.9503783938533632,
+      "p_value": 0.7761194029850746,
+      "certified": false
+    },
+    {
+      "members": [
+        0,
+        5,
+        12
+      ],
+      "class": "emergent",
+      "tt_norm": 4.743589743589744,
+      "z": 37.41191895850876,
+      "unreachable_fraction": 0.3162906167239103,
+      "floor_ratio": 3.710932504834812,
+      "p_value": 0.004975124378109453,
+      "certified": true
+    },
+    {
+      "members": [
+        0,
+        7,
+        8
+      ],
+      "class": "additive",
+      "tt_norm": 0.0,
+      "z": 1.0464383548383231,
+      "unreachable_fraction": 0.1324576114260301,
+      "floor_ratio": 1.065420088266168,
+      "p_value": 0.17412935323383086,
+      "certified": false
+    },
+    {
+      "members": [
+        2,
+        7,
+        12
+      ],
+      "class": "reducible",
+      "tt_norm": 0.0,
+      "z": -2.2600347712101723,
+      "unreachable_fraction": 0.057608677057237316,
+      "floor_ratio": 0.8606027466537408,
+      "p_value": 0.9900497512437811,
+      "certified": false
+    },
+    {
+      "members": [
+        1,
+        2,
+        4
+      ],
+      "class": "emergent",
+      "tt_norm": 6.153846153846154,
+      "z": 59.194461995016,
+      "unreachable_fraction": 0.2998817777847428,
+      "floor_ratio": 5.303923426632325,
+      "p_value": 0.004975124378109453,
+      "certified": true
+    },
+    {
+      "members": [
+        4,
+        6,
+        7
+      ],
+      "class": "additive",
+      "tt_norm": 0.0,
+      "z": -0.5073236978098165,
+      "unreachable_fraction": 0.1376027261709792,
+      "floor_ratio": 0.9638486528063831,
+      "p_value": 0.6766169154228856,
+      "certified": false
+    },
+    {
+      "members": [
+        2,
+        8,
+        11
+      ],
+      "class": "reducible",
+      "tt_norm": 0.0,
+      "z": -0.4332371493560429,
+      "unreachable_fraction": 0.05984454268310363,
+      "floor_ratio": 0.9705513263869109,
+      "p_value": 0.6567164179104478,
+      "certified": false
+    },
+    {
+      "members": [
+        10,
+        11,
+        13
+      ],
+      "class": "reducible",
+      "tt_norm": 0.0,
+      "z": -0.7550388448082911,
+      "unreachable_fraction": 0.05149143137448404,
+      "floor_ratio": 0.9433182899445676,
+      "p_value": 0.7611940298507462,
+      "certified": false
+    },
+    {
+      "members": [
+        0,
+        2,
+        4
+      ],
+      "class": "additive",
+      "tt_norm": 0.0,
+      "z": -0.20728288474254525,
+      "unreachable_fraction": 0.12834937700732485,
+      "floor_ratio": 0.9860993417070137,
+      "p_value": 0.5323383084577115,
+      "certified": false
+    },
+    {
+      "members": [
+        2,
+        5,
+        8
+      ],
+      "class": "additive",
+      "tt_norm": 0.0,
+      "z": 0.9209231640387043,
+      "unreachable_fraction": 0.13605333970509045,
+      "floor_ratio": 1.0650817073429386,
+      "p_value": 0.15920398009950248,
+      "certified": false
+    },
+    {
+      "members": [
+        6,
+        8,
+        13
+      ],
+      "class": "emergent",
+      "tt_norm": 3.8974358974358974,
+      "z": 35.063134552848766,
+      "unreachable_fraction": 0.3149108121108214,
+      "floor_ratio": 3.60382743392451,
+      "p_value": 0.004975124378109453,
+      "certified": true
+    },
+    {
+      "members": [
+        4,
+        7,
+        12
+      ],
+      "class": "emergent",
+      "tt_norm": 5.871794871794871,
+      "z": 45.9042694407635,
+      "unreachable_fraction": 0.44415769406054795,
+      "floor_ratio": 4.337457719773756,
+      "p_value": 0.004975124378109453,
+      "certified": true
+    },
+    {
+      "members": [
+        3,
+        4,
+        12
+      ],
+      "class": "reducible",
+      "tt_norm": 0.0,
+      "z": -0.7816229988122617,
+      "unreachable_fraction": 0.07597534308330443,
+      "floor_ratio": 0.9425093535648428,
+      "p_value": 0.7512437810945274,
+      "certified": false
+    },
+    {
+      "members": [
+        7,
+        11,
+        12
+      ],
+      "class": "reducible",
+      "tt_norm": 0.0,
+      "z": -0.4749161844819124,
+      "unreachable_fraction": 0.060489843172344696,
+      "floor_ratio": 0.968830768857188,
+      "p_value": 0.6467661691542289,
+      "certified": false
+    },
+    {
+      "members": [
+        6,
+        9,
+        12
+      ],
+      "class": "emergent",
+      "tt_norm": 3.333333333333333,
+      "z": 26.56027803862074,
+      "unreachable_fraction": 0.16868246880727392,
+      "floor_ratio": 2.9476520892377183,
+      "p_value": 0.004975124378109453,
+      "certified": true
+    },
+    {
+      "members": [
+        2,
+        4,
+        7
+      ],
+      "class": "emergent",
+      "tt_norm": 7.0,
+      "z": 56.76580375835449,
+      "unreachable_fraction": 0.3391818915107861,
+      "floor_ratio": 5.282135080124396,
+      "p_value": 0.004975124378109453,
+      "certified": true
+    },
+    {
+      "members": [
+        0,
+        8,
+        13
+      ],
+      "class": "additive",
+      "tt_norm": 0.0,
+      "z": -0.5510029269794605,
+      "unreachable_fraction": 0.14101949303898956,
+      "floor_ratio": 0.9625023868560943,
+      "p_value": 0.6666666666666666,
+      "certified": false
+    },
+    {
+      "members": [
+        1,
+        6,
+        13
+      ],
+      "class": "reducible",
+      "tt_norm": 0.0,
+      "z": -0.4738536701797787,
+      "unreachable_fraction": 0.05323506602151331,
+      "floor_ratio": 0.9678368086702686,
+      "p_value": 0.681592039800995,
+      "certified": false
+    },
+    {
+      "members": [
+        4,
+        5,
+        11
+      ],
+      "class": "additive",
+      "tt_norm": 0.0,
+      "z": -0.6970223677055322,
+      "unreachable_fraction": 0.13077601696035485,
+      "floor_ratio": 0.9458385437997324,
+      "p_value": 0.7512437810945274,
+      "certified": false
+    },
+    {
+      "members": [
+        4,
+        8,
+        13
+      ],
+      "class": "emergent",
+      "tt_norm": 2.769230769230769,
+      "z": 23.3280534462304,
+      "unreachable_fraction": 0.2224517276580858,
+      "floor_ratio": 2.7102063422432767,
+      "p_value": 0.004975124378109453,
+      "certified": true
+    },
+    {
+      "members": [
+        4,
+        9,
+        13
+      ],
+      "class": "reducible",
+      "tt_norm": 0.0,
+      "z": 0.0573591635776339,
+      "unreachable_fraction": 0.06501308449101814,
+      "floor_ratio": 1.0041070670004817,
+      "p_value": 0.44776119402985076,
+      "certified": false
+    },
+    {
+      "members": [
+        11,
+        12,
+        13
+      ],
+      "class": "additive",
+      "tt_norm": 0.0,
+      "z": -0.8702685501849724,
+      "unreachable_fraction": 0.13396779441372733,
+      "floor_ratio": 0.9462910108219789,
+      "p_value": 0.8258706467661692,
+      "certified": false
+    },
+    {
+      "members": [
+        2,
+        3,
+        12
+      ],
+      "class": "additive",
+      "tt_norm": 0.0,
+      "z": 0.03513699970868245,
+      "unreachable_fraction": 0.1432688060746637,
+      "floor_ratio": 1.002624429757201,
+      "p_value": 0.472636815920398,
+      "certified": false
+    },
+    {
+      "members": [
+        0,
+        1,
+        5
+      ],
+      "class": "reducible",
+      "tt_norm": 0.0,
+      "z": 1.1611091221407899,
+      "unreachable_fraction": 0.053812899865221246,
+      "floor_ratio": 1.0817956708965486,
+      "p_value": 0.11940298507462686,
+      "certified": false
+    },
+    {
+      "members": [
+        6,
+        12,
+        13
+      ],
+      "class": "additive",
+      "tt_norm": 0.0,
+      "z": 0.46217279134594585,
+      "unreachable_fraction": 0.14659532830377284,
+      "floor_ratio": 1.0316333693731192,
+      "p_value": 0.34328358208955223,
+      "certified": false
+    },
+    {
+      "members": [
+        0,
+        9,
+        11
+      ],
+      "class": "emergent",
+      "tt_norm": 6.012820512820513,
+      "z": 61.88929231046886,
+      "unreachable_fraction": 0.2859003249194089,
+      "floor_ratio": 4.853700290753274,
+      "p_value": 0.004975124378109453,
+      "certified": true
+    },
+    {
+      "members": [
+        6,
+        9,
+        11
+      ],
+      "class": "additive",
+      "tt_norm": 0.0,
+      "z": -1.4408331108044532,
+      "unreachable_fraction": 0.13061875314885607,
+      "floor_ratio": 0.9004968656373389,
+      "p_value": 0.9353233830845771,
+      "certified": false
+    },
+    {
+      "members": [
+        3,
+        6,
+        9
+      ],
+      "class": "reducible",
+      "tt_norm": 0.0,
+      "z": 0.26697776781710697,
+      "unreachable_fraction": 0.05982054994830215,
+      "floor_ratio": 1.0202867085817608,
+      "p_value": 0.3880597014925373,
+      "certified": false
+    },
+    {
+      "members": [
+        2,
+        11,
+        13
+      ],
+      "class": "additive",
+      "tt_norm": 0.0,
+      "z": 0.6199352572512163,
+      "unreachable_fraction": 0.14028672925202523,
+      "floor_ratio": 1.041192759405684,
+      "p_value": 0.24378109452736318,
+      "certified": false
+    },
+    {
+      "members": [
+        2,
+        3,
+        11
+      ],
+      "class": "emergent",
+      "tt_norm": 6.717948717948718,
+      "z": 62.843158474963914,
+      "unreachable_fraction": 0.3625619953749494,
+      "floor_ratio": 5.582317039777784,
+      "p_value": 0.004975124378109453,
+      "certified": true
+    },
+    {
+      "members": [
+        1,
+        6,
+        7
+      ],
+      "class": "emergent",
+      "tt_norm": 5.3076923076923075,
+      "z": 51.03432628450657,
+      "unreachable_fraction": 0.25559037488783476,
+      "floor_ratio": 4.752360395696605,
+      "p_value": 0.004975124378109453,
+      "certified": true
+    },
+    {
+      "members": [
+        3,
+        5,
+        9
+      ],
+      "class": "reducible",
+      "tt_norm": 0.0,
+      "z": -0.6530507655482525,
+      "unreachable_fraction": 0.07258860885565144,
+      "floor_ratio": 0.957858101828261,
+      "p_value": 0.7213930348258707,
+      "certified": false
+    },
+    {
+      "members": [
+        0,
+        3,
+        9
+      ],
+      "class": "emergent",
+      "tt_norm": 1.782051282051282,
+      "z": 13.105218191959766,
+      "unreachable_fraction": 0.1250485203119039,
+      "floor_ratio": 1.8977838658039496,
+      "p_value": 0.004975124378109453,
+      "certified": false
+    },
+    {
+      "members": [
+        3,
+        9,
+        13
+      ],
+      "class": "emergent",
+      "tt_norm": 4.32051282051282,
+      "z": 32.029399189868755,
+      "unreachable_fraction": 0.24262348787372917,
+      "floor_ratio": 3.416478918135449,
+      "p_value": 0.004975124378109453,
+      "certified": true
+    },
+    {
+      "members": [
+        0,
+        6,
+        12
+      ],
+      "class": "emergent",
+      "tt_norm": 4.038461538461538,
+      "z": 35.231374175327666,
+      "unreachable_fraction": 0.26942599034578396,
+      "floor_ratio": 3.312760272006808,
+      "p_value": 0.004975124378109453,
+      "certified": true
+    },
+    {
+      "members": [
+        1,
+        5,
+        8
+      ],
+      "class": "emergent",
+      "tt_norm": 3.051282051282051,
+      "z": 24.216194036221363,
+      "unreachable_fraction": 0.18861731324036465,
+      "floor_ratio": 2.684326807959908,
+      "p_value": 0.004975124378109453,
+      "certified": true
+    },
+    {
+      "members": [
+        0,
+        1,
+        8
+      ],
+      "class": "emergent",
+      "tt_norm": 6.294871794871795,
+      "z": 61.773095004969306,
+      "unreachable_fraction": 0.41158739951185525,
+      "floor_ratio": 5.233564787989074,
+      "p_value": 0.004975124378109453,
+      "certified": true
+    },
+    {
+      "members": [
+        8,
+        10,
+        13
+      ],
+      "class": "emergent",
+      "tt_norm": 2.4871794871794872,
+      "z": 20.542510511807595,
+      "unreachable_fraction": 0.15433925567956516,
+      "floor_ratio": 2.381833738858949,
+      "p_value": 0.004975124378109453,
+      "certified": true
+    },
+    {
+      "members": [
+        1,
+        5,
+        10
+      ],
+      "class": "emergent",
+      "tt_norm": 1.5,
+      "z": 8.082321556939586,
+      "unreachable_fraction": 0.1086956984113171,
+      "floor_ratio": 1.552896943982733,
+      "p_value": 0.004975124378109453,
+      "certified": false
+    },
+    {
+      "members": [
+        1,
+        4,
+        5
+      ],
+      "class": "emergent",
+      "tt_norm": 4.602564102564102,
+      "z": 38.744906916599916,
+      "unreachable_fraction": 0.28482701245087066,
+      "floor_ratio": 3.7133980738353096,
+      "p_value": 0.004975124378109453,
+      "certified": true
+    },
+    {
+      "members": [
+        3,
+        11,
+        13
+      ],
+      "class": "reducible",
+      "tt_norm": 0.0,
+      "z": -0.41346052189808574,
+      "unreachable_fraction": 0.07161619867778311,
+      "floor_ratio": 0.9678084277183239,
+      "p_value": 0.6467661691542289,
+      "certified": false
+    },
+    {
+      "members": [
+        3,
+        6,
+        7
+      ],
+      "class": "additive",
+      "tt_norm": 0.0,
+      "z": -1.2898770425992723,
+      "unreachable_fraction": 0.1393861163400973,
+      "floor_ratio": 0.917550423802045,
+      "p_value": 0.9104477611940298,
+      "certified": false
+    },
+    {
+      "members": [
+        1,
+        3,
+        10
+      ],
+      "class": "emergent",
+      "tt_norm": 5.448717948717949,
+      "z": 56.658253982893605,
+      "unreachable_fraction": 0.31583608654497314,
+      "floor_ratio": 4.521564115528204,
+      "p_value": 0.004975124378109453,
+      "certified": true
+    },
+    {
+      "members": [
+        7,
+        12,
+        13
+      ],
+      "class": "emergent",
+      "tt_norm": 4.179487179487179,
+      "z": 36.3459760079897,
+      "unreachable_fraction": 0.2723846971487669,
+      "floor_ratio": 3.338222682200429,
+      "p_value": 0.004975124378109453,
+      "certified": true
+    },
+    {
+      "members": [
+        6,
+        9,
+        10
+      ],
+      "class": "emergent",
+      "tt_norm": 5.589743589743589,
+      "z": 43.254783125442394,
+      "unreachable_fraction": 0.46036517658281917,
+      "floor_ratio": 4.1605781499103855,
+      "p_value": 0.004975124378109453,
+      "certified": true
+    },
+    {
+      "members": [
+        0,
+        7,
+        9
+      ],
+      "class": "emergent",
+      "tt_norm": 2.91025641025641,
+      "z": 25.07605852997801,
+      "unreachable_fraction": 0.1778620100512211,
+      "floor_ratio": 2.6943353806049952,
+      "p_value": 0.004975124378109453,
+      "certified": true
+    },
+    {
+      "members": [
+        0,
+        5,
+        9
+      ],
+      "class": "additive",
+      "tt_norm": 0.0,
+      "z": -0.3142519425377952,
+      "unreachable_fraction": 0.1395187901409635,
+      "floor_ratio": 0.9777375398855883,
+      "p_value": 0.6169154228855721,
+      "certified": false
+    },
+    {
+      "members": [
+        4,
+        6,
+        9
+      ],
+      "class": "reducible",
+      "tt_norm": 0.0,
+      "z": 0.7273342946230443,
+      "unreachable_fraction": 0.06396846406159364,
+      "floor_ratio": 1.0515397072434802,
+      "p_value": 0.24875621890547264,
+      "certified": false
+    },
+    {
+      "members": [
+        4,
+        6,
+        13
+      ],
+      "class": "additive",
+      "tt_norm": 0.0,
+      "z": -0.6755189164284302,
+      "unreachable_fraction": 0.13966919348456636,
+      "floor_ratio": 0.9552492798276551,
+      "p_value": 0.7064676616915423,
+      "certified": false
+    },
+    {
+      "members": [
+        7,
+        9,
+        13
+      ],
+      "class": "additive",
+      "tt_norm": 0.0,
+      "z": 1.0367740132110856,
+      "unreachable_fraction": 0.1467423053660278,
+      "floor_ratio": 1.075998018887942,
+      "p_value": 0.16417910447761194,
+      "certified": false
+    },
+    {
+      "members": [
+        4,
+        9,
+        11
+      ],
+      "class": "additive",
+      "tt_norm": 0.0,
+      "z": -0.538532218848673,
+      "unreachable_fraction": 0.1337910855768704,
+      "floor_ratio": 0.9597928241133487,
+      "p_value": 0.6716417910447762,
+      "certified": false
+    },
+    {
+      "members": [
+        9,
+        12,
+        13
+      ],
+      "class": "reducible",
+      "tt_norm": 0.0,
+      "z": 0.2898399412775817,
+      "unreachable_fraction": 0.0652225644025049,
+      "floor_ratio": 1.0214072089464656,
+      "p_value": 0.3681592039800995,
+      "certified": false
+    },
+    {
+      "members": [
+        3,
+        8,
+        11
+      ],
+      "class": "reducible",
+      "tt_norm": 0.0,
+      "z": 1.300594574171849,
+      "unreachable_fraction": 0.07811336307677871,
+      "floor_ratio": 1.0863432813347498,
+      "p_value": 0.11940298507462686,
+      "certified": false
+    }
+  ],
+  "note": "SYNTHETIC planted-epistasis screen. Validates the order-3 code path and its discrimination of 3-way-emergent triples from additive / 2-way-reducible ones. NOT evidence about real biological 3-way epistasis: Norman measures 0 triples."
+}

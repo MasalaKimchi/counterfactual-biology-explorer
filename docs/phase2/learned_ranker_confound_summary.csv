@@ -1,0 +1,4 @@
+ranker,spearman_vs_cone_z,spearman_vs_cone_raw,spearman_vs_nonadditivity,spearman_vs_effect_norm
+mlp_pred_error,0.1061,0.8716,0.6839,-0.5795
+cone_raw(ref),0.0676,1.0000,0.7361,-0.5599
+cone_z(ref),1.0000,0.0676,0.1530,0.1428
