@@ -1,0 +1,102 @@
+\section{Introduction}
+\label{sec:intro}
+
+Much of experimental biology is a search for interventions that move a cell from one state to
+another: differentiating a stem cell, repolarizing a T cell, reverting a diseased phenotype,
+or---in drug discovery---combining perturbations to reprogram a pathogenic program. When single
+perturbations are insufficient, the field turns to \emph{combinations}, and the design space
+explodes super-linearly: a library of $100$ single perturbations already implies roughly
+$5{,}000$ pairs and $160{,}000$ triples. No screen can measure them all, and most combinations
+are not worth measuring---their joint effect is what the single effects already predict. The
+decisive questions are therefore triage questions: \emph{which unmeasured combinations are worth
+running}, and, once a combination is measured, \emph{is its effect genuinely emergent or merely
+the additive sum of its parts}. These questions are rarely asked with a checkable answer, and
+their economic weight is large: only about one in ten clinical programs succeeds, and many
+late-stage failures involve insufficient efficacy, which motivates grounding combination choice
+in measured perturbation data rather than inferred models
+\citep{Minikel2024,Nelson2015,Harrison2016,BegleyEllis2012,Prinz2011}.
+
+The computational tools available fall into two camps that, as we document in
+Section~\ref{sec:related}, do not overlap. Perturbation-response models---from
+gene-regulatory-network simulators to single-cell foundation models---are increasingly trained
+on real screens but are forward predictors: given a combination they return a predicted response,
+and a predictor structurally always returns \emph{some} answer, so it cannot certify that a
+combination reaches a state the singles cannot. Network-control and Boolean-attractor methods do
+reason about reachability and can carry controllability guarantees, but those guarantees are
+properties of a hand-built or inferred model, only as trustworthy as the network assumed. Neither
+camp certifies emergence from measured effects. This gap matters all the more because a wave of
+2025--2026 benchmarks finds that current perturbation predictors, foundation models included,
+frequently fail to beat mean or linear baselines on genuinely unseen perturbations
+\citep{AhlmannEltze2025,Wong2025,Kernfeld2025,Atti2025}. We reproduce this directly: a
+self-contained learned neural baseline ties the trivial additive baseline for blind prediction of
+held-out doubles (cosine $0.896$ vs.\ $0.897$; Section~\ref{sec:results-headtohead}). Accuracy,
+in other words, is the wrong axis on which to claim a combination is special---the field's own
+evidence argues for an output that is weaker to state but falsifiable.
+
+\paragraph{The convex-cone move.}
+We take the opposite starting point from model building: we do not infer a network at all. A
+combinatorial perturbation screen directly measures, for each single perturbation, the effect
+vector it produces in expression space. We treat these single-gene vectors as a fixed dictionary
+and ask a geometric question of each combination: does its measured effect lie in the set of
+shifts the singles can produce? Two modelling choices make this a convex-geometry problem. A
+measured single effect may be applied with non-negative weight but not reversed into an unmeasured
+``negative perturbation''; and several perturbations applied together are approximated, to first
+order, by the sum of their single effects. Individual effect vectors may raise some transcripts
+and lower others. The set of directions reachable by the singles is therefore the
+\emph{non-negative conic hull} of the measured single-gene effect vectors, and asking whether a
+combination is emergent is asking whether its measured effect lies \emph{outside} that
+model-relative cone---a question non-negative least squares (NNLS) answers exactly
+\citep{LawsonHanson1974}. This reframing turns ``is this combination special?'' into a decision
+with a checkable answer on both sides. When the combination lies inside the cone, its effect is
+reachable by the singles and the NNLS weights name the reachable mixture. When it lies outside,
+convex duality supplies a separating hyperplane---a Farkas/KKT certificate
+\citep{Farkas1902,KuhnTucker1951}---whose full vector certifies that no non-negative mixture of
+the singles reaches that direction.
+
+\paragraph{The honest bar.}
+Geometric ``outside'' is necessary but not sufficient. Because the unreachable residual is a
+normalized quantity, a low-magnitude combination measured with the same absolute noise as a
+large one shows an inflated apparent residual: on the Norman screen the raw unreachable fraction
+correlates with effect magnitude at Spearman $-0.56$, and only a minority of doubles clear their
+own split-half noise floor. We therefore make the certificate noise-aware: a per-gene
+noise-injection null asks whether a reachable target, corrupted by the measured noise, would look
+as far outside the cone as the observed combination does. This removes the magnitude confound
+(the noise-aware score correlates with magnitude at $+0.14$) and yields a two-bar verdict---a
+permissive significance bar and a stricter effect-size bar---that a learned predictor, emitting a
+point estimate with no null, cannot supply.
+
+\paragraph{Scope.}
+The method is a decision instrument, not an oracle of biological truth: it certifies emergence
+\emph{relative to the measured single-gene dictionary} under an explicit additivity model, and
+its verdicts are hypotheses for the bench, not proofs of biological synergy. The synergistic
+pairs it surfaces (e.g.\ the CEBPA/CEBPE differentiation program) are already reported by the
+source screen \citep{Norman2019} and enter here as positive controls; the novelty we claim is the
+measured-effect, certificate-carrying \emph{triage decision} itself. We report the source data's
+provenance verbatim: the Norman combinatorial CRISPRa file used here is labelled A549, whereas the
+canonical Norman 2019 line is K562, and we carry that discrepancy through every result.
+
+\paragraph{Contributions.}
+This paper makes four contributions.
+\begin{enumerate}
+\item \textbf{A certified emergence test for combinatorial screens.} We formalize emergence of a
+combination as \emph{non-}membership in the convex cone of measured single-gene effect vectors,
+and solve it with NNLS so that a verdict and---on emergence---a Farkas/KKT dual certificate follow
+from one convex program, made noise-aware by an injection null that removes the magnitude confound
+(Section~\ref{sec:methods}).
+\item \textbf{A validated headline result.} On the Norman combinatorial CRISPRa screen, all $131$
+measured doubles are geometrically outside the single-gene cone; the noise-aware null certifies
+$129/131$ at $p<0.05$ ($35$ also clearing a $1.9\times$ floor) and recovers classical synergy at
+partial Spearman $0.62$ controlling for magnitude (Section~\ref{sec:results-certificate}).
+\item \textbf{Training-free prospective triage, and why accuracy is the wrong axis.} A single
+scalar computed from the two single effects---their negative cosine---ranks emergent combinations
+$2.4\times$ above base rate without measuring them, while a self-contained learned MLP ties the
+additive baseline for blind prediction yet emits no certificate on any of the $131$ outside-cone
+doubles (Sections~\ref{sec:results-triage}--\ref{sec:results-headtohead}).
+\item \textbf{Generality across order and across screens.} The machinery extends to arbitrary
+interaction order $k$---a reachable-from-lower-order test shrinks the certified doubles $40\to16$
+on real data, and a synthetic planted-epistasis triple screen recovers order-3 emergence at AUC
+$1.00$---and the certificate with its noise-aware discipline transfers to an orthogonal screen
+(CaRPool-seq, Cas13d knockdown in THP-1), where the raw-label triage rank also transfers but the
+magnitude-controlled component is screen-specific
+(Sections~\ref{sec:results-kway}--\ref{sec:results-crossscreen}).
+\end{enumerate}

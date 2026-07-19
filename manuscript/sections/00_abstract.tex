@@ -1,0 +1,31 @@
+\begin{abstract}
+Combinatorial perturbation screens explode super-linearly: 100 single perturbations imply
+roughly 5{,}000 pairs and 160{,}000 triples, and only a fraction of combinations produce
+cell states that the single perturbations cannot already reach in combination. We ask two
+questions a screening team faces directly---which unmeasured combinations are worth running,
+and which measured ones are genuinely \emph{emergent} rather than additive noise---and answer
+both from measured effects alone, with a certificate rather than a prediction. We treat a
+screen's single-gene effect vectors as a fixed dictionary and define a combination as emergent
+when its measured effect leaves the non-negative cone of the single effects. Non-negative
+least squares decides cone membership exactly; on the outside, convex duality (a Farkas/KKT
+separator) certifies the unreachable direction. On the Norman 2019 CRISPRa combinatorial
+screen (data file labelled A549; the canonical line for this study is K562), all $131$ measured
+doubles are geometrically outside the single-gene cone, but the raw unreachable fraction is
+confounded by effect magnitude (Spearman $-0.56$; only a minority of doubles clear their own
+split-half noise floor). A noise-injection null removes the confound and certifies $129/131$
+emergent at $p<0.05$, of which $35$ also clear a $1.9\times$ floor; the certificate recovers
+classical synergy (partial Spearman $0.62$ controlling for magnitude). A training-free triage
+score---the negative cosine between two single effects---ranks emergent combinations $2.4\times$
+above base rate (raw label; $1.4\times$ on the noise-robust label) \emph{without measuring the
+combination}. A self-contained learned neural baseline ties the trivial additive baseline for
+blind prediction (held-out cosine $0.896$ vs.\ $0.897$), reproducing the 2025--2026 finding
+that learned models do not beat additivity out-of-sample; the cone's distinct contribution is
+the certificate, not accuracy---it emits a separator on all $131$ outside-cone doubles where
+predictors emit none. The certificate and its noise-aware discipline transfer to an orthogonal
+screen (CaRPool-seq; Cas13d knockdown in THP-1), and the machinery generalizes to arbitrary
+interaction order $k$, validated by a reachable-from-lower-order test on real doubles and a
+synthetic planted-epistasis triple screen (order-3 recovery AUC $1.00$; the triple test is
+synthetic because the screen measures no triples). We position the method as a certified triage
+instrument for combinatorial screens: it flags which combinations reach states the singles
+cannot, model-relative to the measured dictionary---not a proof of biological synergy.
+\end{abstract}

@@ -1,0 +1,154 @@
+\section{Methods}
+\label{sec:methods}
+
+\subsection{Data and effect vectors}
+\label{sec:methods-data}
+The primary substrate is the combinatorial CRISPRa Perturb-seq screen of \citet{Norman2019}.
+We report its provenance verbatim: the H5AD file used here is labelled cell type A549, whereas
+the canonical Norman 2019 line is K562; we carry that discrepancy through every result. After
+the source screen's quality filters the data contain one non-targeting control, $152$ single-gene
+perturbations, and $131$ two-gene combinations (``doubles'') over $5{,}045$ measured genes; every
+double's two constituent singles are measured, so each double can be scored against a complete
+single-gene dictionary. For each perturbation we form a per-gene effect vector as the pseudobulk
+mean expression profile of that perturbation minus the pseudobulk mean of the control, giving a
+single-gene effect matrix $\Emat\in\mathbb{R}^{G\times P}$ with $P=105$ single-gene atoms present
+as constituents of measured doubles, and a measured combination effect $\dvec\in\mathbb{R}^{G}$ for
+each double. All comparisons are reported as cosine similarity, so claims are directional. The
+identical operator is applied without modification to a second, orthogonal screen---the CaRPool-seq
+Cas13d RNA-targeting knockdown screen of \citet{Wessels2023} in THP-1 cells ($28$ single atoms,
+$158$ doubles, $2{,}000$ genes)---with no dataset-specific parameters tuned
+(Section~\ref{sec:results-crossscreen}).
+
+\subsection{Reachability as membership in a convex cone}
+\label{sec:methods-cone}
+Two assumptions determine the geometry. First, each measured CRISPRi effect vector enters a
+combination with fixed orientation: a negative coefficient would reverse the entire measured
+effect and amount to an unmeasured ``anti-knockdown.'' This does not mean knockdown lowers
+every transcript; each effect vector is signed. Second, applying a set of knockdowns together
+produces, to first
+order, the sum of their individual effects; there is no natural notion of a
+``negative amount'' of a knockdown. The set of cell-state shifts reachable by a non-negative
+combination of knockdowns is therefore the \emph{non-negative conic hull} of the measured
+effect vectors,
+\begin{equation}
+\cone \;=\; \Bigl\{\, \Emat\wvec \;:\; \wvec \in \Rnn^{P} \,\Bigr\}
+\;\subseteq\; \mathbb{R}^{G},
+\label{eq:cone}
+\end{equation}
+a closed convex cone. For a measured combination effect $\dvec$, deciding whether it is reachable by the singles is deciding whether
+$\dvec\in\cone$ under the additive model (up to a non-negative scale, since only direction is
+claimed). We quantify
+proximity by projecting $\dvec$ onto $\cone$: the reachable component is the solution of the
+non-negative least-squares (NNLS) program
+\begin{equation}
+\wvec^{\star} \;=\; \arg\min_{\wvec \,\geq\, 0}\; \bigl\lVert \Emat\wvec - \dvec \bigr\rVert_2^{2},
+\qquad
+\hat{\dvec} \;=\; \Emat\wvec^{\star},
+\label{eq:nnls}
+\end{equation}
+solved with the Lawson--Hanson active-set algorithm \citep{LawsonHanson1974}. The
+\emph{reachable cosine} $\cos(\hat{\dvec},\dvec)$ measures how much of the target's direction
+the cone can express, and the residual $\dvec-\hat{\dvec}$ is the part it cannot. A target is
+declared reachable when its reachable cosine is both high in absolute terms and far above the
+null of Section~\ref{sec:methods-null}; the same solve returns the support of $\wvec^{\star}$,
+whose largest entries rank candidate contributors. A greedy forward selection adds at each
+step the knockdown giving the largest marginal gain in reachable cosine and yields the sparse
+reachability spectrum reported throughout. Its knee is a compact experimental panel, not a
+proof of the globally smallest perturbation set.
+
+\subsection{Infeasibility certificates via convex duality}
+\label{sec:methods-cert}
+The value of a feasibility oracle is that ``no'' is provable, not merely observed. When
+$\dvec\notin\cone$, the separating-hyperplane theorem for convex cones (a form of Farkas'
+lemma \citep{Farkas1902}) guarantees a vector $\bm{y}$ with $\Emat^{\top}\bm{y}\le 0$ and
+$\dvec^{\top}\bm{y}>0$: a hyperplane with the whole cone on one side and the target strictly
+on the other. For Euclidean projection onto a cone, the residual
+$\bm{y}=\dvec-\hat{\dvec}$ supplies such a separator and is produced by the same solve rather
+than a separate computation. The
+Karush--Kuhn--Tucker (KKT) stationarity conditions of \eqref{eq:nnls} provide the numerical
+proof: at the optimum, active (positive-weight) atoms have zero reduced gradient and inactive
+atoms have non-positive reduced gradient. We report the maximum stationarity violation as the
+certificate residual; across all reported solves it is at machine precision
+($\approx\!1.1\times10^{-11}$), confirming true optimality rather than early stopping. The
+biological reading is deliberately narrower than the mathematical one. When a measured double
+$\dvec$ lies outside the single-gene cone, the separator certifies that no non-negative mixture
+of the measured singles reproduces the double's direction---the combination is \emph{emergent}
+relative to the measured dictionary. This is a statement about the dictionary under the additive
+model, not a proof of biological synergy; the two are related but not identical, and we test the
+relationship directly (Section~\ref{sec:results-certificate}).
+
+
+\subsection{Noise-aware certification}
+\label{sec:methods-null}
+Geometric membership is necessary but not sufficient for a claim of emergence. Because the
+unreachable residual fraction $\lVert\dvec-\hat{\dvec}\rVert/\lVert\dvec\rVert$ is normalized by
+target magnitude, a low-magnitude combination measured with the same absolute noise as a large one
+exhibits an inflated apparent residual. We therefore calibrate every certificate against a
+\emph{noise-injection null}. We first estimate a per-gene measurement standard error by splitting
+the cells of each condition into two halves and taking $\mathrm{SE}_g=\lvert t^{(1)}_g-t^{(2)}_g\rvert/2$,
+where $t^{(h)}$ is the half-$h$ effect estimate. Under the null hypothesis that the combination is
+truly reachable, its expected effect is the cone fit $\hat{\dvec}$; we draw $B=200$ synthetic
+targets $\dvec^{(b)}=\hat{\dvec}+\bm{\varepsilon}^{(b)}$ with $\varepsilon^{(b)}_g\sim\mathcal{N}(0,\mathrm{SE}_g^2)$,
+re-project each onto the cone, and record the null distribution of residual fractions. The emergence
+$z$-score is the standardized distance of the observed residual above this null mean, and the
+plus-one empirical $p$ (a conservative $(1+\#\{\text{null}\ge\text{obs}\})/(B+1)$ estimate) is the fraction of null draws at least as extreme.
+The verdict has two bars: bar~(a), $p<\alpha$ with $\alpha=0.05$ (emergent above noise); bar~(b), a
+floor ratio (observed residual over null-mean residual) $\ge 1.9$ (emergent by a large margin
+relative to its own noise). A combination is \emph{certified emergent} only when it clears both.
+Every certificate is deterministic given a seed, and each result carries a model-relative scope
+field naming the dictionary against which emergence was judged.
+
+To confirm the certificate is not a magnitude artefact, we correlate the raw residual and the
+noise-aware $z$ against effect magnitude, and against the classical non-additivity score
+$\lVert\dvec-(\mathbf{a}+\mathbf{b})\rVert/\lVert\dvec\rVert$ using both Spearman correlation and a
+rank-based partial correlation controlling for magnitude. The partial Spearman is the standard
+three-correlation estimator applied to the rank-transformed variables,
+$\rho_{ab\cdot c}=(\rho_{ab}-\rho_{ac}\rho_{bc})/\sqrt{(1-\rho_{ac}^2)(1-\rho_{bc}^2)}$, where $a$,
+$b$, $c$ are the ranks of the residual, the non-additivity score, and the effect magnitude.
+
+\subsection{Training-free prospective triage}
+\label{sec:methods-triage}
+Certification requires the measured combination; triage of \emph{unmeasured} combinations must use
+the singles alone. Our default score is training-free: the negative cosine between the two
+single-gene effect vectors, $-\cos(\mathbf{a},\mathbf{b})$, so that dissimilar singles rank as more
+likely to produce an emergent combination. We evaluate this score by ranking all measured doubles,
+taking the top $k$, and reporting the enrichment of true emergent pairs over the base rate, against
+both a raw unreachable-fraction label and the stricter noise-aware $z$ label. As an optional
+supervised alternative when a small labelled pilot exists, we fit a ridge model on standardized
+singles-only features (the pair cosine and a leave-pair-out additive gap) and evaluate it
+leave-one-out with a permutation null; we report it as a ceiling in supplement, not as the headline.
+
+\subsection{A self-contained learned baseline}
+\label{sec:methods-learned}
+To test whether a learned interaction model changes the picture, we implemented an additive-anchored
+neural baseline with no external machine-learning dependencies (numpy/scipy only). Single effects are
+reduced to a $50$-component SVD basis retaining $95.6\%$ of atom-span variance; a two-layer
+$\tanh$ multilayer perceptron (hidden width $32$) with features $[\mathbf{a},\mathbf{b},\mathbf{a}\odot\mathbf{b}]$
+predicts a residual added to the additive prediction $\mathbf{a}+\mathbf{b}$, trained by manual
+backpropagation with L-BFGS-B. It is evaluated \emph{leave-pairs-out} on all $131$ doubles---every
+test double's own measurement is withheld---and compared against the additive baseline and against
+the cone's in-sample reconstruction (which sees the measured double and is therefore not a blind
+forecast). This isolates the paper's central comparison: blind predictive accuracy versus the ability
+to emit a certificate.
+
+\subsection{Generalization to interaction order $k$}
+\label{sec:methods-kway}
+The cone construction is order-agnostic. To ask whether an order-$k$ combination is emergent relative
+to everything of lower order, we project its measured effect onto the cone spanned by all lower-order
+measured effects. For order $2$ this is the single-gene cone; for order $3$, the cone of singles and
+measured doubles. On real Norman data we compare two reference cones---singles only versus singles
+plus all other measured doubles---and report how the certified-emergent set changes. Because the
+Norman screen measures no triples, we validate the order-$3$ code path on a synthetic
+planted-epistasis screen with known ground truth (additive, $2$-way-reducible, and $3$-way-emergent
+triples), reporting recovery AUC and the confusion matrix of the two-bar verdict. The synthetic screen
+validates the machinery; it is not evidence about biological $3$-way epistasis.
+
+\subsection{Software and reproducibility}
+\label{sec:methods-software}
+The engine is implemented in \texttt{reachability.py} (convex-cone projection and Farkas/KKT
+certificate) with the combinatorial layer in \texttt{combicone.py} (\texttt{triage\_combinations},
+\texttt{certify\_emergence}, \texttt{fit\_triage\_model}) and the learned baseline in
+\texttt{neural\_baseline.py}; all three are numpy/scipy-only, with no deep-learning framework
+dependency. Every reported quantity derives from the published effect matrices of \citet{Norman2019}
+and \citet{Wessels2023} through this code, with a fixed pinned environment and a one-command
+reproduction script; each figure is generated directly from those outputs.

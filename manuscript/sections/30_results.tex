@@ -1,0 +1,201 @@
+\section{Results}
+\label{sec:results}
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{fig1_hook.png}
+\caption{\textbf{Accuracy is a tie---but only the cone certifies which combinations are emergent.}
+\textbf{(a)} Blind (leave-pairs-out) prediction of $131$ measured Norman doubles: a self-contained
+learned MLP (mean held-out cosine $0.896$) is indistinguishable from the trivial additive baseline
+($0.897$); the cone's higher in-sample number ($0.937$) requires seeing the measurement and is not
+a forecast. \textbf{(b)} For one certified pair (SET$+$CEBPE), the Farkas/KKT separator places all
+$105$ single-gene atoms on one side ($\cos\le 0$) and the measured double strictly on the other
+($\cos=+0.50$); the learned and additive predictors emit no such certificate on any of the $131$
+outside-cone doubles. $n=131$ doubles; unit of replication is the perturbation pair.}
+\label{fig:hook}
+\end{figure*}
+
+Figure~\ref{fig:hook} states the paper's thesis as data. A learned model and a one-line additive
+rule predict held-out combination effects equally well, so predictive accuracy cannot be the
+criterion for calling a combination special. What distinguishes the convex-cone view is not
+accuracy but a falsifiable output: for every combination whose measured effect leaves the
+single-gene cone, the same convex program returns a separating hyperplane certifying the
+unreachable direction. The rest of this section builds that certificate, makes it robust to
+measurement noise, turns it into a training-free triage rule, and shows it generalizes across
+interaction order and across screens.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{fig2.png}
+\caption{\textbf{The emergence certificate must clear a measurement-noise bar.}
+\textbf{(a)} For each of $131$ Norman doubles, observed unreachable fraction (y) against the
+residual expected from measurement noise alone under the reachable-target null (x); points near
+the diagonal are consistent with noise. Colour is the noise-aware emergence $z$. \textbf{(b)} The
+noise-aware certificate recovers classical synergy: observed residual against the non-additivity
+score $\lVert\dvec-(\mathbf{a}+\mathbf{b})\rVert/\lVert\dvec\rVert$ (Spearman $0.74$; partial
+Spearman $0.62$ controlling for effect magnitude, shown by colour). $129/131$ clear bar~(a)
+($p<0.05$); $35/131$ also clear bar~(b) ($1.9\times$ floor). $n=131$ doubles.}
+\label{fig:certificate}
+\end{figure*}
+
+\subsection{The certificate, and the noise bar it must clear}
+\label{sec:results-certificate}
+
+On the Norman combinatorial CRISPRa screen (data file labelled A549; canonical line K562), we
+build a dictionary of $105$ single-gene effect vectors over $5{,}045$ genes and project each of
+$131$ measured doubles onto their non-negative cone (Section~\ref{sec:methods-cone}). Every one of
+the $131$ doubles lies geometrically outside the cone: no non-negative mixture of the measured
+singles reproduces the measured double, and each carries a Farkas/KKT separator at machine
+precision.
+
+Geometric ``outside,'' however, is not yet evidence of emergence. Because the unreachable fraction
+is normalized by target norm, a small-magnitude double measured with the same absolute noise as a
+large one shows an inflated apparent residual. The raw unreachable fraction indeed tracks effect
+magnitude at Spearman $-0.56$ ($p=4\times10^{-12}$), and only a minority of doubles clear their own
+split-half noise floor (Fig.~\ref{fig:certificate}a). We therefore replace the point residual with
+a noise-injection null (Section~\ref{sec:methods-null}): starting from the reachable fit
+$\hat{\dvec}$, we add per-gene Gaussian noise calibrated to the split-half standard error and ask
+how far outside the cone a genuinely reachable target would appear under that noise, repeating
+$B=200$ times. The resulting $z$-score and plus-one empirical $p$ quantify emergence above
+measurement noise, and---critically---no longer track magnitude (Spearman $+0.14$, $p=0.13$;
+Fig.~\ref{fig:certificate}b).
+
+This yields a two-bar verdict. Bar~(a), the permissive significance test, is cleared by $129/131$
+doubles at $p<0.05$. Bar~(b), a stricter requirement that the residual exceed $1.9\times$ its own
+noise floor, is cleared by $35/131$. We report both because they answer different questions: bar~(a)
+asks whether a double is emergent at all above noise; bar~(b) asks whether the emergence is large
+relative to how noisily it was measured. The most strongly certified pairs are
+SET$+$CEBPE ($z=62$, floor ratio $3.5\times$), IRF1$+$SET ($z=49$), and MAPK1$+$PRTG ($z=38$), each
+clearing both bars; the classical DUSP9$+$MAPK1 phosphatase-substrate synergy is strongly
+significant ($z=19$) but sits just below the bar~(b) floor ($1.8\times<1.9\times$), a reminder that
+the two bars are distinct. A textbook
+apoptosis pair, BCL2L11$+$BAK1, passes bar~(a) only weakly ($z=2.9$, $p=0.005$) and does not clear
+bar~(b), and the mitotic pair KIF18B$+$KIF2C is the one headline pair that fails significance
+($z=1.6$, $p=0.055$)---the noise bar demoting exactly the pairs whose apparent unreachability was a
+magnitude artefact. Reassuringly, the noise-aware certificate recovers classical non-additivity:
+the observed residual correlates with the standard synergy score $\lVert\dvec-(\mathbf{a}+\mathbf{b})\rVert/\lVert\dvec\rVert$
+at Spearman $0.74$, and at partial Spearman $0.62$ after controlling for effect magnitude
+(Fig.~\ref{fig:certificate}b), so the signal is synergy, not scale.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{fig3.png}
+\caption{\textbf{Training-free triage of unmeasured combinations.}
+\textbf{(a)} Singles-only predicted emergence (leave-one-out) against measured noise-aware $z$;
+Spearman $0.43$ (permutation $p=0.002$). \textbf{(b)} Precision--recall for flagging true
+top-quartile emergent pairs: the top $20$ picks by the training-free score contain $12$ emergent
+($2.4\times$ the $0.25$ base rate, $p=3\times10^{-4}$). The single-scalar $-\cos(\mathbf{a},\mathbf{b})$
+alone (grey) already beats the base rate; a ridge model on a small labelled pilot (red) adds little
+and is reported only as a ceiling. $n=131$ doubles.}
+\label{fig:triage}
+\end{figure*}
+
+\subsection{Training-free triage of unmeasured combinations}
+\label{sec:results-triage}
+
+The certificate needs the measured combination. The complementary question---which of the
+$\binom{n}{2}$ unmeasured combinations to run---must be answered from singles alone. We find that a
+single scalar predicts emergence prospectively: the negative cosine between the two single-gene
+effect vectors, $-\cos(\mathbf{a},\mathbf{b})$. Pairs of dissimilar singles are more likely to
+produce an emergent combination (Spearman between $-\cos$ and the raw unreachable label $-0.47$;
+against the noise-aware label $-0.37$). Ranking the $131$ doubles by this training-free score and
+taking the top $20$ recovers $12$ true top-quartile emergent pairs---a $2.4\times$ enrichment over
+the $0.25$ base rate ($p=3\times10^{-4}$; Fig.~\ref{fig:triage})---or $7/20$, a $1.4\times$
+enrichment, against the stricter noise-aware label. A supervised ridge model on a small labelled
+pilot (nine singles-only features, leave-one-out) reaches Spearman $0.43$ (permutation $p=0.002$),
+a modest ceiling that we report in supplement; the headline triage claim needs no training data at
+all.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{fig4.png}
+\caption{\textbf{Head-to-head: a learned model ties additive, and neither certifies.}
+\textbf{(a)} Leave-pairs-out blind prediction of $131$ measured doubles: the learned MLP (mean
+cosine $0.896$) ties the additive baseline ($0.897$); the cone's in-sample fit ($0.937$) requires
+the measured double and is not a blind forecast. \textbf{(b)} For a certified pair, only the cone
+emits a separating hyperplane: all $105$ single atoms fall on one side ($\cos\le0$) and the
+measured double on the other; the learned and additive predictors emit no certificate on any of
+the $131$ outside-cone doubles. $n=131$ doubles.}
+\label{fig:headtohead}
+\end{figure*}
+
+\subsection{Head-to-head against a learned baseline}
+\label{sec:results-headtohead}
+
+To test whether a learned interaction model changes the picture, we built a self-contained neural
+baseline with no external dependencies: an additive-anchored two-layer MLP (hidden width $32$,
+trained on a $50$-component SVD of the $105$ atoms retaining $95.6\%$ of atom-span variance) that
+predicts a double's effect from its two single effects, evaluated leave-pairs-out on all $131$
+doubles. Its blind held-out cosine is $0.896$, statistically tied with the additive baseline's
+$0.897$ (the MLP wins on $49.6\%$ of doubles), reproducing the 2025--2026 result that learned
+perturbation models do not beat additivity out-of-sample \citep{AhlmannEltze2025}. The cone's
+in-sample reconstruction cosine ($0.937$) is higher but is not a blind forecast---it requires the
+measured double. The head-to-head (Fig.~\ref{fig:hook}, expanded in Fig.~\ref{fig:headtohead})
+makes the paper's central point precise: on the metric the field optimizes, the methods tie; on the
+output that supports a decision---a per-pair certificate of unreachability---only the cone delivers,
+emitting a valid separator on all $131$ outside-cone doubles where both predictors emit none.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{fig5.png}
+\caption{\textbf{The certificate generalizes to interaction order $k$.}
+\textbf{(a)} Real Norman doubles: noise-floor ratio against the single-gene cone (x) versus against
+the enlarged cone of singles-plus-other-doubles (y). Enlarging the reference set shrinks the
+certified-emergent set from $40$ to $16$; $24$ doubles flip from emergent to reachable, while all
+$131$ remain geometrically outside both cones. \textbf{(b)} Synthetic planted-epistasis triple
+screen (the Norman screen measures no triples): the order-$3$ certificate separates planted
+$3$-way-emergent triples from additive and $2$-way-reducible ones at AUC $1.00$ (noise-aware $z$),
+certifying $36/40$ emergent triples with $0/80$ false positives.}
+\label{fig:kway}
+\end{figure*}
+
+\subsection{The certificate generalizes to interaction order $k$}
+\label{sec:results-kway}
+
+Emergence is not restricted to pairs. The cone construction generalizes verbatim to order $k$: to
+ask whether an order-$k$ combination is emergent \emph{relative to everything of lower order}, we
+project its measured effect onto the cone spanned by all lower-order effects. On real data this
+sharpens the verdict. When the single-gene cone is enlarged with the other measured doubles (from
+$105$ to $235$ atoms), the number of certified-emergent doubles shrinks from $40$ to $16$: $24$
+pairs that look emergent against singles alone become reachable once other measured doubles enter
+the dictionary (Fig.~\ref{fig:kway}a). All $131$ doubles nonetheless remain geometrically outside
+both cones; the shrinkage is driven by effect size crossing the noise bar, not by a change in
+geometric membership---emergence is a property of the reference set, and the method makes that
+reference explicit. Because the Norman screen measures no triples, we validate the order-3 code path
+on a synthetic planted-epistasis screen with known ground truth: the order-3 certificate recovers
+planted $3$-way-emergent triples from additive and $2$-way-reducible ones at AUC $1.00$ on the
+noise-aware score ($0.92$ on the raw residual), certifying $36/40$ true emergent triples with $0/80$
+false positives (Fig.~\ref{fig:kway}b). This is a validation of the machinery, not a claim about
+biological $3$-way epistasis, which the data cannot support.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{fig6.png}
+\caption{\textbf{The certificate and its noise discipline transfer to an orthogonal screen.}
+Norman CRISPRa doubles (blue) and CaRPool-seq Cas13d-knockdown doubles in THP-1 (orange).
+\textbf{(a)} Raw unreachable fraction tracks effect magnitude in both screens ($-0.56$, $-0.82$).
+\textbf{(b)} The noise-aware $z$ is magnitude-free in both ($+0.14$, $+0.12$). \textbf{(c)} The
+two-bar certificate reproduces (CaRPool $48\%$ certified, Norman $31\%$ under the shared symmetric
+pipeline). \textbf{(d)} The training-free triage rank transfers against the raw label
+($\sim\!2.2\times$ in both) but its magnitude-controlled component is screen-specific (survives in
+Norman, not significant in CaRPool). $n=131$ (Norman), $158$ (CaRPool) doubles.}
+\label{fig:crossscreen}
+\end{figure*}
+
+\subsection{The certificate transfers to an orthogonal screen}
+\label{sec:results-crossscreen}
+
+Finally, we ask whether the emergence geometry is a property of one screen or of combinatorial
+perturbation data generally. We repeat the entire pipeline on CaRPool-seq \citep{Wessels2023}, a
+Cas13d RNA-targeting knockdown screen in THP-1 cells---orthogonal to Norman in perturbation modality
+(knockdown vs.\ CRISPRa activation), direction, target molecule, and cell line---with $28$ single
+atoms and $158$ measured doubles. Three findings transfer (Fig.~\ref{fig:crossscreen}). First, the
+magnitude confound is universal: the raw unreachable fraction tracks effect magnitude in both
+screens ($-0.56$ Norman, $-0.82$ CaRPool), and the noise-aware $z$ removes it in both ($+0.14$,
+$+0.12$). Second, the two-bar certificate reproduces, with CaRPool showing a higher certified
+fraction ($76/158$, $48\%$) than Norman ($40/131$ under the shared pipeline). Third, the
+training-free triage rank transfers against the raw label ($\sim\!2.2\times$ enrichment in both),
+but its magnitude-controlled component is screen-specific: the noise-robust triage correlation
+survives in Norman (Spearman $0.37$) and is not significant in CaRPool ($0.08$). The certificate and
+its noise discipline generalize; the prospective triage rule generalizes in rank but should be
+recalibrated per screen---an honest boundary we state rather than paper over.

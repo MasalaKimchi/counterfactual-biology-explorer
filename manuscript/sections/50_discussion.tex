@@ -1,0 +1,106 @@
+\section{Discussion}
+\label{sec:discussion}
+
+We have described a certified triage instrument for combinatorial perturbation screens. It treats
+a screen's single-gene effect vectors as a dictionary and decides, by convex geometry, whether a
+measured combination reaches a cell-state direction that the singles cannot---answering ``is this
+combination emergent?'' with a Farkas/KKT certificate rather than a prediction, and answering
+``which unmeasured combinations are worth running?'' with a training-free score computed from the
+singles alone. The value of the framework is not a new list of synergistic gene pairs---those are
+already in the source screens and we use them only as positive controls---but a new \emph{kind of
+output}: a falsifiable, noise-aware emergence certificate computed directly from measured effects,
+which no forward predictor supplies.
+
+\subsection{Interpretation}
+The central methodological finding is that predictive accuracy is the wrong axis for claiming a
+combination is special. A self-contained learned model and a one-line additive rule predict
+held-out double effects equally well ($0.896$ vs.\ $0.897$), consistent with a wave of
+2025--2026 benchmarks \citep{AhlmannEltze2025,Wong2025,Kernfeld2025,Atti2025}; a screening team
+that ranked combinations by predicted accuracy would be ranking by a quantity on which the best
+available model ties a trivial baseline. The convex-cone view instead asks a decision question
+with a checkable answer on both sides, and only it returns a certificate: on all $131$ Norman
+doubles the measured effect leaves the single-gene cone with a separating hyperplane at machine
+precision.
+
+That geometric answer becomes trustworthy only once it clears a noise bar. The raw unreachable
+fraction is confounded by effect magnitude (Spearman $-0.56$), because a normalized residual
+inflates for low-magnitude combinations measured with the same absolute noise; the
+noise-injection null removes the confound ($+0.14$) and yields a two-bar verdict that separates
+``emergent at all above noise'' ($129/131$) from ``emergent by a large margin relative to its own
+noise'' ($35/131$). We report both bars because they answer different questions, and because a
+learned point predictor, emitting no null, can supply neither. Reassuringly, the certificate is
+not a measurement artefact: it recovers classical non-additivity at partial Spearman $0.62$ after
+controlling for magnitude, so the pairs it certifies are the biologically synergistic ones.
+
+The complement to the certificate is prospective, and here a single scalar carries the signal.
+The negative cosine between two single effects ranks emergent combinations $2.4\times$ above base
+rate without any measurement of the combination---dissimilar singles are more likely to combine
+into something the cone cannot reach. This is a training-free rule a team can apply to a full
+combinatorial catalogue before committing a single well.
+
+\subsection{Limitations}
+\label{sec:limitations}
+Four limitations bound the conclusion, and each maps to a concrete next step.
+
+The most consequential is that emergence is defined \emph{relative to the measured dictionary}
+under an additive model, not as biological synergy in an absolute sense. A combination we certify
+as emergent reaches a state no non-negative mixture of the \emph{measured} singles reaches; if the
+true single-gene effect is mis-estimated, or a relevant single is absent from the library, the
+verdict changes. The $k$-way analysis makes this dependence explicit and turns it into a feature:
+enlarging the reference set from singles to singles-plus-doubles shrinks the certified set from
+$40$ to $16$, because emergence is a property of the reference, and the method forces that
+reference to be stated.
+
+Second, the higher-order validation is uneven. The order-$2$ certificate rests on real measured
+doubles; the order-$3$ certificate is validated only on a synthetic planted-epistasis screen,
+because the Norman screen measures no triples. The AUC $1.00$ on synthetic triples establishes
+that the code path discriminates planted $3$-way emergence from additive and $2$-way-reducible
+combinations---it is a validation of the machinery, not evidence about real biological $3$-way
+epistasis, which no available data can supply.
+
+Third, generalization is partial and we state the boundary. The certificate and its noise-aware
+discipline transfer to an orthogonal screen (CaRPool-seq; Cas13d knockdown in THP-1): the
+magnitude confound and its noise-aware correction reproduce, and the two-bar certificate holds
+(CaRPool $48\%$ certified). But the prospective triage rule transfers only in rank against the raw
+label ($\sim\!2.2\times$ in both screens); its magnitude-controlled component survives in Norman
+and is not significant in CaRPool, so the triage score should be recalibrated per screen rather
+than assumed portable.
+
+Finally, external validity is bounded by provenance and by the transcriptomic proxy. The Norman
+combinatorial file used here is labelled A549 whereas the canonical Norman 2019 line is K562, a
+discrepancy we carry through every result; and matching a target in expression space is not the
+same as achieving the corresponding cellular phenotype---functional confirmation remains a
+separate wet-lab endpoint.
+
+\subsection{Outlook}
+The most valuable next experiments follow directly from the limitations. Measuring a modest panel
+of triple perturbations would replace the synthetic order-$3$ validation with an in-domain one and
+test whether the certified-set shrinkage seen from singles to doubles continues to higher order.
+Applying the training-free triage prospectively---selecting the top-ranked unmeasured combinations
+in a fresh screen and measuring the realized emergence rate against random selection---would
+convert the retrospective $2.4\times$ enrichment into a forward-validated hit rate. And extending
+the dictionary across more screens and modalities would turn the two-screen transfer result into a
+generalization curve, and calibrate when the prospective score is portable. In each case the
+framework's output is intended to make combinatorial screening more efficient by exposing, before
+the wells are run, which combinations can reach states the singles cannot.
+
+\paragraph{A causal-inference agenda.}
+Read as a causal-inference method, the certificate is a design-based counterfactual query: the
+single-gene effect vectors are average treatment effects from a randomized perturbation
+experiment, and an emergence verdict asks whether a combination's measured effect exceeds what any
+non-negative mixture of those single treatment effects produces. That framing makes the identifying
+assumptions explicit and turns each into a concrete robustness check. Four are worth naming. First,
+\emph{interference} (SUTVA): pooled Perturb-seq lets a perturbed cell's secreted signals alter a
+neighbour's state, which would bias the single-gene effects the cone is built from; an
+arrayed-versus-pooled or MOI-titration comparison would bound this spillover. Second,
+\emph{measurement noise as coordinated bias}: our noise-injection null models undirected per-gene
+noise, but a coordinated attenuation of the combination-specific signal would be a different failure
+mode---a sensitivity radius on the certified verdict quantifies how much coordinated bias would
+overturn it. Third, \emph{construct validity}: negative-control combinations (pairs expected to be
+additive) should not certify, and the specificity of the synthetic screen ($0/80$ false positives)
+is the in-silico version of that check. Fourth, \emph{guide non-compliance}: incomplete knockdown
+or activation attenuates the measured effect, an errors-in-variables problem an instrumental-variables
+treatment of guide efficiency would address. The computable half of this agenda---sensitivity radii,
+negative-control outcomes, and signed construct validity for the emergence certificate---is released
+as a causal-validation dossier accompanying the code; the wet-lab experiments above are its
+continuation.

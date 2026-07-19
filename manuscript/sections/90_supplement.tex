@@ -1,0 +1,47 @@
+\section{Supplementary figures}
+\label{sec:supp}
+
+\begin{figure*}[h]
+\centering
+\includegraphics[width=0.92\textwidth]{figS1}
+\caption{\textbf{The noise-injection certificate in detail.} For each Norman double, the observed
+unreachable fraction is compared against the reachable-target noise null; the bar-(a) significance
+call ($p<0.05$, $129/131$) and the stricter bar-(b) floor call ($1.9\times$, $35/131$) are shown,
+along with the ``SNR trap'' panel in which low-magnitude pairs show inflated \emph{raw} residuals
+but collapse under the noise-aware $z$. This is the per-pair detail behind
+Fig.~\ref{fig:certificate}.}
+\label{fig:supp-certificate}
+\end{figure*}
+
+\begin{figure*}[h]
+\centering
+\includegraphics[width=0.92\textwidth]{figS2}
+\caption{\textbf{All raw emergence rankers are magnitude-confounded; only the noise-aware $z$
+escapes.} The cone residual agrees with a ridge interaction model (Spearman $0.98$), and every raw
+ranker---cone residual, non-additivity, ridge and OLS interaction residuals---correlates negatively
+with effect magnitude ($-0.47$ to $-0.59$); the noise-aware $z$ is the only score that is
+magnitude-free ($+0.14$). This is the confound diagnostic behind the head-to-head of
+Fig.~\ref{fig:headtohead}.}
+\label{fig:supp-headtohead}
+\end{figure*}
+
+\begin{figure*}[h]
+\centering
+\includegraphics[width=0.92\textwidth]{figS3}
+\caption{\textbf{Cross-modality reproduction on Replogle CRISPRi.} The same pipeline run on the
+Replogle K562 essential-gene CRISPRi screen reproduces the leave-one-out emergence spectrum and the
+certificate-versus-realized agreement (Spearman $0.75$); the SNR/magnitude confound is present in
+both CRISPRa ($-0.56$) and CRISPRi ($-0.69$) and is removed by the noise-aware score in both. This
+is a geometry-transfer check, distinct from the orthogonal-screen certificate transfer of
+Fig.~\ref{fig:crossscreen}, which uses CaRPool-seq.}
+\label{fig:supp-crossmodality}
+\end{figure*}
+
+\clearpage
+\subsection*{Reproducibility}
+Every number and figure in this manuscript is produced by a pinned, single-command reproduction
+of the released code (\texttt{reachability.py}, \texttt{combicone.py}, \texttt{neural\_baseline.py})
+against the published effect matrices of \citet{Norman2019} and \citet{Wessels2023}. The
+combinatorial-triage API, its test suite, the $k$-way validation scripts, and a deterministic,
+data-free tutorial notebook accompany the code; a canonical facts sheet ties each reported value to
+the analysis output that produced it.

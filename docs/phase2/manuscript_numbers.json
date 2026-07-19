@@ -1,0 +1,96 @@
+{
+  "provenance": "All values pulled from Phase-2 deliverable artifacts (not memory). Two internally-consistent Norman number sets exist and are kept separate: (A) flagship emergence_certificate.csv (fbfc2cf0) \u2014 the canonical Norman headline; (B) cross-screen recompute (norman_metrics.json d2533e54) using a symmetric cone at a slightly different threshold \u2014 used ONLY for the Norman-vs-CaRPool transfer comparison so both screens share one pipeline.",
+  "dataset": {
+    "norman_file_label": "A549",
+    "norman_canonical_line": "K562",
+    "norman_geo": "GSE133344",
+    "norman_n_singles": 105,
+    "norman_n_doubles": 131,
+    "norman_n_genes": 5045,
+    "carpool_geo": "GSE213957",
+    "carpool_modality": "Cas13d RNA-targeting knockdown",
+    "carpool_cell": "THP-1",
+    "carpool_n_singles": 28,
+    "carpool_n_doubles": 158,
+    "carpool_n_genes": 2000
+  },
+  "learned_baseline": {
+    "mlp_heldout_cos": 0.896,
+    "additive_heldout_cos": 0.897,
+    "cone_insample_cos": 0.937,
+    "mlp_beats_additive_frac": 0.496,
+    "svd_ncomp": 50,
+    "svd_var_retained": 0.956,
+    "separators_emitted_cone": "131/131 outside-cone",
+    "separators_emitted_learners": "0"
+  },
+  "emergence_certificate_flagship": {
+    "n_doubles": 131,
+    "geometrically_outside_cone": 131,
+    "bar_a_p_lt_0.05": 129,
+    "bar_b_floor_ge_1.9": 35,
+    "both_bars": 35,
+    "raw_resid_vs_magnitude_spearman": -0.56,
+    "z_vs_magnitude_spearman": 0.14,
+    "synergy_raw_spearman": 0.736,
+    "synergy_partial_given_magnitude": 0.62,
+    "top_emergent": [
+      [
+        "SET+CEBPE",
+        62.4,
+        3.48
+      ],
+      [
+        "IRF1+SET",
+        49.4,
+        3.13
+      ],
+      [
+        "MAPK1+PRTG",
+        37.7,
+        2.63
+      ]
+    ],
+    "borderline_note": "BCL2L11+BAK1 z=2.9 p=0.005 passes bar-a but is modest; KIF18B+KIF2C z=1.6 p=0.055 is the only NS headliner.",
+    "synergy_partial_method": "textbook three-correlation partial Spearman on rank-transformed variables (residual, non-additivity, effect magnitude): rho_ab.c = (r_ab - r_ac*r_bc)/sqrt((1-r_ac^2)(1-r_bc^2)) = 0.6244 -> 0.62. A non-standard double-rank variant used in an earlier keystone draft gave 0.60; the manuscript and Fig2 now use the standard estimator (0.62)."
+  },
+  "triage": {
+    "score": "training-free negative single-single cosine (-cosAB)",
+    "top20_raw_hits": "12/20",
+    "top20_raw_enrichment": 2.4,
+    "top20_z_hits": "7/20",
+    "top20_z_enrichment": 1.4,
+    "cosAB_vs_raw_spearman": -0.468,
+    "cosAB_vs_z_spearman": -0.369,
+    "ridge_loo_spearman": 0.43,
+    "ridge_perm_p": 0.002,
+    "base_rate": 0.25
+  },
+  "kway": {
+    "real_reachable_from_lower_order": "40->16 certified (60% shrink); 24 flip emergent->reachable; all 131 stay geometrically outside both cones",
+    "cone_i_atoms": 105,
+    "cone_ii_atoms": 235,
+    "synth_triple_auc_z": 1.0,
+    "synth_triple_auc_raw": 0.925,
+    "synth_triple_TP": 36,
+    "synth_triple_FN": 4,
+    "synth_triple_FP": 0,
+    "synth_triple_TN": 80,
+    "synth_note": "SYNTHETIC planted-epistasis screen \u2014 Norman measures 0 triples; validates the order-3 code path, NOT real 3-way biology."
+  },
+  "cross_screen_transfer": {
+    "norman_both_bars": "40/131",
+    "carpool_both_bars": "76/158 (48%)",
+    "norman_raw_mag_spearman": -0.56,
+    "carpool_raw_mag_spearman": -0.82,
+    "norman_z_mag_spearman": 0.13,
+    "carpool_z_mag_spearman": 0.12,
+    "norman_triage_raw_enrich": 2.17,
+    "carpool_triage_raw_enrich": 2.17,
+    "norman_triage_raw_spearman": 0.468,
+    "carpool_triage_raw_spearman": 0.643,
+    "norman_triage_z_spearman": 0.373,
+    "carpool_triage_z_spearman": 0.077,
+    "verdict": "Certificate + SNR/magnitude confound + noise-aware fix all transfer; the raw-label triage rank transfers (~2.2x both); the magnitude-controlled triage component is screen-specific (survives Norman, n.s. in CaRPool)."
+  }
+}

@@ -1,0 +1,113 @@
+% Related work section fragment — natbib \citep/\citet; no preamble.
+% Every citation key resolves to an entry in references.bib.
+\section{Related work}
+\label{sec:related}
+
+Combinatorial cell-state engineering poses an inverse-design question at scale: given a
+library of single perturbations, which \emph{combinations} reach states the singles cannot,
+and is a given combination genuinely emergent or merely additive? This is the question behind
+combinatorial CRISPR screens, drug-combination discovery, and multi-factor reprogramming, and
+it is a pharmaceutical target-selection question whenever a program depends on a synergy rather
+than a single lever. Because the combinatorial design space explodes super-linearly, a method
+must also triage which of the untested combinations are worth measuring at all. Wrong target,
+modality, or combination choice is one contributor to the cost of drug development: only about
+one in ten clinical programmes reaches approval, and failure is often paid for late
+\citep{Minikel2024,WongSiahLo2019}. Attrition concentrates
+at Phase~II, and roughly half of Phase~II/III failures are for lack of efficacy---the
+wrong target or mechanism rather than safety \citep{Harrison2016}. The two interventions
+with published evidence of improving those odds both point the same way: human genetic
+support raises the odds of approval about 2.6-fold \citep{Minikel2024,Nelson2015}, and
+\emph{measured} rather than inferred target effects provide a stronger evidence layer amid the
+11--25\% preclinical reproducibility documented by the Amgen and Bayer audits
+\citep{BegleyEllis2012,Prinz2011}. A method for this problem should therefore (i)~work from
+measured effects in the relevant screen, (ii)~certify emergence rather than merely
+predict a combination's response, and (iii)~say so honestly, above measurement noise, when a
+combination is \emph{not} emergent.
+
+We surveyed 91 prior methods spanning 2011--2026 (92 including this work) across
+control-theoretic network control,
+gene-regulatory-network (GRN) inference with in-silico perturbation, deep
+perturbation-response prediction, single-cell foundation models, and the
+combinatorial-screen, optimal-transport, virtual-cell, and benchmark literature that
+borders them. Positioning them on two axes---\emph{what question is answered} (forward
+prediction versus feasibility) and \emph{what the answer is grounded in} (an inferred or
+hand-built model versus directly measured effects)---exposes a gap that is exact rather
+than rhetorical. The methods grounded in measured effects answer only forward questions,
+and the methods that reason about feasibility do so only inside a model.
+
+\paragraph{Model-theoretic feasibility.}
+The most mature theory for the intervention question is network control. Structural and
+target controllability cast steering an assumed linear system as a matching problem over
+network topology \citep{Liu2011,Gao2014}, and determining-node / control-kernel methods
+identify driver sets from structure \citep{Mochizuki2013,Kim2013}. Boolean attractor
+control computes node interventions that switch a logical network between attractors
+\citep{Zanudo2015,Zanudo2017,Joo2018,Marazzi2022}, a line that remains active
+\citep{Cifuentes-Fontanals2025,Metzcar2025,Murrugarra2025,Trinh2025,Vecchio2026}. A
+data-fitted strand fits a dynamical model to omics and then applies control theory
+\citep{Ronquist2017,Rukhlenko2022,Wytock2024}, and network-influence predictors rank
+transcription-factor sets for a conversion \citep{Rackham2016,Cahan2014}. These are the
+methods that carry a controllability or control-strategy guarantee---but the guarantee is
+a property of a hand-built, fitted, or inferred model, never of measured effects, and the
+control set is only as trustworthy as the network put in. The same dependency reappears
+whenever feasibility-style reasoning is imported onto a reconstructed single-cell GRN
+\citep{Wang2023CEFCON} or run in a learned latent space \citep{Han2025}. The set of prior
+methods that emit any verdict- or certificate-like output is therefore not one family: it
+spans structural and Boolean network control, control-from-data, an inferred single-cell
+GRN, and one causally inspired perturbation predictor. What unites them is the assumed
+model, not the family.
+
+\paragraph{Measured-grounded forward prediction.}
+The single-cell community answers the same biological question by running an inferred
+network forward. CellOracle infers a GRN and simulates a transcription-factor knockout
+into predicted identity transitions \citep{Kamimoto2023}; related tools infer regulons,
+enhancer networks, or dynamic GRNs \citep{Aibar2017,Xu2021,BravoGonzalezBlas2023,%
+Wang2023Dictys,Osorio2022}, with BEELINE quantifying how method-dependent GRN inference
+is \citep{Pratapa2020}. Deep perturbation-response models are genuinely
+measured-grounded---they learn from real Perturb-seq data---but are resolutely forward:
+GEARS predicts outcomes of unseen multi-gene perturbations \citep{Roohani2023}, and
+compositional and disentanglement models predict responses to given perturbations
+\citep{Lotfollahi2019,Lotfollahi2023,Hetzel2022,Piran2024}. Single-cell foundation models
+\citep{Theodoris2023,Cui2024,Hao2024} and the 2025--2026 virtual-cell surge---perturbation
+transformers, atlas-scale models and challenges, and giga-scale perturbation atlases
+\citep{Adduri2025,Roohani2025,Zhang2025Tahoe,Klein2025b}---extend the same forward map.
+Optimal-transport methods describe how cells \emph{do} move rather than which interventions
+\emph{would} move them \citep{Schiebinger2019,Lange2022}, and experimental-design methods
+choose the next screen \citep{Huang2024}. Every one maps perturbation to predicted
+response: a predictor always returns \emph{some} answer and structurally cannot certify
+that a target is unreachable.
+
+\paragraph{Why a feasibility verdict, not another predictor.}
+A cluster of 2025--2026 benchmarks reports that current perturbation-prediction models,
+foundation models included, often fail to beat simple mean or linear baselines on
+genuinely unseen perturbations \citep{AhlmannEltze2025,Wong2025,Csendes2025,%
+Kedzierska2025,Wu2025,Vinas2025,Kernfeld2025,Wei2025,Luecken2025,Atti2025,Mao2026,%
+Vollenweider2026}. This is the field's own critique, and it sharpens the case for a
+different output: a feasibility verdict computed directly from measured effects does not
+extrapolate to unseen perturbations at all, and it comes with a checkable certificate and a
+shuffled-target null. The claim is deliberately weaker, and therefore more defensible, than
+predicting an unseen response.
+
+\paragraph{Our position.}
+Across all 91 prior methods (ours excluded), 14 operate directly on measured effects---and
+all 14 only predict or rank; \emph{none} returns a feasibility verdict, emits a
+data-grounded certificate, or proves infeasibility, and the 13--15 partial verdict/%
+certificate marks are all model-theoretic. The two capabilities this work
+combines---measured grounding and an emergence certificate---are held by
+\emph{disjoint} sets of prior methods, and their intersection is empty. We compose the
+measured single-gene effect vectors from a combinatorial Perturb-seq screen
+\citep{Norman2019} directly, with no inferred network. Because a measured single effect enters
+a combination with non-negative weight, the states reachable by the singles form a convex cone,
+and non-negative least squares \citep{LawsonHanson1974} decides membership exactly: ``inside''
+means the combination is additive-reachable, and ``outside'' is a model-relative theorem whose
+separating hyperplane---a Farkas/KKT certificate \citep{Farkas1902}---certifies that no
+non-negative mixture of the singles reaches the combination's direction. We make the certificate
+noise-aware, so that a magnitude-driven residual does not masquerade as emergence, and we
+validate it on the Norman combinatorial CRISPRa screen (all $131$ doubles geometrically outside
+the single-gene cone; $129/131$ certified above a noise-injection null, recovering classical
+synergy at partial Spearman $0.62$). We further show that a self-contained learned model ties the
+additive baseline for blind prediction \citep{AhlmannEltze2025} while emitting no certificate,
+that the certificate transfers to an orthogonal Cas13d screen \citep{Wessels2023}, and that a
+training-free score triages emergent combinations $2.4\times$ above base rate before measurement.
+We claim novelty for this measured-effect, certificate-carrying \emph{emergence-triage} decision,
+not for the synergistic gene pairs it recovers, which the source screen \citep{Norman2019}
+already reports and which we use only as positive controls.

@@ -1,0 +1,91 @@
+% ============================================================================
+%  Cell-state reachability: a convex-cone oracle for feasibility verdicts
+%  ICML 2026 format (preprint mode) --- compiled with tectonic / pdflatex
+% ============================================================================
+\documentclass{article}
+
+% ---- Encoding: accented author names in the bibliography (Barabási, Zañudo, ...) ----
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+% ---- Recommended figure / typesetting packages ----
+\usepackage{microtype}
+\usepackage{graphicx}
+\graphicspath{{figures/}}
+\usepackage{subcaption}
+\usepackage{booktabs}
+
+% ---- hyperref (loaded before icml2026 as in the ICML template) ----
+\usepackage{hyperref}
+\newcommand{\theHalgorithm}{\arabic{algorithm}}
+
+% ---- ICML 2026 style: preprint mode (shows authors, honest "Preprint" footer) ----
+\usepackage[preprint]{icml2026}
+
+% ---- Math ----
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{amsthm}
+\usepackage{bm}
+
+% ---- Convenience macros ----
+\newcommand{\reach}{\textsc{Reach}}
+\newcommand{\cone}{\mathcal{C}}
+\newcommand{\Emat}{\mathbf{E}}
+\newcommand{\dvec}{\mathbf{d}}
+\newcommand{\wvec}{\mathbf{w}}
+\newcommand{\Rnn}{\mathbb{R}_{\geq 0}}
+
+% ---- Title (a short running form is required for the page header) ----
+\icmltitlerunning{Certified triage for combinatorial perturbation screens}
+
+\begin{document}
+
+\twocolumn[
+\icmltitle{Which Combinations Are Worth Running?\\
+Certified Triage of Combinatorial Perturbation Screens\\
+with Convex-Cone Emergence Certificates}
+
+\begin{icmlauthorlist}
+\icmlauthor{Cell-State Reachability Project}{bwc}
+\end{icmlauthorlist}
+
+\icmlaffiliation{bwc}{Built with Claude --- Life Sciences (Research Track)}
+
+\icmlcorrespondingauthor{Cell-State Reachability Project}%
+{github.com/MasalaKimchi/cell-state-reachability}
+
+\icmlkeywords{combinatorial perturbation screens, convex cone, non-negative least squares,
+Perturb-seq, emergence certificate, genetic interaction, triage, Farkas lemma}
+
+\vskip 0.3in
+]
+
+% must follow the closing ] of \twocolumn[ ...
+\printAffiliationsAndNotice{}
+
+\input{sections/00_abstract}
+
+\input{sections/10_introduction}
+
+\input{sections/20_methods}
+
+\input{sections/30_results}
+
+\input{sections/40_related_work}
+
+\input{sections/50_discussion}
+
+\input{sections/60_ai_declaration}
+
+% ---- Bibliography ----
+\bibliography{references}
+\bibliographystyle{icml2026}
+
+\newpage
+\appendix
+\onecolumn
+\input{sections/90_supplement}
+
+\end{document}
