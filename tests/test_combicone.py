@@ -189,6 +189,69 @@ def test_certify_gene_axis_mismatch():
 
 
 # --------------------------------------------------------------------------- #
+# certify_emergence analytic fast path (method="analytic")
+# --------------------------------------------------------------------------- #
+def test_certify_analytic_is_deterministic():
+    rng = np.random.default_rng(0)
+    singles = np.abs(rng.normal(size=(5, 40)))
+    combo = singles.sum(0) + 3.0 * rng.normal(size=40)
+    a = cc.certify_emergence(singles, combo, noise_sd=0.1, method="analytic")
+    b = cc.certify_emergence(singles, combo, noise_sd=0.1, method="analytic")
+    # seed-free: identical without passing a seed, regardless of value
+    assert a.z == b.z and a.p_value == b.p_value and a.floor_ratio == b.floor_ratio
+
+
+def test_certify_analytic_agrees_with_montecarlo_on_clear_emergence():
+    rng = np.random.default_rng(1)
+    singles = np.abs(rng.normal(size=(6, 120)))
+    # a big out-of-cone move on a fresh axis: unambiguously emergent
+    combo = singles.sum(0).astype(float)
+    combo = np.concatenate([combo, [0.0]])
+    singles = np.hstack([singles, np.zeros((6, 1))])
+    combo[-1] = 6.0
+    mc = cc.certify_emergence(singles, combo, noise_sd=0.05, method="montecarlo",
+                              n_boot=400, seed=0)
+    an = cc.certify_emergence(singles, combo, noise_sd=0.05, method="analytic")
+
+    def tier(v):
+        return "cert" if v.startswith("certified") else (
+            "modest" if "modest" in v else "noise")
+
+    assert tier(mc.verdict) == tier(an.verdict) == "cert"
+    # null means agree closely on a stable facet
+    assert abs(an.noise_null_mean / mc.noise_null_mean - 1.0) < 0.10
+
+
+def test_certify_analytic_is_conservative_not_inflating():
+    """Analytic floor_ratio must not exceed the MC one (never inflates a call)."""
+    rng = np.random.default_rng(2)
+    singles = np.abs(rng.normal(size=(8, 100)))
+    combo = singles.sum(0) + 0.5 * rng.normal(size=100)  # near-cone, low SNR
+    se = 0.4 * np.ones(100)
+    mc = cc.certify_emergence(singles, combo, noise_sd=se, method="montecarlo",
+                              n_boot=400, seed=0)
+    an = cc.certify_emergence(singles, combo, noise_sd=se, method="analytic")
+    assert an.floor_ratio <= mc.floor_ratio + 1e-6
+
+
+def test_certify_analytic_rejects_bad_method():
+    singles = np.eye(3)
+    with pytest.raises(rx.InputError):
+        cc.certify_emergence(singles, np.ones(3), noise_sd=0.1, method="bogus")
+
+
+def test_certify_analytic_populates_all_fields():
+    singles = np.eye(4)
+    combo = np.array([1.0, 0.0, -1.0, 2.0])
+    cert = cc.certify_emergence(singles, combo, noise_sd=0.1, method="analytic")
+    for field in ("unreachable_fraction", "noise_null_mean", "noise_null_sd",
+                  "z", "p_value", "floor_ratio", "ci_low", "ci_high"):
+        assert np.isfinite(getattr(cert, field))
+    assert 0.0 < cert.p_value <= 1.0
+    assert cert.ci_low <= cert.unreachable_fraction <= cert.ci_high
+
+
+# --------------------------------------------------------------------------- #
 # fit_triage_model
 # --------------------------------------------------------------------------- #
 def test_fit_triage_model_learns_and_predicts():

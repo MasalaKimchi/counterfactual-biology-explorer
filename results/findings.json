@@ -12,7 +12,7 @@
   "combinatorial_triage": {
     "tier": "MAIN",
     "benchmark": "norman_combinatorial_crispra_emergence_v1",
-    "dataset": "Norman combinatorial CRISPRa screen (distributed file label cell_type=A549; canonical Norman 2019 is K562 \u2014 reported as file-label A549, no cell-line claim made)",
+    "dataset": "Norman combinatorial CRISPRa screen (distributed file label cell_type=A549; canonical Norman 2019 is K562 — reported as file-label A549, no cell-line claim made)",
     "n_single_atoms": 105,
     "n_measured_doubles": 131,
     "doubles_with_both_singles_measured": 131,
@@ -34,12 +34,83 @@
         "MAPK1+PRTG",
         "DUSP9+MAPK1 (textbook Norman phosphatase-on-substrate synergy)"
       ],
-      "per_pair_note": "BCL2L11+BAK1 passes bar (a) weakly (z=2.9, p=0.005) but not bar (b); KIF18B+KIF2C is the one raw-top headliner that is NOT significant (z=1.6, p=0.055). Do not give two pairs a shared significance label."
+      "per_pair_note": "BCL2L11+BAK1 passes bar (a) weakly (z=2.9, p=0.005) but not bar (b); KIF18B+KIF2C is the one raw-top headliner that is NOT significant (z=1.6, p=0.055). Do not give two pairs a shared significance label.",
+      "analytic_closed_form_null": {
+        "method": "reachability.analytic_anisotropy_null: closed-form generalized chi-square null for the emergence residual. Near the reachable projection f0, the null residual is ||(I-P)eps||/||f0|| with P the whitened active-atom-facet projector and eps~N(0,diag(SE^2)); Q=||(I-P)eps||^2 is a generalized chi-square with exact E[Q]=tr((I-P)D), Var[Q]=2 tr(((I-P)D)^2), matched to a Satterthwaite gamma. Deterministic, seed-free, no re-solves.",
+        "api": "combicone.certify_emergence(..., method='analytic'); default method='montecarlo' unchanged",
+        "anisotropy": "Per-gene noise anisotropy enters exactly via tr(PD) (noise-weighted facet leverage); a scalar-SE approximation cannot see it. Across all 289 doubles the isotropic RMS-SE approximation to the null mean is small on these screens (Norman median 1.7%, max 4.2%; CaRPool max 0.6%), so anisotropy is a correctness guarantee rather than a large empirical mover here; a synthetic fixture with atom support aligned to high-noise genes reaches ~11% isotropic error.",
+        "conservative_direction": "The active-atom subspace is locally inside the cone, so the analytic null residual >= the Monte-Carlo null residual: the fast path can only withhold a certificate, never inflate one. Directional/empirical, not a strict pointwise theorem (in general position the two coincide up to Monte-Carlo error).",
+        "cross_screen_validation": {
+          "norman": {
+            "n_doubles": 131,
+            "conservative_direction_violations": 0,
+            "null_ratio_analytic_over_mc": {
+              "min": 1.011,
+              "median": 1.028,
+              "max": 1.443
+            },
+            "agreement_within_5pct": 0.84,
+            "verdict_tier_agreement": 0.92,
+            "certified_mc": 40,
+            "certified_analytic": 34,
+            "analytic_certified_is_subset_of_mc": true,
+            "analytic_only_certifications": 0,
+            "significance_agreement_p_lt_0p05": 0.97
+          },
+          "carpool": {
+            "n_doubles": 158,
+            "conservative_direction_violations": 0,
+            "null_ratio_analytic_over_mc": {
+              "min": 1.011,
+              "median": 1.047,
+              "max": 1.622
+            },
+            "agreement_within_5pct": 0.53,
+            "verdict_tier_agreement": 0.88,
+            "certified_mc": 76,
+            "certified_analytic": 68,
+            "analytic_certified_is_subset_of_mc": true,
+            "analytic_only_certifications": 0,
+            "significance_agreement_p_lt_0p05": 0.93
+          }
+        },
+        "fragility_diagnostic": {
+          "claim": "The analytic-vs-Monte-Carlo null gap is a certificate-fragility score computable from pure geometry: large for low-SNR (fragile) certificates, negligible for robust ones.",
+          "gap_vs_floor_ratio_spearman": {
+            "norman": -0.532,
+            "carpool": -0.778
+          },
+          "gap_vs_active_set_churn_spearman": {
+            "norman": 0.119,
+            "carpool": -0.146,
+            "note": "not significant; churn does NOT drive the gap"
+          },
+          "self_reporting": "Gap is predictable from analytic-only floor_ratio (Spearman -0.57 Norman / -0.82 CaRPool), so the deterministic path flags its own borderline cases without running Monte-Carlo.",
+          "decision_safety": "All 14 certificates the analytic path withheld relative to Monte-Carlo (6 Norman + 8 CaRPool) had Monte-Carlo floor_ratio in [1.90, 1.97] - it diverges only at the 1.9x bar, never on a robust certificate."
+        },
+        "artifacts": [
+          "results/analytic_vs_mc_validation.json",
+          "results/analytic_vs_mc_by_double.csv",
+          "docs/figures/fig_analytic_null_fragility.png",
+          "docs/analytic_null_note.md"
+        ],
+        "anisotropy_sensitivity_pct": {
+          "norman": {
+            "median": 1.71,
+            "max": 4.21
+          },
+          "carpool": {
+            "median": 0.03,
+            "max": 0.61
+          },
+          "synthetic_worst_case": 11.0
+        }
+      }
     },
     "synergy_recovery": {
       "unreachable_fraction_vs_classic_nonadditivity_spearman": 0.736,
-      "partial_spearman_given_effect_magnitude": 0.599,
-      "interpretation": "Unreachability recovers classic non-additivity and survives control for effect size \u2014 the synergy signal is real, not only a magnitude artifact."
+      "partial_spearman_given_effect_magnitude": 0.624,
+      "interpretation": "Unreachability recovers classic non-additivity and survives control for effect size — the synergy signal is real, not only a magnitude artifact."
     },
     "head_to_head_baselines": {
       "cone_raw_vs_learned_ridge_onto_singles_residual_spearman": 0.977,

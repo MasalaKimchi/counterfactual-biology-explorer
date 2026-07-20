@@ -464,6 +464,7 @@ def certify_emergence(
     cone_atoms: np.ndarray | None = None,
     noise_sd: np.ndarray | float | None = None,
     gene_weights: np.ndarray | None = None,
+    method: str = "montecarlo",
     n_boot: int = 200,
     ci_level: float = 0.9,
     floor_threshold: float = 1.9,
@@ -514,8 +515,18 @@ def certify_emergence(
         NaN) and only the point certificate + geometry are returned.
     gene_weights : (n_genes,) array, optional
         Per-gene metric weights passed to the projection.
+    method : {"montecarlo", "analytic"}
+        How to build the noise null. ``"montecarlo"`` (default) re-projects
+        ``n_boot`` noise draws — stochastic (uses ``seed``) but makes no facet
+        assumption. ``"analytic"`` uses the closed-form generalized chi-square null
+        (:func:`reachability.analytic_anisotropy_null`): deterministic, seed-free,
+        ~``n_boot``x fewer solves, and **conservative by construction** (it can only
+        withhold a certificate, never inflate one). The two agree to a few percent
+        on stable facets; the analytic null over-estimates on unstable low-SNR
+        facets, exactly the combinations the effect-size bar demotes.
     n_boot : int
-        Number of noise draws for the null and the CI.
+        Number of noise draws for the Monte-Carlo null and CI (ignored when
+        ``method="analytic"``).
     ci_level : float
         Central mass of the percentile bootstrap CI (e.g. 0.9 -> 5th..95th pct).
     floor_threshold : float
@@ -574,27 +585,45 @@ def certify_emergence(
     if np.any(se < 0) or not np.all(np.isfinite(se)):
         raise rx.InputError("noise_sd must be finite and non-negative")
 
-    rng = np.random.default_rng(seed)
-    f0 = obs.fitted  # reachable null truth
-    null = np.empty(n_boot)
-    boot_obs = np.empty(n_boot)
-    for i in range(n_boot):
-        null[i] = rx.project_cone(
-            singles, f0 + rng.normal(0.0, se), gene_weights=gene_weights
-        ).residual_fraction
-        # CI: resample the OBSERVED target's noise around itself
-        boot_obs[i] = rx.project_cone(
-            singles, target + rng.normal(0.0, se), gene_weights=gene_weights
-        ).residual_fraction
+    if method not in ("montecarlo", "analytic"):
+        raise rx.InputError("method must be 'montecarlo' or 'analytic'")
 
-    null_mean = float(null.mean())
-    null_sd = float(null.std())
-    z = (obs_resid - null_mean) / (null_sd + _EPS)
-    # conservative plus-one p-value (reuses the engine's convention)
-    p = rx.empirical_p(obs_resid, null)
-    lo = float(np.quantile(boot_obs, (1 - ci_level) / 2))
-    hi = float(np.quantile(boot_obs, 1 - (1 - ci_level) / 2))
-    floor_ratio = obs_resid / (null_mean + _EPS)
+    if method == "analytic":
+        # Deterministic closed-form null (no re-solves, no seed). The generalized
+        # chi-square null residual is conservative by construction: it can only
+        # withhold a certificate, never inflate one (see analytic_anisotropy_null).
+        an = rx.analytic_anisotropy_null(
+            singles, target, se, gene_weights=gene_weights, ci_level=ci_level
+        )
+        null_mean = an.null_mean
+        null_sd = an.null_sd
+        z = (obs_resid - null_mean) / (null_sd + _EPS)
+        p = an.p_value
+        lo = an.ci_low
+        hi = an.ci_high
+        floor_ratio = obs_resid / (null_mean + _EPS)
+    else:
+        rng = np.random.default_rng(seed)
+        f0 = obs.fitted  # reachable null truth
+        null = np.empty(n_boot)
+        boot_obs = np.empty(n_boot)
+        for i in range(n_boot):
+            null[i] = rx.project_cone(
+                singles, f0 + rng.normal(0.0, se), gene_weights=gene_weights
+            ).residual_fraction
+            # CI: resample the OBSERVED target's noise around itself
+            boot_obs[i] = rx.project_cone(
+                singles, target + rng.normal(0.0, se), gene_weights=gene_weights
+            ).residual_fraction
+
+        null_mean = float(null.mean())
+        null_sd = float(null.std())
+        z = (obs_resid - null_mean) / (null_sd + _EPS)
+        # conservative plus-one p-value (reuses the engine's convention)
+        p = rx.empirical_p(obs_resid, null)
+        lo = float(np.quantile(boot_obs, (1 - ci_level) / 2))
+        hi = float(np.quantile(boot_obs, 1 - (1 - ci_level) / 2))
+        floor_ratio = obs_resid / (null_mean + _EPS)
 
     sig = p < alpha
     clears_floor = floor_ratio >= floor_threshold

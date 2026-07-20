@@ -1,0 +1,94 @@
+{
+  "title": "Analytic (closed-form generalized chi-square) vs Monte-Carlo emergence noise null",
+  "generated_on": "2026-07-20",
+  "method": "reachability.analytic_anisotropy_null vs certify_emergence(method='montecarlo', n_boot=200, seed=0)",
+  "scope": "Model-relative: null residual under the non-negative cone of measured single-gene effects; not a biological claim.",
+  "screens": {
+    "norman": {
+      "source": "Norman 2019 combinatorial CRISPRa (file label A549; canonical K562 provenance caveat)",
+      "n": 131,
+      "null_ratio": {
+        "min": 1.0113184112511977,
+        "median": 1.0283578524626777,
+        "max": 1.4431017604497396
+      },
+      "conservative_direction_violations": 0,
+      "agreement_within_5pct": 0.8396946564885496,
+      "agreement_within_10pct": 0.9694656488549618,
+      "tier_agreement": 0.9236641221374046,
+      "certified_mc": 40,
+      "certified_analytic": 34,
+      "analytic_certified_subset_of_mc": true,
+      "analytic_only_certifications": 0,
+      "disagreements_analytic_stricter": 10,
+      "disagreements_analytic_looser": 0,
+      "significance_agreement_p05": 0.9694656488549618,
+      "gap_vs_floor_ratio_spearman": -0.5316233384935675,
+      "gap_vs_analytic_floor_spearman": -0.5655100624566274,
+      "gap_vs_active_set_churn_spearman": 0.11870495916297444,
+      "gap_vs_residual_spearman": 0.7454972508407622,
+      "withheld_at_bar": {
+        "count": 6,
+        "mc_floor_range": [
+          1.9052590358855894,
+          1.9280192635333075
+        ]
+      }
+    },
+    "carpool": {
+      "source": "CaRPool-seq GSE213957 THP-1 Cas13d knockdown",
+      "n": 158,
+      "null_ratio": {
+        "min": 1.0109893449282765,
+        "median": 1.0466759920589437,
+        "max": 1.621806519954569
+      },
+      "conservative_direction_violations": 0,
+      "agreement_within_5pct": 0.5253164556962026,
+      "agreement_within_10pct": 0.7658227848101266,
+      "tier_agreement": 0.879746835443038,
+      "certified_mc": 76,
+      "certified_analytic": 68,
+      "analytic_certified_subset_of_mc": true,
+      "analytic_only_certifications": 0,
+      "disagreements_analytic_stricter": 19,
+      "disagreements_analytic_looser": 0,
+      "significance_agreement_p05": 0.930379746835443,
+      "gap_vs_floor_ratio_spearman": -0.7781516644634058,
+      "gap_vs_analytic_floor_spearman": -0.8203417006536762,
+      "gap_vs_active_set_churn_spearman": -0.14635990379685987,
+      "gap_vs_residual_spearman": 0.7493759117924909,
+      "withheld_at_bar": {
+        "count": 8,
+        "mc_floor_range": [
+          1.901169533476868,
+          1.9670316338952805
+        ]
+      }
+    }
+  },
+  "headline": {
+    "conservative_direction": "0/289 violations: analytic null >= Monte-Carlo null on every double, both screens.",
+    "certified_set_nesting": "Analytic certified set is a strict subset of Monte-Carlo on both screens (Norman 34 in 40, CaRPool 68 in 76); 0 analytic-only certifications. The fast path never certifies anything the reference did not.",
+    "agreement": "Null means agree to within 5% on 84% (Norman) / 53% (CaRPool) of doubles; tier agreement 92% / 88%; every disagreement is analytic-stricter.",
+    "anisotropy": "Per-gene noise anisotropy handled exactly (generalized chi-square). Across all 289 doubles the isotropic RMS-SE approximation is small on these screens (Norman median 1.71%, max 4.21%; CaRPool max 0.61%), so anisotropy is a correctness guarantee rather than a large empirical mover here; on a synthetic fixture with atom support aligned to high-noise genes the isotropic error reaches ~11%.",
+    "fragility_diagnostic": "The analytic-vs-MC null gap is a certificate-fragility score driven by SNR (gap vs floor_ratio Spearman -0.53 Norman / -0.78 CaRPool), NOT by active-set churn (Spearman ~0). It is self-reporting: predictable from analytic-only floor_ratio (-0.57/-0.82), so the deterministic path flags its own borderline cases. All 14 certificates it withheld sat at MC floor_ratio in [1.90,1.97] (the 1.9x bar)."
+  },
+  "anisotropy_sensitivity": {
+    "quantity": "percent difference in analytic null mean between true per-gene (anisotropic) SE and an isotropic RMS-SE surrogate, per double",
+    "norman": {
+      "n": 131,
+      "median_pct": 1.71,
+      "p90_pct": 2.41,
+      "max_pct": 4.21
+    },
+    "carpool": {
+      "n": 158,
+      "median_pct": 0.03,
+      "p90_pct": 0.1,
+      "max_pct": 0.61
+    },
+    "synthetic_worst_case_pct": 11.0,
+    "synthetic_note": "controlled fixture with active-atom support deliberately aligned to the high-noise genes (reachability fixture); isotropic error ~11% while anisotropic form stays exact"
+  }
+}

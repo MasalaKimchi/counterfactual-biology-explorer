@@ -209,6 +209,113 @@ def test_legacy_decision_apis_are_removed():
         "design_experiment",
         "reachability_spectrum",
         "activation_certificate",
-        "analytic_anisotropy_null",
     ):
         assert not hasattr(rx, name)
+
+
+# --------------------------------------------------------------------------- #
+# Closed-form anisotropy-corrected noise null
+# --------------------------------------------------------------------------- #
+def _mc_null_mean(effects, target, noise_sd, *, n=4000, seed=0):
+    """Monte-Carlo reference for the emergence noise null mean."""
+    rng = np.random.default_rng(seed)
+    f0 = rx.project_cone(effects, target).fitted
+    se = np.asarray(noise_sd, dtype=float)
+    if se.ndim == 0:
+        se = np.full(target.shape[0], float(se))
+    vals = [
+        rx.project_cone(effects, f0 + rng.normal(0.0, se)).residual_fraction
+        for _ in range(n)
+    ]
+    return float(np.mean(vals)), float(np.std(vals))
+
+
+def test_analytic_null_exists_and_returns_fields():
+    an = rx.analytic_anisotropy_null(np.eye(4), np.array([1.0, 0.0, -1.0, 0.0]), 0.1)
+    assert isinstance(an, rx.AnalyticNull)
+    for field in ("null_mean", "null_sd", "p_value", "n_active", "gamma_shape"):
+        assert np.isfinite(getattr(an, field))
+    assert 0.0 < an.p_value <= 1.0
+
+
+def test_analytic_null_matches_monte_carlo_on_stable_facet():
+    """On a non-degenerate facet the closed form matches MC to a few percent."""
+    rng = np.random.default_rng(0)
+    effects = rng.normal(size=(6, 150))
+    w = np.abs(rng.normal(size=6)) + 0.5
+    f0 = w @ effects
+    target = f0 + 3.0 * rng.normal(size=150)
+    se = 0.15 * (1.0 + np.abs(rng.normal(size=150)))  # anisotropic
+    an = rx.analytic_anisotropy_null(effects, target, se)
+    mc_mean, mc_sd = _mc_null_mean(effects, target, se, n=6000)
+    assert abs(an.null_mean / mc_mean - 1.0) < 0.05
+    assert abs(an.null_sd / mc_sd - 1.0) < 0.20
+
+
+def test_analytic_null_is_conservative_direction():
+    """Analytic null >= MC null up to Monte-Carlo error (never materially inflates).
+
+    The closed form measures distance to the active-atom *subspace*, which is
+    locally inside the cone, so the analytic null is >= the true cone null. In
+    general position the facet can be full-dimensional and the two coincide to
+    within MC estimation error; on the biologically relevant cone-structured
+    facets the analytic null is strictly and substantially larger. We assert the
+    defensible property: it is never more than a fraction of a percent below MC.
+    """
+    rng = np.random.default_rng(1)
+    ratios = []
+    for _ in range(12):
+        effects = rng.normal(size=(5, 80))
+        w = np.abs(rng.normal(size=5)) + 0.3
+        target = w @ effects + 2.0 * rng.normal(size=80)
+        se = 0.1 * (1.0 + np.abs(rng.normal(size=80)))
+        an = rx.analytic_anisotropy_null(effects, target, se)
+        mc_mean, _ = _mc_null_mean(effects, target, se, n=2000)
+        ratios.append(an.null_mean / mc_mean)
+    ratios = np.array(ratios)
+    # never materially below MC (deviations near equality are MC noise), and the
+    # central tendency is conservative (>= MC).
+    assert ratios.min() >= 0.98
+    assert np.median(ratios) >= 1.0 - 1e-9
+
+
+def test_analytic_null_captures_noise_anisotropy():
+    """A scalar-se approximation misreads the null when leverage aligns with noise."""
+    rng = np.random.default_rng(7)
+    effects = 0.05 * rng.normal(size=(8, 240))
+    effects[:, :40] += rng.normal(size=(8, 40)) * 2.0  # atoms load on genes 0:40
+    se = 0.05 * np.ones(240)
+    se[:40] = 0.8  # ...which are also the noisy genes -> high noise-leverage
+    target = (np.abs(rng.normal(size=8)) + 0.5) @ effects + 1.5 * rng.normal(size=240)
+    aniso = rx.analytic_anisotropy_null(effects, target, se)
+    iso = rx.analytic_anisotropy_null(effects, target, np.full(240, np.sqrt((se**2).mean())))
+    mc_mean, _ = _mc_null_mean(effects, target, se, n=5000)
+    # the true (anisotropic) null is matched; the isotropic surrogate is not
+    assert abs(aniso.null_mean / mc_mean - 1.0) < 0.05
+    assert abs(iso.null_mean / mc_mean - 1.0) > 0.05
+
+
+def test_analytic_null_is_deterministic():
+    effects = np.eye(5)
+    target = np.array([1.0, 0.5, -1.0, 0.2, 0.0])
+    a = rx.analytic_anisotropy_null(effects, target, 0.1)
+    b = rx.analytic_anisotropy_null(effects, target, 0.1)
+    assert a.null_mean == b.null_mean and a.p_value == b.p_value
+
+
+@pytest.mark.parametrize("bad", [-0.1, np.nan])
+def test_analytic_null_rejects_bad_noise(bad):
+    with pytest.raises(rx.InputError):
+        rx.analytic_anisotropy_null(np.eye(3), np.ones(3), np.array([0.1, bad, 0.1]))
+
+
+def test_analytic_null_respects_gene_weights():
+    """Passing weights changes the metric the null is computed under."""
+    rng = np.random.default_rng(3)
+    effects = rng.normal(size=(4, 60))
+    target = (np.abs(rng.normal(size=4))) @ effects + rng.normal(size=60)
+    se = 0.2 * np.ones(60)
+    w = np.abs(rng.normal(size=60)) + 0.1
+    plain = rx.analytic_anisotropy_null(effects, target, se)
+    weighted = rx.analytic_anisotropy_null(effects, target, se, gene_weights=w)
+    assert plain.null_mean != weighted.null_mean
