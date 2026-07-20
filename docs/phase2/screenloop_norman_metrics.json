@@ -1,0 +1,30 @@
+{
+ "screen": "Norman GSE133344 K562/A549 CRISPRa",
+ "n_singles": 105,
+ "n_doubles": 131,
+ "n_emergent_two_bar": 40,
+ "base_rate": 0.3053435114503817,
+ "campaign_wells_to_90pct_batch8": {
+  "magnitude": 104.0,
+  "triage": 96.0,
+  "cone_adaptive": 120.0,
+  "random": 120.0
+ },
+ "recovery_n_eligible_singles": 53,
+ "recovery_n_candidates": 105,
+ "recovery_separator_top1": 0.9811320754716981,
+ "recovery_separator_top5": 0.9811320754716981,
+ "recovery_separator_median_rank": 1.0,
+ "recovery_separator_mean_rank": 1.6226415094339623,
+ "recovery_baseline_top1": 0.5471698113207547,
+ "recovery_baseline_top5": 0.8301886792452831,
+ "recovery_magnitude_only_top1": 0.018867924528301886,
+ "permutation_p_top1": 0.0004997501249375312,
+ "permutation_z_top1": 72.47451357182692,
+ "permutation_null_top1_mean": 0.00938679245283019,
+ "separator_top1_where_baseline_fails": 0.9583333333333334,
+ "n_baseline_failures": 24,
+ "spearman_dominance_vs_advantage": -0.626584111602667,
+ "mean_atom_dominance": 0.6955882856208031,
+ "scope": "model-relative; retrospective; recovery is a statement about library cone geometry, not a bench-efficacy prediction"
+}

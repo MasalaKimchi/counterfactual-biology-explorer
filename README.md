@@ -116,6 +116,31 @@ modalities.
 
 ![Cross-modality: CRISPRa double-emergence and CRISPRi single-gene reachability share the same certified geometry — and the same SNR confound.](docs/figures/fig_cross_modality.png)
 
+### The certificate designs the next library — not just the next well
+
+Put the certificate inside a screening campaign
+([`screenloop.py`](screenloop.py)) and two questions separate cleanly. For
+**acquisition** — which unmeasured combination to run next — the
+certificate-adaptive residual does *not* beat the cheap training-free `−cos`
+triage (Norman: 96 wells to 90% discovery for triage vs 120 for the certificate;
+CaRPool: all policies tie), consistent with the finding above that the cone's
+value is not raw ranking accuracy. But for **library augmentation** — which *new
+single perturbation* to add — the certificate does something no forward predictor
+can: aggregating the model-relative separators of the combinations a library
+fails to reach yields the axis the library is *missing*, and ranking candidates
+against it **recovers a held-out single-gene at median rank 1** (Norman top-1
+**0.98** of 105 candidates; CaRPool top-1 **1.00** of 28), versus 0.55 / 0.28 for
+a naive "average-the-combos, take the most-similar-single" baseline and ≈ 0.01 for
+random. The result survives a permutation null (p = 5×10⁻⁴) and three
+magnitude-confound controls on both screens — a magnitude-only ranker recovers
+essentially nothing (top-1 ≤ 0.02), and the separator's advantage *grows* as the
+held-out gene is *less* dominant in its own combinations (Spearman ρ < 0). A
+forward predictor emits a prediction for every input; only a certificate of
+infeasibility can name what the library cannot represent. See
+[`docs/phase2/screenloop_note.md`](docs/phase2/screenloop_note.md).
+
+![Certificate-guided library design: acquisition is a tie, but the separator recovers the held-out library axis where naive baselines fail.](docs/figures/fig_screenloop_B_recovery.png)
+
 ## Who it is for
 
 Groups running or planning **combinatorial** perturbation screens (genetic combos,

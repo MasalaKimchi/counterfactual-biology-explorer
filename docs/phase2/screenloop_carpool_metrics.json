@@ -1,0 +1,30 @@
+{
+ "screen": "CaRPool-seq Cas13d KD THP-1",
+ "n_singles": 28,
+ "n_doubles": 158,
+ "n_emergent_two_bar": 76,
+ "base_rate": 0.4810126582278481,
+ "campaign_wells_to_90pct_batch8": {
+  "magnitude": 144.0,
+  "triage": 144.0,
+  "cone_adaptive": 144.0,
+  "random": 144.0
+ },
+ "recovery_n_eligible_singles": 25,
+ "recovery_n_candidates": 28,
+ "recovery_separator_top1": 1.0,
+ "recovery_separator_top5": 1.0,
+ "recovery_separator_median_rank": 1.0,
+ "recovery_separator_mean_rank": 1.0,
+ "recovery_baseline_top1": 0.28,
+ "recovery_baseline_top5": 0.6,
+ "recovery_magnitude_only_top1": 0.0,
+ "permutation_p_top1": 0.0004997501249375312,
+ "permutation_z_top1": 26.848206733896912,
+ "permutation_null_top1_mean": 0.034820000000000004,
+ "separator_top1_where_baseline_fails": 1.0,
+ "n_baseline_failures": 18,
+ "spearman_dominance_vs_advantage": -0.780425275872624,
+ "mean_atom_dominance": 0.5788659706311009,
+ "scope": "model-relative; retrospective; recovery is a statement about library cone geometry, not a bench-efficacy prediction"
+}

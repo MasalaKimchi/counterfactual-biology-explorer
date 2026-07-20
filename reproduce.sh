@@ -22,6 +22,7 @@ PY
 python -m pytest -q
 python reachability.py
 python combicone.py
+python screenloop.py
 python neural_baseline.py
 python demo_library_coverage.py
 python scripts/run_validation_harness.py --check results/validation_harness.json
