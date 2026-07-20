@@ -230,7 +230,7 @@
   "guide_position_transfer": {
     "benchmark": "zhu_released_guide_position_reciprocal_transfer_v1",
     "report_schema_version": "1.0.0",
-    "report_sha256": "0fd291002f55c7d6a505d3d19c15f53747bc4cf5b6473540a06978de53b4e721",
+    "report_sha256": "76dec12f50e8f73cfb143e95547e1578691c32e70f4dcaa99a3ffa18abad79c6",
     "tier": "STRESS",
     "benchmark_role": "negative released first/second guide-rank reciprocal-transfer stress",
     "guide_identity_status": "OFFICIAL_ALPHANUMERIC_GUIDE_RANKS_IDS_NOT_EMBEDDED_CROSSWALK_NOT_VERIFIED",

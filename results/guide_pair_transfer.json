@@ -3,20 +3,29 @@
     "commit": "848d62fc2b7027f7218d6fc5f5b0c37255dc94af",
     "de_formula": "~ log10_n_cells + target",
     "donor_term_in_de_formula": false,
+    "final_sample_selection_rule": "initial keep_for_DE & keep_test_genes",
     "frozen_source_files": {
       "DE_config_by_guide.yaml": "12b57d759d3a62c807aaa9dc646b15ce1aa5db939c315b3fc0602ba848801da6",
       "data_sharing_readme.md": "1651f775007e3c8b544d0c4f069f52c25d2527bdde6d1f7feac9e88d37076ef8",
       "prep_DE_by_guide.ipynb": "27cba79fdb96a6cecfa702759cd51a7b127d8faef9b08428d0c9bdd9c066c8ed",
       "run_guide_DE_chunk.py": "fb068b7ef2d4413d55716cad3b21ce68c3f5a4819b712b6c8de63eb9258e58c7"
     },
-    "guide_identity_status": "POSITIONAL_MODALITIES_ONLY_IDENTITIES_NOT_RELEASED",
-    "interpretation": "The released guide_1/guide_2 modalities are author-selected positional summaries. The absent for_DE_by_guide.csv prevents reconstruction of a structural-QC-only guide universe.",
-    "minimum_cells_per_guide": 5,
-    "minimum_replicates": 3,
+    "guide_identity_status": "OFFICIAL_ALPHANUMERIC_GUIDE_RANKS_IDS_NOT_EMBEDDED_CROSSWALK_NOT_VERIFIED",
+    "h5mu_identity_field_status": "no guide ID or sequence field is embedded in the guide-level H5MU",
+    "identity_crosswalk_status": "exact ranked-modality-to-sgRNA IDs not reconstructed or hash-verified in this benchmark",
+    "initial_sample_selection_rule": "keep_min_cells & keep_effective_guides & keep_total_counts",
+    "interpretation": "The official dataset card defines guide_1/guide_2 as the first/second alphanumeric sgRNA IDs within each target-condition pair, and public pseudobulk/library artifacts expose guide IDs. The H5MU does not embed those IDs, this benchmark does not cross-verify the exact mapping, and effectiveness-selected inclusion is not a structural-QC-only universe.",
+    "minimum_cells_per_guide_per_condition_sample": 5,
+    "minimum_passing_replicates_per_guide_condition": 3,
+    "official_modality_mapping": "guide_1 is the lowest alphanumeric sgRNA ID and guide_2 the second within each perturbed-gene/culture-condition pair; targets with one passing guide appear only in guide_1",
+    "public_identity_sources": [
+      "GWCD4i.pseudobulk_merged.h5ad obs/guide_id",
+      "sgrna_library_metadata.suppl_table.csv sgRNA"
+    ],
     "repository": "https://github.com/emdann/GWT_perturbseq_analysis_2025",
-    "retained_guide_positions": 2,
+    "required_testable_guides_per_target_condition": 2,
     "selection_field": "keep_effective_guides",
-    "selection_rule": "keep_min_cells & keep_effective_guides & keep_total_counts",
+    "target_condition_membership_source": "cond_targets from unreleased for_DE_by_guide.csv",
     "unreleased_intermediate": "for_DE_by_guide.csv"
   },
   "benchmark": "zhu_released_guide_position_reciprocal_transfer_v1",
@@ -25,38 +34,38 @@
       "fit_gene_sha256": "a7e9b9765b708dd7c8fba2fe2bcfb44fc93b20b368defa5bf9c64f1df098f34b",
       "fit_genes": 4475,
       "fit_id": "guide_1|hollbacker|seed=0",
-      "guide_identity_status": "POSITIONAL_MODALITIES_ONLY_IDENTITIES_NOT_RELEASED",
+      "guide_identity_status": "OFFICIAL_ALPHANUMERIC_GUIDE_RANKS_IDS_NOT_EMBEDDED_CROSSWALK_NOT_VERIFIED",
       "held_guide_slot": "guide_2",
       "prediction_cosine": {
-        "cone": 0.3685044899135862,
-        "training_best_single": 0.022238573075802834,
+        "cone": 0.3685044899135864,
+        "training_best_single": 0.022238573075802903,
         "training_common_ray": 1.0
       },
       "reciprocal_held_guide": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": -0.00653951188620229,
+            "cosine_improvement": -0.006539511886202137,
             "normalized_rmse_improvement": -0.2806170251779636
           },
           "training_common_ray": {
-            "cosine_improvement": -0.0630955066646584,
+            "cosine_improvement": -0.06309550666465841,
             "normalized_rmse_improvement": -0.2948551512519506
           },
           "zero": {
-            "cosine_improvement": -0.0630955066646584,
+            "cosine_improvement": -0.06309550666465841,
             "normalized_rmse_improvement": -0.2948551512519506
           }
         },
         "guide_slot": "guide_2",
         "metrics": {
           "cone": {
-            "cosine": -0.0630955066646584,
-            "norm_ratio": 0.7619080725305977,
+            "cosine": -0.06309550666465841,
+            "norm_ratio": 0.7619080725305974,
             "normalized_rmse": 1.2948551512519506,
             "sign_agreement": 0.5253631284916201
           },
           "training_best_single": {
-            "cosine": -0.0565559947784561,
+            "cosine": -0.05655599477845627,
             "norm_ratio": 0.1219868766206949,
             "normalized_rmse": 1.014238126073987,
             "sign_agreement": 0.5025698324022346
@@ -78,28 +87,28 @@
       "reciprocal_minus_within": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": -0.13704070531108525,
+            "cosine_improvement": -0.13704070531108511,
             "normalized_rmse_improvement": -0.2567010715088267
           },
           "training_common_ray": {
-            "cosine_improvement": -0.2989681936603687,
+            "cosine_improvement": -0.29896819366036875,
             "normalized_rmse_improvement": -0.2764197005598821
           },
           "zero": {
-            "cosine_improvement": -0.2989681936603687,
+            "cosine_improvement": -0.29896819366036875,
             "normalized_rmse_improvement": -0.2764197005598821
           }
         },
         "metrics": {
           "cone": {
-            "cosine": -0.2989681936603687,
-            "norm_ratio": 0.221327834435586,
+            "cosine": -0.29896819366036875,
+            "norm_ratio": 0.22132783443558612,
             "normalized_rmse": 0.2764197005598821,
             "sign_agreement": -0.04379888268156418
           },
           "training_best_single": {
-            "cosine": -0.16192748834928342,
-            "norm_ratio": 0.0034935837794953656,
+            "cosine": -0.1619274883492836,
+            "norm_ratio": 0.003493583779495532,
             "normalized_rmse": 0.01971862905105537,
             "sign_agreement": -0.03486033519553078
           },
@@ -133,12 +142,12 @@
         },
         "best_single_alpha": 0.16950468614351025,
         "best_single_opaque_key": "ENSG00000164715_Rest",
-        "coefficient_sha256": "2a4a260c551025aa2ffb8123a9a3958f1b7f641a4a1d3c1fa2e03ed9bb45cc69",
+        "coefficient_sha256": "20a716c9e3954ac165c663d9a727990e6ab2f4754d36be6227a37f8d48ca1092",
         "common_alpha": 0.0,
-        "cone_fit_cosine": 0.4985398170531622,
-        "cone_kkt_violation": 1.1102230246251563e-16,
+        "cone_fit_cosine": 0.4985398170531629,
+        "cone_kkt_violation": 5.551115123125782e-16,
         "cone_support": 213,
-        "training_model_sha256": "e62ef1edf116e331796d9f095792f0970bce256cd8d1b59216abfa383ace2c5c"
+        "training_model_sha256": "bd0ba46978727dcef0f3157f3653dee2366e6bac14f9b7bc13d93f16304c1009"
       },
       "within_training_guide": {
         "comparisons": {
@@ -147,25 +156,25 @@
             "normalized_rmse_improvement": -0.023915953669136902
           },
           "training_common_ray": {
-            "cosine_improvement": 0.2358726869957103,
+            "cosine_improvement": 0.23587268699571032,
             "normalized_rmse_improvement": -0.018435450692068533
           },
           "zero": {
-            "cosine_improvement": 0.2358726869957103,
+            "cosine_improvement": 0.23587268699571032,
             "normalized_rmse_improvement": -0.018435450692068533
           }
         },
         "guide_slot": "guide_1",
         "metrics": {
           "cone": {
-            "cosine": 0.2358726869957103,
-            "norm_ratio": 0.5405802380950117,
+            "cosine": 0.23587268699571032,
+            "norm_ratio": 0.5405802380950113,
             "normalized_rmse": 1.0184354506920685,
             "sign_agreement": 0.5691620111731843
           },
           "training_best_single": {
-            "cosine": 0.10537149357082731,
-            "norm_ratio": 0.11849329284119954,
+            "cosine": 0.10537149357082734,
+            "norm_ratio": 0.11849329284119937,
             "normalized_rmse": 0.9945194970229316,
             "sign_agreement": 0.5374301675977654
           },
@@ -188,39 +197,39 @@
       "fit_gene_sha256": "a7e9b9765b708dd7c8fba2fe2bcfb44fc93b20b368defa5bf9c64f1df098f34b",
       "fit_genes": 4475,
       "fit_id": "guide_1|hollbacker|seed=0",
-      "guide_identity_status": "POSITIONAL_MODALITIES_ONLY_IDENTITIES_NOT_RELEASED",
+      "guide_identity_status": "OFFICIAL_ALPHANUMERIC_GUIDE_RANKS_IDS_NOT_EMBEDDED_CROSSWALK_NOT_VERIFIED",
       "held_guide_slot": "guide_2",
       "prediction_cosine": {
-        "cone": 0.3685044899135862,
-        "training_best_single": 0.022238573075802834,
+        "cone": 0.3685044899135864,
+        "training_best_single": 0.022238573075802903,
         "training_common_ray": 1.0
       },
       "reciprocal_held_guide": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": -0.024368822107673844,
+            "cosine_improvement": -0.02436882210767371,
             "normalized_rmse_improvement": -0.20519477428655164
           },
           "training_common_ray": {
-            "cosine_improvement": -0.02826518441440835,
+            "cosine_improvement": -0.028265184414408194,
             "normalized_rmse_improvement": -0.21109372497060885
           },
           "zero": {
-            "cosine_improvement": -0.02826518441440835,
+            "cosine_improvement": -0.028265184414408194,
             "normalized_rmse_improvement": -0.21109372497060885
           }
         },
         "guide_slot": "guide_2",
         "metrics": {
           "cone": {
-            "cosine": -0.02826518441440835,
-            "norm_ratio": 0.6555088508583313,
+            "cosine": -0.028265184414408194,
+            "norm_ratio": 0.6555088508583312,
             "normalized_rmse": 1.2110937249706089,
             "sign_agreement": 0.47217877094972066
           },
           "training_best_single": {
-            "cosine": -0.0038963623067345063,
-            "norm_ratio": 0.10495160793852527,
+            "cosine": -0.0038963623067344868,
+            "norm_ratio": 0.10495160793852529,
             "normalized_rmse": 1.0058989506840572,
             "sign_agreement": 0.5106145251396648
           },
@@ -241,28 +250,28 @@
       "reciprocal_minus_within": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": -0.2242110337492032,
+            "cosine_improvement": -0.22421103374920265,
             "normalized_rmse_improvement": -0.23334036794055824
           },
           "training_common_ray": {
-            "cosine_improvement": -0.33167864227508603,
+            "cosine_improvement": -0.33167864227508564,
             "normalized_rmse_improvement": -0.24461595336757003
           },
           "zero": {
-            "cosine_improvement": -0.33167864227508603,
+            "cosine_improvement": -0.33167864227508564,
             "normalized_rmse_improvement": -0.24461595336757003
           }
         },
         "metrics": {
           "cone": {
-            "cosine": -0.33167864227508603,
-            "norm_ratio": 0.19041976275688766,
+            "cosine": -0.33167864227508564,
+            "norm_ratio": 0.19041976275688782,
             "normalized_rmse": 0.24461595336757003,
             "sign_agreement": -0.0822346368715084
           },
           "training_best_single": {
-            "cosine": -0.10746760852588286,
-            "norm_ratio": 0.003005710493482583,
+            "cosine": -0.10746760852588304,
+            "norm_ratio": 0.0030057104934827356,
             "normalized_rmse": 0.011275585427011792,
             "sign_agreement": 0.0031284916201116397
           },
@@ -296,39 +305,39 @@
         },
         "best_single_alpha": 0.16950468614351025,
         "best_single_opaque_key": "ENSG00000164715_Rest",
-        "coefficient_sha256": "2a4a260c551025aa2ffb8123a9a3958f1b7f641a4a1d3c1fa2e03ed9bb45cc69",
+        "coefficient_sha256": "20a716c9e3954ac165c663d9a727990e6ab2f4754d36be6227a37f8d48ca1092",
         "common_alpha": 0.0,
-        "cone_fit_cosine": 0.4985398170531622,
-        "cone_kkt_violation": 1.1102230246251563e-16,
+        "cone_fit_cosine": 0.4985398170531629,
+        "cone_kkt_violation": 5.551115123125782e-16,
         "cone_support": 213,
-        "training_model_sha256": "e62ef1edf116e331796d9f095792f0970bce256cd8d1b59216abfa383ace2c5c"
+        "training_model_sha256": "bd0ba46978727dcef0f3157f3653dee2366e6bac14f9b7bc13d93f16304c1009"
       },
       "within_training_guide": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": 0.19984221164152935,
+            "cosine_improvement": 0.19984221164152893,
             "normalized_rmse_improvement": 0.028145593654006595
           },
           "training_common_ray": {
-            "cosine_improvement": 0.3034134578606777,
+            "cosine_improvement": 0.30341345786067747,
             "normalized_rmse_improvement": 0.03352222839696117
           },
           "zero": {
-            "cosine_improvement": 0.3034134578606777,
+            "cosine_improvement": 0.30341345786067747,
             "normalized_rmse_improvement": 0.03352222839696117
           }
         },
         "guide_slot": "guide_1",
         "metrics": {
           "cone": {
-            "cosine": 0.3034134578606777,
-            "norm_ratio": 0.46508908810144367,
+            "cosine": 0.30341345786067747,
+            "norm_ratio": 0.4650890881014434,
             "normalized_rmse": 0.9664777716030388,
             "sign_agreement": 0.554413407821229
           },
           "training_best_single": {
-            "cosine": 0.10357124621914834,
-            "norm_ratio": 0.10194589744504269,
+            "cosine": 0.10357124621914855,
+            "norm_ratio": 0.10194589744504255,
             "normalized_rmse": 0.9946233652570454,
             "sign_agreement": 0.5074860335195531
           },
@@ -351,38 +360,38 @@
       "fit_gene_sha256": "8c660049916a4c562662e5c4217cebb4c88c1bc19f5714b344df2c3d31544830",
       "fit_genes": 4475,
       "fit_id": "guide_1|hollbacker|seed=1",
-      "guide_identity_status": "POSITIONAL_MODALITIES_ONLY_IDENTITIES_NOT_RELEASED",
+      "guide_identity_status": "OFFICIAL_ALPHANUMERIC_GUIDE_RANKS_IDS_NOT_EMBEDDED_CROSSWALK_NOT_VERIFIED",
       "held_guide_slot": "guide_2",
       "prediction_cosine": {
-        "cone": 0.49565991901190487,
-        "training_best_single": -0.0038642399735096195,
+        "cone": 0.49565991901190465,
+        "training_best_single": -0.0038642399735095987,
         "training_common_ray": 1.0
       },
       "reciprocal_held_guide": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": -0.022874700581024334,
-            "normalized_rmse_improvement": -0.46177010100023397
+            "cosine_improvement": -0.02287470058102435,
+            "normalized_rmse_improvement": -0.46177010100023375
           },
           "training_common_ray": {
-            "cosine_improvement": -0.0518465903436826,
-            "normalized_rmse_improvement": -0.48687251550430743
+            "cosine_improvement": -0.051846590343682664,
+            "normalized_rmse_improvement": -0.4868725155043072
           },
           "zero": {
-            "cosine_improvement": -0.0518465903436826,
-            "normalized_rmse_improvement": -0.48687251550430743
+            "cosine_improvement": -0.051846590343682664,
+            "normalized_rmse_improvement": -0.4868725155043072
           }
         },
         "guide_slot": "guide_2",
         "metrics": {
           "cone": {
-            "cosine": -0.0518465903436826,
+            "cosine": -0.051846590343682664,
             "norm_ratio": 1.0497331599660134,
-            "normalized_rmse": 1.4868725155043074,
+            "normalized_rmse": 1.4868725155043072,
             "sign_agreement": 0.5159776536312849
           },
           "training_best_single": {
-            "cosine": -0.028971889762658267,
+            "cosine": -0.028971889762658312,
             "norm_ratio": 0.19834799634170536,
             "normalized_rmse": 1.0251024145040735,
             "sign_agreement": 0.49743016759776537
@@ -405,27 +414,27 @@
         "comparisons": {
           "training_best_single": {
             "cosine_improvement": -0.12133644981301754,
-            "normalized_rmse_improvement": -0.35997431729700136
+            "normalized_rmse_improvement": -0.35997431729700113
           },
           "training_common_ray": {
-            "cosine_improvement": -0.23195175816315877,
-            "normalized_rmse_improvement": -0.3787140221858645
+            "cosine_improvement": -0.23195175816315888,
+            "normalized_rmse_improvement": -0.37871402218586425
           },
           "zero": {
-            "cosine_improvement": -0.23195175816315877,
-            "normalized_rmse_improvement": -0.3787140221858645
+            "cosine_improvement": -0.23195175816315888,
+            "normalized_rmse_improvement": -0.37871402218586425
           }
         },
         "metrics": {
           "cone": {
-            "cosine": -0.23195175816315877,
-            "norm_ratio": 0.35928191565619827,
-            "normalized_rmse": 0.3787140221858645,
+            "cosine": -0.23195175816315888,
+            "norm_ratio": 0.35928191565619794,
+            "normalized_rmse": 0.37871402218586425,
             "sign_agreement": -0.048268156424581043
           },
           "training_best_single": {
-            "cosine": -0.11061530835014123,
-            "norm_ratio": -0.022692520862352294,
+            "cosine": -0.11061530835014134,
+            "norm_ratio": -0.022692520862352406,
             "normalized_rmse": 0.018739704888863118,
             "sign_agreement": -0.034413407821229036
           },
@@ -459,39 +468,39 @@
         },
         "best_single_alpha": 0.2972207916267859,
         "best_single_opaque_key": "ENSG00000151883_Rest",
-        "coefficient_sha256": "6d3147926c18a6b1d52ecab1181109a0d210d8d52bf791e44d609e4e7aa8caea",
+        "coefficient_sha256": "ad77c6467a84665423fa2ad5542d1b4fdfa4e0f223bcd9a949a5b436af2c40b0",
         "common_alpha": 0.0,
-        "cone_fit_cosine": 0.5373051806672332,
-        "cone_kkt_violation": 5.551115123125782e-16,
+        "cone_fit_cosine": 0.537305180667232,
+        "cone_kkt_violation": 1.5295270791412965e-16,
         "cone_support": 215,
-        "training_model_sha256": "7f34b451ac512ed21354de82a829d8d6d670d88b358c434a4637d4beeddd0da1"
+        "training_model_sha256": "0b9cfea3fe6d64983e461d72d10a11026bc2b7c1d9d8db88a955273ebd3b5ff5"
       },
       "within_training_guide": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": 0.0984617492319932,
+            "cosine_improvement": 0.09846174923199319,
             "normalized_rmse_improvement": -0.10179578370323261
           },
           "training_common_ray": {
-            "cosine_improvement": 0.18010516781947616,
+            "cosine_improvement": 0.18010516781947622,
             "normalized_rmse_improvement": -0.10815849331844296
           },
           "zero": {
-            "cosine_improvement": 0.18010516781947616,
+            "cosine_improvement": 0.18010516781947622,
             "normalized_rmse_improvement": -0.10815849331844296
           }
         },
         "guide_slot": "guide_1",
         "metrics": {
           "cone": {
-            "cosine": 0.18010516781947616,
-            "norm_ratio": 0.6904512443098151,
+            "cosine": 0.18010516781947622,
+            "norm_ratio": 0.6904512443098154,
             "normalized_rmse": 1.108158493318443,
             "sign_agreement": 0.5642458100558659
           },
           "training_best_single": {
-            "cosine": 0.08164341858748296,
-            "norm_ratio": 0.22104051720405765,
+            "cosine": 0.08164341858748303,
+            "norm_ratio": 0.22104051720405776,
             "normalized_rmse": 1.0063627096152103,
             "sign_agreement": 0.5318435754189944
           },
@@ -514,39 +523,39 @@
       "fit_gene_sha256": "8c660049916a4c562662e5c4217cebb4c88c1bc19f5714b344df2c3d31544830",
       "fit_genes": 4475,
       "fit_id": "guide_1|hollbacker|seed=1",
-      "guide_identity_status": "POSITIONAL_MODALITIES_ONLY_IDENTITIES_NOT_RELEASED",
+      "guide_identity_status": "OFFICIAL_ALPHANUMERIC_GUIDE_RANKS_IDS_NOT_EMBEDDED_CROSSWALK_NOT_VERIFIED",
       "held_guide_slot": "guide_2",
       "prediction_cosine": {
-        "cone": 0.49565991901190487,
-        "training_best_single": -0.0038642399735096195,
+        "cone": 0.49565991901190465,
+        "training_best_single": -0.0038642399735095987,
         "training_common_ray": 1.0
       },
       "reciprocal_held_guide": {
         "comparisons": {
           "training_best_single": {
             "cosine_improvement": -0.03414558618053045,
-            "normalized_rmse_improvement": -0.3344159543347909
+            "normalized_rmse_improvement": -0.3344159543347911
           },
           "training_common_ray": {
-            "cosine_improvement": -0.03779048335923653,
-            "normalized_rmse_improvement": -0.3483490286129427
+            "cosine_improvement": -0.037790483359236515,
+            "normalized_rmse_improvement": -0.3483490286129429
           },
           "zero": {
-            "cosine_improvement": -0.03779048335923653,
-            "normalized_rmse_improvement": -0.3483490286129427
+            "cosine_improvement": -0.037790483359236515,
+            "normalized_rmse_improvement": -0.3483490286129429
           }
         },
         "guide_slot": "guide_2",
         "metrics": {
           "cone": {
-            "cosine": -0.03779048335923653,
-            "norm_ratio": 0.8674571201139738,
-            "normalized_rmse": 1.3483490286129427,
+            "cosine": -0.037790483359236515,
+            "norm_ratio": 0.8674571201139741,
+            "normalized_rmse": 1.348349028612943,
             "sign_agreement": 0.47441340782122904
           },
           "training_best_single": {
-            "cosine": -0.0036448971787060762,
-            "norm_ratio": 0.16390677959770594,
+            "cosine": -0.0036448971787060662,
+            "norm_ratio": 0.163906779597706,
             "normalized_rmse": 1.0139330742781518,
             "sign_agreement": 0.49385474860335193
           },
@@ -567,28 +576,28 @@
       "reciprocal_minus_within": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": -0.15471026404202814,
-            "normalized_rmse_improvement": -0.30011276068687653
+            "cosine_improvement": -0.15471026404202817,
+            "normalized_rmse_improvement": -0.30011276068687676
           },
           "training_common_ray": {
             "cosine_improvement": -0.2679744221155913,
-            "normalized_rmse_improvement": -0.31739222626624963
+            "normalized_rmse_improvement": -0.31739222626624986
           },
           "zero": {
             "cosine_improvement": -0.2679744221155913,
-            "normalized_rmse_improvement": -0.31739222626624963
+            "normalized_rmse_improvement": -0.31739222626624986
           }
         },
         "metrics": {
           "cone": {
             "cosine": -0.2679744221155913,
-            "norm_ratio": 0.29689607583154554,
-            "normalized_rmse": 0.31739222626624963,
+            "norm_ratio": 0.2968960758315454,
+            "normalized_rmse": 0.31739222626624986,
             "sign_agreement": -0.0835754189944134
           },
           "training_best_single": {
-            "cosine": -0.11326415807356317,
-            "norm_ratio": -0.018752183455860078,
+            "cosine": -0.11326415807356316,
+            "norm_ratio": -0.01875218345586016,
             "normalized_rmse": 0.0172794655793731,
             "sign_agreement": -0.026368715083798955
           },
@@ -622,39 +631,39 @@
         },
         "best_single_alpha": 0.2972207916267859,
         "best_single_opaque_key": "ENSG00000151883_Rest",
-        "coefficient_sha256": "6d3147926c18a6b1d52ecab1181109a0d210d8d52bf791e44d609e4e7aa8caea",
+        "coefficient_sha256": "ad77c6467a84665423fa2ad5542d1b4fdfa4e0f223bcd9a949a5b436af2c40b0",
         "common_alpha": 0.0,
-        "cone_fit_cosine": 0.5373051806672332,
-        "cone_kkt_violation": 5.551115123125782e-16,
+        "cone_fit_cosine": 0.537305180667232,
+        "cone_kkt_violation": 1.5295270791412965e-16,
         "cone_support": 215,
-        "training_model_sha256": "7f34b451ac512ed21354de82a829d8d6d670d88b358c434a4637d4beeddd0da1"
+        "training_model_sha256": "0b9cfea3fe6d64983e461d72d10a11026bc2b7c1d9d8db88a955273ebd3b5ff5"
       },
       "within_training_guide": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": 0.12056467786149769,
+            "cosine_improvement": 0.12056467786149773,
             "normalized_rmse_improvement": -0.03430319364791434
           },
           "training_common_ray": {
-            "cosine_improvement": 0.2301839387563548,
+            "cosine_improvement": 0.23018393875635482,
             "normalized_rmse_improvement": -0.03095680234669307
           },
           "zero": {
-            "cosine_improvement": 0.2301839387563548,
+            "cosine_improvement": 0.23018393875635482,
             "normalized_rmse_improvement": -0.03095680234669307
           }
         },
         "guide_slot": "guide_1",
         "metrics": {
           "cone": {
-            "cosine": 0.2301839387563548,
-            "norm_ratio": 0.5705610442824283,
+            "cosine": 0.23018393875635482,
+            "norm_ratio": 0.5705610442824287,
             "normalized_rmse": 1.030956802346693,
             "sign_agreement": 0.5579888268156424
           },
           "training_best_single": {
-            "cosine": 0.1096192608948571,
-            "norm_ratio": 0.18265896305356602,
+            "cosine": 0.10961926089485709,
+            "norm_ratio": 0.18265896305356616,
             "normalized_rmse": 0.9966536086987787,
             "sign_agreement": 0.5202234636871509
           },
@@ -677,39 +686,39 @@
       "fit_gene_sha256": "a0673b2bddd34a50e19ef2f108aa372dfcf75e3d7d26803c2900e7a1c29ed8f5",
       "fit_genes": 4475,
       "fit_id": "guide_1|hollbacker|seed=2",
-      "guide_identity_status": "POSITIONAL_MODALITIES_ONLY_IDENTITIES_NOT_RELEASED",
+      "guide_identity_status": "OFFICIAL_ALPHANUMERIC_GUIDE_RANKS_IDS_NOT_EMBEDDED_CROSSWALK_NOT_VERIFIED",
       "held_guide_slot": "guide_2",
       "prediction_cosine": {
-        "cone": 0.5581951259978485,
-        "training_best_single": 0.07195211671871633,
+        "cone": 0.5581951259978489,
+        "training_best_single": 0.07195211671871651,
         "training_common_ray": 1.0
       },
       "reciprocal_held_guide": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": -0.06910490718483314,
+            "cosine_improvement": -0.069104907184833,
             "normalized_rmse_improvement": -0.38087593322336644
           },
           "training_common_ray": {
-            "cosine_improvement": -0.06295804632178248,
+            "cosine_improvement": -0.06295804632178242,
             "normalized_rmse_improvement": -0.3896459981797671
           },
           "zero": {
-            "cosine_improvement": -0.06295804632178248,
+            "cosine_improvement": -0.06295804632178242,
             "normalized_rmse_improvement": -0.3896459981797671
           }
         },
         "guide_slot": "guide_2",
         "metrics": {
           "cone": {
-            "cosine": -0.06295804632178248,
-            "norm_ratio": 0.9040371531770044,
+            "cosine": -0.06295804632178242,
+            "norm_ratio": 0.9040371531770038,
             "normalized_rmse": 1.389645998179767,
             "sign_agreement": 0.524022346368715
           },
           "training_best_single": {
-            "cosine": 0.006146860863050669,
-            "norm_ratio": 0.1390183320320363,
+            "cosine": 0.006146860863050577,
+            "norm_ratio": 0.13901833203203637,
             "normalized_rmse": 1.0087700649564006,
             "sign_agreement": 0.5146368715083799
           },
@@ -730,28 +739,28 @@
       "reciprocal_minus_within": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": -0.0798615544087285,
+            "cosine_improvement": -0.07986155440872797,
             "normalized_rmse_improvement": -0.2758739686210194
           },
           "training_common_ray": {
-            "cosine_improvement": -0.18565195156856576,
+            "cosine_improvement": -0.18565195156856537,
             "normalized_rmse_improvement": -0.28935161863761283
           },
           "zero": {
-            "cosine_improvement": -0.18565195156856576,
+            "cosine_improvement": -0.18565195156856537,
             "normalized_rmse_improvement": -0.28935161863761283
           }
         },
         "metrics": {
           "cone": {
-            "cosine": -0.18565195156856576,
-            "norm_ratio": 0.30626271156111207,
+            "cosine": -0.18565195156856537,
+            "norm_ratio": 0.3062627115611112,
             "normalized_rmse": 0.28935161863761283,
             "sign_agreement": -0.042905027932960915
           },
           "training_best_single": {
-            "cosine": -0.10579039715983726,
-            "norm_ratio": -0.028927326882113413,
+            "cosine": -0.1057903971598374,
+            "norm_ratio": -0.028927326882113302,
             "normalized_rmse": 0.013477650016593401,
             "sign_agreement": -0.012067039106145261
           },
@@ -785,39 +794,39 @@
         },
         "best_single_alpha": 0.21861913155636584,
         "best_single_opaque_key": "ENSG00000166582_Rest",
-        "coefficient_sha256": "a43a330e7d3b39dedf576b72c658d1de1f6cffb0bdda875551950e5bef880dea",
+        "coefficient_sha256": "b14703e08968887fed37207f3115733af9e7be0849b6315e60d96b68ef170bc9",
         "common_alpha": 0.0,
-        "cone_fit_cosine": 0.5862557106845706,
-        "cone_kkt_violation": 6.661338147750938e-16,
+        "cone_fit_cosine": 0.58625571068457,
+        "cone_kkt_violation": 4.440892098500625e-16,
         "cone_support": 239,
-        "training_model_sha256": "b5c3af9b89191685b0450b3fa7c295b91bd09f4ec255f3c8e15667505293fa36"
+        "training_model_sha256": "a7e216e9af51a773ca2e0d99d0cb3a90ed3ba885ecfbf94dc260f9f08575e8a7"
       },
       "within_training_guide": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": 0.010756647223895355,
+            "cosine_improvement": 0.010756647223894966,
             "normalized_rmse_improvement": -0.10500196460234701
           },
           "training_common_ray": {
-            "cosine_improvement": 0.12269390524678328,
+            "cosine_improvement": 0.12269390524678295,
             "normalized_rmse_improvement": -0.10029437954215425
           },
           "zero": {
-            "cosine_improvement": 0.12269390524678328,
+            "cosine_improvement": 0.12269390524678295,
             "normalized_rmse_improvement": -0.10029437954215425
           }
         },
         "guide_slot": "guide_1",
         "metrics": {
           "cone": {
-            "cosine": 0.12269390524678328,
-            "norm_ratio": 0.5977744416158923,
+            "cosine": 0.12269390524678295,
+            "norm_ratio": 0.5977744416158927,
             "normalized_rmse": 1.1002943795421543,
             "sign_agreement": 0.566927374301676
           },
           "training_best_single": {
-            "cosine": 0.11193725802288793,
-            "norm_ratio": 0.16794565891414973,
+            "cosine": 0.11193725802288798,
+            "norm_ratio": 0.16794565891414967,
             "normalized_rmse": 0.9952924149398072,
             "sign_agreement": 0.5267039106145252
           },
@@ -840,39 +849,39 @@
       "fit_gene_sha256": "a0673b2bddd34a50e19ef2f108aa372dfcf75e3d7d26803c2900e7a1c29ed8f5",
       "fit_genes": 4475,
       "fit_id": "guide_1|hollbacker|seed=2",
-      "guide_identity_status": "POSITIONAL_MODALITIES_ONLY_IDENTITIES_NOT_RELEASED",
+      "guide_identity_status": "OFFICIAL_ALPHANUMERIC_GUIDE_RANKS_IDS_NOT_EMBEDDED_CROSSWALK_NOT_VERIFIED",
       "held_guide_slot": "guide_2",
       "prediction_cosine": {
-        "cone": 0.5581951259978485,
-        "training_best_single": 0.07195211671871633,
+        "cone": 0.5581951259978489,
+        "training_best_single": 0.07195211671871651,
         "training_common_ray": 1.0
       },
       "reciprocal_held_guide": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": -0.04243657346157167,
-            "normalized_rmse_improvement": -0.26879312585865334
+            "cosine_improvement": -0.04243657346157163,
+            "normalized_rmse_improvement": -0.26879312585865356
           },
           "training_common_ray": {
-            "cosine_improvement": -0.034545484453049384,
-            "normalized_rmse_improvement": -0.27462573947739277
+            "cosine_improvement": -0.03454548445304943,
+            "normalized_rmse_improvement": -0.274625739477393
           },
           "zero": {
-            "cosine_improvement": -0.034545484453049384,
-            "normalized_rmse_improvement": -0.27462573947739277
+            "cosine_improvement": -0.03454548445304943,
+            "normalized_rmse_improvement": -0.274625739477393
           }
         },
         "guide_slot": "guide_2",
         "metrics": {
           "cone": {
-            "cosine": -0.034545484453049384,
-            "norm_ratio": 0.7565702885121889,
-            "normalized_rmse": 1.2746257394773928,
+            "cosine": -0.03454548445304943,
+            "norm_ratio": 0.756570288512189,
+            "normalized_rmse": 1.274625739477393,
             "sign_agreement": 0.5003351955307263
           },
           "training_best_single": {
-            "cosine": 0.007891089008522284,
-            "norm_ratio": 0.11634161185117578,
+            "cosine": 0.007891089008522199,
+            "norm_ratio": 0.1163416118511759,
             "normalized_rmse": 1.0058326136187394,
             "sign_agreement": 0.4846927374301676
           },
@@ -893,28 +902,28 @@
       "reciprocal_minus_within": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": -0.10691092414578632,
-            "normalized_rmse_improvement": -0.23296845416594236
+            "cosine_improvement": -0.10691092414578611,
+            "normalized_rmse_improvement": -0.23296845416594258
           },
           "training_common_ray": {
-            "cosine_improvement": -0.2292281370686048,
-            "normalized_rmse_improvement": -0.24726047099095072
+            "cosine_improvement": -0.22922813706860468,
+            "normalized_rmse_improvement": -0.24726047099095094
           },
           "zero": {
-            "cosine_improvement": -0.2292281370686048,
-            "normalized_rmse_improvement": -0.24726047099095072
+            "cosine_improvement": -0.22922813706860468,
+            "normalized_rmse_improvement": -0.24726047099095094
           }
         },
         "metrics": {
           "cone": {
-            "cosine": -0.2292281370686048,
-            "norm_ratio": 0.2563050282082253,
-            "normalized_rmse": 0.24726047099095072,
+            "cosine": -0.22922813706860468,
+            "norm_ratio": 0.25630502820822476,
+            "normalized_rmse": 0.24726047099095094,
             "sign_agreement": -0.057206703910614554
           },
           "training_best_single": {
-            "cosine": -0.12231721292281847,
-            "norm_ratio": -0.024208690946136258,
+            "cosine": -0.12231721292281855,
+            "norm_ratio": -0.024208690946136188,
             "normalized_rmse": 0.014292016825008358,
             "sign_agreement": -0.03217877094972066
           },
@@ -948,39 +957,39 @@
         },
         "best_single_alpha": 0.21861913155636584,
         "best_single_opaque_key": "ENSG00000166582_Rest",
-        "coefficient_sha256": "a43a330e7d3b39dedf576b72c658d1de1f6cffb0bdda875551950e5bef880dea",
+        "coefficient_sha256": "b14703e08968887fed37207f3115733af9e7be0849b6315e60d96b68ef170bc9",
         "common_alpha": 0.0,
-        "cone_fit_cosine": 0.5862557106845706,
-        "cone_kkt_violation": 6.661338147750938e-16,
+        "cone_fit_cosine": 0.58625571068457,
+        "cone_kkt_violation": 4.440892098500625e-16,
         "cone_support": 239,
-        "training_model_sha256": "b5c3af9b89191685b0450b3fa7c295b91bd09f4ec255f3c8e15667505293fa36"
+        "training_model_sha256": "a7e216e9af51a773ca2e0d99d0cb3a90ed3ba885ecfbf94dc260f9f08575e8a7"
       },
       "within_training_guide": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": 0.06447435068421464,
+            "cosine_improvement": 0.06447435068421448,
             "normalized_rmse_improvement": -0.035824671692710974
           },
           "training_common_ray": {
-            "cosine_improvement": 0.1946826526155554,
+            "cosine_improvement": 0.19468265261555523,
             "normalized_rmse_improvement": -0.02736526848644205
           },
           "zero": {
-            "cosine_improvement": 0.1946826526155554,
+            "cosine_improvement": 0.19468265261555523,
             "normalized_rmse_improvement": -0.02736526848644205
           }
         },
         "guide_slot": "guide_1",
         "metrics": {
           "cone": {
-            "cosine": 0.1946826526155554,
-            "norm_ratio": 0.5002652603039636,
+            "cosine": 0.19468265261555523,
+            "norm_ratio": 0.5002652603039642,
             "normalized_rmse": 1.027365268486442,
             "sign_agreement": 0.5575418994413408
           },
           "training_best_single": {
             "cosine": 0.13020830193134075,
-            "norm_ratio": 0.14055030279731204,
+            "norm_ratio": 0.1405503027973121,
             "normalized_rmse": 0.9915405967937311,
             "sign_agreement": 0.5168715083798883
           },
@@ -1003,38 +1012,38 @@
       "fit_gene_sha256": "a7e9b9765b708dd7c8fba2fe2bcfb44fc93b20b368defa5bf9c64f1df098f34b",
       "fit_genes": 4475,
       "fit_id": "guide_1|ota|seed=0",
-      "guide_identity_status": "POSITIONAL_MODALITIES_ONLY_IDENTITIES_NOT_RELEASED",
+      "guide_identity_status": "OFFICIAL_ALPHANUMERIC_GUIDE_RANKS_IDS_NOT_EMBEDDED_CROSSWALK_NOT_VERIFIED",
       "held_guide_slot": "guide_2",
       "prediction_cosine": {
-        "cone": 0.4424383965192389,
-        "training_best_single": 0.05400229942170817,
+        "cone": 0.4424383965192388,
+        "training_best_single": 0.054002299421708214,
         "training_common_ray": 1.0
       },
       "reciprocal_held_guide": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": 0.07952751951627404,
+            "cosine_improvement": 0.07952751951627418,
             "normalized_rmse_improvement": -0.21365770474815715
           },
           "training_common_ray": {
-            "cosine_improvement": 0.02523058449644718,
+            "cosine_improvement": 0.02523058449644723,
             "normalized_rmse_improvement": -0.23232943853956645
           },
           "zero": {
-            "cosine_improvement": 0.02523058449644718,
+            "cosine_improvement": 0.02523058449644723,
             "normalized_rmse_improvement": -0.23232943853956645
           }
         },
         "guide_slot": "guide_2",
         "metrics": {
           "cone": {
-            "cosine": 0.02523058449644718,
-            "norm_ratio": 0.7458361822302394,
+            "cosine": 0.02523058449644723,
+            "norm_ratio": 0.745836182230239,
             "normalized_rmse": 1.2323294385395664,
             "sign_agreement": 0.49988826815642456
           },
           "training_best_single": {
-            "cosine": -0.05429693501982687,
+            "cosine": -0.05429693501982694,
             "norm_ratio": 0.14729735651181253,
             "normalized_rmse": 1.0186717337914093,
             "sign_agreement": 0.4773184357541899
@@ -1056,28 +1065,28 @@
       "reciprocal_minus_within": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": -0.12574794183287344,
-            "normalized_rmse_improvement": -0.2348342013577568
+            "cosine_improvement": -0.1257479418328731,
+            "normalized_rmse_improvement": -0.23483420135775668
           },
           "training_common_ray": {
-            "cosine_improvement": -0.3304023082018273,
-            "normalized_rmse_improvement": -0.2645345658889128
+            "cosine_improvement": -0.3304023082018271,
+            "normalized_rmse_improvement": -0.26453456588891266
           },
           "zero": {
-            "cosine_improvement": -0.3304023082018273,
-            "normalized_rmse_improvement": -0.2645345658889128
+            "cosine_improvement": -0.3304023082018271,
+            "normalized_rmse_improvement": -0.26453456588891266
           }
         },
         "metrics": {
           "cone": {
-            "cosine": -0.3304023082018273,
-            "norm_ratio": 0.13900283193318308,
-            "normalized_rmse": 0.2645345658889128,
+            "cosine": -0.3304023082018271,
+            "norm_ratio": 0.13900283193318297,
+            "normalized_rmse": 0.26453456588891266,
             "sign_agreement": -0.08536312849162014
           },
           "training_best_single": {
-            "cosine": -0.20465436636895384,
-            "norm_ratio": -0.0289777595025745,
+            "cosine": -0.20465436636895395,
+            "norm_ratio": -0.02897775950257442,
             "normalized_rmse": 0.029700364531155987,
             "sign_agreement": -0.047597765363128486
           },
@@ -1111,39 +1120,39 @@
         },
         "best_single_alpha": 0.2579620136397887,
         "best_single_opaque_key": "ENSG00000185043_Rest",
-        "coefficient_sha256": "4c2a6a8e5a301ee4f9e1b52712b6a270337570af256a9b38e91577e262a4914d",
+        "coefficient_sha256": "04ced6178cac8323fff7d1104ff887e5d24d8036898cd458e2a0ce010aa2d6a3",
         "common_alpha": 0.0,
         "cone_fit_cosine": 0.5456425688820532,
-        "cone_kkt_violation": 7.771561172376094e-16,
+        "cone_kkt_violation": 1.6327881132507713e-16,
         "cone_support": 196,
-        "training_model_sha256": "1278b95b7f29f3dac624ce212820a02fe8c2067419ff3abfeba9c65e878efdfd"
+        "training_model_sha256": "9366d12515a8ce693ccea3dee3a0e337cd3fa72b6625583e8254151b0065e71c"
       },
       "within_training_guide": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": 0.20527546134914748,
-            "normalized_rmse_improvement": 0.021176496609599638
+            "cosine_improvement": 0.2052754613491473,
+            "normalized_rmse_improvement": 0.021176496609599527
           },
           "training_common_ray": {
-            "cosine_improvement": 0.35563289269827447,
-            "normalized_rmse_improvement": 0.03220512734934633
+            "cosine_improvement": 0.3556328926982743,
+            "normalized_rmse_improvement": 0.03220512734934622
           },
           "zero": {
-            "cosine_improvement": 0.35563289269827447,
-            "normalized_rmse_improvement": 0.03220512734934633
+            "cosine_improvement": 0.3556328926982743,
+            "normalized_rmse_improvement": 0.03220512734934622
           }
         },
         "guide_slot": "guide_1",
         "metrics": {
           "cone": {
-            "cosine": 0.35563289269827447,
-            "norm_ratio": 0.6068333502970563,
-            "normalized_rmse": 0.9677948726506537,
+            "cosine": 0.3556328926982743,
+            "norm_ratio": 0.606833350297056,
+            "normalized_rmse": 0.9677948726506538,
             "sign_agreement": 0.5852513966480447
           },
           "training_best_single": {
-            "cosine": 0.150357431349127,
-            "norm_ratio": 0.17627511601438703,
+            "cosine": 0.15035743134912702,
+            "norm_ratio": 0.17627511601438695,
             "normalized_rmse": 0.9889713692602533,
             "sign_agreement": 0.5249162011173184
           },
@@ -1166,39 +1175,39 @@
       "fit_gene_sha256": "a7e9b9765b708dd7c8fba2fe2bcfb44fc93b20b368defa5bf9c64f1df098f34b",
       "fit_genes": 4475,
       "fit_id": "guide_1|ota|seed=0",
-      "guide_identity_status": "POSITIONAL_MODALITIES_ONLY_IDENTITIES_NOT_RELEASED",
+      "guide_identity_status": "OFFICIAL_ALPHANUMERIC_GUIDE_RANKS_IDS_NOT_EMBEDDED_CROSSWALK_NOT_VERIFIED",
       "held_guide_slot": "guide_2",
       "prediction_cosine": {
-        "cone": 0.4424383965192389,
-        "training_best_single": 0.05400229942170817,
+        "cone": 0.4424383965192388,
+        "training_best_single": 0.054002299421708214,
         "training_common_ray": 1.0
       },
       "reciprocal_held_guide": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": -0.045483818705300785,
+            "cosine_improvement": -0.0454838187053008,
             "normalized_rmse_improvement": -0.33416409042910566
           },
           "training_common_ray": {
-            "cosine_improvement": -0.03661383794072399,
+            "cosine_improvement": -0.03661383794072403,
             "normalized_rmse_improvement": -0.3472160658639607
           },
           "zero": {
-            "cosine_improvement": -0.03661383794072399,
+            "cosine_improvement": -0.03661383794072403,
             "normalized_rmse_improvement": -0.3472160658639607
           }
         },
         "guide_slot": "guide_2",
         "metrics": {
           "cone": {
-            "cosine": -0.03661383794072399,
-            "norm_ratio": 0.8668969263840396,
+            "cosine": -0.03661383794072403,
+            "norm_ratio": 0.8668969263840391,
             "normalized_rmse": 1.3472160658639607,
             "sign_agreement": 0.5320670391061453
           },
           "training_best_single": {
-            "cosine": 0.008869980764576799,
-            "norm_ratio": 0.1712059949180181,
+            "cosine": 0.008869980764576768,
+            "norm_ratio": 0.17120599491801808,
             "normalized_rmse": 1.013051975434855,
             "sign_agreement": 0.5175418994413408
           },
@@ -1219,28 +1228,28 @@
       "reciprocal_minus_within": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": -0.18592102807072625,
-            "normalized_rmse_improvement": -0.26229876748433145
+            "cosine_improvement": -0.18592102807072622,
+            "normalized_rmse_improvement": -0.26229876748433123
           },
           "training_common_ray": {
-            "cosine_improvement": -0.28564493837142085,
-            "normalized_rmse_improvement": -0.2766116448327638
+            "cosine_improvement": -0.2856449383714207,
+            "normalized_rmse_improvement": -0.27661164483276357
           },
           "zero": {
-            "cosine_improvement": -0.28564493837142085,
-            "normalized_rmse_improvement": -0.2766116448327638
+            "cosine_improvement": -0.2856449383714207,
+            "normalized_rmse_improvement": -0.27661164483276357
           }
         },
         "metrics": {
           "cone": {
-            "cosine": -0.28564493837142085,
+            "cosine": -0.2856449383714207,
             "norm_ratio": 0.16156514075413275,
-            "normalized_rmse": 0.2766116448327638,
+            "normalized_rmse": 0.27661164483276357,
             "sign_agreement": -0.029050279329608908
           },
           "training_best_single": {
-            "cosine": -0.09972391030069455,
-            "norm_ratio": -0.03368129791070254,
+            "cosine": -0.09972391030069448,
+            "norm_ratio": -0.03368129791070246,
             "normalized_rmse": 0.01431287734843234,
             "sign_agreement": -0.008715083798882639
           },
@@ -1274,39 +1283,39 @@
         },
         "best_single_alpha": 0.2579620136397887,
         "best_single_opaque_key": "ENSG00000185043_Rest",
-        "coefficient_sha256": "4c2a6a8e5a301ee4f9e1b52712b6a270337570af256a9b38e91577e262a4914d",
+        "coefficient_sha256": "04ced6178cac8323fff7d1104ff887e5d24d8036898cd458e2a0ce010aa2d6a3",
         "common_alpha": 0.0,
         "cone_fit_cosine": 0.5456425688820532,
-        "cone_kkt_violation": 7.771561172376094e-16,
+        "cone_kkt_violation": 1.6327881132507713e-16,
         "cone_support": 196,
-        "training_model_sha256": "1278b95b7f29f3dac624ce212820a02fe8c2067419ff3abfeba9c65e878efdfd"
+        "training_model_sha256": "9366d12515a8ce693ccea3dee3a0e337cd3fa72b6625583e8254151b0065e71c"
       },
       "within_training_guide": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": 0.14043720936542547,
-            "normalized_rmse_improvement": -0.07186532294477421
+            "cosine_improvement": 0.14043720936542542,
+            "normalized_rmse_improvement": -0.07186532294477443
           },
           "training_common_ray": {
-            "cosine_improvement": 0.24903110043069684,
-            "normalized_rmse_improvement": -0.0706044210311969
+            "cosine_improvement": 0.24903110043069668,
+            "normalized_rmse_improvement": -0.07060442103119713
           },
           "zero": {
-            "cosine_improvement": 0.24903110043069684,
-            "normalized_rmse_improvement": -0.0706044210311969
+            "cosine_improvement": 0.24903110043069668,
+            "normalized_rmse_improvement": -0.07060442103119713
           }
         },
         "guide_slot": "guide_1",
         "metrics": {
           "cone": {
-            "cosine": 0.24903110043069684,
-            "norm_ratio": 0.7053317856299068,
-            "normalized_rmse": 1.070604421031197,
+            "cosine": 0.24903110043069668,
+            "norm_ratio": 0.7053317856299064,
+            "normalized_rmse": 1.0706044210311971,
             "sign_agreement": 0.5611173184357542
           },
           "training_best_single": {
-            "cosine": 0.10859389106527136,
-            "norm_ratio": 0.20488729282872065,
+            "cosine": 0.10859389106527124,
+            "norm_ratio": 0.20488729282872054,
             "normalized_rmse": 0.9987390980864227,
             "sign_agreement": 0.5262569832402234
           },
@@ -1329,39 +1338,39 @@
       "fit_gene_sha256": "8c660049916a4c562662e5c4217cebb4c88c1bc19f5714b344df2c3d31544830",
       "fit_genes": 4475,
       "fit_id": "guide_1|ota|seed=1",
-      "guide_identity_status": "POSITIONAL_MODALITIES_ONLY_IDENTITIES_NOT_RELEASED",
+      "guide_identity_status": "OFFICIAL_ALPHANUMERIC_GUIDE_RANKS_IDS_NOT_EMBEDDED_CROSSWALK_NOT_VERIFIED",
       "held_guide_slot": "guide_2",
       "prediction_cosine": {
-        "cone": 0.5182027367184633,
-        "training_best_single": -0.0038642399735096702,
+        "cone": 0.5182027367184646,
+        "training_best_single": -0.0038642399735096156,
         "training_common_ray": 1.0
       },
       "reciprocal_held_guide": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": -0.011108445673199945,
+            "cosine_improvement": -0.011108445673199864,
             "normalized_rmse_improvement": -0.3840534496456338
           },
           "training_common_ray": {
-            "cosine_improvement": -0.014753342851905979,
+            "cosine_improvement": -0.014753342851905911,
             "normalized_rmse_improvement": -0.4084545496905605
           },
           "zero": {
-            "cosine_improvement": -0.014753342851905979,
+            "cosine_improvement": -0.014753342851905911,
             "normalized_rmse_improvement": -0.4084545496905605
           }
         },
         "guide_slot": "guide_2",
         "metrics": {
           "cone": {
-            "cosine": -0.014753342851905979,
-            "norm_ratio": 0.9771951838718077,
+            "cosine": -0.014753342851905911,
+            "norm_ratio": 0.9771951838718074,
             "normalized_rmse": 1.4084545496905605,
             "sign_agreement": 0.49162011173184356
           },
           "training_best_single": {
-            "cosine": -0.0036448971787060333,
-            "norm_ratio": 0.21864072774719662,
+            "cosine": -0.003644897178706048,
+            "norm_ratio": 0.21864072774719656,
             "normalized_rmse": 1.0244011000449267,
             "sign_agreement": 0.49385474860335193
           },
@@ -1382,28 +1391,28 @@
       "reciprocal_minus_within": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": -0.1746411186210374,
+            "cosine_improvement": -0.17464111862103737,
             "normalized_rmse_improvement": -0.3348123187394627
           },
           "training_common_ray": {
-            "cosine_improvement": -0.2879052766946006,
+            "cosine_improvement": -0.2879052766946005,
             "normalized_rmse_improvement": -0.356243245781638
           },
           "zero": {
-            "cosine_improvement": -0.2879052766946006,
+            "cosine_improvement": -0.2879052766946005,
             "normalized_rmse_improvement": -0.356243245781638
           }
         },
         "metrics": {
           "cone": {
-            "cosine": -0.2879052766946006,
-            "norm_ratio": 0.2777093350801403,
+            "cosine": -0.2879052766946005,
+            "norm_ratio": 0.27770933508013973,
             "normalized_rmse": 0.356243245781638,
             "sign_agreement": -0.08513966480446927
           },
           "training_best_single": {
-            "cosine": -0.11326415807356315,
-            "norm_ratio": -0.02501416382959401,
+            "cosine": -0.11326415807356308,
+            "norm_ratio": -0.025014163829594233,
             "normalized_rmse": 0.021430927042175307,
             "sign_agreement": -0.026368715083798955
           },
@@ -1437,39 +1446,39 @@
         },
         "best_single_alpha": 0.3964727410444945,
         "best_single_opaque_key": "ENSG00000151883_Rest",
-        "coefficient_sha256": "737fa73018bec23beaa72801af4b6eb3994dad54ca28316d8244a8981cab502f",
+        "coefficient_sha256": "2166ccc604b6698ab9d868fab1f9133055904b05a5452499825800fb9eb08df0",
         "common_alpha": 0.0,
-        "cone_fit_cosine": 0.5822482078110304,
-        "cone_kkt_violation": 9.992007221626407e-16,
+        "cone_fit_cosine": 0.582248207811029,
+        "cone_kkt_violation": 2.2204460492503126e-16,
         "cone_support": 206,
-        "training_model_sha256": "1687e05b0f305ed9fd8b9645317ba9cb9ab6ef6de441356dc0f9351612eb41b1"
+        "training_model_sha256": "c887e71536f12e539ebdbb7c23e08d73899cb68fe223b60e2d4e757e3c30069f"
       },
       "within_training_guide": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": 0.16353267294783747,
+            "cosine_improvement": 0.16353267294783752,
             "normalized_rmse_improvement": -0.049241130906171104
           },
           "training_common_ray": {
-            "cosine_improvement": 0.2731519338426946,
+            "cosine_improvement": 0.27315193384269454,
             "normalized_rmse_improvement": -0.05221130390892248
           },
           "zero": {
-            "cosine_improvement": 0.2731519338426946,
+            "cosine_improvement": 0.27315193384269454,
             "normalized_rmse_improvement": -0.05221130390892248
           }
         },
         "guide_slot": "guide_1",
         "metrics": {
           "cone": {
-            "cosine": 0.2731519338426946,
-            "norm_ratio": 0.6994858487916674,
+            "cosine": 0.27315193384269454,
+            "norm_ratio": 0.6994858487916676,
             "normalized_rmse": 1.0522113039089225,
             "sign_agreement": 0.5767597765363128
           },
           "training_best_single": {
-            "cosine": 0.10961926089485712,
-            "norm_ratio": 0.24365489157679063,
+            "cosine": 0.10961926089485703,
+            "norm_ratio": 0.2436548915767908,
             "normalized_rmse": 1.0029701730027514,
             "sign_agreement": 0.5202234636871509
           },
@@ -1492,39 +1501,39 @@
       "fit_gene_sha256": "8c660049916a4c562662e5c4217cebb4c88c1bc19f5714b344df2c3d31544830",
       "fit_genes": 4475,
       "fit_id": "guide_1|ota|seed=1",
-      "guide_identity_status": "POSITIONAL_MODALITIES_ONLY_IDENTITIES_NOT_RELEASED",
+      "guide_identity_status": "OFFICIAL_ALPHANUMERIC_GUIDE_RANKS_IDS_NOT_EMBEDDED_CROSSWALK_NOT_VERIFIED",
       "held_guide_slot": "guide_2",
       "prediction_cosine": {
-        "cone": 0.5182027367184633,
-        "training_best_single": -0.0038642399735096702,
+        "cone": 0.5182027367184646,
+        "training_best_single": -0.0038642399735096156,
         "training_common_ray": 1.0
       },
       "reciprocal_held_guide": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": -0.017825982181243042,
+            "cosine_improvement": -0.017825982181242997,
             "normalized_rmse_improvement": -0.542206235694803
           },
           "training_common_ray": {
-            "cosine_improvement": -0.04679787194390145,
+            "cosine_improvement": -0.04679787194390135,
             "normalized_rmse_improvement": -0.584000415434943
           },
           "zero": {
-            "cosine_improvement": -0.04679787194390145,
+            "cosine_improvement": -0.04679787194390135,
             "normalized_rmse_improvement": -0.584000415434943
           }
         },
         "guide_slot": "guide_2",
         "metrics": {
           "cone": {
-            "cosine": -0.04679787194390145,
-            "norm_ratio": 1.182530138359513,
+            "cosine": -0.04679787194390135,
+            "norm_ratio": 1.1825301383595122,
             "normalized_rmse": 1.584000415434943,
             "sign_agreement": 0.5077094972067039
           },
           "training_best_single": {
-            "cosine": -0.028971889762658406,
-            "norm_ratio": 0.2645830170892804,
+            "cosine": -0.028971889762658354,
+            "norm_ratio": 0.2645830170892803,
             "normalized_rmse": 1.04179417974014,
             "sign_agreement": 0.49743016759776537
           },
@@ -1545,28 +1554,28 @@
       "reciprocal_minus_within": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": -0.11923556690333931,
-            "normalized_rmse_improvement": -0.37541252539492254
+            "cosine_improvement": -0.11923556690333946,
+            "normalized_rmse_improvement": -0.37541252539492276
           },
           "training_common_ray": {
-            "cosine_improvement": -0.22985087525348089,
-            "normalized_rmse_improvement": -0.3979948439769867
+            "cosine_improvement": -0.2298508752534808,
+            "normalized_rmse_improvement": -0.3979948439769869
           },
           "zero": {
-            "cosine_improvement": -0.22985087525348089,
-            "normalized_rmse_improvement": -0.3979948439769867
+            "cosine_improvement": -0.2298508752534808,
+            "normalized_rmse_improvement": -0.3979948439769869
           }
         },
         "metrics": {
           "cone": {
-            "cosine": -0.22985087525348089,
-            "norm_ratio": 0.3360635253387899,
-            "normalized_rmse": 0.3979948439769867,
+            "cosine": -0.2298508752534808,
+            "norm_ratio": 0.336063525338789,
+            "normalized_rmse": 0.3979948439769869,
             "sign_agreement": -0.04446927374301679
           },
           "training_best_single": {
-            "cosine": -0.11061530835014158,
-            "norm_ratio": -0.030270311502310687,
+            "cosine": -0.11061530835014133,
+            "norm_ratio": -0.03027031150231091,
             "normalized_rmse": 0.022582318582064165,
             "sign_agreement": -0.034413407821229036
           },
@@ -1600,26 +1609,26 @@
         },
         "best_single_alpha": 0.3964727410444945,
         "best_single_opaque_key": "ENSG00000151883_Rest",
-        "coefficient_sha256": "737fa73018bec23beaa72801af4b6eb3994dad54ca28316d8244a8981cab502f",
+        "coefficient_sha256": "2166ccc604b6698ab9d868fab1f9133055904b05a5452499825800fb9eb08df0",
         "common_alpha": 0.0,
-        "cone_fit_cosine": 0.5822482078110304,
-        "cone_kkt_violation": 9.992007221626407e-16,
+        "cone_fit_cosine": 0.582248207811029,
+        "cone_kkt_violation": 2.2204460492503126e-16,
         "cone_support": 206,
-        "training_model_sha256": "1687e05b0f305ed9fd8b9645317ba9cb9ab6ef6de441356dc0f9351612eb41b1"
+        "training_model_sha256": "c887e71536f12e539ebdbb7c23e08d73899cb68fe223b60e2d4e757e3c30069f"
       },
       "within_training_guide": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": 0.10140958472209627,
-            "normalized_rmse_improvement": -0.16679371029988044
+            "cosine_improvement": 0.10140958472209646,
+            "normalized_rmse_improvement": -0.16679371029988022
           },
           "training_common_ray": {
             "cosine_improvement": 0.18305300330957944,
-            "normalized_rmse_improvement": -0.18600557145795626
+            "normalized_rmse_improvement": -0.18600557145795604
           },
           "zero": {
             "cosine_improvement": 0.18305300330957944,
-            "normalized_rmse_improvement": -0.18600557145795626
+            "normalized_rmse_improvement": -0.18600557145795604
           }
         },
         "guide_slot": "guide_1",
@@ -1627,12 +1636,12 @@
           "cone": {
             "cosine": 0.18305300330957944,
             "norm_ratio": 0.8464666130207231,
-            "normalized_rmse": 1.1860055714579563,
+            "normalized_rmse": 1.186005571457956,
             "sign_agreement": 0.5521787709497207
           },
           "training_best_single": {
-            "cosine": 0.08164341858748317,
-            "norm_ratio": 0.2948533285915911,
+            "cosine": 0.08164341858748297,
+            "norm_ratio": 0.2948533285915912,
             "normalized_rmse": 1.0192118611580758,
             "sign_agreement": 0.5318435754189944
           },
@@ -1655,39 +1664,39 @@
       "fit_gene_sha256": "a0673b2bddd34a50e19ef2f108aa372dfcf75e3d7d26803c2900e7a1c29ed8f5",
       "fit_genes": 4475,
       "fit_id": "guide_1|ota|seed=2",
-      "guide_identity_status": "POSITIONAL_MODALITIES_ONLY_IDENTITIES_NOT_RELEASED",
+      "guide_identity_status": "OFFICIAL_ALPHANUMERIC_GUIDE_RANKS_IDS_NOT_EMBEDDED_CROSSWALK_NOT_VERIFIED",
       "held_guide_slot": "guide_2",
       "prediction_cosine": {
-        "cone": 0.5309732222817529,
-        "training_best_single": 0.030648180151899157,
+        "cone": 0.5309732222817524,
+        "training_best_single": 0.030648180151899213,
         "training_common_ray": 1.0
       },
       "reciprocal_held_guide": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": -0.02077518945294226,
-            "normalized_rmse_improvement": -0.31996441200404013
+            "cosine_improvement": -0.020775189452942447,
+            "normalized_rmse_improvement": -0.31996441200404035
           },
           "training_common_ray": {
-            "cosine_improvement": -0.06387286643151954,
-            "normalized_rmse_improvement": -0.3464137425380238
+            "cosine_improvement": -0.06387286643151974,
+            "normalized_rmse_improvement": -0.34641374253802404
           },
           "zero": {
-            "cosine_improvement": -0.06387286643151954,
-            "normalized_rmse_improvement": -0.3464137425380238
+            "cosine_improvement": -0.06387286643151974,
+            "normalized_rmse_improvement": -0.34641374253802404
           }
         },
         "guide_slot": "guide_2",
         "metrics": {
           "cone": {
-            "cosine": -0.06387286643151954,
-            "norm_ratio": 0.8399577090423493,
-            "normalized_rmse": 1.3464137425380238,
+            "cosine": -0.06387286643151974,
+            "norm_ratio": 0.8399577090423506,
+            "normalized_rmse": 1.346413742538024,
             "sign_agreement": 0.48335195530726255
           },
           "training_best_single": {
-            "cosine": -0.04309767697857728,
-            "norm_ratio": 0.19239253070448709,
+            "cosine": -0.04309767697857729,
+            "norm_ratio": 0.19239253070448728,
             "normalized_rmse": 1.0264493305339837,
             "sign_agreement": 0.5025698324022346
           },
@@ -1709,27 +1718,27 @@
         "comparisons": {
           "training_best_single": {
             "cosine_improvement": -0.15427455362549214,
-            "normalized_rmse_improvement": -0.28299808263014437
+            "normalized_rmse_improvement": -0.2829980826301446
           },
           "training_common_ray": {
-            "cosine_improvement": -0.31215225189292256,
-            "normalized_rmse_improvement": -0.31143350774253653
+            "cosine_improvement": -0.31215225189292267,
+            "normalized_rmse_improvement": -0.31143350774253675
           },
           "zero": {
-            "cosine_improvement": -0.31215225189292256,
-            "normalized_rmse_improvement": -0.31143350774253653
+            "cosine_improvement": -0.31215225189292267,
+            "normalized_rmse_improvement": -0.31143350774253675
           }
         },
         "metrics": {
           "cone": {
-            "cosine": -0.31215225189292256,
-            "norm_ratio": 0.22722429402109479,
-            "normalized_rmse": 0.31143350774253653,
+            "cosine": -0.31215225189292267,
+            "norm_ratio": 0.227224294021095,
+            "normalized_rmse": 0.31143350774253675,
             "sign_agreement": -0.10033519553072628
           },
           "training_best_single": {
-            "cosine": -0.15787769826743045,
-            "norm_ratio": -0.018336480688102813,
+            "cosine": -0.15787769826743053,
+            "norm_ratio": -0.018336480688102758,
             "normalized_rmse": 0.028435425112392165,
             "sign_agreement": -0.0060335195530726304
           },
@@ -1763,39 +1772,39 @@
         },
         "best_single_alpha": 0.3742180171723459,
         "best_single_opaque_key": "ENSG00000151883_Rest",
-        "coefficient_sha256": "4ac9492c247288261d45ac91358e11fd27bc7ac56a3a3a4573ca5a148a265452",
+        "coefficient_sha256": "a347d0f2f258470f121b4021befcb9dced9b214d64c6a958e69470b8235fe997",
         "common_alpha": 0.0,
-        "cone_fit_cosine": 0.6091783864366084,
-        "cone_kkt_violation": 1.1102230246251563e-15,
+        "cone_fit_cosine": 0.609178386436608,
+        "cone_kkt_violation": 1.6208678312012977e-16,
         "cone_support": 228,
-        "training_model_sha256": "1d0a29abf92916d44e7c09fda9b5d6013976ee4eaa7329cff11f9984970e46b6"
+        "training_model_sha256": "a169260f349019902b55a88fd4af046a8c2c3e0df095e240243560c32b38edf7"
       },
       "within_training_guide": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": 0.13349936417254987,
+            "cosine_improvement": 0.1334993641725497,
             "normalized_rmse_improvement": -0.03696632937389577
           },
           "training_common_ray": {
-            "cosine_improvement": 0.24827938546140302,
+            "cosine_improvement": 0.24827938546140293,
             "normalized_rmse_improvement": -0.034980234795487286
           },
           "zero": {
-            "cosine_improvement": 0.24827938546140302,
+            "cosine_improvement": 0.24827938546140293,
             "normalized_rmse_improvement": -0.034980234795487286
           }
         },
         "guide_slot": "guide_1",
         "metrics": {
           "cone": {
-            "cosine": 0.24827938546140302,
-            "norm_ratio": 0.6127334150212546,
+            "cosine": 0.24827938546140293,
+            "norm_ratio": 0.6127334150212556,
             "normalized_rmse": 1.0349802347954873,
             "sign_agreement": 0.5836871508379888
           },
           "training_best_single": {
-            "cosine": 0.11478002128885316,
-            "norm_ratio": 0.2107290113925899,
+            "cosine": 0.11478002128885323,
+            "norm_ratio": 0.21072901139259004,
             "normalized_rmse": 0.9980139054215915,
             "sign_agreement": 0.5086033519553073
           },
@@ -1818,39 +1827,39 @@
       "fit_gene_sha256": "a0673b2bddd34a50e19ef2f108aa372dfcf75e3d7d26803c2900e7a1c29ed8f5",
       "fit_genes": 4475,
       "fit_id": "guide_1|ota|seed=2",
-      "guide_identity_status": "POSITIONAL_MODALITIES_ONLY_IDENTITIES_NOT_RELEASED",
+      "guide_identity_status": "OFFICIAL_ALPHANUMERIC_GUIDE_RANKS_IDS_NOT_EMBEDDED_CROSSWALK_NOT_VERIFIED",
       "held_guide_slot": "guide_2",
       "prediction_cosine": {
-        "cone": 0.5309732222817529,
-        "training_best_single": 0.030648180151899157,
+        "cone": 0.5309732222817524,
+        "training_best_single": 0.030648180151899213,
         "training_common_ray": 1.0
       },
       "reciprocal_held_guide": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": -0.06197208755892109,
-            "normalized_rmse_improvement": -0.4484113713582103
+            "cosine_improvement": -0.06197208755892121,
+            "normalized_rmse_improvement": -0.4484113713582105
           },
           "training_common_ray": {
-            "cosine_improvement": -0.09341979225008777,
-            "normalized_rmse_improvement": -0.4815182658649271
+            "cosine_improvement": -0.09341979225008792,
+            "normalized_rmse_improvement": -0.4815182658649273
           },
           "zero": {
-            "cosine_improvement": -0.09341979225008777,
-            "normalized_rmse_improvement": -0.4815182658649271
+            "cosine_improvement": -0.09341979225008792,
+            "normalized_rmse_improvement": -0.4815182658649273
           }
         },
         "guide_slot": "guide_2",
         "metrics": {
           "cone": {
-            "cosine": -0.09341979225008777,
-            "norm_ratio": 1.0036780291293321,
-            "normalized_rmse": 1.481518265864927,
+            "cosine": -0.09341979225008792,
+            "norm_ratio": 1.003678029129333,
+            "normalized_rmse": 1.4815182658649273,
             "sign_agreement": 0.5106145251396648
           },
           "training_best_single": {
-            "cosine": -0.03144770469116668,
-            "norm_ratio": 0.2298927124043436,
+            "cosine": -0.031447704691166714,
+            "norm_ratio": 0.22989271240434364,
             "normalized_rmse": 1.0331068945067168,
             "sign_agreement": 0.4958659217877095
           },
@@ -1871,28 +1880,28 @@
       "reciprocal_minus_within": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": -0.11253770278006145,
-            "normalized_rmse_improvement": -0.30881472676865585
+            "cosine_improvement": -0.11253770278006157,
+            "normalized_rmse_improvement": -0.30881472676865607
           },
           "training_common_ray": {
-            "cosine_improvement": -0.24628351821288574,
-            "normalized_rmse_improvement": -0.3359957381046448
+            "cosine_improvement": -0.246283518212886,
+            "normalized_rmse_improvement": -0.335995738104645
           },
           "zero": {
-            "cosine_improvement": -0.24628351821288574,
-            "normalized_rmse_improvement": -0.3359957381046448
+            "cosine_improvement": -0.246283518212886,
+            "normalized_rmse_improvement": -0.335995738104645
           }
         },
         "metrics": {
           "cone": {
-            "cosine": -0.24628351821288574,
-            "norm_ratio": 0.2715137073429704,
-            "normalized_rmse": 0.3359957381046448,
+            "cosine": -0.246283518212886,
+            "norm_ratio": 0.27151370734297064,
+            "normalized_rmse": 0.335995738104645,
             "sign_agreement": -0.05027932960893855
           },
           "training_best_single": {
-            "cosine": -0.1337458154328243,
-            "norm_ratio": -0.02191053501870438,
+            "cosine": -0.13374581543282443,
+            "norm_ratio": -0.021910535018704297,
             "normalized_rmse": 0.027181011335988936,
             "sign_agreement": -0.02972067039106141
           },
@@ -1926,12 +1935,12 @@
         },
         "best_single_alpha": 0.3742180171723459,
         "best_single_opaque_key": "ENSG00000151883_Rest",
-        "coefficient_sha256": "4ac9492c247288261d45ac91358e11fd27bc7ac56a3a3a4573ca5a148a265452",
+        "coefficient_sha256": "a347d0f2f258470f121b4021befcb9dced9b214d64c6a958e69470b8235fe997",
         "common_alpha": 0.0,
-        "cone_fit_cosine": 0.6091783864366084,
-        "cone_kkt_violation": 1.1102230246251563e-15,
+        "cone_fit_cosine": 0.609178386436608,
+        "cone_kkt_violation": 1.6208678312012977e-16,
         "cone_support": 228,
-        "training_model_sha256": "1d0a29abf92916d44e7c09fda9b5d6013976ee4eaa7329cff11f9984970e46b6"
+        "training_model_sha256": "a169260f349019902b55a88fd4af046a8c2c3e0df095e240243560c32b38edf7"
       },
       "within_training_guide": {
         "comparisons": {
@@ -1940,25 +1949,25 @@
             "normalized_rmse_improvement": -0.13959664458955445
           },
           "training_common_ray": {
-            "cosine_improvement": 0.15286372596279799,
+            "cosine_improvement": 0.15286372596279807,
             "normalized_rmse_improvement": -0.1455225277602823
           },
           "zero": {
-            "cosine_improvement": 0.15286372596279799,
+            "cosine_improvement": 0.15286372596279807,
             "normalized_rmse_improvement": -0.1455225277602823
           }
         },
         "guide_slot": "guide_1",
         "metrics": {
           "cone": {
-            "cosine": 0.15286372596279799,
-            "norm_ratio": 0.7321643217863617,
+            "cosine": 0.15286372596279807,
+            "norm_ratio": 0.7321643217863624,
             "normalized_rmse": 1.1455225277602823,
             "sign_agreement": 0.5608938547486033
           },
           "training_best_single": {
-            "cosine": 0.10229811074165762,
-            "norm_ratio": 0.251803247423048,
+            "cosine": 0.1022981107416577,
+            "norm_ratio": 0.25180324742304794,
             "normalized_rmse": 1.0059258831707278,
             "sign_agreement": 0.5255865921787709
           },
@@ -1981,39 +1990,39 @@
       "fit_gene_sha256": "a7e9b9765b708dd7c8fba2fe2bcfb44fc93b20b368defa5bf9c64f1df098f34b",
       "fit_genes": 4475,
       "fit_id": "guide_2|hollbacker|seed=0",
-      "guide_identity_status": "POSITIONAL_MODALITIES_ONLY_IDENTITIES_NOT_RELEASED",
+      "guide_identity_status": "OFFICIAL_ALPHANUMERIC_GUIDE_RANKS_IDS_NOT_EMBEDDED_CROSSWALK_NOT_VERIFIED",
       "held_guide_slot": "guide_1",
       "prediction_cosine": {
-        "cone": 0.42039908016141025,
+        "cone": 0.42039908016141064,
         "training_best_single": -0.02409762106874654,
         "training_common_ray": 1.0
       },
       "reciprocal_held_guide": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": -0.048651775033447156,
-            "normalized_rmse_improvement": -0.2553965590718741
+            "cosine_improvement": -0.04865177503344714,
+            "normalized_rmse_improvement": -0.25539655907187386
           },
           "training_common_ray": {
-            "cosine_improvement": -0.01628211666929966,
-            "normalized_rmse_improvement": -0.26376302616364655
+            "cosine_improvement": -0.016282116669299646,
+            "normalized_rmse_improvement": -0.26376302616364633
           },
           "zero": {
-            "cosine_improvement": -0.01628211666929966,
-            "normalized_rmse_improvement": -0.26376302616364655
+            "cosine_improvement": -0.016282116669299646,
+            "normalized_rmse_improvement": -0.26376302616364633
           }
         },
         "guide_slot": "guide_1",
         "metrics": {
           "cone": {
-            "cosine": -0.01628211666929966,
-            "norm_ratio": 0.7566099156492716,
-            "normalized_rmse": 1.2637630261636466,
+            "cosine": -0.016282116669299646,
+            "norm_ratio": 0.756609915649271,
+            "normalized_rmse": 1.2637630261636463,
             "sign_agreement": 0.5338547486033519
           },
           "training_best_single": {
-            "cosine": 0.03236965836414749,
-            "norm_ratio": 0.1659762702430304,
+            "cosine": 0.0323696583641475,
+            "norm_ratio": 0.16597627024303024,
             "normalized_rmse": 1.0083664670917725,
             "sign_agreement": 0.4945251396648045
           },
@@ -2034,28 +2043,28 @@
       "reciprocal_minus_within": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": -0.14410350445654763,
+            "cosine_improvement": -0.14410350445654807,
             "normalized_rmse_improvement": -0.2345047551303825
           },
           "training_common_ray": {
-            "cosine_improvement": -0.27045721242476733,
+            "cosine_improvement": -0.27045721242476756,
             "normalized_rmse_improvement": -0.25549937566245284
           },
           "zero": {
-            "cosine_improvement": -0.27045721242476733,
+            "cosine_improvement": -0.27045721242476756,
             "normalized_rmse_improvement": -0.25549937566245284
           }
         },
         "metrics": {
           "cone": {
-            "cosine": -0.27045721242476733,
+            "cosine": -0.27045721242476756,
             "norm_ratio": 0.21747768588187,
             "normalized_rmse": 0.25549937566245284,
             "sign_agreement": -0.03597765363128491
           },
           "training_best_single": {
-            "cosine": -0.1263537079682197,
-            "norm_ratio": -0.0025588440780938415,
+            "cosine": -0.1263537079682195,
+            "norm_ratio": -0.0025588440780940636,
             "normalized_rmse": 0.02099462053207035,
             "sign_agreement": -0.020111731843575398
           },
@@ -2089,39 +2098,39 @@
         },
         "best_single_alpha": 0.19725944324626346,
         "best_single_opaque_key": "ENSG00000278588_Rest",
-        "coefficient_sha256": "cafe46fe1a266b91a37ce312506b8b4b0f050cf3bc30c9db499229e1cebf82f6",
+        "coefficient_sha256": "bf6c146728024c985ca7b6bcc4972482d5f7255d69b993435bf5fcea6667ae84",
         "common_alpha": 0.0,
-        "cone_fit_cosine": 0.5178943077577022,
-        "cone_kkt_violation": 1.221245327087672e-15,
+        "cone_fit_cosine": 0.5178943077577023,
+        "cone_kkt_violation": 2.2204460492503126e-16,
         "cone_support": 203,
-        "training_model_sha256": "4118516e8330244b9b1571e3cd774dd95670174842d2c47f058cec4a0c938304"
+        "training_model_sha256": "f6012ff807cb81ec382263049ee5c3518ee5f8e213da3402f6ad0b3abcd314dd"
       },
       "within_training_guide": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": 0.09545172942310046,
-            "normalized_rmse_improvement": -0.020891803941491593
+            "cosine_improvement": 0.09545172942310093,
+            "normalized_rmse_improvement": -0.02089180394149137
           },
           "training_common_ray": {
-            "cosine_improvement": 0.25417509575546765,
-            "normalized_rmse_improvement": -0.008263650501193709
+            "cosine_improvement": 0.25417509575546793,
+            "normalized_rmse_improvement": -0.008263650501193487
           },
           "zero": {
-            "cosine_improvement": 0.25417509575546765,
-            "normalized_rmse_improvement": -0.008263650501193709
+            "cosine_improvement": 0.25417509575546793,
+            "normalized_rmse_improvement": -0.008263650501193487
           }
         },
         "guide_slot": "guide_2",
         "metrics": {
           "cone": {
-            "cosine": 0.25417509575546765,
-            "norm_ratio": 0.5391322297674016,
-            "normalized_rmse": 1.0082636505011937,
+            "cosine": 0.25417509575546793,
+            "norm_ratio": 0.539132229767401,
+            "normalized_rmse": 1.0082636505011935,
             "sign_agreement": 0.5698324022346368
           },
           "training_best_single": {
-            "cosine": 0.1587233663323672,
-            "norm_ratio": 0.16853511432112425,
+            "cosine": 0.158723366332367,
+            "norm_ratio": 0.1685351143211243,
             "normalized_rmse": 0.9873718465597021,
             "sign_agreement": 0.5146368715083799
           },
@@ -2144,17 +2153,17 @@
       "fit_gene_sha256": "a7e9b9765b708dd7c8fba2fe2bcfb44fc93b20b368defa5bf9c64f1df098f34b",
       "fit_genes": 4475,
       "fit_id": "guide_2|hollbacker|seed=0",
-      "guide_identity_status": "POSITIONAL_MODALITIES_ONLY_IDENTITIES_NOT_RELEASED",
+      "guide_identity_status": "OFFICIAL_ALPHANUMERIC_GUIDE_RANKS_IDS_NOT_EMBEDDED_CROSSWALK_NOT_VERIFIED",
       "held_guide_slot": "guide_1",
       "prediction_cosine": {
-        "cone": 0.42039908016141025,
+        "cone": 0.42039908016141064,
         "training_best_single": -0.02409762106874654,
         "training_common_ray": 1.0
       },
       "reciprocal_held_guide": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": -0.045778225739018005,
+            "cosine_improvement": -0.04577822573901795,
             "normalized_rmse_improvement": -0.1845498688741325
           },
           "training_common_ray": {
@@ -2170,13 +2179,13 @@
         "metrics": {
           "cone": {
             "cosine": 0.012361320204492137,
-            "norm_ratio": 0.6509505729582036,
+            "norm_ratio": 0.6509505729582031,
             "normalized_rmse": 1.1864414993986618,
             "sign_agreement": 0.5025698324022346
           },
           "training_best_single": {
-            "cosine": 0.05813954594351014,
-            "norm_ratio": 0.14279795437183984,
+            "cosine": 0.05813954594351009,
+            "norm_ratio": 0.1427979543718397,
             "normalized_rmse": 1.0018916305245293,
             "sign_agreement": 0.5267039106145252
           },
@@ -2197,28 +2206,28 @@
       "reciprocal_minus_within": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": -0.16245695634982554,
+            "cosine_improvement": -0.16245695634982543,
             "normalized_rmse_improvement": -0.20471231524821076
           },
           "training_common_ray": {
-            "cosine_improvement": -0.30045311994013857,
+            "cosine_improvement": -0.300453119940139,
             "normalized_rmse_improvement": -0.22469473435966758
           },
           "zero": {
-            "cosine_improvement": -0.30045311994013857,
+            "cosine_improvement": -0.300453119940139,
             "normalized_rmse_improvement": -0.22469473435966758
           }
         },
         "metrics": {
           "cone": {
-            "cosine": -0.30045311994013857,
+            "cosine": -0.300453119940139,
             "norm_ratio": 0.18710728117929049,
             "normalized_rmse": 0.22469473435966758,
             "sign_agreement": -0.04983240223463692
           },
           "training_best_single": {
-            "cosine": -0.13799616359031303,
-            "norm_ratio": -0.002201505669293946,
+            "cosine": -0.1379961635903136,
+            "norm_ratio": -0.0022015056692941404,
             "normalized_rmse": 0.019982419111456817,
             "sign_agreement": -0.0031284916201117507
           },
@@ -2252,39 +2261,39 @@
         },
         "best_single_alpha": 0.19725944324626346,
         "best_single_opaque_key": "ENSG00000278588_Rest",
-        "coefficient_sha256": "cafe46fe1a266b91a37ce312506b8b4b0f050cf3bc30c9db499229e1cebf82f6",
+        "coefficient_sha256": "bf6c146728024c985ca7b6bcc4972482d5f7255d69b993435bf5fcea6667ae84",
         "common_alpha": 0.0,
-        "cone_fit_cosine": 0.5178943077577022,
-        "cone_kkt_violation": 1.221245327087672e-15,
+        "cone_fit_cosine": 0.5178943077577023,
+        "cone_kkt_violation": 2.2204460492503126e-16,
         "cone_support": 203,
-        "training_model_sha256": "4118516e8330244b9b1571e3cd774dd95670174842d2c47f058cec4a0c938304"
+        "training_model_sha256": "f6012ff807cb81ec382263049ee5c3518ee5f8e213da3402f6ad0b3abcd314dd"
       },
       "within_training_guide": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": 0.11667873061080755,
+            "cosine_improvement": 0.11667873061080747,
             "normalized_rmse_improvement": 0.02016244637407827
           },
           "training_common_ray": {
-            "cosine_improvement": 0.3128144401446307,
+            "cosine_improvement": 0.31281444014463117,
             "normalized_rmse_improvement": 0.038253234961005744
           },
           "zero": {
-            "cosine_improvement": 0.3128144401446307,
+            "cosine_improvement": 0.31281444014463117,
             "normalized_rmse_improvement": 0.038253234961005744
           }
         },
         "guide_slot": "guide_2",
         "metrics": {
           "cone": {
-            "cosine": 0.3128144401446307,
-            "norm_ratio": 0.4638432917789131,
+            "cosine": 0.31281444014463117,
+            "norm_ratio": 0.46384329177891265,
             "normalized_rmse": 0.9617467650389943,
             "sign_agreement": 0.5524022346368715
           },
           "training_best_single": {
-            "cosine": 0.19613570953382317,
-            "norm_ratio": 0.1449994600411338,
+            "cosine": 0.1961357095338237,
+            "norm_ratio": 0.14499946004113384,
             "normalized_rmse": 0.9819092114130725,
             "sign_agreement": 0.5298324022346369
           },
@@ -2307,39 +2316,39 @@
       "fit_gene_sha256": "8c660049916a4c562662e5c4217cebb4c88c1bc19f5714b344df2c3d31544830",
       "fit_genes": 4475,
       "fit_id": "guide_2|hollbacker|seed=1",
-      "guide_identity_status": "POSITIONAL_MODALITIES_ONLY_IDENTITIES_NOT_RELEASED",
+      "guide_identity_status": "OFFICIAL_ALPHANUMERIC_GUIDE_RANKS_IDS_NOT_EMBEDDED_CROSSWALK_NOT_VERIFIED",
       "held_guide_slot": "guide_1",
       "prediction_cosine": {
-        "cone": 0.5269177702879856,
-        "training_best_single": -0.07059895936759288,
+        "cone": 0.5269177702879859,
+        "training_best_single": -0.07059895936759274,
         "training_common_ray": 1.0
       },
       "reciprocal_held_guide": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": 0.023556392860560292,
+            "cosine_improvement": 0.023556392860560466,
             "normalized_rmse_improvement": -0.4013538985911058
           },
           "training_common_ray": {
-            "cosine_improvement": -0.013491179003067462,
+            "cosine_improvement": -0.01349117900306738,
             "normalized_rmse_improvement": -0.42272085901330403
           },
           "zero": {
-            "cosine_improvement": -0.013491179003067462,
+            "cosine_improvement": -0.01349117900306738,
             "normalized_rmse_improvement": -0.42272085901330403
           }
         },
         "guide_slot": "guide_1",
         "metrics": {
           "cone": {
-            "cosine": -0.013491179003067462,
-            "norm_ratio": 0.9985941210494756,
+            "cosine": -0.01349117900306738,
+            "norm_ratio": 0.9985941210494758,
             "normalized_rmse": 1.422720859013304,
             "sign_agreement": 0.5237988826815643
           },
           "training_best_single": {
-            "cosine": -0.037047571863627754,
-            "norm_ratio": 0.17405190805773632,
+            "cosine": -0.037047571863627844,
+            "norm_ratio": 0.1740519080577364,
             "normalized_rmse": 1.0213669604221982,
             "sign_agreement": 0.4960893854748603
           },
@@ -2360,28 +2369,28 @@
       "reciprocal_minus_within": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": -0.14640255889591688,
-            "normalized_rmse_improvement": -0.32068364246834835
+            "cosine_improvement": -0.1464025588959169,
+            "normalized_rmse_improvement": -0.3206836424683486
           },
           "training_common_ray": {
-            "cosine_improvement": -0.21677683472238307,
-            "normalized_rmse_improvement": -0.3166334239661157
+            "cosine_improvement": -0.21677683472238327,
+            "normalized_rmse_improvement": -0.31663342396611593
           },
           "zero": {
-            "cosine_improvement": -0.21677683472238307,
-            "normalized_rmse_improvement": -0.3166334239661157
+            "cosine_improvement": -0.21677683472238327,
+            "normalized_rmse_improvement": -0.31663342396611593
           }
         },
         "metrics": {
           "cone": {
-            "cosine": -0.21677683472238307,
-            "norm_ratio": 0.2807654916238814,
-            "normalized_rmse": 0.3166334239661157,
+            "cosine": -0.21677683472238327,
+            "norm_ratio": 0.28076549162388176,
+            "normalized_rmse": 0.31663342396611593,
             "sign_agreement": -0.03463687150837991
           },
           "training_best_single": {
-            "cosine": -0.0703742758264662,
-            "norm_ratio": -0.08860220384049225,
+            "cosine": -0.07037427582646635,
+            "norm_ratio": -0.08860220384049228,
             "normalized_rmse": -0.004050218502232639,
             "sign_agreement": -0.01653631284916207
           },
@@ -2415,39 +2424,39 @@
         },
         "best_single_alpha": 0.2782421637335275,
         "best_single_opaque_key": "ENSG00000218891_Rest",
-        "coefficient_sha256": "3586e29fb2116674e4f7300ce46348a4586366260f563245cd45b43ec50d2e75",
+        "coefficient_sha256": "1aaceeb0d883ac9eaceabc0818e2049c14a92d84bc10750426373b0804274130",
         "common_alpha": 0.0,
-        "cone_fit_cosine": 0.5626353249825472,
-        "cone_kkt_violation": 8.88178419700125e-16,
+        "cone_fit_cosine": 0.5626353249825455,
+        "cone_kkt_violation": 4.440892098500625e-16,
         "cone_support": 207,
-        "training_model_sha256": "3c507654044f5870f37ab616d0e7d907d10277127384c533e551c789e20586db"
+        "training_model_sha256": "2de4fdc0f5c3a3c3bbfec1776bb24b072c73e2704f4d1ee6cb566720ad62909e"
       },
       "within_training_guide": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": 0.16995895175647718,
-            "normalized_rmse_improvement": -0.08067025612275747
+            "cosine_improvement": 0.16995895175647738,
+            "normalized_rmse_improvement": -0.08067025612275724
           },
           "training_common_ray": {
-            "cosine_improvement": 0.20328565571931562,
-            "normalized_rmse_improvement": -0.10608743504718832
+            "cosine_improvement": 0.2032856557193159,
+            "normalized_rmse_improvement": -0.1060874350471881
           },
           "zero": {
-            "cosine_improvement": 0.20328565571931562,
-            "normalized_rmse_improvement": -0.10608743504718832
+            "cosine_improvement": 0.2032856557193159,
+            "normalized_rmse_improvement": -0.1060874350471881
           }
         },
         "guide_slot": "guide_2",
         "metrics": {
           "cone": {
-            "cosine": 0.20328565571931562,
-            "norm_ratio": 0.7178286294255942,
-            "normalized_rmse": 1.1060874350471883,
+            "cosine": 0.2032856557193159,
+            "norm_ratio": 0.717828629425594,
+            "normalized_rmse": 1.106087435047188,
             "sign_agreement": 0.5584357541899442
           },
           "training_best_single": {
-            "cosine": 0.03332670396283845,
-            "norm_ratio": 0.26265411189822857,
+            "cosine": 0.03332670396283851,
+            "norm_ratio": 0.2626541118982287,
             "normalized_rmse": 1.0254171789244308,
             "sign_agreement": 0.5126256983240224
           },
@@ -2470,39 +2479,39 @@
       "fit_gene_sha256": "8c660049916a4c562662e5c4217cebb4c88c1bc19f5714b344df2c3d31544830",
       "fit_genes": 4475,
       "fit_id": "guide_2|hollbacker|seed=1",
-      "guide_identity_status": "POSITIONAL_MODALITIES_ONLY_IDENTITIES_NOT_RELEASED",
+      "guide_identity_status": "OFFICIAL_ALPHANUMERIC_GUIDE_RANKS_IDS_NOT_EMBEDDED_CROSSWALK_NOT_VERIFIED",
       "held_guide_slot": "guide_1",
       "prediction_cosine": {
-        "cone": 0.5269177702879856,
-        "training_best_single": -0.07059895936759288,
+        "cone": 0.5269177702879859,
+        "training_best_single": -0.07059895936759274,
         "training_common_ray": 1.0
       },
       "reciprocal_held_guide": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": 0.07161161136083741,
-            "normalized_rmse_improvement": -0.2720335419792508
+            "cosine_improvement": 0.07161161136083745,
+            "normalized_rmse_improvement": -0.27203354197925056
           },
           "training_common_ray": {
-            "cosine_improvement": 0.0081475539062162,
-            "normalized_rmse_improvement": -0.29131903734909703
+            "cosine_improvement": 0.008147553906216217,
+            "normalized_rmse_improvement": -0.2913190373490968
           },
           "zero": {
-            "cosine_improvement": 0.0081475539062162,
-            "normalized_rmse_improvement": -0.29131903734909703
+            "cosine_improvement": 0.008147553906216217,
+            "normalized_rmse_improvement": -0.2913190373490968
           }
         },
         "guide_slot": "guide_1",
         "metrics": {
           "cone": {
-            "cosine": 0.0081475539062162,
-            "norm_ratio": 0.8251978821326067,
-            "normalized_rmse": 1.291319037349097,
+            "cosine": 0.008147553906216217,
+            "norm_ratio": 0.8251978821326071,
+            "normalized_rmse": 1.2913190373490968,
             "sign_agreement": 0.4929608938547486
           },
           "training_best_single": {
-            "cosine": -0.0634640574546212,
-            "norm_ratio": 0.14382947273857136,
+            "cosine": -0.06346405745462123,
+            "norm_ratio": 0.1438294727385715,
             "normalized_rmse": 1.0192854953698463,
             "sign_agreement": 0.46346368715083797
           },
@@ -2523,28 +2532,28 @@
       "reciprocal_minus_within": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": -0.0716772857044409,
+            "cosine_improvement": -0.07167728570444128,
             "normalized_rmse_improvement": -0.2510131859288137
           },
           "training_common_ray": {
-            "cosine_improvement": -0.2579865570424985,
+            "cosine_improvement": -0.2579865570424986,
             "normalized_rmse_improvement": -0.2734120355840828
           },
           "zero": {
-            "cosine_improvement": -0.2579865570424985,
+            "cosine_improvement": -0.2579865570424986,
             "normalized_rmse_improvement": -0.2734120355840828
           }
         },
         "metrics": {
           "cone": {
-            "cosine": -0.2579865570424985,
-            "norm_ratio": 0.23201327163878638,
+            "cosine": -0.2579865570424986,
+            "norm_ratio": 0.2320132716387867,
             "normalized_rmse": 0.2734120355840828,
             "sign_agreement": -0.06279329608938544
           },
           "training_best_single": {
-            "cosine": -0.18630927133805758,
-            "norm_ratio": -0.07321728560209825,
+            "cosine": -0.18630927133805736,
+            "norm_ratio": -0.07321728560209828,
             "normalized_rmse": 0.02239884965526906,
             "sign_agreement": -0.09251396648044696
           },
@@ -2578,39 +2587,39 @@
         },
         "best_single_alpha": 0.2782421637335275,
         "best_single_opaque_key": "ENSG00000218891_Rest",
-        "coefficient_sha256": "3586e29fb2116674e4f7300ce46348a4586366260f563245cd45b43ec50d2e75",
+        "coefficient_sha256": "1aaceeb0d883ac9eaceabc0818e2049c14a92d84bc10750426373b0804274130",
         "common_alpha": 0.0,
-        "cone_fit_cosine": 0.5626353249825472,
-        "cone_kkt_violation": 8.88178419700125e-16,
+        "cone_fit_cosine": 0.5626353249825455,
+        "cone_kkt_violation": 4.440892098500625e-16,
         "cone_support": 207,
-        "training_model_sha256": "3c507654044f5870f37ab616d0e7d907d10277127384c533e551c789e20586db"
+        "training_model_sha256": "2de4fdc0f5c3a3c3bbfec1776bb24b072c73e2704f4d1ee6cb566720ad62909e"
       },
       "within_training_guide": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": 0.1432888970652783,
-            "normalized_rmse_improvement": -0.02102035605043706
+            "cosine_improvement": 0.14328889706527873,
+            "normalized_rmse_improvement": -0.02102035605043684
           },
           "training_common_ray": {
-            "cosine_improvement": 0.2661341109487147,
-            "normalized_rmse_improvement": -0.017907001765014252
+            "cosine_improvement": 0.26613411094871486,
+            "normalized_rmse_improvement": -0.01790700176501403
           },
           "zero": {
-            "cosine_improvement": 0.2661341109487147,
-            "normalized_rmse_improvement": -0.017907001765014252
+            "cosine_improvement": 0.26613411094871486,
+            "normalized_rmse_improvement": -0.01790700176501403
           }
         },
         "guide_slot": "guide_2",
         "metrics": {
           "cone": {
-            "cosine": 0.2661341109487147,
-            "norm_ratio": 0.5931846104938203,
-            "normalized_rmse": 1.0179070017650143,
+            "cosine": 0.26613411094871486,
+            "norm_ratio": 0.5931846104938204,
+            "normalized_rmse": 1.017907001765014,
             "sign_agreement": 0.5557541899441341
           },
           "training_best_single": {
-            "cosine": 0.12284521388343637,
-            "norm_ratio": 0.2170467583406696,
+            "cosine": 0.12284521388343614,
+            "norm_ratio": 0.21704675834066978,
             "normalized_rmse": 0.9968866457145772,
             "sign_agreement": 0.5559776536312849
           },
@@ -2633,39 +2642,39 @@
       "fit_gene_sha256": "a0673b2bddd34a50e19ef2f108aa372dfcf75e3d7d26803c2900e7a1c29ed8f5",
       "fit_genes": 4475,
       "fit_id": "guide_2|hollbacker|seed=2",
-      "guide_identity_status": "POSITIONAL_MODALITIES_ONLY_IDENTITIES_NOT_RELEASED",
+      "guide_identity_status": "OFFICIAL_ALPHANUMERIC_GUIDE_RANKS_IDS_NOT_EMBEDDED_CROSSWALK_NOT_VERIFIED",
       "held_guide_slot": "guide_1",
       "prediction_cosine": {
-        "cone": 0.6120459860080874,
-        "training_best_single": -0.004882263386515762,
+        "cone": 0.6120459860080859,
+        "training_best_single": -0.004882263386515749,
         "training_common_ray": 1.0
       },
       "reciprocal_held_guide": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": -0.019914671281210966,
-            "normalized_rmse_improvement": -0.42943321047710303
+            "cosine_improvement": -0.019914671281211136,
+            "normalized_rmse_improvement": -0.42943321047710326
           },
           "training_common_ray": {
-            "cosine_improvement": -0.04655411912582914,
-            "normalized_rmse_improvement": -0.44531413076682425
+            "cosine_improvement": -0.046554119125829276,
+            "normalized_rmse_improvement": -0.44531413076682447
           },
           "zero": {
-            "cosine_improvement": -0.04655411912582914,
-            "normalized_rmse_improvement": -0.44531413076682425
+            "cosine_improvement": -0.046554119125829276,
+            "normalized_rmse_improvement": -0.44531413076682447
           }
         },
         "guide_slot": "guide_1",
         "metrics": {
           "cone": {
-            "cosine": -0.04655411912582914,
-            "norm_ratio": 0.9980033099329295,
-            "normalized_rmse": 1.4453141307668242,
+            "cosine": -0.046554119125829276,
+            "norm_ratio": 0.9980033099329298,
+            "normalized_rmse": 1.4453141307668245,
             "sign_agreement": 0.5374301675977654
           },
           "training_best_single": {
-            "cosine": -0.02663944784461817,
-            "norm_ratio": 0.15425749627041405,
+            "cosine": -0.02663944784461814,
+            "norm_ratio": 0.15425749627041407,
             "normalized_rmse": 1.0158809202897212,
             "sign_agreement": 0.49318435754189943
           },
@@ -2687,27 +2696,27 @@
         "comparisons": {
           "training_best_single": {
             "cosine_improvement": -0.09755125901687081,
-            "normalized_rmse_improvement": -0.3400592855071576
+            "normalized_rmse_improvement": -0.3400592855071578
           },
           "training_common_ray": {
-            "cosine_improvement": -0.2157380754409415,
-            "normalized_rmse_improvement": -0.3585080083299239
+            "cosine_improvement": -0.21573807544094142,
+            "normalized_rmse_improvement": -0.35850800832992413
           },
           "zero": {
-            "cosine_improvement": -0.2157380754409415,
-            "normalized_rmse_improvement": -0.3585080083299239
+            "cosine_improvement": -0.21573807544094142,
+            "normalized_rmse_improvement": -0.35850800832992413
           }
         },
         "metrics": {
           "cone": {
-            "cosine": -0.2157380754409415,
+            "cosine": -0.21573807544094142,
             "norm_ratio": 0.37081197503013086,
-            "normalized_rmse": 0.3585080083299239,
+            "normalized_rmse": 0.35850800832992413,
             "sign_agreement": -0.039999999999999925
           },
           "training_best_single": {
-            "cosine": -0.1181868164240707,
-            "norm_ratio": 0.005684613773232983,
+            "cosine": -0.11818681642407061,
+            "norm_ratio": 0.005684613773233066,
             "normalized_rmse": 0.018448722822766328,
             "sign_agreement": -0.015418994413407827
           },
@@ -2741,39 +2750,39 @@
         },
         "best_single_alpha": 0.22779895650229257,
         "best_single_opaque_key": "ENSG00000198182_Rest",
-        "coefficient_sha256": "7be8e1cfb5ccbebe02a2885c78987ee82f4e04bd63df97c418dbf04b0d423a35",
+        "coefficient_sha256": "d27b0ff2fad2cc42dc58cd1a9617ee04d9d366ebff02be8e8a765a455ab678a7",
         "common_alpha": 0.0,
-        "cone_fit_cosine": 0.5887575385259699,
-        "cone_kkt_violation": 1.77635683940025e-15,
+        "cone_fit_cosine": 0.5887575385259698,
+        "cone_kkt_violation": 4.440892098500625e-16,
         "cone_support": 250,
-        "training_model_sha256": "b0df63701c445e1c3217e5db445e89792e29e1ced10cf15ca61fc58855970bb7"
+        "training_model_sha256": "90de6bd675835487d7281fe0eb5dbebd4920accf65140c63d8e167777b192be0"
       },
       "within_training_guide": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": 0.07763658773565985,
+            "cosine_improvement": 0.07763658773565968,
             "normalized_rmse_improvement": -0.08937392496994545
           },
           "training_common_ray": {
-            "cosine_improvement": 0.16918395631511238,
+            "cosine_improvement": 0.16918395631511216,
             "normalized_rmse_improvement": -0.08680612243690033
           },
           "zero": {
-            "cosine_improvement": 0.16918395631511238,
+            "cosine_improvement": 0.16918395631511216,
             "normalized_rmse_improvement": -0.08680612243690033
           }
         },
         "guide_slot": "guide_2",
         "metrics": {
           "cone": {
-            "cosine": 0.16918395631511238,
-            "norm_ratio": 0.6271913349027987,
+            "cosine": 0.16918395631511216,
+            "norm_ratio": 0.627191334902799,
             "normalized_rmse": 1.0868061224369003,
             "sign_agreement": 0.5774301675977653
           },
           "training_best_single": {
-            "cosine": 0.09154736857945253,
-            "norm_ratio": 0.14857288249718106,
+            "cosine": 0.09154736857945248,
+            "norm_ratio": 0.148572882497181,
             "normalized_rmse": 0.9974321974669549,
             "sign_agreement": 0.5086033519553073
           },
@@ -2796,39 +2805,39 @@
       "fit_gene_sha256": "a0673b2bddd34a50e19ef2f108aa372dfcf75e3d7d26803c2900e7a1c29ed8f5",
       "fit_genes": 4475,
       "fit_id": "guide_2|hollbacker|seed=2",
-      "guide_identity_status": "POSITIONAL_MODALITIES_ONLY_IDENTITIES_NOT_RELEASED",
+      "guide_identity_status": "OFFICIAL_ALPHANUMERIC_GUIDE_RANKS_IDS_NOT_EMBEDDED_CROSSWALK_NOT_VERIFIED",
       "held_guide_slot": "guide_1",
       "prediction_cosine": {
-        "cone": 0.6120459860080874,
-        "training_best_single": -0.004882263386515762,
+        "cone": 0.6120459860080859,
+        "training_best_single": -0.004882263386515749,
         "training_common_ray": 1.0
       },
       "reciprocal_held_guide": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": -0.04059991085734346,
+            "cosine_improvement": -0.0405999108573436,
             "normalized_rmse_improvement": -0.3138204820138806
           },
           "training_common_ray": {
-            "cosine_improvement": -0.02753929907141581,
+            "cosine_improvement": -0.02753929907141598,
             "normalized_rmse_improvement": -0.3204452333272467
           },
           "zero": {
-            "cosine_improvement": -0.02753929907141581,
+            "cosine_improvement": -0.02753929907141598,
             "normalized_rmse_improvement": -0.3204452333272467
           }
         },
         "guide_slot": "guide_1",
         "metrics": {
           "cone": {
-            "cosine": -0.02753929907141581,
-            "norm_ratio": 0.8352086520765374,
+            "cosine": -0.02753929907141598,
+            "norm_ratio": 0.8352086520765383,
             "normalized_rmse": 1.3204452333272467,
             "sign_agreement": 0.4949720670391061
           },
           "training_best_single": {
-            "cosine": 0.01306061178592765,
-            "norm_ratio": 0.12909495815336772,
+            "cosine": 0.013060611785927625,
+            "norm_ratio": 0.12909495815336783,
             "normalized_rmse": 1.0066247513133662,
             "sign_agreement": 0.5155307262569833
           },
@@ -2849,28 +2858,28 @@
       "reciprocal_minus_within": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": -0.1254825409831294,
-            "normalized_rmse_improvement": -0.2843184385378713
+            "cosine_improvement": -0.12548254098312986,
+            "normalized_rmse_improvement": -0.28431843853787153
           },
           "training_common_ray": {
-            "cosine_improvement": -0.251769837677413,
-            "normalized_rmse_improvement": -0.3005859466587075
+            "cosine_improvement": -0.2517698376774135,
+            "normalized_rmse_improvement": -0.30058594665870775
           },
           "zero": {
-            "cosine_improvement": -0.251769837677413,
-            "normalized_rmse_improvement": -0.3005859466587075
+            "cosine_improvement": -0.2517698376774135,
+            "normalized_rmse_improvement": -0.30058594665870775
           }
         },
         "metrics": {
           "cone": {
-            "cosine": -0.251769837677413,
-            "norm_ratio": 0.31032499266918045,
-            "normalized_rmse": 0.3005859466587075,
+            "cosine": -0.2517698376774135,
+            "norm_ratio": 0.3103249926691807,
+            "normalized_rmse": 0.30058594665870775,
             "sign_agreement": -0.06234636871508381
           },
           "training_best_single": {
-            "cosine": -0.1262872966942836,
-            "norm_ratio": 0.0047573375357209124,
+            "cosine": -0.12628729669428362,
+            "norm_ratio": 0.004757337535720982,
             "normalized_rmse": 0.016267508120836216,
             "sign_agreement": -0.016312849162011145
           },
@@ -2904,39 +2913,39 @@
         },
         "best_single_alpha": 0.22779895650229257,
         "best_single_opaque_key": "ENSG00000198182_Rest",
-        "coefficient_sha256": "7be8e1cfb5ccbebe02a2885c78987ee82f4e04bd63df97c418dbf04b0d423a35",
+        "coefficient_sha256": "d27b0ff2fad2cc42dc58cd1a9617ee04d9d366ebff02be8e8a765a455ab678a7",
         "common_alpha": 0.0,
-        "cone_fit_cosine": 0.5887575385259699,
-        "cone_kkt_violation": 1.77635683940025e-15,
+        "cone_fit_cosine": 0.5887575385259698,
+        "cone_kkt_violation": 4.440892098500625e-16,
         "cone_support": 250,
-        "training_model_sha256": "b0df63701c445e1c3217e5db445e89792e29e1ced10cf15ca61fc58855970bb7"
+        "training_model_sha256": "90de6bd675835487d7281fe0eb5dbebd4920accf65140c63d8e167777b192be0"
       },
       "within_training_guide": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": 0.08488263012578592,
-            "normalized_rmse_improvement": -0.029502043476009265
+            "cosine_improvement": 0.08488263012578626,
+            "normalized_rmse_improvement": -0.029502043476009043
           },
           "training_common_ray": {
-            "cosine_improvement": 0.22423053860599718,
-            "normalized_rmse_improvement": -0.0198592866685392
+            "cosine_improvement": 0.2242305386059975,
+            "normalized_rmse_improvement": -0.019859286668538978
           },
           "zero": {
-            "cosine_improvement": 0.22423053860599718,
-            "normalized_rmse_improvement": -0.0198592866685392
+            "cosine_improvement": 0.2242305386059975,
+            "normalized_rmse_improvement": -0.019859286668538978
           }
         },
         "guide_slot": "guide_2",
         "metrics": {
           "cone": {
-            "cosine": 0.22423053860599718,
-            "norm_ratio": 0.5248836594073569,
-            "normalized_rmse": 1.0198592866685392,
+            "cosine": 0.2242305386059975,
+            "norm_ratio": 0.5248836594073576,
+            "normalized_rmse": 1.019859286668539,
             "sign_agreement": 0.5573184357541899
           },
           "training_best_single": {
             "cosine": 0.13934790848021125,
-            "norm_ratio": 0.1243376206176468,
+            "norm_ratio": 0.12433762061764685,
             "normalized_rmse": 0.9903572431925299,
             "sign_agreement": 0.5318435754189944
           },
@@ -2959,38 +2968,38 @@
       "fit_gene_sha256": "a7e9b9765b708dd7c8fba2fe2bcfb44fc93b20b368defa5bf9c64f1df098f34b",
       "fit_genes": 4475,
       "fit_id": "guide_2|ota|seed=0",
-      "guide_identity_status": "POSITIONAL_MODALITIES_ONLY_IDENTITIES_NOT_RELEASED",
+      "guide_identity_status": "OFFICIAL_ALPHANUMERIC_GUIDE_RANKS_IDS_NOT_EMBEDDED_CROSSWALK_NOT_VERIFIED",
       "held_guide_slot": "guide_1",
       "prediction_cosine": {
-        "cone": 0.3634248558650173,
-        "training_best_single": -0.02409762106874654,
+        "cone": 0.3634248558650174,
+        "training_best_single": -0.024097621068746543,
         "training_common_ray": 1.0
       },
       "reciprocal_held_guide": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": -0.050841139477411326,
+            "cosine_improvement": -0.05084113947741134,
             "normalized_rmse_improvement": -0.2890345925737292
           },
           "training_common_ray": {
-            "cosine_improvement": 0.007298406466098778,
+            "cosine_improvement": 0.0072984064660987285,
             "normalized_rmse_improvement": -0.2954390926388506
           },
           "zero": {
-            "cosine_improvement": 0.007298406466098778,
+            "cosine_improvement": 0.0072984064660987285,
             "normalized_rmse_improvement": -0.2954390926388506
           }
         },
         "guide_slot": "guide_1",
         "metrics": {
           "cone": {
-            "cosine": 0.007298406466098778,
-            "norm_ratio": 0.8308369359071412,
+            "cosine": 0.0072984064660987285,
+            "norm_ratio": 0.8308369359071403,
             "normalized_rmse": 1.2954390926388506,
             "sign_agreement": 0.4893854748603352
           },
           "training_best_single": {
-            "cosine": 0.058139545943510104,
+            "cosine": 0.05813954594351007,
             "norm_ratio": 0.18553744448914633,
             "normalized_rmse": 1.0064045000651214,
             "sign_agreement": 0.5267039106145252
@@ -3012,27 +3021,27 @@
       "reciprocal_minus_within": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": -0.22009763622128958,
+            "cosine_improvement": -0.22009763622129008,
             "normalized_rmse_improvement": -0.3118124048198856
           },
           "training_common_ray": {
-            "cosine_improvement": -0.3580937998116036,
+            "cosine_improvement": -0.3580937998116039,
             "normalized_rmse_improvement": -0.33760961461344874
           },
           "zero": {
-            "cosine_improvement": -0.3580937998116036,
+            "cosine_improvement": -0.3580937998116039,
             "normalized_rmse_improvement": -0.33760961461344874
           }
         },
         "metrics": {
           "cone": {
-            "cosine": -0.3580937998116036,
-            "norm_ratio": 0.23972637994802415,
+            "cosine": -0.3580937998116039,
+            "norm_ratio": 0.23972637994802348,
             "normalized_rmse": 0.33760961461344874,
             "sign_agreement": -0.08558659217877101
           },
           "training_best_single": {
-            "cosine": -0.13799616359031402,
+            "cosine": -0.13799616359031383,
             "norm_ratio": -0.002860417277726346,
             "normalized_rmse": 0.025797209793563147,
             "sign_agreement": -0.0031284916201117507
@@ -3067,38 +3076,38 @@
         },
         "best_single_alpha": 0.256299280772337,
         "best_single_opaque_key": "ENSG00000278588_Rest",
-        "coefficient_sha256": "26bcae7a9a452344ad95967ff4a4acbd7d64d9fff3c6c5a44dba6f0cc2fd151f",
+        "coefficient_sha256": "7c444e01cace1ea6b2eae66f965444de006e41fa8cb7cf73d61bcefb635e659e",
         "common_alpha": 0.0,
         "cone_fit_cosine": 0.5526423650911609,
         "cone_kkt_violation": 4.440892098500625e-16,
         "cone_support": 199,
-        "training_model_sha256": "70d74bafad9b4df2d88118ba7db984695c0eb816f77c57348de5e1c7b57f34b5"
+        "training_model_sha256": "3d58a975f2e91ae5b81156ea4c04e20ba6c5d56f1e49431778aaf27b09652c03"
       },
       "within_training_guide": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": 0.16925649674387824,
+            "cosine_improvement": 0.16925649674387874,
             "normalized_rmse_improvement": 0.02277781224615638
           },
           "training_common_ray": {
-            "cosine_improvement": 0.36539220627770236,
+            "cosine_improvement": 0.36539220627770264,
             "normalized_rmse_improvement": 0.04217052197459814
           },
           "zero": {
-            "cosine_improvement": 0.36539220627770236,
+            "cosine_improvement": 0.36539220627770264,
             "normalized_rmse_improvement": 0.04217052197459814
           }
         },
         "guide_slot": "guide_2",
         "metrics": {
           "cone": {
-            "cosine": 0.36539220627770236,
-            "norm_ratio": 0.5911105559591171,
+            "cosine": 0.36539220627770264,
+            "norm_ratio": 0.5911105559591168,
             "normalized_rmse": 0.9578294780254019,
             "sign_agreement": 0.5749720670391062
           },
           "training_best_single": {
-            "cosine": 0.19613570953382412,
+            "cosine": 0.1961357095338239,
             "norm_ratio": 0.18839786176687268,
             "normalized_rmse": 0.9806072902715582,
             "sign_agreement": 0.5298324022346369
@@ -3122,39 +3131,39 @@
       "fit_gene_sha256": "a7e9b9765b708dd7c8fba2fe2bcfb44fc93b20b368defa5bf9c64f1df098f34b",
       "fit_genes": 4475,
       "fit_id": "guide_2|ota|seed=0",
-      "guide_identity_status": "POSITIONAL_MODALITIES_ONLY_IDENTITIES_NOT_RELEASED",
+      "guide_identity_status": "OFFICIAL_ALPHANUMERIC_GUIDE_RANKS_IDS_NOT_EMBEDDED_CROSSWALK_NOT_VERIFIED",
       "held_guide_slot": "guide_1",
       "prediction_cosine": {
-        "cone": 0.3634248558650173,
-        "training_best_single": -0.02409762106874654,
+        "cone": 0.3634248558650174,
+        "training_best_single": -0.024097621068746543,
         "training_common_ray": 1.0
       },
       "reciprocal_held_guide": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": -0.06658979882538069,
-            "normalized_rmse_improvement": -0.3975969760439386
+            "cosine_improvement": -0.06658979882538049,
+            "normalized_rmse_improvement": -0.39759697604393884
           },
           "training_common_ray": {
-            "cosine_improvement": -0.03422014046123305,
-            "normalized_rmse_improvement": -0.4137391921519922
+            "cosine_improvement": -0.03422014046123302,
+            "normalized_rmse_improvement": -0.4137391921519924
           },
           "zero": {
-            "cosine_improvement": -0.03422014046123305,
-            "normalized_rmse_improvement": -0.4137391921519922
+            "cosine_improvement": -0.03422014046123302,
+            "normalized_rmse_improvement": -0.4137391921519924
           }
         },
         "guide_slot": "guide_1",
         "metrics": {
           "cone": {
-            "cosine": -0.03422014046123305,
-            "norm_ratio": 0.9656946166254685,
-            "normalized_rmse": 1.4137391921519922,
+            "cosine": -0.03422014046123302,
+            "norm_ratio": 0.9656946166254672,
+            "normalized_rmse": 1.4137391921519924,
             "sign_agreement": 0.526927374301676
           },
           "training_best_single": {
-            "cosine": 0.032369658364147645,
-            "norm_ratio": 0.21565304042481875,
+            "cosine": 0.03236965836414747,
+            "norm_ratio": 0.21565304042481878,
             "normalized_rmse": 1.0161422161080536,
             "sign_agreement": 0.4945251396648045
           },
@@ -3175,28 +3184,28 @@
       "reciprocal_minus_within": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": -0.1830538019795277,
-            "normalized_rmse_improvement": -0.34085617906625976
+            "cosine_improvement": -0.18305380197952734,
+            "normalized_rmse_improvement": -0.34085617906626
           },
           "training_common_ray": {
-            "cosine_improvement": -0.3094075099477474,
-            "normalized_rmse_improvement": -0.3678384063714526
+            "cosine_improvement": -0.30940750994774696,
+            "normalized_rmse_improvement": -0.3678384063714528
           },
           "zero": {
-            "cosine_improvement": -0.3094075099477474,
-            "normalized_rmse_improvement": -0.3678384063714526
+            "cosine_improvement": -0.30940750994774696,
+            "normalized_rmse_improvement": -0.3678384063714528
           }
         },
         "metrics": {
           "cone": {
-            "cosine": -0.3094075099477474,
-            "norm_ratio": 0.2786376779532014,
-            "normalized_rmse": 0.3678384063714526,
+            "cosine": -0.30940750994774696,
+            "norm_ratio": 0.2786376779532004,
+            "normalized_rmse": 0.3678384063714528,
             "sign_agreement": -0.03240223463687142
           },
           "training_best_single": {
-            "cosine": -0.12635370796821968,
-            "norm_ratio": -0.0033247072283646706,
+            "cosine": -0.12635370796821965,
+            "norm_ratio": -0.003324707228364643,
             "normalized_rmse": 0.02698222730519284,
             "sign_agreement": -0.020111731843575398
           },
@@ -3230,38 +3239,38 @@
         },
         "best_single_alpha": 0.256299280772337,
         "best_single_opaque_key": "ENSG00000278588_Rest",
-        "coefficient_sha256": "26bcae7a9a452344ad95967ff4a4acbd7d64d9fff3c6c5a44dba6f0cc2fd151f",
+        "coefficient_sha256": "7c444e01cace1ea6b2eae66f965444de006e41fa8cb7cf73d61bcefb635e659e",
         "common_alpha": 0.0,
         "cone_fit_cosine": 0.5526423650911609,
         "cone_kkt_violation": 4.440892098500625e-16,
         "cone_support": 199,
-        "training_model_sha256": "70d74bafad9b4df2d88118ba7db984695c0eb816f77c57348de5e1c7b57f34b5"
+        "training_model_sha256": "3d58a975f2e91ae5b81156ea4c04e20ba6c5d56f1e49431778aaf27b09652c03"
       },
       "within_training_guide": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": 0.11646400315414701,
+            "cosine_improvement": 0.11646400315414684,
             "normalized_rmse_improvement": -0.056740796977678865
           },
           "training_common_ray": {
-            "cosine_improvement": 0.27518736948651434,
+            "cosine_improvement": 0.27518736948651396,
             "normalized_rmse_improvement": -0.04590078578053958
           },
           "zero": {
-            "cosine_improvement": 0.27518736948651434,
+            "cosine_improvement": 0.27518736948651396,
             "normalized_rmse_improvement": -0.04590078578053958
           }
         },
         "guide_slot": "guide_2",
         "metrics": {
           "cone": {
-            "cosine": 0.27518736948651434,
-            "norm_ratio": 0.6870569386722671,
+            "cosine": 0.27518736948651396,
+            "norm_ratio": 0.6870569386722668,
             "normalized_rmse": 1.0459007857805396,
             "sign_agreement": 0.5593296089385474
           },
           "training_best_single": {
-            "cosine": 0.15872336633236733,
+            "cosine": 0.1587233663323671,
             "norm_ratio": 0.21897774765318342,
             "normalized_rmse": 0.9891599888028607,
             "sign_agreement": 0.5146368715083799
@@ -3285,39 +3294,39 @@
       "fit_gene_sha256": "8c660049916a4c562662e5c4217cebb4c88c1bc19f5714b344df2c3d31544830",
       "fit_genes": 4475,
       "fit_id": "guide_2|ota|seed=1",
-      "guide_identity_status": "POSITIONAL_MODALITIES_ONLY_IDENTITIES_NOT_RELEASED",
+      "guide_identity_status": "OFFICIAL_ALPHANUMERIC_GUIDE_RANKS_IDS_NOT_EMBEDDED_CROSSWALK_NOT_VERIFIED",
       "held_guide_slot": "guide_1",
       "prediction_cosine": {
-        "cone": 0.5028515641989703,
+        "cone": 0.5028515641989709,
         "training_best_single": -0.07059895936759276,
         "training_common_ray": 1.0
       },
       "reciprocal_held_guide": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": 0.07118283931981889,
-            "normalized_rmse_improvement": -0.37446335205709436
+            "cosine_improvement": 0.07118283931981913,
+            "normalized_rmse_improvement": -0.37446335205709413
           },
           "training_common_ray": {
-            "cosine_improvement": 0.00771878186519784,
-            "normalized_rmse_improvement": -0.40217057760075003
+            "cosine_improvement": 0.007718781865197901,
+            "normalized_rmse_improvement": -0.4021705776007498
           },
           "zero": {
-            "cosine_improvement": 0.00771878186519784,
-            "normalized_rmse_improvement": -0.40217057760075003
+            "cosine_improvement": 0.007718781865197901,
+            "normalized_rmse_improvement": -0.4021705776007498
           }
         },
         "guide_slot": "guide_1",
         "metrics": {
           "cone": {
-            "cosine": 0.00771878186519784,
-            "norm_ratio": 0.9906439612571506,
-            "normalized_rmse": 1.40217057760075,
+            "cosine": 0.007718781865197901,
+            "norm_ratio": 0.9906439612571507,
+            "normalized_rmse": 1.4021705776007498,
             "sign_agreement": 0.495195530726257
           },
           "training_best_single": {
-            "cosine": -0.06346405745462105,
-            "norm_ratio": 0.1819128526719055,
+            "cosine": -0.06346405745462122,
+            "norm_ratio": 0.18191285267190574,
             "normalized_rmse": 1.0277072255436557,
             "sign_agreement": 0.46346368715083797
           },
@@ -3338,28 +3347,28 @@
       "reciprocal_minus_within": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": -0.10796342662989819,
-            "normalized_rmse_improvement": -0.3430309887981702
+            "cosine_improvement": -0.10796342662989743,
+            "normalized_rmse_improvement": -0.34303098879816996
           },
           "training_common_ray": {
-            "cosine_improvement": -0.29427269796795513,
-            "normalized_rmse_improvement": -0.36678936159330533
+            "cosine_improvement": -0.2942726979679548,
+            "normalized_rmse_improvement": -0.3667893615933051
           },
           "zero": {
-            "cosine_improvement": -0.29427269796795513,
-            "normalized_rmse_improvement": -0.36678936159330533
+            "cosine_improvement": -0.2942726979679548,
+            "normalized_rmse_improvement": -0.3667893615933051
           }
         },
         "metrics": {
           "cone": {
-            "cosine": -0.29427269796795513,
-            "norm_ratio": 0.284656050309969,
-            "normalized_rmse": 0.36678936159330533,
+            "cosine": -0.2942726979679548,
+            "norm_ratio": 0.28465605030996877,
+            "normalized_rmse": 0.3667893615933051,
             "sign_agreement": -0.08804469273743021
           },
           "training_best_single": {
-            "cosine": -0.18630927133805697,
-            "norm_ratio": -0.09260386647582763,
+            "cosine": -0.18630927133805741,
+            "norm_ratio": -0.0926038664758275,
             "normalized_rmse": 0.023758372795135152,
             "sign_agreement": -0.09251396648044696
           },
@@ -3393,39 +3402,39 @@
         },
         "best_single_alpha": 0.3519155342408173,
         "best_single_opaque_key": "ENSG00000218891_Rest",
-        "coefficient_sha256": "90d5ba2d53cb83eb095925eabbb489569660e21535d07e451a1525b1bcb4c17e",
+        "coefficient_sha256": "18ec156f17eccc0b84ecd8453ca7c8d0be2419a309a9f267c2b2255a92ce0bbb",
         "common_alpha": 0.0,
-        "cone_fit_cosine": 0.5881509985367473,
-        "cone_kkt_violation": 1.77635683940025e-15,
+        "cone_fit_cosine": 0.5881509985367466,
+        "cone_kkt_violation": 1.4656439089894783e-16,
         "cone_support": 204,
-        "training_model_sha256": "c6163e50dd16e237fa4f2f85a30e3d7563e1280c5c981fdbf38b2787a66f625a"
+        "training_model_sha256": "c3affc220dbbe55c9cda5f03c0f2e25884e9eaced44e150cf090e47ca9824a20"
       },
       "within_training_guide": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": 0.17914626594971708,
+            "cosine_improvement": 0.17914626594971655,
             "normalized_rmse_improvement": -0.03143236325892418
           },
           "training_common_ray": {
-            "cosine_improvement": 0.301991479833153,
+            "cosine_improvement": 0.3019914798331527,
             "normalized_rmse_improvement": -0.035381216007444705
           },
           "zero": {
-            "cosine_improvement": 0.301991479833153,
+            "cosine_improvement": 0.3019914798331527,
             "normalized_rmse_improvement": -0.035381216007444705
           }
         },
         "guide_slot": "guide_2",
         "metrics": {
           "cone": {
-            "cosine": 0.301991479833153,
-            "norm_ratio": 0.7059879109471816,
+            "cosine": 0.3019914798331527,
+            "norm_ratio": 0.7059879109471819,
             "normalized_rmse": 1.0353812160074447,
             "sign_agreement": 0.5832402234636872
           },
           "training_best_single": {
-            "cosine": 0.12284521388343592,
-            "norm_ratio": 0.2745167191477331,
+            "cosine": 0.12284521388343618,
+            "norm_ratio": 0.27451671914773323,
             "normalized_rmse": 1.0039488527485205,
             "sign_agreement": 0.5559776536312849
           },
@@ -3448,39 +3457,39 @@
       "fit_gene_sha256": "8c660049916a4c562662e5c4217cebb4c88c1bc19f5714b344df2c3d31544830",
       "fit_genes": 4475,
       "fit_id": "guide_2|ota|seed=1",
-      "guide_identity_status": "POSITIONAL_MODALITIES_ONLY_IDENTITIES_NOT_RELEASED",
+      "guide_identity_status": "OFFICIAL_ALPHANUMERIC_GUIDE_RANKS_IDS_NOT_EMBEDDED_CROSSWALK_NOT_VERIFIED",
       "held_guide_slot": "guide_1",
       "prediction_cosine": {
-        "cone": 0.5028515641989703,
+        "cone": 0.5028515641989709,
         "training_best_single": -0.07059895936759276,
         "training_common_ray": 1.0
       },
       "reciprocal_held_guide": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": 0.034337390852150484,
+            "cosine_improvement": 0.03433739085215048,
             "normalized_rmse_improvement": -0.5313340205879329
           },
           "training_common_ray": {
-            "cosine_improvement": -0.002710181011477358,
+            "cosine_improvement": -0.0027101810114773554,
             "normalized_rmse_improvement": -0.5632117773779111
           },
           "zero": {
-            "cosine_improvement": -0.002710181011477358,
+            "cosine_improvement": -0.0027101810114773554,
             "normalized_rmse_improvement": -0.5632117773779111
           }
         },
         "guide_slot": "guide_1",
         "metrics": {
           "cone": {
-            "cosine": -0.002710181011477358,
-            "norm_ratio": 1.19880486509245,
+            "cosine": -0.0027101810114773554,
+            "norm_ratio": 1.1988048650924499,
             "normalized_rmse": 1.563211777377911,
             "sign_agreement": 0.5273743016759777
           },
           "training_best_single": {
-            "cosine": -0.037047571863627844,
-            "norm_ratio": 0.22013762899153017,
+            "cosine": -0.03704757186362783,
+            "norm_ratio": 0.2201376289915304,
             "normalized_rmse": 1.0318777567899782,
             "sign_agreement": 0.4960893854748603
           },
@@ -3501,28 +3510,28 @@
       "reciprocal_minus_within": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": -0.13035773168148435,
+            "cosine_improvement": -0.13035773168148393,
             "normalized_rmse_improvement": -0.39487617492083515
           },
           "training_common_ray": {
-            "cosine_improvement": -0.2007320075079507,
+            "cosine_improvement": -0.20073200750795023,
             "normalized_rmse_improvement": -0.3835786775984438
           },
           "zero": {
-            "cosine_improvement": -0.2007320075079507,
+            "cosine_improvement": -0.20073200750795023,
             "normalized_rmse_improvement": -0.3835786775984438
           }
         },
         "metrics": {
           "cone": {
-            "cosine": -0.2007320075079507,
-            "norm_ratio": 0.34446993201931153,
+            "cosine": -0.20073200750795023,
+            "norm_ratio": 0.3444699320193111,
             "normalized_rmse": 0.3835786775984438,
             "sign_agreement": -0.019664804469273767
           },
           "training_best_single": {
-            "cosine": -0.07037427582646635,
-            "norm_ratio": -0.11206242605740457,
+            "cosine": -0.07037427582646628,
+            "norm_ratio": -0.11206242605740435,
             "normalized_rmse": -0.011297497322391381,
             "sign_agreement": -0.01653631284916207
           },
@@ -3556,38 +3565,38 @@
         },
         "best_single_alpha": 0.3519155342408173,
         "best_single_opaque_key": "ENSG00000218891_Rest",
-        "coefficient_sha256": "90d5ba2d53cb83eb095925eabbb489569660e21535d07e451a1525b1bcb4c17e",
+        "coefficient_sha256": "18ec156f17eccc0b84ecd8453ca7c8d0be2419a309a9f267c2b2255a92ce0bbb",
         "common_alpha": 0.0,
-        "cone_fit_cosine": 0.5881509985367473,
-        "cone_kkt_violation": 1.77635683940025e-15,
+        "cone_fit_cosine": 0.5881509985367466,
+        "cone_kkt_violation": 1.4656439089894783e-16,
         "cone_support": 204,
-        "training_model_sha256": "c6163e50dd16e237fa4f2f85a30e3d7563e1280c5c981fdbf38b2787a66f625a"
+        "training_model_sha256": "c3affc220dbbe55c9cda5f03c0f2e25884e9eaced44e150cf090e47ca9824a20"
       },
       "within_training_guide": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": 0.16469512253363483,
+            "cosine_improvement": 0.1646951225336344,
             "normalized_rmse_improvement": -0.13645784566709773
           },
           "training_common_ray": {
-            "cosine_improvement": 0.19802182649647335,
+            "cosine_improvement": 0.19802182649647287,
             "normalized_rmse_improvement": -0.1796330997794673
           },
           "zero": {
-            "cosine_improvement": 0.19802182649647335,
+            "cosine_improvement": 0.19802182649647287,
             "normalized_rmse_improvement": -0.1796330997794673
           }
         },
         "guide_slot": "guide_2",
         "metrics": {
           "cone": {
-            "cosine": 0.19802182649647335,
-            "norm_ratio": 0.8543349330731386,
+            "cosine": 0.19802182649647287,
+            "norm_ratio": 0.8543349330731388,
             "normalized_rmse": 1.1796330997794673,
             "sign_agreement": 0.5470391061452514
           },
           "training_best_single": {
-            "cosine": 0.0333267039628385,
+            "cosine": 0.033326703962838454,
             "norm_ratio": 0.33220005504893474,
             "normalized_rmse": 1.0431752541123696,
             "sign_agreement": 0.5126256983240224
@@ -3611,39 +3620,39 @@
       "fit_gene_sha256": "a0673b2bddd34a50e19ef2f108aa372dfcf75e3d7d26803c2900e7a1c29ed8f5",
       "fit_genes": 4475,
       "fit_id": "guide_2|ota|seed=2",
-      "guide_identity_status": "POSITIONAL_MODALITIES_ONLY_IDENTITIES_NOT_RELEASED",
+      "guide_identity_status": "OFFICIAL_ALPHANUMERIC_GUIDE_RANKS_IDS_NOT_EMBEDDED_CROSSWALK_NOT_VERIFIED",
       "held_guide_slot": "guide_1",
       "prediction_cosine": {
-        "cone": 0.6085570830519642,
-        "training_best_single": -0.022117713300310236,
+        "cone": 0.6085570830519641,
+        "training_best_single": -0.022117713300310222,
         "training_common_ray": 1.0
       },
       "reciprocal_held_guide": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": -0.042702841434623225,
-            "normalized_rmse_improvement": -0.3684380271568348
+            "cosine_improvement": -0.042702841434623294,
+            "normalized_rmse_improvement": -0.36843802715683505
           },
           "training_common_ray": {
-            "cosine_improvement": -0.02211158422538269,
-            "normalized_rmse_improvement": -0.3837463329689774
+            "cosine_improvement": -0.022111584225382733,
+            "normalized_rmse_improvement": -0.38374633296897764
           },
           "zero": {
-            "cosine_improvement": -0.02211158422538269,
-            "normalized_rmse_improvement": -0.3837463329689774
+            "cosine_improvement": -0.022111584225382733,
+            "normalized_rmse_improvement": -0.38374633296897764
           }
         },
         "guide_slot": "guide_1",
         "metrics": {
           "cone": {
-            "cosine": -0.02211158422538269,
-            "norm_ratio": 0.9345716633346692,
-            "normalized_rmse": 1.3837463329689774,
+            "cosine": -0.022111584225382733,
+            "norm_ratio": 0.9345716633346699,
+            "normalized_rmse": 1.3837463329689776,
             "sign_agreement": 0.49854748603351956
           },
           "training_best_single": {
-            "cosine": 0.020591257209240536,
-            "norm_ratio": 0.19743852386773414,
+            "cosine": 0.02059125720924056,
+            "norm_ratio": 0.1974385238677343,
             "normalized_rmse": 1.0153083058121426,
             "sign_agreement": 0.5005586592178771
           },
@@ -3664,28 +3673,28 @@
       "reciprocal_minus_within": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": -0.15069308198625303,
-            "normalized_rmse_improvement": -0.3357239196033931
+            "cosine_improvement": -0.15069308198625345,
+            "normalized_rmse_improvement": -0.3357239196033933
           },
           "training_common_ray": {
-            "cosine_improvement": -0.3032672634419167,
-            "normalized_rmse_improvement": -0.3660827594911831
+            "cosine_improvement": -0.30326726344191707,
+            "normalized_rmse_improvement": -0.3660827594911833
           },
           "zero": {
-            "cosine_improvement": -0.3032672634419167,
-            "normalized_rmse_improvement": -0.3660827594911831
+            "cosine_improvement": -0.30326726344191707,
+            "normalized_rmse_improvement": -0.3660827594911833
           }
         },
         "metrics": {
           "cone": {
-            "cosine": -0.3032672634419167,
-            "norm_ratio": 0.314760311289073,
-            "normalized_rmse": 0.3660827594911831,
+            "cosine": -0.30326726344191707,
+            "norm_ratio": 0.3147603112890731,
+            "normalized_rmse": 0.3660827594911833,
             "sign_agreement": -0.06882681564245813
           },
           "training_best_single": {
-            "cosine": -0.15257418145566365,
-            "norm_ratio": 0.013703337207903538,
+            "cosine": -0.15257418145566362,
+            "norm_ratio": 0.013703337207903454,
             "normalized_rmse": 0.03035883988778998,
             "sign_agreement": -0.03620111731843567
           },
@@ -3719,39 +3728,39 @@
         },
         "best_single_alpha": 0.2698688166599104,
         "best_single_opaque_key": "ENSG00000278588_Rest",
-        "coefficient_sha256": "9fb7301d24ddd3130108714a41a96e9e11d3c86dc0b3ac7d0e5d82cc3696c603",
+        "coefficient_sha256": "a60100af0b3017a6673731eab0b9bc69cc32bf9ff9890c8b41c025e05c27569f",
         "common_alpha": 0.0,
-        "cone_fit_cosine": 0.6050278711495958,
+        "cone_fit_cosine": 0.6050278711495952,
         "cone_kkt_violation": 5.551115123125782e-16,
         "cone_support": 245,
-        "training_model_sha256": "0bc4bfb1fda684037510b46eaf462638abcba86058f6b61c17031809ef7865fa"
+        "training_model_sha256": "e80965ba77cac948f3fea7d8e9c5f142634c523f7c03ab2742e51f4c22d4de9d"
       },
       "within_training_guide": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": 0.10799024055162981,
+            "cosine_improvement": 0.10799024055163015,
             "normalized_rmse_improvement": -0.03271410755344173
           },
           "training_common_ray": {
-            "cosine_improvement": 0.281155679216534,
+            "cosine_improvement": 0.28115567921653434,
             "normalized_rmse_improvement": -0.017663573477794348
           },
           "zero": {
-            "cosine_improvement": 0.281155679216534,
+            "cosine_improvement": 0.28115567921653434,
             "normalized_rmse_improvement": -0.017663573477794348
           }
         },
         "guide_slot": "guide_2",
         "metrics": {
           "cone": {
-            "cosine": 0.281155679216534,
-            "norm_ratio": 0.6198113520455962,
+            "cosine": 0.28115567921653434,
+            "norm_ratio": 0.6198113520455968,
             "normalized_rmse": 1.0176635734777943,
             "sign_agreement": 0.5673743016759777
           },
           "training_best_single": {
             "cosine": 0.1731654386649042,
-            "norm_ratio": 0.1837351866598306,
+            "norm_ratio": 0.18373518665983085,
             "normalized_rmse": 0.9849494659243526,
             "sign_agreement": 0.5367597765363128
           },
@@ -3774,39 +3783,39 @@
       "fit_gene_sha256": "a0673b2bddd34a50e19ef2f108aa372dfcf75e3d7d26803c2900e7a1c29ed8f5",
       "fit_genes": 4475,
       "fit_id": "guide_2|ota|seed=2",
-      "guide_identity_status": "POSITIONAL_MODALITIES_ONLY_IDENTITIES_NOT_RELEASED",
+      "guide_identity_status": "OFFICIAL_ALPHANUMERIC_GUIDE_RANKS_IDS_NOT_EMBEDDED_CROSSWALK_NOT_VERIFIED",
       "held_guide_slot": "guide_1",
       "prediction_cosine": {
-        "cone": 0.6085570830519642,
-        "training_best_single": -0.022117713300310236,
+        "cone": 0.6085570830519641,
+        "training_best_single": -0.022117713300310222,
         "training_common_ray": 1.0
       },
       "reciprocal_held_guide": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": -0.06226910203666615,
-            "normalized_rmse_improvement": -0.5108646602071367
+            "cosine_improvement": -0.06226910203666618,
+            "normalized_rmse_improvement": -0.5108646602071372
           },
           "training_common_ray": {
-            "cosine_improvement": -0.04933289162385959,
-            "normalized_rmse_improvement": -0.5353427839987113
+            "cosine_improvement": -0.04933289162385961,
+            "normalized_rmse_improvement": -0.5353427839987117
           },
           "zero": {
-            "cosine_improvement": -0.04933289162385959,
-            "normalized_rmse_improvement": -0.5353427839987113
+            "cosine_improvement": -0.04933289162385961,
+            "normalized_rmse_improvement": -0.5353427839987117
           }
         },
         "guide_slot": "guide_1",
         "metrics": {
           "cone": {
-            "cosine": -0.04933289162385959,
+            "cosine": -0.04933289162385961,
             "norm_ratio": 1.1167336581806044,
-            "normalized_rmse": 1.5353427839987113,
+            "normalized_rmse": 1.5353427839987117,
             "sign_agreement": 0.5311731843575419
           },
           "training_best_single": {
-            "cosine": 0.012936210412806553,
-            "norm_ratio": 0.23592224510410542,
+            "cosine": 0.012936210412806572,
+            "norm_ratio": 0.23592224510410548,
             "normalized_rmse": 1.0244781237915745,
             "sign_agreement": 0.49162011173184356
           },
@@ -3827,28 +3836,28 @@
       "reciprocal_minus_within": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": -0.08496974173290987,
-            "normalized_rmse_improvement": -0.3689449366143357
+            "cosine_improvement": -0.08496974173291007,
+            "normalized_rmse_improvement": -0.36894493661433614
           },
           "training_common_ray": {
-            "cosine_improvement": -0.2311320269165568,
-            "normalized_rmse_improvement": -0.4043114378299544
+            "cosine_improvement": -0.23113202691655688,
+            "normalized_rmse_improvement": -0.4043114378299548
           },
           "zero": {
-            "cosine_improvement": -0.2311320269165568,
-            "normalized_rmse_improvement": -0.4043114378299544
+            "cosine_improvement": -0.23113202691655688,
+            "normalized_rmse_improvement": -0.4043114378299548
           }
         },
         "metrics": {
           "cone": {
-            "cosine": -0.2311320269165568,
+            "cosine": -0.23113202691655688,
             "norm_ratio": 0.3761118035846537,
-            "normalized_rmse": 0.4043114378299544,
+            "normalized_rmse": 0.4043114378299548,
             "sign_agreement": -0.029050279329608908
           },
           "training_best_single": {
-            "cosine": -0.14616228518364693,
-            "norm_ratio": 0.016374322579888162,
+            "cosine": -0.14616228518364682,
+            "norm_ratio": 0.01637432257988808,
             "normalized_rmse": 0.035366501215618684,
             "sign_agreement": -0.032625698324022345
           },
@@ -3882,39 +3891,39 @@
         },
         "best_single_alpha": 0.2698688166599104,
         "best_single_opaque_key": "ENSG00000278588_Rest",
-        "coefficient_sha256": "9fb7301d24ddd3130108714a41a96e9e11d3c86dc0b3ac7d0e5d82cc3696c603",
+        "coefficient_sha256": "a60100af0b3017a6673731eab0b9bc69cc32bf9ff9890c8b41c025e05c27569f",
         "common_alpha": 0.0,
-        "cone_fit_cosine": 0.6050278711495958,
+        "cone_fit_cosine": 0.6050278711495952,
         "cone_kkt_violation": 5.551115123125782e-16,
         "cone_support": 245,
-        "training_model_sha256": "0bc4bfb1fda684037510b46eaf462638abcba86058f6b61c17031809ef7865fa"
+        "training_model_sha256": "e80965ba77cac948f3fea7d8e9c5f142634c523f7c03ab2742e51f4c22d4de9d"
       },
       "within_training_guide": {
         "comparisons": {
           "training_best_single": {
-            "cosine_improvement": 0.022700639696243724,
+            "cosine_improvement": 0.02270063969624389,
             "normalized_rmse_improvement": -0.14191972359280103
           },
           "training_common_ray": {
-            "cosine_improvement": 0.1817991352926972,
+            "cosine_improvement": 0.18179913529269728,
             "normalized_rmse_improvement": -0.1310313461687569
           },
           "zero": {
-            "cosine_improvement": 0.1817991352926972,
+            "cosine_improvement": 0.18179913529269728,
             "normalized_rmse_improvement": -0.1310313461687569
           }
         },
         "guide_slot": "guide_2",
         "metrics": {
           "cone": {
-            "cosine": 0.1817991352926972,
+            "cosine": 0.18179913529269728,
             "norm_ratio": 0.7406218545959508,
             "normalized_rmse": 1.131031346168757,
             "sign_agreement": 0.5602234636871508
           },
           "training_best_single": {
-            "cosine": 0.15909849559645348,
-            "norm_ratio": 0.21954792252421726,
+            "cosine": 0.1590984955964534,
+            "norm_ratio": 0.2195479225242174,
             "normalized_rmse": 0.9891116225759559,
             "sign_agreement": 0.5242458100558659
           },
@@ -3934,17 +3943,17 @@
       }
     }
   ],
-  "claim_ceiling": "same-study reciprocal robustness across the released guide_1 and guide_2 positional modalities under the authors' effectiveness-selected DE pipeline; not leakage-safe guide generalization, verified physical-guide replication, donor-population inference, predictive utility, or state reachability",
-  "config_sha256": "01d69a3090d5153d82c426e9b16cf728e9c222baa877d62a18bc0735b7ea85f4",
+  "claim_ceiling": "same-study reciprocal robustness across the released guide_1 and guide_2 alphanumeric guide-rank modalities under the authors' effectiveness-selected DE pipeline; not leakage-safe physical-guide generalization, named-sgRNA replication, donor-population inference, predictive utility, or state reachability",
+  "config_sha256": "9f5f1416e4a745a741b9d99c8dc0d84856ffeff7d2db58fa5385b59c78d66483",
   "data_quality": {
-    "between_source_target_cosine": 0.7905978929805006,
+    "between_source_target_cosine": 0.7905978929805018,
     "common_rest_atoms": 8323,
-    "eligibility_warning": "The author pipeline uses keep_effective_guides, and the intermediate for_DE_by_guide.csv is absent. Presence in the released positional modalities can therefore select on perturbation effectiveness.",
+    "eligibility_warning": "The author pipeline uses keep_effective_guides, and the intermediate for_DE_by_guide.csv is absent. Presence in the released guide-rank modalities can therefore select on perturbation effectiveness.",
     "genes": 10282,
     "guide_1_only_rest_atoms": 2752,
     "guide_1_rest_atoms": 11075,
     "guide_2_keys_exact_subset_of_guide_1": true,
-    "guide_identity_status": "POSITIONAL_MODALITIES_ONLY_IDENTITIES_NOT_RELEASED",
+    "guide_identity_status": "OFFICIAL_ALPHANUMERIC_GUIDE_RANKS_IDS_NOT_EMBEDDED_CROSSWALK_NOT_VERIFIED",
     "h5mu_encoding": "MuData with two AnnData modalities",
     "metadata_hashes": {
       "guide_1_only_rest_keys_sha256": "6284d0e4cbe5a2d266b00589e03c5e12a3dee149632847d7ecb2dfb2d8ed84ab",
@@ -3961,6 +3970,11 @@
           "Stim48hr": 11068,
           "Stim8hr": 11231
         },
+        "missing_key_condition_suffix_counts": {
+          "Rest": 35,
+          "Stim48hr": 61,
+          "Stim8hr": 18
+        },
         "rows": 33488
       },
       "guide_2": {
@@ -3969,6 +3983,11 @@
           "Rest": 8323,
           "Stim48hr": 8719,
           "Stim8hr": 8998
+        },
+        "missing_key_condition_suffix_counts": {
+          "Rest": 0,
+          "Stim48hr": 38,
+          "Stim8hr": 0
         },
         "rows": 26078
       }
@@ -3998,26 +4017,26 @@
     }
   },
   "limitations": [
-    "guide_1 and guide_2 are positional modality labels; physical guide IDs are not present, so this is not physical guide-held-out generalization.",
+    "The official dataset card defines guide_1 and guide_2 as the first and second alphanumeric sgRNA IDs within each target-condition pair, but those IDs are not embedded or cross-verified in this H5MU benchmark.",
     "guide_2 is a strict subset of guide_1 and the released universe is conditioned on the authors' keep_effective_guides field.",
-    "The author pipeline also required keep_min_cells and keep_total_counts, retained two testable guide positions using at least three replicates and five cells per guide, and fit ~ log10_n_cells + target without a donor term.",
-    "The object contains 114 guide_1 and 38 guide_2 rows with code -1 across every required categorical field; these are recorded as missing rather than imputed, and no selected common Rest row is missing its target mapping.",
-    "The absent for_DE_by_guide.csv prevents reconstruction of a leakage-safe structural-QC-only universe from this object.",
+    "The author pipeline initially required keep_min_cells & keep_effective_guides & keep_total_counts, including >=3 passing replicates per guide-condition and >=5 cells per guide in each condition/sample; target-condition membership came from cond_targets in unreleased for_DE_by_guide.csv, exactly 2 testable guides per target-condition were required, and the final sample mask also required keep_test_genes. The DE model was ~ log10_n_cells + target without a donor term.",
+    "The object contains 114 guide_1 and 38 guide_2 rows with code -1 across every required categorical field; documented key suffixes classify these as Rest/Stim8hr/Stim48hr = 35/18/61 and 0/0/38, respectively. They are recorded as missing rather than imputed, and no selected common category-labeled Rest row is missing its target mapping.",
+    "Public pseudobulk and guide-library artifacts expose guide IDs, but this report does not hash-bind or reconstruct their exact ranked-modality crosswalk; the absent for_DE_by_guide.csv also prevents auditing the author-selected intermediate from the H5MU alone.",
     "Random gene splits contain correlated coordinates and are descriptive sensitivity challenges, not independent replicates.",
-    "The same source study supplies both positional modalities; this is not independent external validation.",
+    "The same source study supplies both guide-rank modalities; this is not independent external validation.",
     "Because the fit is underdetermined, transferred coefficients and their held-slot predictions are relative to the frozen SciPy NNLS solver and lexicographic opaque-key order; the fitted cone point need not identify a unique coefficient vector.",
-    "No p-values or confidence intervals are emitted, and no donor, functional, state-conversion, or intervention claim is supported."
+    "No p-values or confidence intervals are emitted; no named-guide, leakage-safe guide-generalization, donor, functional, state-conversion, or intervention claim is supported."
   ],
   "protocol": {
     "baseline_application": "select common-ray scale and best-single opaque key/scale only on the training modality, training source, and fit genes; freeze them for both score domains and both target-source scores",
     "challenge_rows": 24,
-    "coefficient_application": "fit once on one positional modality, one target source, and fit genes; apply identical coefficients to both positional modalities on disjoint score genes",
+    "coefficient_application": "fit once on one alphanumeric guide-rank modality, one target source, and fit genes; apply identical coefficients to both ranked modalities on disjoint score genes",
     "condition": "Rest",
     "fit_count": 12,
     "gene_order": "lexicographic_gene_symbol",
     "inference": "descriptive correlated challenges only; no p-values, confidence intervals, physical-guide generalization, or donor-population inference",
     "layer": "log_fc",
-    "opaque_key_contract": "target_condition values are matched by exact string identity only; they are never parsed to reconstruct a guide identity. Cross-modality target ID/name equality is required only on the selected common Rest rows; no unsupported global cross-condition bijection is asserted",
+    "opaque_key_contract": "target_condition values are matched by exact string identity only; only the documented terminal Rest/Stim8hr/Stim48hr suffix is parsed to audit categorical integrity, never to reconstruct an sgRNA ID. The official dataset card supplies the guide-rank meaning, but exact IDs are not cross-bound here. Cross-modality target ID/name equality is required only on the selected common Rest rows; no unsupported global cross-condition bijection is asserted",
     "prediction_cosine_zero_policy": "two zero predictions map to 1 and exactly one zero prediction maps to 0",
     "representation_sensitivity_fits": 1,
     "split_rng": "numpy.default_rng(seed)",
@@ -4027,22 +4046,22 @@
       2
     ],
     "target_gene_universe": "both target sources and guide-H5MU gene symbols; no held-out-source sign or magnitude filter",
-    "whole_universe_reporting": "all 8,323 released common Rest atoms are retained; no outcome-ranked top-k subset is selected"
+    "whole_universe_reporting": "all 8,323 common category-labeled Rest atoms are retained; 35 nominal guide_1 Rest keys with missing categorical metadata are withheld, and no outcome-ranked top-k subset is selected"
   },
   "schema_version": "1.0.0",
   "solver_representation_sensitivity": {
     "alternative_atom_order": "reverse_lexicographic",
     "alternative_atom_order_sha256": "4cf4557139119c463c99abd5e491973756a151924766709075a58d9090b5646e",
-    "alternative_coefficient_mapped_to_canonical_order_sha256": "d4138b50b50ef2f7a36417fd012c4170c47eafe1c9f24ead6e1838ba5871e6bf",
-    "alternative_fit_cosine": 0.4985398170531623,
-    "alternative_kkt_violation": 1.3264119706504863e-16,
+    "alternative_coefficient_mapped_to_canonical_order_sha256": "9ca82df512f68330c933f80ee7359dbf845011c82ea5415f3aff32e5cff7a3b9",
+    "alternative_fit_cosine": 0.49853981705316286,
+    "alternative_kkt_violation": 5.551115123125782e-16,
     "alternative_support": 213,
-    "best_single_alpha_absolute_difference": 2.7755575615628914e-17,
+    "best_single_alpha_absolute_difference": 0.0,
     "best_single_key_match": true,
     "canonical_atom_order_sha256": "a75887d0a38d0a3a800fbf9c28eae574e68a863dd549ef5b614a19621a808fed",
-    "canonical_coefficient_sha256": "2a4a260c551025aa2ffb8123a9a3958f1b7f641a4a1d3c1fa2e03ed9bb45cc69",
-    "canonical_fit_cosine": 0.4985398170531622,
-    "canonical_kkt_violation": 1.1102230246251563e-16,
+    "canonical_coefficient_sha256": "20a716c9e3954ac165c663d9a727990e6ab2f4754d36be6227a37f8d48ca1092",
+    "canonical_fit_cosine": 0.4985398170531629,
+    "canonical_kkt_violation": 5.551115123125782e-16,
     "canonical_support": 213,
     "common_ray_alpha_absolute_difference": 0.0,
     "fit_gene_sha256": "a7e9b9765b708dd7c8fba2fe2bcfb44fc93b20b368defa5bf9c64f1df098f34b",
@@ -4052,20 +4071,20 @@
     "seed": 0,
     "stability": {
       "coefficients": {
-        "cosine": 1.0000000000000002,
-        "relative_l2_difference": 1.7553913092863503e-15
+        "cosine": 0.9999999999999999,
+        "relative_l2_difference": 1.5066330243755028e-15
       },
       "fit_prediction": {
-        "cosine": 1.0,
-        "relative_l2_difference": 9.618960736178637e-16
+        "cosine": 0.9999999999999998,
+        "relative_l2_difference": 8.882715986124856e-16
       },
       "held_score_prediction": {
-        "cosine": 1.0000000000000002,
-        "relative_l2_difference": 9.093092948327657e-16
+        "cosine": 1.0,
+        "relative_l2_difference": 8.234065109972168e-16
       },
       "within_score_prediction": {
-        "cosine": 1.0000000000000002,
-        "relative_l2_difference": 9.3887111355185e-16
+        "cosine": 1.0,
+        "relative_l2_difference": 8.729611680093808e-16
       }
     },
     "train_guide_slot": "guide_1",
@@ -4078,6 +4097,9 @@
     ],
     "citation": "Zhu R., Dann E. et al. (2025), Genome-scale perturb-seq in primary human CD4+ T cells maps context-specific regulators of T cell programs and human immune traits",
     "data_license": "Virtual Cells Platform metadata labels the dataset MIT plus its Acceptable Use Policy; the downloaded H5MU has no embedded license field",
+    "dataset_card": "https://virtualcellmodels.cziscience.com/dataset/genome-scale-tcell-perturb-seq?access_dataset=true",
+    "dataset_card_accessed": "2026-07-19",
+    "dataset_card_version": "v1.0",
     "doi": "10.64898/2025.12.23.696273",
     "license_boundary": "Use is subject to the Virtual Cells Platform dataset metadata and Acceptable Use Policy; the author code repository is MIT-licensed.",
     "redistribution": "The 29.4 GB source object remains gitignored and is not redistributed."
@@ -4098,18 +4120,18 @@
       "prediction_cosine": {
         "cone": {
           "fraction_positive": 1.0,
-          "median": 0.5105271504587168,
+          "median": 0.5105271504587178,
           "range": [
-            0.3634248558650173,
-            0.6120459860080874
+            0.3634248558650174,
+            0.6120459860080859
           ]
         },
         "training_best_single": {
           "fraction_positive": 0.3333333333333333,
-          "median": -0.004373251680012716,
+          "median": -0.004373251680012682,
           "range": [
-            -0.07059895936759288,
-            0.07195211671871633
+            -0.07059895936759276,
+            0.07195211671871651
           ]
         },
         "training_common_ray": {
@@ -4126,15 +4148,15 @@
           "training_best_single": {
             "cosine_improvement": {
               "fraction_positive": 0.16666666666666666,
-              "median": -0.04151824215945757,
+              "median": -0.04151824215945762,
               "range": [
-                -0.06658979882538069,
-                0.07161161136083741
+                -0.06658979882538049,
+                0.07161161136083745
               ]
             },
             "normalized_rmse_improvement": {
               "fraction_positive": 0.0,
-              "median": -0.33429002238194827,
+              "median": -0.3342900223819484,
               "range": [
                 -0.542206235694803,
                 -0.1845498688741325
@@ -4144,15 +4166,15 @@
           "training_common_ray": {
             "cosine_improvement": {
               "fraction_positive": 0.16666666666666666,
-              "median": -0.03438281245714121,
+              "median": -0.034382812457141226,
               "range": [
-                -0.09341979225008777,
+                -0.09341979225008792,
                 0.012361320204492137
               ]
             },
             "normalized_rmse_improvement": {
               "fraction_positive": 0.0,
-              "median": -0.3477825472384517,
+              "median": -0.3477825472384518,
               "range": [
                 -0.584000415434943,
                 -0.18644149939866184
@@ -4162,15 +4184,15 @@
           "zero": {
             "cosine_improvement": {
               "fraction_positive": 0.16666666666666666,
-              "median": -0.03438281245714121,
+              "median": -0.034382812457141226,
               "range": [
-                -0.09341979225008777,
+                -0.09341979225008792,
                 0.012361320204492137
               ]
             },
             "normalized_rmse_improvement": {
               "fraction_positive": 0.0,
-              "median": -0.3477825472384517,
+              "median": -0.3477825472384518,
               "range": [
                 -0.584000415434943,
                 -0.18644149939866184
@@ -4182,15 +4204,15 @@
           "cone": {
             "cosine": {
               "fraction_positive": 0.16666666666666666,
-              "median": -0.03438281245714121,
+              "median": -0.034382812457141226,
               "range": [
-                -0.09341979225008777,
+                -0.09341979225008792,
                 0.012361320204492137
               ]
             },
             "normalized_rmse": {
               "fraction_positive": 1.0,
-              "median": 1.3477825472384517,
+              "median": 1.347782547238452,
               "range": [
                 1.1864414993986618,
                 1.584000415434943
@@ -4200,10 +4222,10 @@
           "training_best_single": {
             "cosine": {
               "fraction_positive": 0.5,
-              "median": 0.002123095914908104,
+              "median": 0.002123095914908066,
               "range": [
-                -0.0634640574546212,
-                0.05813954594351014
+                -0.06346405745462123,
+                0.05813954594351009
               ]
             },
             "normalized_rmse": {
@@ -4258,15 +4280,15 @@
           "training_best_single": {
             "cosine_improvement": {
               "fraction_positive": 0.0,
-              "median": -0.12792013633230687,
+              "median": -0.1279201363323069,
               "range": [
-                -0.2242110337492032,
-                -0.0716772857044409
+                -0.22421103374920265,
+                -0.07167728570444128
               ]
             },
             "normalized_rmse_improvement": {
               "fraction_positive": 0.0,
-              "median": -0.2922155996123739,
+              "median": -0.29221559961237414,
               "range": [
                 -0.39487617492083515,
                 -0.20471231524821076
@@ -4276,17 +4298,17 @@
           "training_common_ray": {
             "cosine_improvement": {
               "fraction_positive": 0.0,
-              "median": -0.25487819735995576,
+              "median": -0.2548781973599561,
               "range": [
-                -0.33167864227508603,
-                -0.2007320075079507
+                -0.33167864227508564,
+                -0.20073200750795023
               ]
             },
             "normalized_rmse_improvement": {
               "fraction_positive": 0.0,
-              "median": -0.3089890864624786,
+              "median": -0.3089890864624788,
               "range": [
-                -0.4043114378299544,
+                -0.4043114378299548,
                 -0.22469473435966758
               ]
             }
@@ -4294,17 +4316,17 @@
           "zero": {
             "cosine_improvement": {
               "fraction_positive": 0.0,
-              "median": -0.25487819735995576,
+              "median": -0.2548781973599561,
               "range": [
-                -0.33167864227508603,
-                -0.2007320075079507
+                -0.33167864227508564,
+                -0.20073200750795023
               ]
             },
             "normalized_rmse_improvement": {
               "fraction_positive": 0.0,
-              "median": -0.3089890864624786,
+              "median": -0.3089890864624788,
               "range": [
-                -0.4043114378299544,
+                -0.4043114378299548,
                 -0.22469473435966758
               ]
             }
@@ -4314,15 +4336,15 @@
           "cone": {
             "cosine": {
               "fraction_positive": 0.0,
-              "median": -0.25487819735995576,
+              "median": -0.2548781973599561,
               "range": [
-                -0.33167864227508603,
-                -0.2007320075079507
+                -0.33167864227508564,
+                -0.20073200750795023
               ]
             },
             "norm_ratio": {
               "fraction_positive": 1.0,
-              "median": 0.2750756926480859,
+              "median": 0.2750756926480855,
               "range": [
                 0.16156514075413275,
                 0.3761118035846537
@@ -4330,10 +4352,10 @@
             },
             "normalized_rmse": {
               "fraction_positive": 1.0,
-              "median": 0.3089890864624786,
+              "median": 0.3089890864624788,
               "range": [
                 0.22469473435966758,
-                0.4043114378299544
+                0.4043114378299548
               ]
             },
             "sign_agreement": {
@@ -4348,18 +4370,18 @@
           "training_best_single": {
             "cosine": {
               "fraction_positive": 0.0,
-              "median": -0.12430225480855103,
+              "median": -0.12430225480855109,
               "range": [
-                -0.18630927133805758,
-                -0.07037427582646635
+                -0.18630927133805736,
+                -0.07037427582646628
               ]
             },
             "norm_ratio": {
               "fraction_positive": 0.25,
               "median": -0.02033135923728223,
               "range": [
-                -0.11206242605740457,
-                0.016374322579888162
+                -0.11206242605740435,
+                0.01637432257988808
               ]
             },
             "normalized_rmse": {
@@ -4455,17 +4477,17 @@
           "training_best_single": {
             "cosine_improvement": {
               "fraction_positive": 1.0,
-              "median": 0.11657136688247728,
+              "median": 0.11657136688247716,
               "range": [
-                0.022700639696243724,
-                0.19984221164152935
+                0.02270063969624389,
+                0.19984221164152893
               ]
             },
             "normalized_rmse_improvement": {
               "fraction_positive": 0.16666666666666666,
               "median": -0.04628273433519492,
               "range": [
-                -0.16679371029988044,
+                -0.16679371029988022,
                 0.028145593654006595
               ]
             }
@@ -4473,17 +4495,17 @@
           "training_common_ray": {
             "cosine_improvement": {
               "fraction_positive": 1.0,
-              "median": 0.22720723868117598,
+              "median": 0.22720723868117615,
               "range": [
-                0.15286372596279799,
-                0.3128144401446307
+                0.15286372596279807,
+                0.31281444014463117
               ]
             },
             "normalized_rmse_improvement": {
               "fraction_positive": 0.16666666666666666,
               "median": -0.03842879406361632,
               "range": [
-                -0.18600557145795626,
+                -0.18600557145795604,
                 0.038253234961005744
               ]
             }
@@ -4491,17 +4513,17 @@
           "zero": {
             "cosine_improvement": {
               "fraction_positive": 1.0,
-              "median": 0.22720723868117598,
+              "median": 0.22720723868117615,
               "range": [
-                0.15286372596279799,
-                0.3128144401446307
+                0.15286372596279807,
+                0.31281444014463117
               ]
             },
             "normalized_rmse_improvement": {
               "fraction_positive": 0.16666666666666666,
               "median": -0.03842879406361632,
               "range": [
-                -0.18600557145795626,
+                -0.18600557145795604,
                 0.038253234961005744
               ]
             }
@@ -4511,10 +4533,10 @@
           "cone": {
             "cosine": {
               "fraction_positive": 1.0,
-              "median": 0.22720723868117598,
+              "median": 0.22720723868117615,
               "range": [
-                0.15286372596279799,
-                0.3128144401446307
+                0.15286372596279807,
+                0.31281444014463117
               ]
             },
             "normalized_rmse": {
@@ -4522,17 +4544,17 @@
               "median": 1.0384287940636163,
               "range": [
                 0.9617467650389943,
-                1.1860055714579563
+                1.186005571457956
               ]
             }
           },
           "training_best_single": {
             "cosine": {
               "fraction_positive": 1.0,
-              "median": 0.11623223738914673,
+              "median": 0.11623223738914662,
               "range": [
-                0.0333267039628385,
-                0.19613570953382317
+                0.033326703962838454,
+                0.1961357095338237
               ]
             },
             "normalized_rmse": {
@@ -4588,18 +4610,18 @@
       "prediction_cosine": {
         "cone": {
           "fraction_positive": 1.0,
-          "median": 0.5105271504587168,
+          "median": 0.5105271504587178,
           "range": [
-            0.3634248558650173,
-            0.6120459860080874
+            0.3634248558650174,
+            0.6120459860080859
           ]
         },
         "training_best_single": {
           "fraction_positive": 0.3333333333333333,
-          "median": -0.004373251680012716,
+          "median": -0.004373251680012682,
           "range": [
-            -0.07059895936759288,
-            0.07195211671871633
+            -0.07059895936759276,
+            0.07195211671871651
           ]
         },
         "training_common_ray": {
@@ -4616,17 +4638,17 @@
           "training_best_single": {
             "cosine_improvement": {
               "fraction_positive": 0.25,
-              "median": -0.020344930367076613,
+              "median": -0.02034493036707679,
               "range": [
-                -0.06910490718483314,
-                0.07952751951627404
+                -0.069104907184833,
+                0.07952751951627418
               ]
             },
             "normalized_rmse_improvement": {
               "fraction_positive": 0.0,
               "median": -0.3714506896069646,
               "range": [
-                -0.46177010100023397,
+                -0.46177010100023375,
                 -0.21365770474815715
               ]
             }
@@ -4634,17 +4656,17 @@
           "training_common_ray": {
             "cosine_improvement": {
               "fraction_positive": 0.25,
-              "median": -0.019196850447341172,
+              "median": -0.01919685044734119,
               "range": [
-                -0.06387286643151954,
-                0.02523058449644718
+                -0.06387286643151974,
+                0.02523058449644723
               ]
             },
             "normalized_rmse_improvement": {
               "fraction_positive": 0.0,
-              "median": -0.38669616557437225,
+              "median": -0.38669616557437236,
               "range": [
-                -0.48687251550430743,
+                -0.4868725155043072,
                 -0.23232943853956645
               ]
             }
@@ -4652,17 +4674,17 @@
           "zero": {
             "cosine_improvement": {
               "fraction_positive": 0.25,
-              "median": -0.019196850447341172,
+              "median": -0.01919685044734119,
               "range": [
-                -0.06387286643151954,
-                0.02523058449644718
+                -0.06387286643151974,
+                0.02523058449644723
               ]
             },
             "normalized_rmse_improvement": {
               "fraction_positive": 0.0,
-              "median": -0.38669616557437225,
+              "median": -0.38669616557437236,
               "range": [
-                -0.48687251550430743,
+                -0.4868725155043072,
                 -0.23232943853956645
               ]
             }
@@ -4672,28 +4694,28 @@
           "cone": {
             "cosine": {
               "fraction_positive": 0.25,
-              "median": -0.019196850447341172,
+              "median": -0.01919685044734119,
               "range": [
-                -0.06387286643151954,
-                0.02523058449644718
+                -0.06387286643151974,
+                0.02523058449644723
               ]
             },
             "normalized_rmse": {
               "fraction_positive": 1.0,
-              "median": 1.3866961655743721,
+              "median": 1.3866961655743724,
               "range": [
                 1.2323294385395664,
-                1.4868725155043074
+                1.4868725155043072
               ]
             }
           },
           "training_best_single": {
             "cosine": {
               "fraction_positive": 0.3333333333333333,
-              "median": -0.027805668803638217,
+              "median": -0.027805668803638224,
               "range": [
-                -0.06346405745462105,
-                0.058139545943510104
+                -0.06346405745462122,
+                0.05813954594351007
               ]
             },
             "normalized_rmse": {
@@ -4748,17 +4770,17 @@
           "training_best_single": {
             "cosine_improvement": {
               "fraction_positive": 0.0,
-              "median": -0.14057210488381644,
+              "median": -0.1405721048838166,
               "range": [
-                -0.22009763622128958,
-                -0.0798615544087285
+                -0.22009763622129008,
+                -0.07986155440872797
               ]
             },
             "normalized_rmse_improvement": {
               "fraction_positive": 0.0,
-              "median": -0.31624802364411697,
+              "median": -0.3162480236441171,
               "range": [
-                -0.35997431729700136,
+                -0.35997431729700113,
                 -0.2345047551303825
               ]
             }
@@ -4766,17 +4788,17 @@
           "training_common_ray": {
             "cosine_improvement": {
               "fraction_positive": 0.0,
-              "median": -0.29108898733127786,
+              "median": -0.29108898733127764,
               "range": [
-                -0.3580937998116036,
-                -0.18565195156856576
+                -0.3580937998116039,
+                -0.18565195156856537
               ]
             },
             "normalized_rmse_improvement": {
               "fraction_positive": 0.0,
-              "median": -0.3271215192897822,
+              "median": -0.32712151928978234,
               "range": [
-                -0.3787140221858645,
+                -0.37871402218586425,
                 -0.25549937566245284
               ]
             }
@@ -4784,17 +4806,17 @@
           "zero": {
             "cosine_improvement": {
               "fraction_positive": 0.0,
-              "median": -0.29108898733127786,
+              "median": -0.29108898733127764,
               "range": [
-                -0.3580937998116036,
-                -0.18565195156856576
+                -0.3580937998116039,
+                -0.18565195156856537
               ]
             },
             "normalized_rmse_improvement": {
               "fraction_positive": 0.0,
-              "median": -0.3271215192897822,
+              "median": -0.32712151928978234,
               "range": [
-                -0.3787140221858645,
+                -0.37871402218586425,
                 -0.25549937566245284
               ]
             }
@@ -4804,26 +4826,26 @@
           "cone": {
             "cosine": {
               "fraction_positive": 0.0,
-              "median": -0.29108898733127786,
+              "median": -0.29108898733127764,
               "range": [
-                -0.3580937998116036,
-                -0.18565195156856576
+                -0.3580937998116039,
+                -0.18565195156856537
               ]
             },
             "norm_ratio": {
               "fraction_positive": 1.0,
-              "median": 0.27923741335201085,
+              "median": 0.27923741335201074,
               "range": [
-                0.13900283193318308,
+                0.13900283193318297,
                 0.37081197503013086
               ]
             },
             "normalized_rmse": {
               "fraction_positive": 1.0,
-              "median": 0.3271215192897822,
+              "median": 0.32712151928978234,
               "range": [
                 0.25549937566245284,
-                0.3787140221858645
+                0.37871402218586425
               ]
             },
             "sign_agreement": {
@@ -4838,18 +4860,18 @@
           "training_best_single": {
             "cosine": {
               "fraction_positive": 0.0,
-              "median": -0.13217493577926687,
+              "median": -0.13217493577926664,
               "range": [
-                -0.20465436636895384,
-                -0.0703742758264662
+                -0.20465436636895395,
+                -0.07037427582646635
               ]
             },
             "norm_ratio": {
               "fraction_positive": 0.25,
-              "median": -0.020514500775227554,
+              "median": -0.02051450077522758,
               "range": [
-                -0.09260386647582763,
-                0.013703337207903538
+                -0.0926038664758275,
+                0.013703337207903454
               ]
             },
             "normalized_rmse": {
@@ -4945,10 +4967,10 @@
           "training_best_single": {
             "cosine_improvement": {
               "fraction_positive": 1.0,
-              "median": 0.13200027879871642,
+              "median": 0.13200027879871634,
               "range": [
-                0.010756647223895355,
-                0.20527546134914748
+                0.010756647223894966,
+                0.2052754613491473
               ]
             },
             "normalized_rmse_improvement": {
@@ -4963,10 +4985,10 @@
           "training_common_ray": {
             "cosine_improvement": {
               "fraction_positive": 1.0,
-              "median": 0.2512272406084353,
+              "median": 0.25122724060843543,
               "range": [
-                0.12269390524678328,
-                0.36539220627770236
+                0.12269390524678295,
+                0.36539220627770264
               ]
             },
             "normalized_rmse_improvement": {
@@ -4981,10 +5003,10 @@
           "zero": {
             "cosine_improvement": {
               "fraction_positive": 1.0,
-              "median": 0.2512272406084353,
+              "median": 0.25122724060843543,
               "range": [
-                0.12269390524678328,
-                0.36539220627770236
+                0.12269390524678295,
+                0.36539220627770264
               ]
             },
             "normalized_rmse_improvement": {
@@ -5001,10 +5023,10 @@
           "cone": {
             "cosine": {
               "fraction_positive": 1.0,
-              "median": 0.2512272406084353,
+              "median": 0.25122724060843543,
               "range": [
-                0.12269390524678328,
-                0.36539220627770236
+                0.12269390524678295,
+                0.36539220627770264
               ]
             },
             "normalized_rmse": {
@@ -5019,10 +5041,10 @@
           "training_best_single": {
             "cosine": {
               "fraction_positive": 1.0,
-              "median": 0.11335863965587054,
+              "median": 0.1133586396558706,
               "range": [
-                0.03332670396283845,
-                0.19613570953382412
+                0.03332670396283851,
+                0.1961357095338239
               ]
             },
             "normalized_rmse": {

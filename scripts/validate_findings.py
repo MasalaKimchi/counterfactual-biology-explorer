@@ -80,9 +80,6 @@ MANIFEST_PATHS = [
     "docs/SCIENTIFIC_VALIDATION_PLAN.md",
     "docs/VALIDATION_REPORT.md",
     "docs/analytic_null_note.md",
-    "docs/figures/make_at_a_glance.py",
-    "docs/figures/fig_at_a_glance.png",
-    "docs/figures/fig_at_a_glance.pdf",
     "docs/figures/fig_analytic_null_fragility.png",
     "docs/figures/fig_analytic_null_fragility.pdf",
     "tutorial/README.md",
@@ -3339,7 +3336,7 @@ def validate_guide_pair(ledger: dict) -> None:
     if report["config_sha256"] != sha256(config_path):
         raise AssertionError("guide report/config byte identity differs")
     if report["config_sha256"] != (
-        "01d69a3090d5153d82c426e9b16cf728e9c222baa877d62a18bc0735b7ea85f4"
+        "9f5f1416e4a745a741b9d99c8dc0d84856ffeff7d2db58fa5385b59c78d66483"
     ):
         raise AssertionError("guide frozen config identity differs")
 
@@ -3639,8 +3636,12 @@ def validate_guide_pair(ledger: dict) -> None:
         or quality["genes"] != expected_counts["genes"]
         or quality["shared_source_safe_target_genes"]
         != expected_counts["shared_target_genes"]
-        or quality["between_source_target_cosine"]
-        != expected_counts["between_source_target_cosine"]
+        or not np.isclose(
+            quality["between_source_target_cosine"],
+            expected_counts["between_source_target_cosine"],
+            atol=1e-12,
+            rtol=0,
+        )
         or quality["guide_1_rest_atoms"] != 11075
         or quality["common_rest_atoms"] != 8323
         or quality["guide_1_only_rest_atoms"] != 2752
@@ -3652,7 +3653,7 @@ def validate_guide_pair(ledger: dict) -> None:
         or quality["eligibility_warning"]
         != (
             "The author pipeline uses keep_effective_guides, and the intermediate "
-            "for_DE_by_guide.csv is absent. Presence in the released positional "
+            "for_DE_by_guide.csv is absent. Presence in the released guide-rank "
             "modalities can therefore select on perturbation effectiveness."
         )
     ):
@@ -3701,14 +3702,17 @@ def validate_guide_pair(ledger: dict) -> None:
         "challenge_rows": 24,
         "opaque_key_contract": (
             "target_condition values are matched by exact string identity only; "
-            "they are never parsed to reconstruct a guide identity. Cross-modality "
-            "target ID/name equality is required only on the selected common Rest "
-            "rows; no unsupported global cross-condition bijection is asserted"
+            "only the documented terminal Rest/Stim8hr/Stim48hr suffix is parsed "
+            "to audit categorical integrity, never to reconstruct an sgRNA ID. "
+            "The official dataset card supplies the guide-rank meaning, but exact "
+            "IDs are not cross-bound here. Cross-modality target ID/name equality "
+            "is required only on the selected common Rest rows; no unsupported "
+            "global cross-condition bijection is asserted"
         ),
         "coefficient_application": (
-            "fit once on one positional modality, one target source, and fit genes; "
-            "apply identical coefficients to both positional modalities on disjoint "
-            "score genes"
+            "fit once on one alphanumeric guide-rank modality, one target source, "
+            "and fit genes; apply identical coefficients to both ranked modalities "
+            "on disjoint score genes"
         ),
         "baseline_application": (
             "select common-ray scale and best-single opaque key/scale only on the "
@@ -3716,8 +3720,9 @@ def validate_guide_pair(ledger: dict) -> None:
             "score domains and both target-source scores"
         ),
         "whole_universe_reporting": (
-            "all 8,323 released common Rest atoms are retained; no outcome-ranked "
-            "top-k subset is selected"
+            "all 8,323 common category-labeled Rest atoms are retained; 35 nominal "
+            "guide_1 Rest keys with missing categorical metadata are withheld, and "
+            "no outcome-ranked top-k subset is selected"
         ),
         "prediction_cosine_zero_policy": (
             "two zero predictions map to 1 and exactly one zero prediction maps to 0"
@@ -4260,31 +4265,31 @@ def validate_guide_pair(ledger: dict) -> None:
                 "prediction_cosine"
             ]["cone"]["median"],
         }
-        if ledger_scope != expected_compact:
-            raise AssertionError(f"guide findings {scope_name} compact values differ")
+        for compact_key in scope_ledger_fields:
+            if not np.isclose(
+                ledger_scope[compact_key],
+                expected_compact[compact_key],
+                atol=1e-12,
+                rtol=0,
+            ):
+                raise AssertionError(
+                    f"guide findings {scope_name} compact values differ"
+                )
 
     expected_limitations = [
-        "guide_1 and guide_2 are positional modality labels; physical guide IDs are not present, so this is not physical guide-held-out generalization.",
+        "The official dataset card defines guide_1 and guide_2 as the first and second alphanumeric sgRNA IDs within each target-condition pair, but those IDs are not embedded or cross-verified in this H5MU benchmark.",
         "guide_2 is a strict subset of guide_1 and the released universe is conditioned on the authors' keep_effective_guides field.",
-        "The author pipeline also required keep_min_cells and keep_total_counts, retained two testable guide positions using at least three replicates and five cells per guide, and fit ~ log10_n_cells + target without a donor term.",
-        "The object contains 114 guide_1 and 38 guide_2 rows with code -1 across every required categorical field; these are recorded as missing rather than imputed, and no selected common Rest row is missing its target mapping.",
-        "The absent for_DE_by_guide.csv prevents reconstruction of a leakage-safe structural-QC-only universe from this object.",
+        "The author pipeline initially required keep_min_cells & keep_effective_guides & keep_total_counts, including >=3 passing replicates per guide-condition and >=5 cells per guide in each condition/sample; target-condition membership came from cond_targets in unreleased for_DE_by_guide.csv, exactly 2 testable guides per target-condition were required, and the final sample mask also required keep_test_genes. The DE model was ~ log10_n_cells + target without a donor term.",
+        "The object contains 114 guide_1 and 38 guide_2 rows with code -1 across every required categorical field; documented key suffixes classify these as Rest/Stim8hr/Stim48hr = 35/18/61 and 0/0/38, respectively. They are recorded as missing rather than imputed, and no selected common category-labeled Rest row is missing its target mapping.",
+        "Public pseudobulk and guide-library artifacts expose guide IDs, but this report does not hash-bind or reconstruct their exact ranked-modality crosswalk; the absent for_DE_by_guide.csv also prevents auditing the author-selected intermediate from the H5MU alone.",
         "Random gene splits contain correlated coordinates and are descriptive sensitivity challenges, not independent replicates.",
-        "The same source study supplies both positional modalities; this is not independent external validation.",
+        "The same source study supplies both guide-rank modalities; this is not independent external validation.",
         "Because the fit is underdetermined, transferred coefficients and their held-slot predictions are relative to the frozen SciPy NNLS solver and lexicographic opaque-key order; the fitted cone point need not identify a unique coefficient vector.",
-        "No p-values or confidence intervals are emitted, and no donor, functional, state-conversion, or intervention claim is supported.",
+        "No p-values or confidence intervals are emitted; no named-guide, leakage-safe guide-generalization, donor, functional, state-conversion, or intervention claim is supported.",
     ]
     if report["limitations"] != expected_limitations:
         raise AssertionError("guide positional/effectiveness/solver limitations differ")
-    expected_interpretation = (
-        "The cone's within-position held-gene alignment does not survive reciprocal "
-        "position transfer: same-source median cosine falls from 0.251 to -0.019 "
-        "(median paired change -0.291), with positive gain over the training-selected "
-        "best single in 3/12 rows and normalized-RMSE gain in 0/12. Joint "
-        "target-source transfer is likewise negative. This falsifies robustness "
-        "across the released positional summaries, but absent physical guide IDs and "
-        "effectiveness-selected inclusion prevent a physical-guide generalization claim."
-    )
+    expected_interpretation = "The cone's within-rank held-gene alignment does not survive reciprocal guide-rank transfer: same-source median cosine falls from 0.251 to -0.019 (median paired change -0.291), with positive gain over the training-selected best single in 3/12 rows and normalized-RMSE gain in 0/12. Joint target-source transfer is likewise negative. This fixed descriptive benchmark therefore does not demonstrate reciprocal-rank robustness. The H5MU does not embed the ranked sgRNA IDs, this benchmark has not cross-verified the exact ID mapping against public identity-bearing artifacts, and effectiveness-selected inclusion prevents a leakage-safe physical-guide generalization claim."
     if ledger["interpretation"] != expected_interpretation:
         raise AssertionError("guide findings interpretation/claim ceiling differs")
 

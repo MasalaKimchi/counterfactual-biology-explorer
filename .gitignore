@@ -36,3 +36,29 @@ AGENTS.md
 CLAUDE.md
 .claude/
 results/
+
+# Root-level scratch / proof-of-concept outputs (root-anchored so the committed
+# substrates combicone_substrate.npz / carpool_substrate.npz and the canonical
+# docs/figures/ copies are never matched). Not claim-bearing.
+/_view_*.png
+/*_groundtruth.npz
+/screenloop_poc.*
+/screenloop_validation_*.json
+# Root-level build/scratch outputs whose canonical, tracked counterparts live in
+# subdirectories. NOTE: /main.pdf and /certificate_dossier.json are NOT byte-identical
+# to manuscript/main.pdf and results/certificate_dossier.json — they are stale/divergent
+# root-level regenerations, ignored so they don't shadow the canonical copies (not
+# throwaway duplicates; inspect before deleting). The /fig_screenloop_* root copies WERE
+# byte-identical to docs/figures/ and have been removed.
+/main.pdf
+/certificate_dossier.json
+/fig_screenloop_*.png
+/fig_screenloop_*.pdf
+
+# Manuscript held back from the public repo until it is ready (user decision,
+# 2026-07-20 — "more work can be done"). The whole directory is ignored so no new
+# manuscript files are staged. NOTE: the manuscript is ALSO already tracked and already
+# on origin/main, so this ignore does not by itself remove it from the public repo —
+# that requires `git rm -r --cached manuscript/` (keeps the files on disk) followed by a
+# commit and a push to main. Files stay on disk for continued work either way.
+manuscript/

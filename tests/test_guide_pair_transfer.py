@@ -177,20 +177,20 @@ def _categorical(
 
 def _fixture_rows(*, guide2_only: bool = False):
     guide1 = [
-        ("opaque:key/b", "Rest", "ENSG_B", "B"),
-        ("guide1-only::rest", "Rest", "ENSG_C", "C"),
-        ("opaque:key/a", "Rest", "ENSG_A", "A"),
-        ("stim-key", "Stim8hr", "ENSG_D", "D"),
-        ("stim48-key", "Stim48hr", "ENSG_E", "E"),
+        ("opaque:key/b_Rest", "Rest", "ENSG_B", "B"),
+        ("guide1-only::rest_Rest", "Rest", "ENSG_C", "C"),
+        ("opaque:key/a_Rest", "Rest", "ENSG_A", "A"),
+        ("stim-key_Stim8hr", "Stim8hr", "ENSG_D", "D"),
+        ("stim48-key_Stim48hr", "Stim48hr", "ENSG_E", "E"),
     ]
     guide2 = [
-        ("opaque:key/a", "Rest", "ENSG_A", "A"),
-        ("stim-key", "Stim8hr", "ENSG_D", "D"),
-        ("opaque:key/b", "Rest", "ENSG_B", "B"),
-        ("stim48-key", "Stim48hr", "ENSG_E", "E"),
+        ("opaque:key/a_Rest", "Rest", "ENSG_A", "A"),
+        ("stim-key_Stim8hr", "Stim8hr", "ENSG_D", "D"),
+        ("opaque:key/b_Rest", "Rest", "ENSG_B", "B"),
+        ("stim48-key_Stim48hr", "Stim48hr", "ENSG_E", "E"),
     ]
     if guide2_only:
-        guide2[2] = ("guide2-only::rest", "Rest", "ENSG_X", "X")
+        guide2[2] = ("guide2-only::rest_Rest", "Rest", "ENSG_X", "X")
     return {"guide_1": guide1, "guide_2": guide2}
 
 
@@ -212,12 +212,12 @@ def _write_tiny_h5mu(
     string = h5py.string_dtype("utf-8")
     rows_by_modality = _fixture_rows(guide2_only=guide2_only)
     vectors = {
-        "opaque:key/a": np.asarray([1.0, 0.0, 1.0, 0.0]),
-        "opaque:key/b": np.asarray([0.0, 1.0, 0.0, 1.0]),
-        "guide1-only::rest": np.asarray([3.0, 3.0, 3.0, 3.0]),
-        "guide2-only::rest": np.asarray([7.0, 7.0, 7.0, 7.0]),
-        "stim-key": np.asarray([2.0, 2.0, 2.0, 2.0]),
-        "stim48-key": np.asarray([4.0, 4.0, 4.0, 4.0]),
+        "opaque:key/a_Rest": np.asarray([1.0, 0.0, 1.0, 0.0]),
+        "opaque:key/b_Rest": np.asarray([0.0, 1.0, 0.0, 1.0]),
+        "guide1-only::rest_Rest": np.asarray([3.0, 3.0, 3.0, 3.0]),
+        "guide2-only::rest_Rest": np.asarray([7.0, 7.0, 7.0, 7.0]),
+        "stim-key_Stim8hr": np.asarray([2.0, 2.0, 2.0, 2.0]),
+        "stim48-key_Stim48hr": np.asarray([4.0, 4.0, 4.0, 4.0]),
     }
     with h5py.File(path, "w") as handle:
         handle.attrs["encoding-type"] = root_encoding
@@ -311,8 +311,8 @@ def _write_tiny_h5mu(
 
 
 def _tiny_config() -> dict:
-    common = ("opaque:key/a", "opaque:key/b")
-    guide1_rest = ("guide1-only::rest", *common)
+    common = ("opaque:key/a_Rest", "opaque:key/b_Rest")
+    guide1_rest = ("guide1-only::rest_Rest", *common)
     gene_ids = ("g1", "g2", "g3", "g4")
     gene_names = ("G1", "G2", "G3", "G4")
     return {
@@ -540,7 +540,7 @@ def test_profile_aligns_opaque_keys_independent_of_physical_row_order(tmp_path):
     _write_tiny_h5mu(path)
     profile = profile_h5mu(path, _tiny_config())
 
-    assert profile["rest_atom_keys"] == ("opaque:key/a", "opaque:key/b")
+    assert profile["rest_atom_keys"] == ("opaque:key/a_Rest", "opaque:key/b_Rest")
     first = _aligned_matrix(path, profile, "guide_1")
     second = _aligned_matrix(path, profile, "guide_2")
     np.testing.assert_array_equal(first, [[1, 0, 1, 0], [0, 1, 0, 1]])
@@ -553,12 +553,12 @@ def test_profile_uses_guide2_rest_subset_and_excludes_guide1_only_rows(tmp_path)
     profile = profile_h5mu(path, _tiny_config())
 
     assert profile["guide_1_rest_keys"] == (
-        "guide1-only::rest",
-        "opaque:key/a",
-        "opaque:key/b",
+        "guide1-only::rest_Rest",
+        "opaque:key/a_Rest",
+        "opaque:key/b_Rest",
     )
-    assert profile["guide_1_only_rest_keys"] == ("guide1-only::rest",)
-    assert "guide1-only::rest" not in profile["rest_atom_keys"]
+    assert profile["guide_1_only_rest_keys"] == ("guide1-only::rest_Rest",)
+    assert "guide1-only::rest_Rest" not in profile["rest_atom_keys"]
 
 
 @pytest.mark.parametrize("modalities", [("guide_1",), ("guide_1", "guide_2", "extra")])
@@ -635,7 +635,7 @@ def test_profile_does_not_require_unused_layers_to_be_finite(tmp_path):
     path = tmp_path / "tiny.h5mu"
     _write_tiny_h5mu(path, nonfinite=("guide_2", "p_value"))
     profile = profile_h5mu(path, _tiny_config())
-    assert profile["rest_atom_keys"] == ("opaque:key/a", "opaque:key/b")
+    assert profile["rest_atom_keys"] == ("opaque:key/a_Rest", "opaque:key/b_Rest")
 
 
 def test_profile_rejects_modality_gene_axis_mismatch(tmp_path):
@@ -833,10 +833,10 @@ def test_report_has_24_unique_rows_12_fits_and_paired_hash_reuse(tmp_path):
     assert sensitivity["train_target_source"] == "hollbacker"
     assert sensitivity["seed"] == 0
     assert sensitivity["canonical_atom_order_sha256"] == _names_hash(
-        ["opaque:key/a", "opaque:key/b"]
+        ["opaque:key/a_Rest", "opaque:key/b_Rest"]
     )
     assert sensitivity["alternative_atom_order_sha256"] == _names_hash(
-        ["opaque:key/b", "opaque:key/a"]
+        ["opaque:key/b_Rest", "opaque:key/a_Rest"]
     )
     assert set(sensitivity["stability"]) == {
         "coefficients",

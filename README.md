@@ -1,8 +1,5 @@
 # CombiCone — certified triage for combinatorial perturbation screens
 
-[![CI](https://github.com/MasalaKimchi/cell-state-reachability/actions/workflows/ci.yml/badge.svg)](https://github.com/MasalaKimchi/cell-state-reachability/actions/workflows/ci.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-
 **Which combinations are worth running?** A combinatorial perturbation screen
 explodes super-linearly: 100 single perturbations imply ~5,000 pairs and ~160,000
 triples. You cannot measure them all, and most combinations are *additive* — they
@@ -73,7 +70,7 @@ measured. All numbers below are reproduced by the scripts in this repo and the
 | **All 131 doubles fall outside the single-gene cone** (fail-closed certificate) | Every combination gets a model-relative separator; the cone never silently "reaches" a target it cannot represent. |
 | **Raw unreachable fraction is signal-to-noise confounded** (Spearman −0.56 vs effect magnitude; only ~27% of doubles clear their own split-half noise floor) | Low-magnitude doubles show inflated *normalized* residuals from measurement noise, not biology. This is the trap CombiCone's noise test exists to catch. |
 | **The noise-injection null removes the confound** (`emergence_z` vs magnitude ρ ≈ +0.14) and certifies **129/131** doubles above noise at p<0.05 | The noise-aware verdict, not the raw residual, is what you act on. |
-| **Emergence recovers classic synergy independent of effect size** (partial Spearman(residual, ‖D−(A+B)‖/‖D‖ ∣ magnitude) = **0.60**) | Unsupervised, the certificate rediscovers the textbook DUSP9+MAPK1 phosphatase-on-substrate synergy and chromatin/MAPK modules (SET+CEBPE, MAPK1+PRTG). |
+| **Emergence recovers classic synergy independent of effect size** (partial Spearman(residual, ‖D−(A+B)‖/‖D‖ ∣ magnitude) = **0.62**) | Unsupervised, the certificate rediscovers the textbook DUSP9+MAPK1 phosphatase-on-substrate synergy and chromatin/MAPK modules (SET+CEBPE, MAPK1+PRTG). |
 
 ![Each combination ships its own certificate: a bootstrap CI, a noise-injection p-value, and the floor ratio that exposes the signal-to-noise trap.](docs/figures/fig_emergence_certificate.png)
 
@@ -137,7 +134,8 @@ essentially nothing (top-1 ≤ 0.02), and the separator's advantage *grows* as t
 held-out gene is *less* dominant in its own combinations (Spearman ρ < 0). A
 forward predictor emits a prediction for every input; only a certificate of
 infeasibility can name what the library cannot represent. See
-[`docs/phase2/screenloop_note.md`](docs/phase2/screenloop_note.md).
+[`docs/FINDINGS.md`](docs/FINDINGS.md) §6 (methods in
+[`docs/METHODS.md`](docs/METHODS.md) §6).
 
 ![Certificate-guided library design: acquisition is a tie, but the separator recovers the held-out library axis where naive baselines fail.](docs/figures/fig_screenloop_B_recovery.png)
 
