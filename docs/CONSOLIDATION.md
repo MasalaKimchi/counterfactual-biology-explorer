@@ -176,3 +176,97 @@ These were present before this pass and are outside "consolidate the docs":
   touched** — so the Python test suite and the validator's logic are unaffected by
   this pass, and the validator reaches the *same* pre-existing `guide_pair` blocker
   it hit at session start (no regression introduced by the consolidation).
+
+---
+
+## 8. reproduce.sh greened end-to-end (2026-07-20, second session)
+
+The session that owns `validate_findings.py` (§5) resolved every blocker §6 left
+open, plus a deeper pre-existing breakage the docs pass could not see. `reproduce.sh`
+now exits **0 for the first time in the repo's history** — all 9 stages green:
+environment, `pytest` (340 passed / 6 skipped), five module smoke-runs, the systemic
+validation harness ("frozen report matches"), and `validate_findings.py` ("findings
+and artifact lineage: OK"). Committed as `5cdd3547` on branch `consolidation`.
+
+**§6.1 guide_pair — fixed by re-running the generator (the honest path).** The local
+29 GB `GWCD4i.DE_stats.by_guide.h5mu` was present, so `scripts/run_guide_pair_transfer.py`
+was re-run against the real data (~77 s), regenerating `results/guide_pair_transfer.json`.
+The generator's own docstring is authoritative — `guide_1`/`guide_2` are "the first and
+second **alphanumeric sgRNA IDs**" — so the config wording ("alphanumeric guide-rank")
+is canonical and the frozen report's "positional modalities" was the stale side. The
+regenerated report embeds the live config SHA `9f5f1416…`. `validate_findings.py` was
+then completed as a bounded terminology migration: ~8 stale "positional" → "guide-rank"
+literals aligned to the regenerated report verbatim (each diff verified to be wording
+only, no facts/numbers/hashes changed); two exact-float `==` checks relaxed to
+`np.isclose(atol=1e-12)` to match the generator's *own* tolerance (not to bake in a
+machine BLAS artifact); frozen SHA literal updated `01d69a30…` → `9f5f1416…`.
+
+**§6.2 fig_at_a_glance — de-listed as prescribed.** The three stale `MANIFEST_PATHS`
+entries were removed; `results/manifest.json` regenerated (76 files).
+
+**Deeper pre-existing breakage found & fixed: the `guide_pair` *test* subsystem.**
+Beyond stage 9, the `pytest` stage itself had **13 failures in
+`tests/test_guide_pair_transfer.py` present on `main` since commit `527be127`** — i.e.
+`reproduce.sh` had never been green on any branch. Root cause: `527be127` shipped a
+newer generator + newer tests but never migrated the test fixtures. The generator reads
+the condition from the `target_condition` key's terminal suffix
+(`_Rest`/`_Stim8hr`/`_Stim48hr`) and cross-checks it against the categorical
+`culture_condition` column; the fixtures still supplied opaque keys (`opaque:key/b`) with
+the condition only in the separate column, so every fixture tripped
+`InputError: target_condition key must have exactly one documented terminal condition
+suffix`. Fixed by migrating each fixture key to embed its documented suffix
+(`opaque:key/b` → `opaque:key/b_Rest`, `stim-key` → `stim-key_Stim8hr`, …) — structural
+test intent unchanged, only the key format. All 36 guide_pair tests pass.
+
+**Also:** `.github/workflows/ci.yml` (tracked at HEAD) had been deleted from the working
+tree; restored. The four orphaned canonical docs (§2) + this changelog were committed
+(they are manifest-tracked, so `reproduce.sh` requires them). The manuscript is held
+back from the commit per the user's decision (§4 `.gitignore` block); the tutorial
+notebook and the drug-combination WIP figures (§6.3) remain unstaged.
+
+---
+
+## 9. Branch map and canonical integration (2026-07-20)
+
+Full topology at consolidation time. **Every branch is a strict ancestor of
+`consolidation`** — the whole repo collapses to one linear history, so there is nothing
+to merge and no conflict surface anywhere.
+
+| branch | tip | date | vs `consolidation` | reproduce.sh |
+|---|---|---|---|---|
+| **`consolidation`** ← canonical | `5cdd3547` | 07-20 | — (tip) | **green (exit 0)** |
+| `analytic-null` | `f7d94579` | 07-20 | ancestor, −1 | red (stage 9 + pytest) |
+| `phase2-combicone-rigor` | `2cb87ac4` | 07-20 | ancestor, −2 | red |
+| `main` / `origin/main` | `d51e4d11` | 07-20 | ancestor, −3 (FF) | red |
+| `post-hackathon-phase2-rigor` | `934c9b21` | 07-17 | ancestor, −18 | red |
+| `codex/manuscript-validation-harness` | `5f925f30` | 07-17 | ancestor, −17 | red |
+| `codex/source-reconstruction-specificity` | `1674efcb` | 07-17 | ancestor, −15 | red |
+
+Linear chain: `…older ancestors… → d51e4d11 (main) → 2cb87ac4 (phase2) → f7d94579
+(analytic-null) → 5cdd3547 (consolidation)`. `main` is a **direct ancestor** of
+`consolidation`, so `main → consolidation` is a **fast-forward** (zero conflicts);
+`git merge-base --is-ancestor` confirms containment for `phase2-combicone-rigor`,
+`analytic-null`, and all three 07-17 branches as well.
+
+**Recommended integration (NOT force-executed — the maintainer runs these):**
+
+```bash
+# 1. Make consolidation the canonical branch (fast-forward, zero conflicts):
+git checkout main && git merge --ff-only consolidation      # main -> 5cdd3547
+#    (or rename: git branch -M consolidation main)
+git push origin main
+
+# 2. Prune the now-redundant local scaffolding branches (all fully contained):
+git branch -d analytic-null phase2-combicone-rigor consolidation   # -d = safe, refuses if not merged
+
+# 3. Prune the stale 07-17 lines locally + on origin (fully contained in main):
+git branch -d post-hackathon-phase2-rigor
+git push origin --delete post-hackathon-phase2-rigor \
+    codex/manuscript-validation-harness codex/source-reconstruction-specificity
+```
+
+Rationale: keeping six branches whose entire content is reproduced (and superseded) by
+the single green tip only invites future work to fork from a red base again — which is
+exactly how the `527be127` guide_pair inconsistency propagated to every branch. The
+prunes are *recommended*, reversible (reflog / origin), and left to the maintainer; the
+one non-optional action for a clean repo is fast-forwarding `main` to the green tip.
