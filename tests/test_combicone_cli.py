@@ -9,7 +9,6 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 import combicone_cli as cli  # noqa: E402
 

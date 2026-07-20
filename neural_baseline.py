@@ -75,7 +75,6 @@ import numpy as np
 from scipy.optimize import minimize
 
 import reachability as rx  # READ-ONLY dependency
-import combicone as cc     # READ-ONLY dependency (re-exported for callers' convenience)
 
 __all__ = [
     "cosine_full",

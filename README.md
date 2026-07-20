@@ -209,6 +209,11 @@ Full per-result detail and claim ceilings are in the canonical machine-readable
 
 ## Repository map
 
+**Reading order:** start at `combicone.py` (the public API); `reachability.py` is
+the numerical core beneath it; everything else is a layer over those two. The
+modules sit flat at the repo root deliberately — this is a paper companion, and
+the method files are meant to be the first thing you see.
+
 | Path | Role |
 |---|---|
 | [`combicone.py`](combicone.py) | **Triage + certify API** — `triage_combinations`, `certify_emergence`, `fit_triage_model`, layered over the certified cone |
@@ -226,6 +231,13 @@ Full per-result detail and claim ceilings are in the canonical machine-readable
 | [`tutorial/tutorial_combicone.ipynb`](tutorial/tutorial_combicone.ipynb) | End-to-end: triage a combinatorial screen, then certify emergence (**start here**) |
 | [`tutorial/tutorial.ipynb`](tutorial/tutorial.ipynb) | The fail-closed reachability core, on its own |
 | [`results/findings.json`](results/findings.json) | Canonical machine-readable findings |
+| [`combicone_substrate.npz`](combicone_substrate.npz) | Frozen Norman substrate (13.9 MB) — deliberately committed at the repo root and hash-stable, so a clone reproduces the paper offline |
+| [`carpool_substrate.npz`](carpool_substrate.npz) | Frozen CaRPool-seq transfer substrate (3.6 MB), same contract |
+| [`configs/`](configs/) | Nine frozen runner configurations, one per `scripts/run_*.py` |
+| [`scripts/`](scripts/) | Validators (`validate_*`), frozen config-driven runners (`run_*`), and paper-reproduction drivers |
+| [`reproduce.sh`](reproduce.sh) | **The gate.** Full local verification — this is what CI runs |
+| [`reproduce_paper.sh`](reproduce_paper.sh) | Regenerates the headline certificate and the manuscript ledger — *not* the CI gate |
+| [`build_docs.sh`](build_docs.sh) | Renders the pdoc API reference into `site/` (generated; not tracked) |
 
 ## Hard boundaries
 

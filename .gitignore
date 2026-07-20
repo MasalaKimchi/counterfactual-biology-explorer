@@ -35,7 +35,15 @@ dist/
 AGENTS.md
 CLAUDE.md
 .claude/
-results/
+
+# Regenerated outputs under results/. A blanket `results/` rule used to live here,
+# which silently swallowed every new file written into the directory -- including
+# claim-bearing evidence that then never reached a clone. Ignore only what a script
+# rewrites; the canonical frozen artifacts in results/ are tracked and hash-pinned
+# via MANIFEST_PATHS in scripts/validate_findings.py.
+/results/emergence_certificate_reproduced.csv
+/results/certificate_dossier.json
+/results/screenloop_campaign.json
 
 # Root-level scratch / proof-of-concept outputs (root-anchored so the committed
 # substrates combicone_substrate.npz / carpool_substrate.npz and the canonical
@@ -44,6 +52,9 @@ results/
 /*_groundtruth.npz
 /screenloop_poc.*
 /screenloop_validation_*.json
+# scripts/synth_triple_screen.py writes this CWD-relative, i.e. into the repo root;
+# /*_groundtruth.npz does not match it.
+/synth_triple_screen.npz
 # Root-level build/scratch outputs whose canonical, tracked counterparts live in
 # subdirectories. NOTE: /main.pdf and /certificate_dossier.json are NOT byte-identical
 # to manuscript/main.pdf and results/certificate_dossier.json — they are stale/divergent

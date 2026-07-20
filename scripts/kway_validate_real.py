@@ -17,12 +17,13 @@ from __future__ import annotations
 
 import json
 import sys
+from pathlib import Path
 import time
 from concurrent.futures import ThreadPoolExecutor
 
 import numpy as np
 
-sys.path.insert(0, ".")
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import combicone as cc
 import reachability as rx
 
