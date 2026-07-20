@@ -2,12 +2,9 @@
 
 Canonical human-readable findings for CombiCone. Every number here is
 single-sourced from [`results/findings.json`](../results/findings.json)
-(machine-readable, canonical) and the frozen metric JSON under `docs/phase2/`
-and `docs/phase3/`; methods are in [`METHODS.md`](METHODS.md), and what is
-certified vs. evaluated is in [`VALIDATION_REPORT.md`](VALIDATION_REPORT.md).
-This document absorbs the former `docs/phase2/{cross_screen_analysis,
-kway_note,screenloop_note}.md` and `docs/phase3/{acquisition_note,
-certificate_dossier}.md`.
+(machine-readable, canonical) and the frozen metric JSON under `docs/metrics/`;
+methods are in [`METHODS.md`](METHODS.md), and what is certified vs. evaluated
+is in [`VALIDATION_REPORT.md`](VALIDATION_REPORT.md).
 
 **Tiers.** `[MAIN]` combinatorial triage/certification is the headline;
 `[TRANSFER]` cross-screen/cross-modality; `[EXTENSION]` library coverage;

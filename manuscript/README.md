@@ -48,7 +48,7 @@ On Overleaf: upload this folder, set `main.tex` as the root document, compiler
 - **Fig 1 (hook)** — learned MLP ties additive on blind prediction
   (0.896 vs 0.897); only the cone emits a separator. Accuracy is the wrong axis.
 - **Fig 2 (certificate)** — the emergence certificate and the measurement-noise
-  bar it must clear; recovers classical synergy at partial Spearman 0.60.
+  bar it must clear; recovers classical synergy at partial Spearman 0.62.
 - **Fig 3 (triage)** — training-free triage flags emergent combinations 2.4x
   above base rate.
 - **Fig 4 (head-to-head)** — learned baseline vs cone; only the cone certifies.
@@ -62,4 +62,4 @@ On Overleaf: upload this folder, set `main.tex` as the root document, compiler
 The Norman screen H5AD used here is labelled cell type **A549**, whereas the
 canonical Norman 2019 line is **K562**; this discrepancy is carried verbatim
 through the manuscript. All headline numbers are single-sourced from the
-Phase-2 deliverable artifacts (see `../docs/phase2/`).
+Phase-2 deliverable artifacts (see `../docs/metrics/`).

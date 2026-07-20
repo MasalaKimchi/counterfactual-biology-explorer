@@ -2,9 +2,8 @@
 
 What is **certified** (math, holds by construction), what is **source
 reconstructed** (hash-bound to real data), and what is **independently
-evaluated** (descriptive, with a stated ceiling) — for CombiCone. This document
-absorbs the trust-dossier argument formerly in
-`docs/phase3/certificate_dossier.md`. Numbers are single-sourced from
+evaluated** (descriptive, with a stated ceiling) — for CombiCone. Numbers are
+single-sourced from
 [`results/findings.json`](../results/findings.json) and the frozen reports under
 `results/`; methods are in [`METHODS.md`](METHODS.md), findings in
 [`FINDINGS.md`](FINDINGS.md), the forward program in
@@ -121,7 +120,7 @@ and [`../data/README.md`](../data/README.md).
 
 | Benchmark | Status | What it shows / ceiling | Source report |
 |---|---|---|---|
-| Cross-screen (CaRPool) | TRANSFER | Certificate + SNR confound reproduce on an orthogonal screen; triage's magnitude-controlled part does not | `docs/phase2/cross_screen_emergence.csv` |
+| Cross-screen (CaRPool) | TRANSFER | Certificate + SNR confound reproduce on an orthogonal screen; triage's magnitude-controlled part does not | `docs/metrics/cross_screen_emergence.csv` |
 | Arce Perturb-CITE | STRESS | Modest S1 cross-modality ranking (ρ 0.08–0.15) + S14 supplied-score donor robustness (0.73–0.93) in a preselected panel | `results/evidence/arce_external_validation_meta.json` |
 | Schmidt two-donor screens | STRESS | Source-selected top-K concordance; whole-universe agreement limited (0.135–0.332); joint axes not isolated | `results/schmidt_external_validation.json` |
 | Zhu arrayed follow-up | SUPPORTING | Same-study cross-platform RNA replication (top-1 1.0) + IL-10/IL-21 flow consistency (0.72–0.85) | `results/evidence/zhu_arrayed_validation_meta.json` |
@@ -149,20 +148,16 @@ and [`../data/README.md`](../data/README.md).
 
 ---
 
-## 6. Known open item (pre-existing, out of scope for the doc consolidation)
+## 6. Guide-rank transfer: residual claim ceiling
 
-`scripts/validate_findings.py` currently fails at the **guide_pair** check
-because `configs/guide_pair_transfer.json` was edited after
-`results/guide_pair_transfer.json` was frozen: the config's live SHA-256
-(`9f5f1416…`) no longer matches the hash frozen into the report
-(`01d69a30…`), and the `claim_ceiling` wording drifted from "positional /
-verified physical-guide replication" (frozen report) to "alphanumeric guide-rank
-/ named-sgRNA replication" (live config). Honest resolution requires re-running
-`scripts/run_guide_pair_transfer.py` against the local 29 GB
-`GWCD4i.DE_stats.by_guide.h5mu` (regenerating the frozen report/hash), or a
-maintainer decision on the canonical `claim_ceiling` wording. It is **not** a
-documentation issue and is tracked in
-[`CONSOLIDATION.md`](CONSOLIDATION.md).
+The guide-pair report and its config are hash-consistent, and
+`scripts/validate_findings.py` passes. The **residual claim ceiling is
+unchanged**: this is a negative result on guide-**rank** summaries
+(`guide_1`/`guide_2` are the first and second *alphanumeric* sgRNA IDs within
+each target-condition pair), and it is **not** physical-sgRNA generalization —
+the sgRNA IDs are not embedded in the released H5MU, and the rank-to-ID
+crosswalk is not hash-verified. Both guide-rank modalities come from the same
+source study, so this is not independent external validation.
 
 ---
 

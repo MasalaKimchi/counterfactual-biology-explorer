@@ -2,13 +2,11 @@
 
 CombiCone is a triage layer for combinatorial perturbation screens, built on a
 fail-closed convex-cone geometric core. This document is the canonical method
-reference; it absorbs the former `docs/phase2/{kway_note,learned_baseline_note,
-screenloop_note}.md` and `docs/phase3/{acquisition_note,certificate_dossier}.md`
-prose notes. Every number reported here is single-sourced from
+reference. Every number reported here is single-sourced from
 [`results/findings.json`](../results/findings.json) (canonical) and the frozen
-metric JSON under `docs/phase2/` and `docs/phase3/`. Findings and their claim
-ceilings live in [`FINDINGS.md`](FINDINGS.md); what is certified vs. merely
-evaluated is in [`VALIDATION_REPORT.md`](VALIDATION_REPORT.md).
+metric JSON under `docs/metrics/`. Findings and their claim ceilings live in
+[`FINDINGS.md`](FINDINGS.md); what is certified vs. merely evaluated is in
+[`VALIDATION_REPORT.md`](VALIDATION_REPORT.md).
 
 **Scope, stated once.** "Unreachable" is *model-relative*: outside the
 non-negative cone of **these** measured single-gene effects under **this**

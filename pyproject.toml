@@ -54,6 +54,7 @@ Issues = "https://github.com/MasalaKimchi/cell-state-reachability/issues"
 
 [tool.setuptools]
 py-modules = [
+  "acquisition",
   "combicone",
   "combicone_cli",
   "effect_dictionary",

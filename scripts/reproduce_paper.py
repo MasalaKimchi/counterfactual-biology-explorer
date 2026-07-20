@@ -23,7 +23,7 @@ Reproducibility contract (stated honestly):
 Usage
 -----
     python scripts/reproduce_paper.py --out emergence_certificate.csv
-    python scripts/reproduce_paper.py --check docs/phase2/... --out /tmp/rep.csv
+    python scripts/reproduce_paper.py --check docs/metrics/... --out /tmp/rep.csv
 """
 
 from __future__ import annotations

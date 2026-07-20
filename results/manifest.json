@@ -1,14 +1,14 @@
 {
   "files": {
     ".github/workflows/ci.yml": {
-      "bytes": 5545,
+      "bytes": 6119,
       "executable": false,
-      "sha256": "99c82279281e9caa53dc182b05ba915821807bdc7d1c0fb899270eb430659d2d"
+      "sha256": "92ba2010fac045ee380cc7172208b423bc636478b5a47a212bad3ea71e1b7715"
     },
     ".gitignore": {
-      "bytes": 2186,
+      "bytes": 2368,
       "executable": false,
-      "sha256": "ba5a37b8656c7c1bf496b313dccf2cb552f99ced911e9fba3c84a580338583c7"
+      "sha256": "3f7ef99f6255e6e6f08f6f5ed5e2454e70cbad755c634586a671b95474197c79"
     },
     "CITATION.cff": {
       "bytes": 650,
@@ -21,9 +21,9 @@
       "sha256": "9b494e1755b82795a16087985ee17697415870d9d23e919f76251d7aaa06dbc1"
     },
     "README.md": {
-      "bytes": 14306,
+      "bytes": 16501,
       "executable": false,
-      "sha256": "87bdf4359b9010555ad488b389e4360abd053d290c587942494c7806992090f7"
+      "sha256": "895d6c68b84015aa06b93b28ef8c3196a8902c1094fc41835d3ab48bdec85116"
     },
     "combicone.py": {
       "bytes": 34675,
@@ -91,14 +91,14 @@
       "sha256": "0f83b160ebd4a0f54a4fc9ae6f46ab8e66d9fe47ab6119fcdec78872954bd685"
     },
     "docs/FINDINGS.md": {
-      "bytes": 17626,
+      "bytes": 17445,
       "executable": false,
-      "sha256": "9845acd9f311f1c0656988f30a9e124418b9ce86733e34acb6aa91eb24969cf1"
+      "sha256": "9e0ed4c94519a5cafb4c852e7ce0ece477a67b05952dace0f4362f94c236d2d9"
     },
     "docs/METHODS.md": {
-      "bytes": 14289,
+      "bytes": 14108,
       "executable": false,
-      "sha256": "96f9f925c80026313a19a5df01cff4ba73d8c0ceb3fdda6fb43d5af99c33209c"
+      "sha256": "7d709a321e122cb59bc81214b766f0c86d73f0574e21015cccfeb4c4871b0ecb"
     },
     "docs/SCIENTIFIC_VALIDATION_PLAN.md": {
       "bytes": 7129,
@@ -106,9 +106,9 @@
       "sha256": "81d1d53a2c0ed4865b33357885d48d7e42cc6a442e945134612241e85e6ce85d"
     },
     "docs/VALIDATION_REPORT.md": {
-      "bytes": 10503,
+      "bytes": 10145,
       "executable": false,
-      "sha256": "8d2388ff5f762ab81c27c938a1de420d214984409fbce6034e52db4e46d6bde0"
+      "sha256": "fd8d06766fcb26e6ca663bf2e1d3c81180b23a19b77c70ec9c2c186bc88e4502"
     },
     "docs/analytic_null_note.md": {
       "bytes": 8751,
@@ -136,9 +136,9 @@
       "sha256": "fe6bd8b22e6920239a21e6ffe33db22a04888b817737e74f59962684108709d8"
     },
     "pyproject.toml": {
-      "bytes": 1758,
+      "bytes": 1775,
       "executable": false,
-      "sha256": "7fbde50c61402885f35b1d8c24eab6bc4e603b3bd85ff086ce519973e6014b68"
+      "sha256": "41e0d4d0382da0ed6b7ede33160479832bcc34754107ee4ae03cb64f80f498ca"
     },
     "reachability.py": {
       "bytes": 24043,
@@ -161,9 +161,9 @@
       "sha256": "b916b6492cd0d61912a79ea132bbf14df6fa32f6ba4173bb6be3ef1a9320a24a"
     },
     "results/README.md": {
-      "bytes": 2304,
+      "bytes": 2322,
       "executable": false,
-      "sha256": "33fcef3f30e589dd50ec0b1dc8322954ad201ac3fc061df33a6c9e496032964f"
+      "sha256": "1c658397a92eb0be5869a6b3a1e802b0052274ef4b206797c2fdbf01346b242a"
     },
     "results/analytic_vs_mc_by_double.csv": {
       "bytes": 107348,

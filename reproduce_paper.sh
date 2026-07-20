@@ -12,7 +12,7 @@ cd "$ROOT"
 export PYTHONPATH="$ROOT${PYTHONPATH:+:$PYTHONPATH}"
 
 SUBSTRATE="${COMBICONE_SUBSTRATE:-combicone_substrate.npz}"
-REFERENCE="${COMBICONE_CERT_REF:-docs/phase2/emergence_certificate.csv}"
+REFERENCE="${COMBICONE_CERT_REF:-docs/metrics/emergence_certificate.csv}"
 
 if [[ ! -f "$SUBSTRATE" ]]; then
   echo "ERROR: substrate not found at $SUBSTRATE" >&2
@@ -34,7 +34,7 @@ echo
 echo "=== [2/3] Certificate trust dossier (negative controls + sensitivity) ==="
 if [[ -f "$REFERENCE" ]]; then
   python scripts/certificate_dossier.py --substrate "$SUBSTRATE" \
-    --certificate "$REFERENCE" --ledger docs/phase2/manuscript_numbers.json \
+    --certificate "$REFERENCE" --ledger docs/metrics/manuscript_numbers.json \
     --out results/certificate_dossier.json --n-neg 100 --n-boot 120
 else
   echo "(skipped — needs the reference certificate CSV)"
@@ -46,4 +46,4 @@ python -m pytest -q
 
 echo
 echo "Reproduction complete. Regenerated certificate + dossier in results/;"
-echo "the paper's numeric ledger is docs/phase2/manuscript_numbers.json."
+echo "the paper's numeric ledger is docs/metrics/manuscript_numbers.json."

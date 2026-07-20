@@ -1,5 +1,9 @@
 # CombiCone — certified triage for combinatorial perturbation screens
 
+> The repository slug `cell-state-reachability` is the project's original name.
+> The method is **CombiCone**; single-target reachability is retained below as
+> the proving ground it grew out of.
+
 **Which combinations are worth running?** A combinatorial perturbation screen
 explodes super-linearly: 100 single perturbations imply ~5,000 pairs and ~160,000
 triples. You cannot measure them all, and most combinations are *additive* — they
@@ -61,7 +65,7 @@ Validated on the **Norman combinatorial CRISPRa screen** (file label `A549`;
 canonically K562 — see the provenance note below): 105 single-gene effect atoms,
 131 measured double perturbations, every double with both constituent singles
 measured. All numbers below are reproduced by the scripts in this repo and the
-[tutorial](tutorial/tutorial.ipynb).
+[tutorial](tutorial/tutorial_combicone.ipynb).
 
 ### The certificate recovers synergy — and survives a noise test
 
@@ -69,7 +73,7 @@ measured. All numbers below are reproduced by the scripts in this repo and the
 |---|---|
 | **All 131 doubles fall outside the single-gene cone** (fail-closed certificate) | Every combination gets a model-relative separator; the cone never silently "reaches" a target it cannot represent. |
 | **Raw unreachable fraction is signal-to-noise confounded** (Spearman −0.56 vs effect magnitude; only ~27% of doubles clear their own split-half noise floor) | Low-magnitude doubles show inflated *normalized* residuals from measurement noise, not biology. This is the trap CombiCone's noise test exists to catch. |
-| **The noise-injection null removes the confound** (`emergence_z` vs magnitude ρ ≈ +0.14) and certifies **129/131** doubles above noise at p<0.05 | The noise-aware verdict, not the raw residual, is what you act on. |
+| **The noise-injection null removes the confound** (`emergence_z` vs magnitude ρ ≈ +0.14). **Two bars, two different tests:** bar (a) — **129/131** doubles are emergent *at all* above noise (p<0.05); bar (b) — only **35/131** clear the stricter 1.9× own-noise-floor margin | The noise-aware verdict, not the raw residual, is what you act on. Always say which bar you mean; bar (a) alone is not "certified by a large margin". |
 | **Emergence recovers classic synergy independent of effect size** (partial Spearman(residual, ‖D−(A+B)‖/‖D‖ ∣ magnitude) = **0.62**) | Unsupervised, the certificate rediscovers the textbook DUSP9+MAPK1 phosphatase-on-substrate synergy and chromatin/MAPK modules (SET+CEBPE, MAPK1+PRTG). |
 
 ![Each combination ships its own certificate: a bootstrap CI, a noise-injection p-value, and the floor ratio that exposes the signal-to-noise trap.](docs/figures/fig_emergence_certificate.png)
@@ -99,17 +103,26 @@ trust.
 
 ![Head-to-head: cone raw residual ≈ learned-linear residual, and only the noise-aware verdict escapes the effect-size confound.](docs/figures/fig_baseline_headtohead.png)
 
-### The geometry transfers across modality
+### The certificate transfers to an orthogonal second screen
 
-The same engine runs unchanged on the **Replogle K562 essential-gene CRISPRi**
-library (loss-of-function): a leave-one-out reachability spectrum ranks
-proteasome/splicing factors as the most unique directions and ribosomal /
-prohibitin co-functional modules as the most reachable, and the cheap acquisition
-certificate predicts realized coverage (Spearman 0.75). Replogle has no measured
-doubles, so this is a **geometry-transfer demonstration, not a second
-double-emergence benchmark** — and it shows the signal-to-noise confound is
-present in CRISPRi too (ρ −0.69), so the noise test is required in both
-modalities.
+The headline benchmark is CRISPRa gain-of-function. **CaRPool-seq** (Cas13d
+knockdown, THP-1) is orthogonal on four axes at once — modality, direction,
+target molecule, and cell line — and the certificate reproduces there unchanged:
+28 atoms, 158 measured doubles, raw unreachable fraction vs magnitude ρ **−0.82**
+(the same signal-to-noise trap), noise-aware `emergence_z` vs magnitude **+0.12**,
+and the two-bar certificate carries over (CaRPool 76/158 certified vs Norman
+40/131 under the shared symmetric pipeline). **The certificate generalizes; the
+triage does not** — the training-free score holds its raw-label enrichment
+(~2.2× on both screens) but its magnitude-controlled component survives on Norman
+(0.37) and dies on CaRPool (0.08). Triage needs per-screen recalibration.
+
+A third library, **Replogle K562 essential-gene CRISPRi**, runs unchanged as a
+single-gene *geometry-transfer demonstration* — a leave-one-out reachability
+spectrum ranks proteasome/splicing factors as the most unique directions, and the
+cheap acquisition certificate predicts realized coverage (Spearman 0.75).
+Replogle has **no measured doubles**, so it is explicitly **not a second
+double-emergence benchmark**. It does confirm the signal-to-noise confound is
+present in CRISPRi too (ρ −0.69): the noise test is required in all three.
 
 ![Cross-modality: CRISPRa double-emergence and CRISPRi single-gene reachability share the same certified geometry — and the same SNR confound.](docs/figures/fig_cross_modality.png)
 
@@ -150,13 +163,17 @@ layers (below) remain available for library redundancy and coverage audits.
 
 ## Install and reproduce
 
+Install the pinned environment **first** — `reproduce.sh` hard-fails on version
+drift, and installing the package unpinned can move `numpy`/`scipy` off the pins:
+
 ```bash
-python -m pip install .            # the flat module API (combicone, reachability, ...)
+python -m pip install -r requirements.txt   # pinned environment (do this first)
+python -m pip install .                     # the flat module API + `combicone` CLI
 ```
 
 ```bash
-python -m pip install -r requirements.txt
-./reproduce.sh                     # frozen reproduction contract
+./reproduce.sh                     # frozen reproduction contract (exits 0 when green)
+bash reproduce_paper.sh            # regenerate the headline emergence certificate
 ```
 
 `reproduce.sh` gates the pinned environment, runs the full numerical test suite
@@ -197,8 +214,14 @@ Full per-result detail and claim ceilings are in the canonical machine-readable
 | [`validation.py`](validation.py) | Oracle, label/provenance, grouped-split, and multiplicity contracts |
 | [`scripts/run_validation_harness.py`](scripts/run_validation_harness.py) | Deterministic adversarial synthetic stress harness |
 | [`effect_dictionary.py`](effect_dictionary.py) | Safe, labeled adapter from cell matrices to portable effect dictionaries |
+| [`screenloop.py`](screenloop.py) | Certificate-guided campaign layer: acquisition replay + library augmentation |
+| [`acquisition.py`](acquisition.py) | Prospective batch recommender (relevance + greedy-MMR diversity) |
+| [`screen_ingest.py`](screen_ingest.py) | Ingestion adapter from real screen files (`.h5ad` / CSV / arrays) to CombiCone inputs |
+| [`combicone_cli.py`](combicone_cli.py) | The `combicone {ingest,triage,certify,recommend}` command line |
+| [`neural_baseline.py`](neural_baseline.py) | Self-contained additive-anchored MLP — the learned baseline in the head-to-head |
 | [`tests/test_combicone.py`](tests/test_combicone.py) | Unit + geometry tests for the triage/certify layer |
-| [`tutorial/tutorial.ipynb`](tutorial/tutorial.ipynb) | End-to-end: triage a combinatorial screen, then certify emergence |
+| [`tutorial/tutorial_combicone.ipynb`](tutorial/tutorial_combicone.ipynb) | End-to-end: triage a combinatorial screen, then certify emergence (**start here**) |
+| [`tutorial/tutorial.ipynb`](tutorial/tutorial.ipynb) | The fail-closed reachability core, on its own |
 | [`results/findings.json`](results/findings.json) | Canonical machine-readable findings |
 
 ## Hard boundaries
