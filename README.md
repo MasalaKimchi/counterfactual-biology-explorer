@@ -1,5 +1,8 @@
 # CombiCone — certified triage for combinatorial perturbation screens
 
+[![CI](https://github.com/MasalaKimchi/cell-state-reachability/actions/workflows/ci.yml/badge.svg)](https://github.com/MasalaKimchi/cell-state-reachability/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
 > The repository slug `cell-state-reachability` is the project's original name.
 > The method is **CombiCone**; single-target reachability is retained below as
 > the proving ground it grew out of.
