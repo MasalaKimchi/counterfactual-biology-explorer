@@ -52,7 +52,6 @@ def _verdict_tier(cert) -> str:
 def regenerate(substrate_path, *, n_boot=200, seed=0):
     z = np.load(substrate_path, allow_pickle=True)
     atoms = np.asarray(z["atoms"], dtype=float)
-    names = [str(g) for g in z["single_genes"]]
     cond = [str(c) for c in z["conditions"]]
     means = np.asarray(z["means"], dtype=float)
     ctrl = np.asarray(z["ctrl"], dtype=float)
@@ -67,11 +66,9 @@ def regenerate(substrate_path, *, n_boot=200, seed=0):
         noise = np.abs(m1[i] - m2[i]) / 2.0
         c = cc.certify_emergence(
             cone_atoms=atoms, measured_combo=effect, noise_sd=noise,
-            n_boot=n_boot, seed=seed,
+            method="montecarlo", n_boot=n_boot, seed=seed,
         )
         geneA, geneB = d.split("+", 1) if "+" in d else (d, "")
-        nonadd = float(np.linalg.norm(effect - _cone_free_add(atoms, names, d, means, cond, ctrl))
-                       / (np.linalg.norm(effect) + 1e-12))
         rows.append({
             "double": d, "geneA": geneA, "geneB": geneB,
             "residual": round(c.unreachable_fraction, 6),
@@ -85,17 +82,6 @@ def regenerate(substrate_path, *, n_boot=200, seed=0):
             "effect_norm": round(float(np.linalg.norm(effect)), 6),
         })
     return rows
-
-
-def _cone_free_add(atoms, names, double, means, cond, ctrl):
-    """Additive prediction a+b for the nonadditivity column (best-effort)."""
-    try:
-        a, b = double.split("+", 1)
-        ea = means[cond.index(f"{a}+ctrl")] - ctrl if f"{a}+ctrl" in cond else atoms[names.index(a)]
-        eb = means[cond.index(f"{b}+ctrl")] - ctrl if f"{b}+ctrl" in cond else atoms[names.index(b)]
-        return ea + eb
-    except Exception:
-        return np.zeros(atoms.shape[1])
 
 
 def main() -> int:

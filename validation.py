@@ -15,15 +15,10 @@ from typing import Iterable
 import numpy as np
 from scipy.stats import beta
 
-from reachability import InputError
+from reachability import InputError, _stable_norm
 
 
 _SHA256 = re.compile(r"[0-9a-f]{64}")
-
-
-def _stable_norm(values: np.ndarray) -> float:
-    scale = float(np.max(np.abs(values), initial=0.0))
-    return 0.0 if scale == 0.0 else scale * float(np.linalg.norm(values / scale))
 
 
 @dataclass(frozen=True)

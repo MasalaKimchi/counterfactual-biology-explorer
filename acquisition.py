@@ -41,7 +41,7 @@ from __future__ import annotations
 
 import itertools
 from collections.abc import Iterable, Mapping, Sequence
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 
 import numpy as np
 
@@ -231,15 +231,19 @@ def recommend_batch(
         first = int(np.argmax(rel_norm))
         selected.append(first)
         remaining.discard(first)
+        # maxsim[i] = max_{j in selected} sim[i, j], maintained incrementally so each
+        # pick costs O(n) instead of recomputing the max over the whole batch-so-far
+        # (O(n * |selected|)). Same values, same argmax tie-break -> identical output.
+        maxsim = sim[:, first].copy()
         while len(selected) < k and remaining:
             best_i, best_val = None, -np.inf
             for i in remaining:
-                redundancy = max(sim[i, j] for j in selected)
-                val = rel_norm[i] - diversity_weight * redundancy
+                val = rel_norm[i] - diversity_weight * maxsim[i]
                 if val > best_val:
                     best_val, best_i = val, i
             selected.append(best_i)
             remaining.discard(best_i)
+            maxsim = np.maximum(maxsim, sim[:, best_i])
         order_idx = selected
 
     combos = [pool[i] for i in order_idx]

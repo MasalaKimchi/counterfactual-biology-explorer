@@ -30,7 +30,6 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 import combicone as cc  # noqa: E402
-import reachability as rx  # noqa: E402
 import screenloop as sl  # noqa: E402
 
 N_BOOT = 200
@@ -65,7 +64,6 @@ def _load(path: Path) -> dict:
 
 def _norman_arrays(sub: dict):
     atoms = sub["atoms"].astype(float)
-    genes = sub["genes"].astype(str)
     single_genes = sub["single_genes"].astype(str)
     ctrl = sub["ctrl"].astype(float)
     means = sub["means"].astype(float)
@@ -103,6 +101,7 @@ def _emergence_labels(atoms, D, noise):
             cone_atoms=atoms,
             measured_combo=D[k],
             noise_sd=noise[k],
+            method="montecarlo",
             n_boot=N_BOOT,
             floor_threshold=FLOOR,
             alpha=ALPHA,
@@ -222,7 +221,6 @@ def _recovery_with_nulls(atoms, D, pair, rng):
 
 def _check_frozen(name, camp, rec):
     f = FROZEN[name]
-    tol = 1e-9
     problems = []
     if abs(rec["separator"]["top1"] - f["recovery_sep_top1"]) > 1e-6:
         problems.append(
@@ -243,7 +241,6 @@ def _check_frozen(name, camp, rec):
 
 
 def main() -> None:
-    quick = "--quick" in sys.argv
     rng = np.random.default_rng(SEED)
     payload = {"schema_version": "1.0.0", "batch_size": BATCH, "screens": {}}
     all_problems = []

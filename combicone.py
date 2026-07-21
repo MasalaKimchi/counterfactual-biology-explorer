@@ -52,7 +52,7 @@ A549 / canonically K562; 105 single-gene atoms, 131 measured doubles):
 from __future__ import annotations
 
 import itertools
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import Iterable, Mapping, Sequence
 
 import numpy as np
@@ -495,7 +495,7 @@ def certify_emergence(
     cone_atoms: np.ndarray | None = None,
     noise_sd: np.ndarray | float | None = None,
     gene_weights: np.ndarray | None = None,
-    method: str = "montecarlo",
+    method: str = "analytic",
     n_boot: int = 200,
     ci_level: float = 0.9,
     floor_threshold: float = 1.9,
@@ -546,15 +546,17 @@ def certify_emergence(
         NaN) and only the point certificate + geometry are returned.
     gene_weights : (n_genes,) array, optional
         Per-gene metric weights passed to the projection.
-    method : {"montecarlo", "analytic"}
-        How to build the noise null. ``"montecarlo"`` (default) re-projects
-        ``n_boot`` noise draws — stochastic (uses ``seed``) but makes no facet
-        assumption. ``"analytic"`` uses the closed-form generalized chi-square null
-        (:func:`reachability.analytic_anisotropy_null`): deterministic, seed-free,
-        ~``n_boot``x fewer solves, and **conservative by construction** (it can only
-        withhold a certificate, never inflate one). The two agree to a few percent
-        on stable facets; the analytic null over-estimates on unstable low-SNR
-        facets, exactly the combinations the effect-size bar demotes.
+    method : {"analytic", "montecarlo"}
+        How to build the noise null. ``"analytic"`` (default) uses the closed-form
+        generalized chi-square null (:func:`reachability.analytic_anisotropy_null`):
+        deterministic, seed-free, ~``n_boot``x fewer solves, and **conservative by
+        construction** (it can only withhold a certificate, never inflate one).
+        ``"montecarlo"`` re-projects ``n_boot`` noise draws — stochastic (uses
+        ``seed``), makes no facet assumption, and is the reference null the analytic
+        path is validated against (and the method behind the frozen headline counts;
+        pass it explicitly to reproduce those). The two agree to a few percent on
+        stable facets; the analytic null over-estimates on unstable low-SNR facets,
+        exactly the combinations the effect-size bar demotes.
     n_boot : int
         Number of noise draws for the Monte-Carlo null and CI (ignored when
         ``method="analytic"``).
@@ -623,16 +625,30 @@ def certify_emergence(
         # Deterministic closed-form null (no re-solves, no seed). The generalized
         # chi-square null residual is conservative by construction: it can only
         # withhold a certificate, never inflate one (see analytic_anisotropy_null).
-        an = rx.analytic_anisotropy_null(
-            singles, target, se, gene_weights=gene_weights, ci_level=ci_level
-        )
-        null_mean = an.null_mean
-        null_sd = an.null_sd
-        z = (obs_resid - null_mean) / (null_sd + _EPS)
-        p = an.p_value
-        lo = an.ci_low
-        hi = an.ci_high
-        floor_ratio = obs_resid / (null_mean + _EPS)
+        if obs.geometry_status == "inside_tolerance":
+            # Target is inside the cone: reachable, hence not emergent by geometry.
+            # The closed-form null has no residual subspace to describe here (its
+            # moments degenerate), so report the not-emergent verdict directly.
+            # Monte-Carlo returns the same call; this keeps analytic a drop-in on
+            # reachable targets (e.g. a k-way combo reachable once lower-order atoms
+            # enter the cone) instead of raising on a well-defined "not emergent".
+            null_mean = obs_resid
+            null_sd = 0.0
+            z = 0.0
+            p = 1.0
+            lo = hi = obs_resid
+            floor_ratio = obs_resid / (null_mean + _EPS)
+        else:
+            an = rx.analytic_anisotropy_null(
+                singles, target, se, gene_weights=gene_weights, ci_level=ci_level
+            )
+            null_mean = an.null_mean
+            null_sd = an.null_sd
+            z = (obs_resid - null_mean) / (null_sd + _EPS)
+            p = an.p_value
+            lo = an.ci_low
+            hi = an.ci_high
+            floor_ratio = obs_resid / (null_mean + _EPS)
     else:
         rng = np.random.default_rng(seed)
         f0 = obs.fitted  # reachable null truth

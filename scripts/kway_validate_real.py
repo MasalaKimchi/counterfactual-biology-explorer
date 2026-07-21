@@ -54,7 +54,7 @@ def _certify_one(k: int) -> dict:
     # (i) singles-only cone
     try:
         ci = cc.certify_emergence(
-            _ATOMS, target, noise_sd=sd, n_boot=N_BOOT,
+            _ATOMS, target, noise_sd=sd, method="montecarlo", n_boot=N_BOOT,
             floor_threshold=FLOOR, alpha=ALPHA, seed=SEED,
         )
         out["i_status"] = ci.geometry_status
@@ -72,7 +72,7 @@ def _certify_one(k: int) -> dict:
     cone_ii = np.vstack([_ATOMS, _DBL_EFF[other]])
     try:
         cii = cc.certify_emergence(
-            cone_ii, target, noise_sd=sd, n_boot=N_BOOT,
+            cone_ii, target, noise_sd=sd, method="montecarlo", n_boot=N_BOOT,
             floor_threshold=FLOOR, alpha=ALPHA, seed=SEED,
         )
         out["ii_status"] = cii.geometry_status

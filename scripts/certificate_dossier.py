@@ -65,7 +65,8 @@ def negative_control_additive(atoms, names, *, n_pairs=200, noise_frac=0.1,
         noise = noise_frac * np.abs(add) + 1e-4
         combo = add + rng.normal(0, noise)
         c = cc.certify_emergence(cone_atoms=atoms, measured_combo=combo,
-                                 noise_sd=noise, n_boot=n_boot, seed=int(rng.integers(1 << 30)))
+                                 noise_sd=noise, method="montecarlo",
+                                 n_boot=n_boot, seed=int(rng.integers(1 << 30)))
         floor_ratios.append(float(c.floor_ratio))
         if _is_certified(c):
             verdicts["certified"] += 1
@@ -100,7 +101,8 @@ def sensitivity_radius(atoms, combo_effect, noise_sd, *, floor_threshold=1.9,
     for g in grid:
         c = cc.certify_emergence(
             cone_atoms=atoms, measured_combo=combo_effect, noise_sd=g * noise_sd,
-            n_boot=n_boot, floor_threshold=floor_threshold, alpha=alpha, seed=seed,
+            method="montecarlo", n_boot=n_boot, floor_threshold=floor_threshold,
+            alpha=alpha, seed=seed,
         )
         curve.append((float(g), float(c.floor_ratio), float(c.p_value), _is_certified(c)))
         if gamma_star == float("inf") and not _is_certified(c):
@@ -154,7 +156,8 @@ def main() -> int:
     nc_reach = {"certified": 0, "modest": 0, "within_noise": 0}
     for d in bottom:
         c = cc.certify_emergence(cone_atoms=atoms, measured_combo=combo_effect(d),
-                                 noise_sd=combo_noise(d), n_boot=args.n_boot, seed=args.seed)
+                                 noise_sd=combo_noise(d), method="montecarlo",
+                                 n_boot=args.n_boot, seed=args.seed)
         if _is_certified(c):
             nc_reach["certified"] += 1
         elif "modest" in c.verdict:

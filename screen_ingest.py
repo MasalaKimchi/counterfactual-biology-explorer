@@ -51,7 +51,7 @@ Public API
 from __future__ import annotations
 
 import csv
-from collections.abc import Mapping, Sequence
+from collections.abc import Sequence
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
@@ -107,32 +107,6 @@ def parse_condition(
         arms.append(arm)
     genes = tuple(a for a in arms if a and a != control_label)
     return genes
-
-
-def _classify(
-    conditions: np.ndarray,
-    *,
-    control_label: str,
-    separator: str,
-) -> tuple[dict[str, str], dict[tuple[str, ...], str]]:
-    """Map gene -> single-condition-label and gene-tuple -> combo-condition-label.
-
-    Singles are keyed by their one gene; combinations by the sorted tuple of their
-    genes, so ``A+B`` and ``B+A`` collapse to one canonical key.
-    """
-    singles: dict[str, str] = {}
-    combos: dict[tuple[str, ...], str] = {}
-    for label in conditions:
-        genes = parse_condition(
-            label, control_label=control_label, separator=separator
-        )
-        if len(genes) == 0:
-            continue  # control
-        if len(genes) == 1:
-            singles.setdefault(genes[0], label)
-        else:
-            combos.setdefault(tuple(sorted(genes)), label)
-    return singles, combos
 
 
 # --------------------------------------------------------------------------- #

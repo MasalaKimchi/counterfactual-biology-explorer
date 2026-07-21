@@ -44,12 +44,22 @@ import screen_ingest as si
 # --------------------------------------------------------------------------- #
 # Loading
 # --------------------------------------------------------------------------- #
-def _load_substrate(args) -> si.ScreenSubstrate:
-    """Dispatch on the input path/extension to a ScreenSubstrate."""
+def _load_substrate(args, *, compute_noise: bool = True) -> si.ScreenSubstrate:
+    """Dispatch on the input path/extension to a ScreenSubstrate.
+
+    ``compute_noise=False`` skips split-half measurement-noise estimation, which the
+    triage command never consumes (triage scores singles only); getattr guards let
+    subcommands that omit the noise flags still call this.
+    """
     src = args.screen
     suffix = Path(src).suffix.lower()
     if suffix == ".npz":
         return _substrate_from_npz(src, args)
+    noise_kw = dict(
+        compute_noise=compute_noise and not getattr(args, "no_noise", False),
+        noise_seed=getattr(args, "noise_seed", 7),
+        min_cells_per_half=getattr(args, "min_cells_per_half", 6),
+    )
     if args.conditions_csv:
         return si.ingest_screen(
             src,
@@ -58,9 +68,7 @@ def _load_substrate(args) -> si.ScreenSubstrate:
             control_label=args.control_label,
             separator=args.separator,
             arm_handling=args.arm_handling,
-            compute_noise=not args.no_noise,
-            noise_seed=args.noise_seed,
-            min_cells_per_half=args.min_cells_per_half,
+            **noise_kw,
         )
     # default: AnnData
     return si.ingest_screen(
@@ -71,9 +79,7 @@ def _load_substrate(args) -> si.ScreenSubstrate:
         control_label=args.control_label,
         separator=args.separator,
         arm_handling=args.arm_handling,
-        compute_noise=not args.no_noise,
-        noise_seed=args.noise_seed,
-        min_cells_per_half=args.min_cells_per_half,
+        **noise_kw,
     )
 
 
@@ -144,7 +150,8 @@ def cmd_ingest(args) -> int:
 
 
 def cmd_triage(args) -> int:
-    sub = _load_substrate(args)
+    # Triage ranks singles only; the split-half noise model is never read, so skip it.
+    sub = _load_substrate(args, compute_noise=False)
     atoms, names = sub.triage_ready()
     candidates = None
     if args.measured_only:
@@ -308,9 +315,6 @@ def build_parser() -> argparse.ArgumentParser:
     pt.add_argument("--use-gap", action="store_true", help="add leave-combo-out gap feature (slower)")
     pt.add_argument("--measured-only", action="store_true", help="only score combos actually measured in the screen")
     pt.add_argument("--top", type=int, default=10, help="print the top-N to run first")
-    pt.add_argument("--no-noise", action="store_true")
-    pt.add_argument("--noise-seed", type=int, default=7)
-    pt.add_argument("--min-cells-per-half", type=int, default=6)
     pt.set_defaults(func=cmd_triage)
 
     pc = sub.add_parser("certify", help="certify measured combinations against the singles cone")

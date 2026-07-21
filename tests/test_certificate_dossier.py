@@ -39,7 +39,8 @@ def test_sensitivity_radius_monotone_and_flips():
     combo = combo - atoms.T @ np.linalg.lstsq(atoms.T, combo, rcond=None)[0]  # orthogonal component
     combo = combo / np.linalg.norm(combo) * np.linalg.norm(atoms[0]) * 3
     noise = 0.05 * np.abs(combo) + 1e-3
-    c0 = cc.certify_emergence(cone_atoms=atoms, measured_combo=combo, noise_sd=noise, n_boot=80, seed=0)
+    c0 = cc.certify_emergence(cone_atoms=atoms, measured_combo=combo, noise_sd=noise,
+                              method="montecarlo", n_boot=80, seed=0)
     if not cd._is_certified(c0):
         return  # not emergent enough to test the flip; skip silently
     gstar, curve = cd.sensitivity_radius(atoms, combo, noise, n_boot=80, seed=0)

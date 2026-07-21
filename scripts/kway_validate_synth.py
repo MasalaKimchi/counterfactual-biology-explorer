@@ -59,7 +59,7 @@ def main() -> None:
         )
         c = cc.certify_emergence(
             cone_atoms=cone, measured_combo=Tm[idx], noise_sd=sd,
-            n_boot=N_BOOT, floor_threshold=FLOOR, alpha=ALPHA, seed=SEED,
+            method="montecarlo", n_boot=N_BOOT, floor_threshold=FLOOR, alpha=ALPHA, seed=SEED,
         )
         zs.append(c.z); unr.append(c.unreachable_fraction); floors.append(c.floor_ratio)
         ps.append(c.p_value)

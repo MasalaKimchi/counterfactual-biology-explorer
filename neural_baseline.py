@@ -68,7 +68,7 @@ Dependencies: numpy + scipy only (no torch, sklearn). Runs in the pinned CI env
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import Sequence
 
 import numpy as np

@@ -26,19 +26,19 @@
       "sha256": "a7b44cf8a4d0875fbd623d089b44a58a1b37869b3f75a1e6ede728bc3f5c1ffe"
     },
     "acquisition.py": {
-      "bytes": 13947,
+      "bytes": 14229,
       "executable": false,
-      "sha256": "20e7e691f1f6b4ebf0aeecd7febd64bca413474bbe56ab91ac9329dd52b9e32b"
+      "sha256": "41d8e37be75b551c1f0d25655139ed8d94d52e20a079b6559c8b7dbec5285f0a"
     },
     "combicone.py": {
-      "bytes": 36140,
+      "bytes": 37093,
       "executable": false,
-      "sha256": "3a7929c4b86e34f98590f73ed27492a6b3e7cf01503f15cf7c5ed5651ba6f46d"
+      "sha256": "9c032eec165777f7f03eb59066283b3f7d091b4d46ec674968775f83457c7fd5"
     },
     "combicone_cli.py": {
-      "bytes": 16282,
+      "bytes": 16474,
       "executable": false,
-      "sha256": "c7b01bc83764ae33aee280c2d6ab495e1bc9a47b1c891316654204e61819baba"
+      "sha256": "a88545bbaac812676ba740c515bbbd60e4277cdc0213b29937019e2e70ed2c37"
     },
     "configs/arce_external_validation.json": {
       "bytes": 5411,
@@ -211,9 +211,9 @@
       "sha256": "fe6bd8b22e6920239a21e6ffe33db22a04888b817737e74f59962684108709d8"
     },
     "neural_baseline.py": {
-      "bytes": 18650,
+      "bytes": 18643,
       "executable": false,
-      "sha256": "00da0afb1323b1abd44c4fbbc097981d00e528cc8d776b9a413313394d7c6f2a"
+      "sha256": "75fb94707b70a92b6bf175f83828921aff1e0c08ca99e8884352b58739cacd8b"
     },
     "pyproject.toml": {
       "bytes": 1768,
@@ -291,9 +291,9 @@
       "sha256": "6e33d3e18d2420469fa9e421f496ed32f9ef0da06bf6812e259b84e3fa7047d7"
     },
     "results/findings.json": {
-      "bytes": 38125,
+      "bytes": 38244,
       "executable": false,
-      "sha256": "531008b2e750e4fc17c228042cd1cc5c1923577abd0c06e0287123c52e497386"
+      "sha256": "8aa61cfb876500baea30e2a8c40195c6b78697c969465a29fbf0787d4c110483"
     },
     "results/goudy_combination_validation.json": {
       "bytes": 140155,
@@ -326,14 +326,14 @@
       "sha256": "768b53818b88ed4764b70ed84dab3a4a443ed5e5d88879cd81d082d2056e6168"
     },
     "screen_ingest.py": {
-      "bytes": 23356,
+      "bytes": 22502,
       "executable": false,
-      "sha256": "b5367abd935771d7b1998d32171b55b7f21118a22cc1925c73e0629503ef9d03"
+      "sha256": "959d3ebe448e527703c4f0a427d89431611e33615669c95b47847725faa572ea"
     },
     "screenloop.py": {
-      "bytes": 24030,
+      "bytes": 24013,
       "executable": false,
-      "sha256": "2c893b64dd3fdc8f25b57693c41546eac62d3fbb6602deb2c4aba35dfa9a29ec"
+      "sha256": "a0fc960e660203b83802cb7089816546b976da253c1fe9c4e18784099bb4f935"
     },
     "scripts/build_library_coverage_caches.py": {
       "bytes": 22367,
@@ -411,9 +411,9 @@
       "sha256": "15cc6af06e10d4a73b685577a4b56dacc40919d07ca6747bf449862cc34093dd"
     },
     "tests/test_certificate_dossier.py": {
-      "bytes": 2323,
+      "bytes": 2374,
       "executable": false,
-      "sha256": "a80fcf69766152012a89c4b521e569cdd0b588e7b2af691e50d2d822fce483a0"
+      "sha256": "d8edf922e73609dd3b90ec1cfcbcfd466b89496048fe8c1d4b901f2a4afd4df8"
     },
     "tests/test_combicone.py": {
       "bytes": 23392,
@@ -501,9 +501,9 @@
       "sha256": "ef0a76c69415cb300bb3e4670f60c3ecfba19970eecbf3727d9ade050b4bc86a"
     },
     "validation.py": {
-      "bytes": 15200,
+      "bytes": 15028,
       "executable": false,
-      "sha256": "63fc2b501a5c1f03d0c4682c5e766b2891208314ee36453fb151e82d30fc27aa"
+      "sha256": "010662441628f85aa1ce2b0798875256ca945adcb4dc08ed77e878171157598e"
     }
   },
   "generated_on": "2026-07-19",
