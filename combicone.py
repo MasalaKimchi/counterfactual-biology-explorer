@@ -132,6 +132,32 @@ def combo_cosine(
     return float(np.mean(cosines) if agg == "mean" else np.max(cosines))
 
 
+def _unit_rows(singles: np.ndarray) -> np.ndarray:
+    """Stable-normed unit rows of ``singles`` (zero-norm rows -> zero vector).
+
+    Precomputing these once turns every pairwise cosine into a plain dot product:
+    ``_unit_rows(s)[i] @ _unit_rows(s)[j]`` is bit-identical to
+    ``single_effect_cosine(s[i], s[j])`` (which is ``dot(a/||a||, b/||b||)``), but the
+    norms are computed once per single instead of once per candidate combination.
+    """
+    norms = np.array([rx._stable_norm(singles[i]) for i in range(singles.shape[0])])
+    safe = np.where(norms > 0.0, norms, 1.0)
+    units = singles / safe[:, None]
+    units[norms == 0.0] = 0.0
+    return units
+
+
+def _combo_cos_from_units(units: np.ndarray, idxs: Sequence[int], agg: str) -> float:
+    """Aggregated pairwise cosine among precomputed unit rows ``units[idxs]``.
+
+    Equivalent to ``combo_cosine([singles[i] for i in idxs], agg=agg)`` with the row
+    norms hoisted out; the pairwise order matches so mean/max reduce identically.
+    """
+    u = units[list(idxs)]
+    pair_cos = (u @ u.T)[np.triu_indices(len(idxs), k=1)]
+    return float(pair_cos.mean() if agg == "mean" else pair_cos.max())
+
+
 def additive_gap(
     singles: np.ndarray,
     *indices: int,
@@ -341,6 +367,11 @@ def triage_combinations(
         if order < 2:
             raise rx.InputError("combinations must have order >= 2")
 
+    # Hoist the per-single norms out of the candidate loop: every pairwise cosine
+    # below is then a dot product of precomputed unit rows (bit-identical to
+    # combo_cosine, which is dot(a/||a||, b/||b||)). Turns C(n,2) or C(n,k) repeated
+    # norm computations into n.
+    units = _unit_rows(singles)
     combos: list[tuple[str, ...]] = []
     cos_ab: list[float] = []
     gap: list[float] = []
@@ -353,7 +384,7 @@ def triage_combinations(
                 raise rx.InputError(f"unknown single in combination {combo!r}")
             idxs.append(index[name])
         combos.append(combo)
-        cos_ab.append(combo_cosine([singles[i] for i in idxs], agg=pairwise))
+        cos_ab.append(_combo_cos_from_units(units, idxs, pairwise))
         if use_gap or model is not None:
             gap.append(additive_gap(singles, *idxs, gene_weights=gene_weights))
         else:

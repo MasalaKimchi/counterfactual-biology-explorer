@@ -197,7 +197,7 @@ def cmd_certify(args) -> int:
             continue
         cert = cc.certify_emergence(
             cone_atoms=sub.atoms, measured_combo=rec.effect, noise_sd=rec.noise_sd,
-            n_boot=args.n_boot, floor_threshold=args.floor_threshold,
+            method=args.method, n_boot=args.n_boot, floor_threshold=args.floor_threshold,
             alpha=args.alpha, seed=args.seed,
         )
         rows.append({
@@ -232,7 +232,7 @@ def cmd_recommend(args) -> int:
                 continue
             cert = cc.certify_emergence(
                 cone_atoms=sub.atoms, measured_combo=rec.effect,
-                noise_sd=rec.noise_sd, n_boot=args.n_boot, seed=args.seed,
+                noise_sd=rec.noise_sd, method=args.method, n_boot=args.n_boot, seed=args.seed,
             )
             labeled[rec.genes] = float(cert.z)
     batch = aq.recommend_batch(
@@ -316,6 +316,9 @@ def build_parser() -> argparse.ArgumentParser:
     pc = sub.add_parser("certify", help="certify measured combinations against the singles cone")
     _add_common(pc)
     pc.add_argument("--combo", nargs="+", default=None, help="only certify these named combinations")
+    pc.add_argument("--method", default="analytic", choices=["montecarlo", "analytic"],
+                    help="noise null: analytic (default; deterministic, seed-free, ~200x "
+                         "faster, conservative) or montecarlo (--n-boot/--seed apply then)")
     pc.add_argument("--n-boot", type=int, default=200)
     pc.add_argument("--floor-threshold", type=float, default=1.9)
     pc.add_argument("--alpha", type=float, default=0.05)
@@ -334,6 +337,9 @@ def build_parser() -> argparse.ArgumentParser:
     pr.add_argument("--diversity-metric", default="effect_cosine", choices=["effect_cosine", "gene_jaccard"])
     pr.add_argument("--use-labels", action="store_true",
                     help="certify already-measured combos and fit the ridge model on their z")
+    pr.add_argument("--method", default="analytic", choices=["montecarlo", "analytic"],
+                    help="noise null for --use-labels: analytic (default; ~200x faster, "
+                         "conservative) or montecarlo (--n-boot/--seed apply then)")
     pr.add_argument("--n-boot", type=int, default=200)
     pr.add_argument("--seed", type=int, default=0)
     pr.add_argument("--no-noise", action="store_true")

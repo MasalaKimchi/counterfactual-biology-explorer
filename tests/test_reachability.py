@@ -319,3 +319,55 @@ def test_analytic_null_respects_gene_weights():
     plain = rx.analytic_anisotropy_null(effects, target, se)
     weighted = rx.analytic_anisotropy_null(effects, target, se, gene_weights=w)
     assert plain.null_mean != weighted.null_mean
+
+
+# --- analytic_certification_power (closed-form sample-size / power) -----------------
+
+# A clear out-of-cone direction: the -1 coordinate is unreachable from the non-negative
+# orthant spanned by eye(4), so there is real signal above a small measurement floor.
+_CP_EFFECTS = np.eye(4)
+_CP_TARGET = np.array([1.0, 0.0, -1.0, 0.0])
+
+
+def test_certification_power_certifies_real_signal_and_curve_is_monotone():
+    cp = rx.analytic_certification_power(_CP_EFFECTS, _CP_TARGET, 0.35)
+    assert isinstance(cp, rx.CertificationPower)
+    assert cp.certifiable and cp.r2_true_denoised > 0.0
+    assert np.isfinite(cp.cells_multiplier_for_target_power)
+    # power is monotone non-decreasing in the depth multiplier
+    assert np.all(np.diff(np.array(cp.power_curve)) >= -1e-9)
+
+
+def test_certification_power_mean_crossing_delivers_below_half_power():
+    """Fix for the mislabeled 'median': the mean-crossing depth yields power < 0.5,
+    and the calibrated target-power depth is deeper than it."""
+    cp = rx.analytic_certification_power(_CP_EFFECTS, _CP_TARGET, 0.35)
+    at_crossing = rx.analytic_certification_power(
+        _CP_EFFECTS, _CP_TARGET, 0.35,
+        curve_multipliers=np.array([cp.cells_multiplier_for_mean_crossing]),
+    )
+    assert at_crossing.power_curve[0] < 0.5
+    assert cp.cells_multiplier_for_target_power >= cp.cells_multiplier_for_mean_crossing
+
+
+def test_certification_power_below_floor_is_never_certifiable():
+    """Residual at/below the noise floor -> not certifiable at any depth."""
+    reachable_target = np.array([1.0, 0.002, 0.0, 0.0])  # inside the orthant
+    cp = rx.analytic_certification_power(_CP_EFFECTS, reachable_target, 0.5)
+    assert not cp.certifiable
+    assert cp.cells_multiplier_for_target_power == float("inf")
+    assert cp.cells_multiplier_for_mean_crossing == float("inf")
+
+
+@pytest.mark.parametrize(
+    "noise_sd, kwargs",
+    [
+        (0.1, {"bar": 1.0}),               # bar must exceed 1.0
+        (0.1, {"target_power": 0.0}),      # power strictly in (0, 1)
+        (0.1, {"target_power": 1.0}),
+        (0.0, {}),                          # zero noise floor -> undefined, fail closed
+    ],
+)
+def test_certification_power_fails_closed(noise_sd, kwargs):
+    with pytest.raises(rx.InputError):
+        rx.analytic_certification_power(_CP_EFFECTS, _CP_TARGET, noise_sd, **kwargs)

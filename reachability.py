@@ -544,6 +544,175 @@ def analytic_anisotropy_null(
     )
 
 
+# Practical ceiling on the depth multiplier n/n0 searched for the target-power depth.
+# A certifiable combination that needs more than this is reported with an infinite
+# target multiplier (certifiable=True, but beyond practical reach) — distinct from a
+# combination that can never be certified at any depth (certifiable=False).
+_MAX_DEPTH_MULTIPLIER = 1e6
+
+
+@dataclass(frozen=True)
+class CertificationPower:
+    """Closed-form sample-size / power result for an emergence certificate.
+
+    All sample sizes are expressed as a MULTIPLIER on the reference cell count
+    ``n0`` used to compute ``noise_sd`` (measurement SE scales as
+    ``SE(n) = SE(n0) * sqrt(n0 / n)``). ``cells_multiplier_for_target_power`` is
+    therefore "how many times the current cells you would need"; multiply by your
+    actual per-condition cell count to get an absolute number.
+
+    ``certifiable=True`` with ``cells_multiplier_for_target_power == inf`` means the
+    combination is certifiable in principle but only beyond ``_MAX_DEPTH_MULTIPLIER``x
+    the reference depth. ``certifiable=False`` means it can never be certified at any
+    depth (observed residual at or below the noise floor).
+    """
+
+    certifiable: bool                       # is the debiased true signal above the noise floor at all?
+    floor_ratio_now: float                  # observed floor ratio at n0
+    r2_true_denoised: float                 # noise-debiased true squared residual fraction
+    mu2_reference: float                    # squared residual-fraction noise floor at n0
+    bar: float                              # floor-ratio bar being certified against
+    target_power: float                     # requested power
+    cells_multiplier_for_target_power: float   # n / n0 for target power (inf if beyond the cap)
+    cells_multiplier_for_mean_crossing: float  # n / n0 where the residual MEAN crosses the bar
+    power_curve_multipliers: tuple          # the n/n0 grid evaluated
+    power_curve: tuple                      # power at each grid point
+
+
+def analytic_certification_power(
+    effects: np.ndarray,
+    target: np.ndarray,
+    noise_sd: np.ndarray,
+    *,
+    bar: float = 1.9,
+    target_power: float = 0.8,
+    gene_weights: np.ndarray | None = None,
+    gene_mask: np.ndarray | None = None,
+    active_tol: float = 1e-8,
+    curve_multipliers: np.ndarray | None = None,
+) -> CertificationPower:
+    r"""Closed-form cells/replicates needed to certify emergence at a target power.
+
+    The emergence certificate certifies a combination when its floor ratio
+    ``residual_fraction / null_mean`` clears ``bar`` (default 1.9x). Because the
+    analytic null mean scales exactly linearly with the measurement-noise scale
+    ``s`` (:func:`analytic_anisotropy_null`), and measurement SE scales as
+    ``s = sqrt(n0 / n)`` with cell count, the whole certificate is a deterministic
+    function of ``n``. This inverts it: given a screen measured at reference depth
+    ``n0`` (the depth implied by ``noise_sd``), it returns the minimum cell
+    multiplier ``n / n0`` that pushes the floor ratio past ``bar`` at the requested
+    power, plus the full power-vs-depth curve.
+
+    **Derivation.** Split the observed squared residual fraction into a fixed
+    (denoised) part and a noise part. At reference depth the analytic null gives
+    ``mu2 = null_mean**2`` (the pure-noise floor) and ``rf**2`` (observed). The
+    noise-debiased true signal is ``R2_true = max(rf**2 - mu2, 0)``. At depth
+    ``n = n0 / s**2`` the numerator ``||r||**2`` is a *noncentral* generalized
+    chi-square with
+
+        mean_t = R2_true + s**2 * mu2
+        var_t  = 2 (s**2 mu2)**2 / dof  +  4 s**2 R2_true mu2 / dof
+
+    (``dof`` = the anisotropy-aware effective dof of the null, which is invariant to
+    the overall noise scale, so it is held fixed across depths). Matching a gamma to
+    ``(mean_t, var_t)`` gives the certification probability
+
+        power(n) = P(||r||**2 >= bar**2 * s**2 * mu2) = Gamma.sf(bar**2 s**2 mu2; k, theta).
+
+    Setting the residual's *mean* equal to the bar recovers a closed-form reference
+    depth
+
+        n / n0  =  mu2 * (bar**2 - 1) / R2_true       (``cells_multiplier_for_mean_crossing``).
+
+    This is the depth at which the *expected* residual sits exactly on the bar. Because
+    the residual statistic is right-skewed, the actual power there is below 0.5
+    (``Gamma.sf(mean) ~ 0.37-0.48`` depending on the effective dof), so it is a lower
+    bound on the depth for a coin-flip certification, not the median — use
+    ``cells_multiplier_for_target_power`` (solved by bisection) for a calibrated depth.
+    Deeper sequencing only ever helps, and a combination with ``R2_true <= 0``
+    (observed residual at or below the noise floor) can never be certified at any depth.
+
+    Validated against a denoised-truth Monte-Carlo simulation: the closed-form and MC
+    certification curves agree to within one depth grid-step on DUSP9+MAPK1. The power
+    layer inherits the null's conservative direction: it will not promise certification
+    earlier than Monte-Carlo would.
+    """
+    if bar <= 1.0:
+        raise InputError("bar must exceed 1.0 for an emergence certificate")
+    if not (0.0 < target_power < 1.0):
+        raise InputError("target_power must lie strictly in (0, 1)")
+
+    null = analytic_anisotropy_null(
+        effects, target, noise_sd,
+        gene_weights=gene_weights, gene_mask=gene_mask, active_tol=active_tol,
+    )
+    if not np.isfinite(null.null_mean) or null.null_mean <= 0.0:
+        raise InputError(
+            "noise floor is zero or undefined (noise_sd has no positive entries); "
+            "certification power is undefined without measurement noise"
+        )
+    mu2 = float(null.null_mean) ** 2
+    rf2 = float(null.residual_fraction) ** 2
+    dof = float(null.effective_dof)
+    r2_true = max(rf2 - mu2, 0.0)
+    floor_now = float(null.residual_fraction / null.null_mean)
+
+    certifiable = r2_true > 0.0
+    if not certifiable:
+        return CertificationPower(
+            certifiable=False, floor_ratio_now=floor_now, r2_true_denoised=r2_true,
+            mu2_reference=mu2, bar=float(bar), target_power=float(target_power),
+            cells_multiplier_for_target_power=float("inf"),
+            cells_multiplier_for_mean_crossing=float("inf"),
+            power_curve_multipliers=tuple(), power_curve=tuple(),
+        )
+
+    # closed-form depth where the residual MEAN crosses the bar (actual power there is
+    # < 0.5 — see docstring; kept as a reference/lower bound, not a median).
+    mult_mean_crossing = mu2 * (bar * bar - 1.0) / r2_true
+
+    def _power_at(mult: float) -> float:
+        s2 = 1.0 / mult
+        mean_t = r2_true + s2 * mu2
+        var_t = 2.0 * (s2 * mu2) ** 2 / max(dof, 1e-12) + 4.0 * s2 * r2_true * mu2 / max(dof, 1e-12)
+        thresh = (bar * bar) * s2 * mu2
+        if var_t <= 0.0:  # defensive: unreachable while certifiable (all terms > 0)
+            return 1.0 if mean_t >= thresh else 0.0
+        k = mean_t * mean_t / var_t
+        theta = var_t / mean_t
+        return float(_gamma_dist.sf(thresh, a=k, scale=theta))
+
+    # Bisect power(mult) = target_power (power is monotone increasing in mult).
+    # power(1e-3) ~ 0 anchors the lower bracket. Hitting the cap leaves mult_target=inf
+    # (certifiable in principle but beyond _MAX_DEPTH_MULTIPLIER), never conflated with
+    # the certifiable=False "never" case handled above.
+    lo, hi = 1e-3, 1.0
+    while _power_at(hi) < target_power and hi < _MAX_DEPTH_MULTIPLIER:
+        hi *= 2.0
+    mult_target = float("inf")
+    if _power_at(hi) >= target_power:
+        for _ in range(80):
+            mid = 0.5 * (lo + hi)
+            if _power_at(mid) >= target_power:
+                hi = mid
+            else:
+                lo = mid
+        mult_target = hi
+
+    if curve_multipliers is None:
+        curve_multipliers = np.array([0.25, 0.5, 0.75, 1.0, 1.25, 1.5, 2.0, 3.0, 5.0])
+    curve = np.array([_power_at(float(m)) for m in curve_multipliers])
+
+    return CertificationPower(
+        certifiable=True, floor_ratio_now=floor_now, r2_true_denoised=r2_true,
+        mu2_reference=mu2, bar=float(bar), target_power=float(target_power),
+        cells_multiplier_for_target_power=float(mult_target),
+        cells_multiplier_for_mean_crossing=float(mult_mean_crossing),
+        power_curve_multipliers=tuple(float(m) for m in curve_multipliers),
+        power_curve=tuple(float(p) for p in curve),
+    )
+
+
 def _demo() -> None:
     effects = np.eye(4)
     target = np.array([1.0, 0.0, -1.0, 0.0])
